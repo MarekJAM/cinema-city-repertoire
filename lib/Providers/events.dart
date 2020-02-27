@@ -7,15 +7,42 @@ class Events {
     return [..._items];
   }
 
-  List<Event> findEventsByFilmId(List<Event> events, String id){
+  List<String> eventTypes = [
+    '2d',
+    '3d',
+    'dolby-atmos',
+    'screening',
+    'screenx',
+    '4dx',
+    'imax',
+    'vip'
+  ];
+
+  List<Event> findEventsByFilmId(List<Event> events, String id) {
     List<Event> eventsToReturn = [];
     events.forEach((item) {
-      if(item.filmId == id){
+      if (item.filmId == id) {
         eventsToReturn.add(item);
       }
     });
 
     return eventsToReturn;
+  }
+
+  String getEventType(List<dynamic> attrList) {
+    String returnedString;
+    attrList.forEach((attr){
+      eventTypes.forEach((type){
+        if (attr == type){
+          if (returnedString == null) {
+            returnedString = type;
+          } else {
+            returnedString = returnedString + ' ' + type;
+          }
+        }
+      });
+    });
+    return returnedString;
   }
 
   void setEvents(List<dynamic> events) {
@@ -28,7 +55,7 @@ class Events {
           cinemaId: event['cinemaId'],
           dateTime: DateTime.parse(event['eventDateTime']),
           language: 'PL',
-          type: '2D',
+          type: getEventType(event['attributeIds']).toUpperCase(),
         ),
       );
     });
