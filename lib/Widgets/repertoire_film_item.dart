@@ -10,6 +10,20 @@ class RepertoireFilmItem extends StatelessWidget {
 
   RepertoireFilmItem(this.data, this.index);
 
+  Color _getAgeRestrictionColor(String value) {
+    var color;
+    if (value == 'NA') {
+      color = Colors.green;
+    } else if (value == '18') {
+      color = Colors.red;
+    } else if (int.parse(value) >= 12) {
+      color = Colors.yellow;
+    } else {
+      color = Colors.green;
+    }
+    return color;
+  }
+
   @override
   Widget build(BuildContext context) {
     final deviceSize = MediaQuery.of(context).size;
@@ -44,12 +58,15 @@ class RepertoireFilmItem extends StatelessWidget {
                   Row(
                     children: <Widget>[
                       Container(
+                        padding: EdgeInsets.all(3),
                         child: Text(
                           data[0][index].ageRestriction,
+                          style: TextStyle(fontSize: 10),
                         ),
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          color: Colors.green,
+                          color: _getAgeRestrictionColor(
+                              data[0][index].ageRestriction),
                         ),
                       ),
                       for (var item in data[0][index].genres)
@@ -98,7 +115,11 @@ class RepertoireFilmItem extends StatelessWidget {
                               Text(DateHandler.convertDateToHH_MM(
                                   item.dateTime)),
                               Text(
-                                item.type,
+                                '${item.type}',
+                                style: TextStyle(fontSize: 7),
+                              ),
+                              Text(
+                                '${item.language}',
                                 style: TextStyle(fontSize: 7),
                               ),
                             ],

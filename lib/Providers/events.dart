@@ -29,33 +29,44 @@ class Events {
     return eventsToReturn;
   }
 
-  String getEventType(List<dynamic> attrList) {
-    String returnedString;
-    attrList.forEach((attr){
-      eventTypes.forEach((type){
-        if (attr == type){
-          if (returnedString == null) {
-            returnedString = type;
-          } else {
-            returnedString = returnedString + ' ' + type;
-          }
+  Map<String, dynamic> setAttributes(List<dynamic> attrList) {
+    Map<String, dynamic> returnedMap = {};
+    String language;
+    attrList.forEach((attr) {
+      eventTypes.forEach((type) {
+        if (attr == type) {
+          returnedMap.update(
+            'type',
+            (value) => value + ' ' + type.toString(),
+            ifAbsent: () => type.toString(),
+          );
         }
       });
+      if (attr.contains('dubbed')) {
+        language = 'DUBBING';
+      } else if ((attr.contains('original') && (!attr.contains('pl')) || attr == 'first-subbed-lang-pl') && language == null) {
+        language = 'NAPISY';
+      } 
     });
-    return returnedString;
+    if(language == null) language = 'PL';
+
+    returnedMap.putIfAbsent('language', () => language);
+    
+    return returnedMap;
   }
 
   void setEvents(List<dynamic> events) {
     List<Event> loadedEvents = [];
     events.forEach((event) {
+      var attributes = setAttributes(event['attributeIds']);
       loadedEvents.add(
         Event(
           id: event['id'],
           filmId: event['filmId'],
           cinemaId: event['cinemaId'],
           dateTime: DateTime.parse(event['eventDateTime']),
-          language: 'PL',
-          type: getEventType(event['attributeIds']).toUpperCase(),
+          language: attributes['language'],
+          type: attributes['type'].toUpperCase(),
         ),
       );
     });
