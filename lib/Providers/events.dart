@@ -29,6 +29,17 @@ class Events {
     return eventsToReturn;
   }
 
+  List<Event> findEventsByCinemaId(List<Event> events, String id) {
+    List<Event> eventsToReturn = [];
+    events.forEach((item) {
+      if (item.cinemaId == id) {
+        eventsToReturn.add(item);
+      }
+    });
+
+    return eventsToReturn;
+  }
+
   Map<String, dynamic> setAttributes(List<dynamic> attrList) {
     Map<String, dynamic> returnedMap = {};
     String language;
@@ -44,14 +55,16 @@ class Events {
       });
       if (attr.contains('dubbed')) {
         language = 'DUBBING';
-      } else if ((attr.contains('original') && (!attr.contains('pl')) || attr == 'first-subbed-lang-pl') && language == null) {
+      } else if ((attr.contains('original') && (!attr.contains('pl')) ||
+              attr == 'first-subbed-lang-pl') &&
+          language == null) {
         language = 'NAPISY';
-      } 
+      }
     });
-    if(language == null) language = 'PL';
+    if (language == null) language = 'PL';
 
     returnedMap.putIfAbsent('language', () => language);
-    
+
     return returnedMap;
   }
 

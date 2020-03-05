@@ -1,9 +1,12 @@
+import 'package:cinema_city/Providers/cinemas.dart';
 import 'package:cinema_city/Providers/events.dart';
 import 'package:cinema_city/Utils/date_handler.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class RepertoireFilmItem extends StatelessWidget {
-  final events = new Events();
+  final events = Events();
+  final cinemas = Cinemas();
 
   final List<dynamic> data;
   final int index;
@@ -101,14 +104,71 @@ class RepertoireFilmItem extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.symmetric(vertical: 1),
                   ),
-                  Wrap(
-                    direction: Axis.horizontal,
-                    alignment: WrapAlignment.start,
-                    spacing: 3,
-                    runSpacing: 3,
-                    children: <Widget>[
-                      for (var item in events.findEventsByFilmId(
-                          data[1], data[0][index].id))
+                  for (var cinema in data[2])
+                    RepertoireFilmItemRow(
+                        cinemas: cinemas,
+                        cinema: cinema,
+                        events: events,
+                        data: data,
+                        index: index)
+                ],
+                crossAxisAlignment: CrossAxisAlignment.start,
+              ),
+            ),
+          )
+        ],
+        crossAxisAlignment: CrossAxisAlignment.start,
+      ),
+    );
+  }
+}
+
+class RepertoireFilmItemRow extends StatelessWidget {
+  const RepertoireFilmItemRow({
+    Key key,
+    @required this.cinemas,
+    @required this.cinema,
+    @required this.events,
+    @required this.data,
+    @required this.index,
+  }) : super(key: key);
+
+  final Cinemas cinemas;
+  final String cinema;
+  final Events events;
+  final List data;
+  final int index;
+
+  @override
+  Widget build(BuildContext context) {
+    return events
+            .findEventsByFilmId(
+                events.findEventsByCinemaId(data[1], cinema), data[0][index].id)
+            .isNotEmpty
+        ? Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Stack(
+                children: <Widget>[
+                  Divider(),
+                  Text(
+                    '${cinemas.getCinemaNameById(cinema)}',
+                    style:
+                        TextStyle(backgroundColor: Colors.white, fontSize: 12),
+                  )
+                ],
+              ),
+              Wrap(
+                direction: Axis.horizontal,
+                alignment: WrapAlignment.start,
+                spacing: 3,
+                runSpacing: 3,
+                children: <Widget>[
+                  for (var item in events.findEventsByFilmId(
+                      events.findEventsByCinemaId(data[1], cinema),
+                      data[0][index].id))
+                    Column(
+                      children: <Widget>[
                         Container(
                           child: Column(
                             children: <Widget>[
@@ -131,16 +191,12 @@ class RepertoireFilmItem extends StatelessWidget {
                             ),
                           ),
                         ),
-                    ],
-                  )
+                      ],
+                    ),
                 ],
-                crossAxisAlignment: CrossAxisAlignment.start,
-              ),
-            ),
+              ),Padding(padding: EdgeInsets.only(bottom: 2))
+            ],
           )
-        ],
-        crossAxisAlignment: CrossAxisAlignment.start,
-      ),
-    );
+        : Container();
   }
 }

@@ -34,7 +34,12 @@ class Films {
   void setFilms(List<dynamic> films) {
     List<Film> loadedFilms = [];
 
-    films.forEach((film) {
+    mainLoop: for(var film in films) {
+      innerLoop: for(var loadedFilm in loadedFilms) {
+        if(loadedFilm.id == film['id']){
+          break mainLoop;
+        }
+      }
       var tempAgeRestriction = 'NA';
       List<String> loadedGenres = [];
       
@@ -59,7 +64,8 @@ class Films {
           posterLink: film['posterLink'],
         ),
       );
-    });
+    }
+    loadedFilms.sort((a, b) => a.name.compareTo(b.name));
     _items = loadedFilms;
   }
 }
