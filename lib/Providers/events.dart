@@ -80,6 +80,7 @@ class Events {
           dateTime: DateTime.parse(event['eventDateTime']),
           language: attributes['language'],
           type: attributes['type'].toUpperCase(),
+          bookingLink: event['bookingLink']
         ),
       );
     });

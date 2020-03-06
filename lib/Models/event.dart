@@ -7,6 +7,7 @@ class Event {
   final DateTime dateTime;
   final String type;
   final String language;
+  final String bookingLink;
 
   Event({
     @required this.id,
@@ -15,5 +16,6 @@ class Event {
     @required this.dateTime,
     @required this.language,
     @required this.type,
+    @required this.bookingLink,
   });
 }

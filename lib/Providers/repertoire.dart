@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:cinema_city/Providers/events.dart';
 import 'package:cinema_city/Providers/films.dart';
 import 'package:flutter/cupertino.dart';
@@ -21,7 +22,6 @@ class Repertoire with ChangeNotifier {
     if(cinemaIds.isEmpty){
       SharedPreferences prefs = await SharedPreferences.getInstance();
       var cinemasShared = prefs.getStringList('cinemas');
-      print(cinemasShared);
       if(cinemasShared.isNotEmpty){
         cinemaIds = cinemasShared;
       } else {
@@ -48,7 +48,6 @@ class Repertoire with ChangeNotifier {
       events.setEvents(extEvents);
       films.setFilms(extFilms);
       _items = [films.items, events.items, cinemaIds];
-      print(extEvents.length);
       notifyListeners();
     } catch (error) {
       throw(error);

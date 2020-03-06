@@ -26,10 +26,11 @@ class _RepertoireScreenState extends State<RepertoireScreen> {
         initialDate: selectedDate,
         firstDate: DateTime(todayDate.year, todayDate.month, todayDate.day),
         lastDate: DateTime(2101));
-    if (picked != null && picked != selectedDate)
+    if (picked != null && picked != selectedDate) {
       setState(() {
         selectedDate = picked;
       });
+    }
   }
 
   void showCinemaListModal(
@@ -44,27 +45,33 @@ class _RepertoireScreenState extends State<RepertoireScreen> {
         context: context, builder: (BuildContext context) => cinemaDialog);
   }
 
+  Future<void> _refreshRepertoire(BuildContext context) async {
+    Provider.of<Repertoire>(context, listen: false).fetchAndSetRepertoire(
+        DateHandler.convertDateToYYYY_MM_DD(
+          selectedDate,
+        ),
+        pickedCinemas);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
           'Cinema city',
-          style: TextStyle(color: Colors.orange, fontSize: 12),
+          style: TextStyle(color: Colors.orange, fontSize: 22),
         ),
         actions: <Widget>[
-          FlatButton(
-            onPressed: () => setState(() {}),
-            child: Icon(
-              Icons.refresh,
-              color: Colors.white,
-            ),
-          ),
-          FlatButton(
-            onPressed: () => _selectDate(context),
-            child: Text(
-              DateHandler.convertDateToDD_MM(selectedDate),
-              style: TextStyle(color: Colors.white),
+          Padding(
+            padding: EdgeInsets.only(right: 20),
+            child: GestureDetector(
+              onTap: () => _selectDate(context),
+              child: Center(
+                child: Text(
+                  DateHandler.convertDateToDD_MM(selectedDate),
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
             ),
           ),
           FutureBuilder(
@@ -78,31 +85,33 @@ class _RepertoireScreenState extends State<RepertoireScreen> {
                 switch (snapshot.connectionState) {
                   case ConnectionState.done:
                     if (snapshot.data != null) {
-                      return FlatButton(
-                        onPressed: () => showCinemaListModal(
-                            context, snapshot.data, selectedDate),
-                        child: Icon(
-                          Icons.local_movies,
-                          color: Colors.white,
+                      return Padding(
+                        padding: EdgeInsets.only(right: 20),
+                        child: GestureDetector(
+                          onTap: () => showCinemaListModal(
+                              context, snapshot.data, selectedDate),
+                          child: Center(
+                            child: Icon(
+                              Icons.local_movies,
+                              color: Colors.white,
+                            ),
+                          ),
                         ),
                       );
-                    } else {
-                      return FlatButton(
-                      onPressed: () {},
-                      child: Icon(
-                        Icons.local_movies,
-                        color: Colors.grey,
-                      ),
-                    );
                     }
                     break;
 
                   default:
-                    return FlatButton(
-                      onPressed: () {},
-                      child: Icon(
-                        Icons.local_movies,
-                        color: Colors.grey,
+                    return Padding(
+                      padding: EdgeInsets.only(right: 10),
+                      child: GestureDetector(
+                        onTap: () {},
+                        child: Center(
+                          child: Icon(
+                            Icons.local_movies,
+                            color: Colors.grey,
+                          ),
+                        ),
                       ),
                     );
                 }
@@ -111,25 +120,33 @@ class _RepertoireScreenState extends State<RepertoireScreen> {
         backgroundColor: Colors.black,
       ),
       body: FutureBuilder(
-          future: Provider.of<Repertoire>(context, listen: false)
-              .fetchAndSetRepertoire(
-            DateHandler.convertDateToYYYY_MM_DD(
-              selectedDate,
-            ), pickedCinemas
-          ),
+          future: _refreshRepertoire(context),
           builder: (ctx, snapshot) {
             switch (snapshot.connectionState) {
               case ConnectionState.done:
                 if (snapshot.error == null) {
-                  return Consumer<Repertoire>(
-                      builder: (ctx, data, child) => Padding(
-                            padding: const EdgeInsets.only(top: 5),
-                            child: ListView.separated(
-                                itemBuilder: (ctx, index) =>
-                                    RepertoireFilmItem(data.items, index),
-                                separatorBuilder: (ctx, index) => Divider(),
-                                itemCount: data.items[0].length),
-                          ));
+                  return RefreshIndicator(
+                    onRefresh: () => _refreshRepertoire(context),
+                    child: Consumer<Repertoire>(
+                        builder: (ctx, data, child) => data.items.isNotEmpty
+                            ? data.items[0].length > 0
+                                ? Padding(
+                                    padding: const EdgeInsets.only(top: 5),
+                                    child: ListView.separated(
+                                        itemBuilder: (ctx, index) =>
+                                            RepertoireFilmItem(
+                                                data.items, index),
+                                        separatorBuilder: (ctx, index) =>
+                                            Divider(),
+                                        itemCount: data.items[0].length),
+                                  )
+                                : Center(
+                                    child: Text('Brak seansów.'),
+                                  )
+                            : Center(
+                                child: CircularProgressIndicator(),
+                              )),
+                  );
                 } else {
                   return Center(
                     child: Text('Ups, coś poszło nie tak!'),

@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 import 'Providers/repertoire.dart';
 
 void main() {
-  WidgetsFlutterBinding.ensureInitialized(); 
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(MyApp());
 }
 
@@ -37,6 +37,10 @@ class MyApp extends StatelessWidget {
         title: 'Flutter Demo',
         theme: ThemeData(
           primarySwatch: Colors.orange,
+          brightness: Brightness.dark
+        ),
+        darkTheme: ThemeData(
+          brightness: Brightness.dark,
         ),
         home: RepertoireScreen(),
       ),

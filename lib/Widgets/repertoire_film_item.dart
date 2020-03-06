@@ -3,6 +3,7 @@ import 'package:cinema_city/Providers/events.dart';
 import 'package:cinema_city/Utils/date_handler.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class RepertoireFilmItem extends StatelessWidget {
   final events = Events();
@@ -20,7 +21,7 @@ class RepertoireFilmItem extends StatelessWidget {
     } else if (value == '18') {
       color = Colors.red;
     } else if (int.parse(value) >= 12) {
-      color = Colors.yellow;
+      color = Colors.yellow[700];
     } else {
       color = Colors.green;
     }
@@ -139,6 +140,14 @@ class RepertoireFilmItemRow extends StatelessWidget {
   final List data;
   final int index;
 
+  _launchURL(url) async {
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return events
@@ -148,15 +157,11 @@ class RepertoireFilmItemRow extends StatelessWidget {
         ? Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Stack(
-                children: <Widget>[
-                  Divider(),
-                  Text(
-                    '${cinemas.getCinemaNameById(cinema)}',
-                    style:
-                        TextStyle(backgroundColor: Colors.white, fontSize: 12),
-                  )
-                ],
+              Text(
+                '${cinemas.getCinemaNameById(cinema)}',
+                style: TextStyle(
+                  fontSize: 12,
+                ),
               ),
               Wrap(
                 direction: Axis.horizontal,
@@ -167,34 +172,38 @@ class RepertoireFilmItemRow extends StatelessWidget {
                   for (var item in events.findEventsByFilmId(
                       events.findEventsByCinemaId(data[1], cinema),
                       data[0][index].id))
-                    Column(
-                      children: <Widget>[
-                        Container(
-                          child: Column(
-                            children: <Widget>[
-                              Text(DateHandler.convertDateToHH_MM(
-                                  item.dateTime)),
-                              Text(
-                                '${item.type}',
-                                style: TextStyle(fontSize: 7),
+                    GestureDetector(
+                      onTap: () => _launchURL(item.bookingLink),
+                      child: Column(
+                        children: <Widget>[
+                          Container(
+                            child: Column(
+                              children: <Widget>[
+                                Text(DateHandler.convertDateToHH_MM(
+                                    item.dateTime)),
+                                Text(
+                                  '${item.type}',
+                                  style: TextStyle(fontSize: 7),
+                                ),
+                                Text(
+                                  '${item.language}',
+                                  style: TextStyle(fontSize: 7),
+                                ),
+                              ],
+                            ),
+                            decoration: BoxDecoration(
+                              border: Border.all(color: Colors.orange),
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(5),
                               ),
-                              Text(
-                                '${item.language}',
-                                style: TextStyle(fontSize: 7),
-                              ),
-                            ],
-                          ),
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.black),
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(5),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                 ],
-              ),Padding(padding: EdgeInsets.only(bottom: 2))
+              ),
+              Padding(padding: EdgeInsets.only(bottom: 2))
             ],
           )
         : Container();
