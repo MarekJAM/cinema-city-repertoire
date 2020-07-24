@@ -14,13 +14,13 @@ description: A new Flutter project.
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.1.0 <3.0.0"
+  sdk: ">=2.5.0 <3.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
   provider: 3.0.0
-  intl: 0.16.0
+  intl: ^0.16.0
   http: ^0.12.0+4
   flutter_localizations:
     sdk: flutter

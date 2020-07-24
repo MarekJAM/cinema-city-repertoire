@@ -2,7 +2,7 @@ import 'package:cinema_city/Models/cinema.dart';
 import 'package:cinema_city/Providers/cinemas.dart';
 import 'package:cinema_city/Providers/events.dart';
 import 'package:cinema_city/Providers/repertoire.dart';
-import 'package:cinema_city/Utils/date_handler.dart';
+import 'package:cinema_city/utils/date_handler.dart';
 import 'package:cinema_city/Widgets/cinema_list_modal.dart';
 import 'package:cinema_city/Widgets/repertoire_film_item.dart';
 import 'package:flutter/material.dart';

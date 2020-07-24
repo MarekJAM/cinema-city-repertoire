@@ -1,6 +1,6 @@
 import 'package:cinema_city/Providers/cinemas.dart';
 import 'package:cinema_city/Providers/events.dart';
-import 'package:cinema_city/Utils/date_handler.dart';
+import 'package:cinema_city/utils/date_handler.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
