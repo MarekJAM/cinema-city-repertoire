@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:cinema_city/Providers/events.dart';
 import 'package:cinema_city/Providers/films.dart';
+import 'package:cinema_city/data/models/event.dart';
+import 'package:cinema_city/data/models/film.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -44,6 +46,8 @@ class Repertoire with ChangeNotifier {
         extFilms.addAll(extResponse['body']['films']);
         extEvents.addAll(extResponse['body']['events']);
       }
+
+      print(extEvents[0]);
 
       events.setEvents(extEvents);
       films.setFilms(extFilms);
