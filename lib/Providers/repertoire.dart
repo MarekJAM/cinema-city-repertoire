@@ -47,7 +47,7 @@ class Repertoire with ChangeNotifier {
         extEvents.addAll(extResponse['body']['events']);
       }
 
-      print(extEvents[0]);
+      print(extFilms[0]);
 
       events.setEvents(extEvents);
       films.setFilms(extFilms);
