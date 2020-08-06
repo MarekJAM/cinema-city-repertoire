@@ -19,6 +19,8 @@ class Repertoire with ChangeNotifier {
   var events = new Events();
   var films = new Films();
   var newFilms = new models.Films();
+  var newEvents = new models.Events();
+  var newCinemas = new models.Cinemas();
   var repertoire = new models.Repertoire();
 
   Future<void> fetchAndSetRepertoire(String date, [List<String> cinemaIds]) async {
@@ -56,7 +58,8 @@ class Repertoire with ChangeNotifier {
       films.setFilms(extFilms);
 
       newFilms.setFilms(extFilms);
-      repertoire.setItems(newFilms, null, null);
+      newEvents.setEvents(extEvents);
+      repertoire.setItems(newFilms, newEvents, newCinemas);
 
       print(repertoire.items[0]);
 

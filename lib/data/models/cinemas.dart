@@ -1,8 +1,4 @@
-import 'dart:convert';
-import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-
-import 'package:cinema_city/Models/cinema.dart';
+import 'cinema.dart';
 
 class Cinemas {
   static final Cinemas _singleton = Cinemas._internal();
