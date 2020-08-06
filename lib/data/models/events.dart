@@ -7,9 +7,9 @@ class Events {
     return [..._items];
   }
 
-  List<Event> findEventsByFilmId(List<Event> events, String id) {
+  List<Event> findEventsByFilmId(String id) {
     List<Event> retEvents = [];
-    events.forEach((item) {
+    items.forEach((item) {
       if (item.filmId == id) {
         retEvents.add(item);
       }
@@ -18,9 +18,9 @@ class Events {
     return retEvents;
   }
 
-  List<Event> findEventsByCinemaId(List<Event> events, String id) {
+  List<Event> findEventsByCinemaId(String id) {
     List<Event> retEvents = [];
-    events.forEach((item) {
+    items.forEach((item) {
       if (item.cinemaId == id) {
         retEvents.add(item);
       }

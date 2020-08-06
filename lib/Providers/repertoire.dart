@@ -2,8 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:cinema_city/Providers/events.dart';
 import 'package:cinema_city/Providers/films.dart';
-import 'package:cinema_city/data/models/event.dart';
-import 'package:cinema_city/data/models/film.dart';
+import '../data/models/models.dart' as models;
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -19,6 +18,8 @@ class Repertoire with ChangeNotifier {
 
   var events = new Events();
   var films = new Films();
+  var newFilms = new models.Films();
+  var repertoire = new models.Repertoire();
 
   Future<void> fetchAndSetRepertoire(String date, [List<String> cinemaIds]) async {
     if(cinemaIds.isEmpty){
@@ -37,6 +38,8 @@ class Repertoire with ChangeNotifier {
       List<dynamic> extFilms = [];
       List<dynamic> extEvents = [];
 
+
+
       if (responseList == null) {
         return;
       }
@@ -51,6 +54,12 @@ class Repertoire with ChangeNotifier {
 
       events.setEvents(extEvents);
       films.setFilms(extFilms);
+
+      newFilms.setFilms(extFilms);
+      repertoire.setItems(newFilms, null, null);
+
+      print(repertoire.items[0]);
+
       _items = [films.items, events.items, cinemaIds];
       notifyListeners();
     } catch (error) {
