@@ -11,10 +11,8 @@ class CinemasBloc extends Bloc<CinemasEvent, CinemasState> {
 
   CinemasBloc({@required CinemasRepository cinemasRepository})
       : assert(CinemasRepository != null),
-        _cinemasRepository = cinemasRepository;
-
-  @override
-  CinemasState get initialState => CinemasInitial();
+        _cinemasRepository = cinemasRepository,
+        super(CinemasInitial());
 
   @override
   Stream<CinemasState> mapEventToState(CinemasEvent event) async* {
