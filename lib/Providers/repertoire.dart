@@ -41,7 +41,6 @@ class Repertoire with ChangeNotifier {
       List<dynamic> extEvents = [];
 
 
-
       if (responseList == null) {
         return;
       }
@@ -52,16 +51,14 @@ class Repertoire with ChangeNotifier {
         extEvents.addAll(extResponse['body']['events']);
       }
 
-      print(extFilms[0]);
-
       events.setEvents(extEvents);
       films.setFilms(extFilms);
 
       newFilms.setFilms(extFilms);
       newEvents.setEvents(extEvents);
-      repertoire.setItems(newFilms, newEvents, newCinemas);
+      // repertoire.setItems(newFilms, newEvents, newCinemas);
 
-      print(repertoire.items[0]);
+      // print(repertoire.items[0]['4120s2r'].name);
 
       _items = [films.items, events.items, cinemaIds];
       notifyListeners();
