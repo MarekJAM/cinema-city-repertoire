@@ -5,6 +5,7 @@ import '../../bloc/cinemas/bloc.dart';
 import '../../data/repositories/exceptions.dart';
 import './bloc.dart';
 import '../../data/repositories/repositories.dart';
+import '../../utils/date_handler.dart';
 
 class CinemasBloc extends Bloc<CinemasEvent, CinemasState> {
   final CinemasRepository _cinemasRepository;
@@ -24,8 +25,8 @@ class CinemasBloc extends Bloc<CinemasEvent, CinemasState> {
   Stream<CinemasState> _mapFetchCinemasToState() async* {
     yield CinemasLoading();
     try {
-      final Cinemas data = await _cinemasRepository.getData();
-      yield CinemasLoaded(data: data);
+      final Cinemas data = await _cinemasRepository.getAllCinemas();
+      yield CinemasLoaded(data: data.items);
     } on ClientException catch (e) {
       print(e);
       yield CinemasError(message: 'Błąd połączenia.');

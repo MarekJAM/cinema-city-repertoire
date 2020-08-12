@@ -2,10 +2,15 @@ import 'package:cinema_city/Models/cinema.dart';
 import 'package:cinema_city/Providers/cinemas.dart';
 import 'package:cinema_city/Providers/events.dart';
 import 'package:cinema_city/Providers/repertoire.dart';
+import 'package:cinema_city/bloc/cinemas/bloc.dart';
+import 'package:cinema_city/bloc/repertoire/bloc.dart';
+import 'package:cinema_city/bloc/repertoire/repertoire_bloc.dart';
+import 'package:cinema_city/bloc/repertoire/repertoire_event.dart';
 import 'package:cinema_city/utils/date_handler.dart';
 import 'package:cinema_city/Widgets/cinema_list_modal.dart';
 import 'package:cinema_city/Widgets/repertoire_film_item.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -65,7 +70,9 @@ class _RepertoireScreenState extends State<RepertoireScreen> {
           Padding(
             padding: EdgeInsets.only(right: 20),
             child: GestureDetector(
-              onTap: () => _selectDate(context),
+              onTap: () {
+                _selectDate(context);
+              },
               child: Center(
                 child: Text(
                   DateHandler.convertDateToDD_MM(selectedDate),
@@ -119,45 +126,22 @@ class _RepertoireScreenState extends State<RepertoireScreen> {
         ],
         backgroundColor: Colors.black,
       ),
-      body: FutureBuilder(
-          future: _refreshRepertoire(context),
-          builder: (ctx, snapshot) {
-            switch (snapshot.connectionState) {
-              case ConnectionState.done:
-                if (snapshot.error == null) {
-                  return RefreshIndicator(
-                    onRefresh: () => _refreshRepertoire(context),
-                    child: Consumer<Repertoire>(
-                        builder: (ctx, data, child) => data.items.isNotEmpty
-                            ? data.items[0].length > 0
-                                ? Padding(
-                                    padding: const EdgeInsets.only(top: 5),
-                                    child: ListView.separated(
-                                        itemBuilder: (ctx, index) =>
-                                            RepertoireFilmItem(
-                                                data.items, index),
-                                        separatorBuilder: (ctx, index) =>
-                                            Divider(),
-                                        itemCount: data.items[0].length),
-                                  )
-                                : Center(
-                                    child: Text('Brak seansów.'),
-                                  )
-                            : Center(
-                                child: CircularProgressIndicator(),
-                              )),
-                  );
-                } else {
-                  return Center(
-                    child: Text('Ups, coś poszło nie tak!'),
-                  );
-                }
-                break;
-
-              default:
-                return Center(child: CircularProgressIndicator());
+      body: BlocListener<CinemasBloc, CinemasState>(
+        listener: (context, state) {
+          if (state is CinemasLoaded) {
+            BlocProvider.of<RepertoireBloc>(context)
+                .add(FetchRepertoire(DateTime.now(), ["1076", "1090"]));
+          }
+        },
+        child: BlocListener<RepertoireBloc, RepertoireState>(
+          listener: (context, state) {
+            if (state is RepertoireLoaded) {
+              print(state.data.items);
             }
-          }),
+          },
+          child: Container(),
+        ),
+      ),
     );
   }
 }

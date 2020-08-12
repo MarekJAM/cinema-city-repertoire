@@ -1,3 +1,4 @@
+import '../../utils/date_handler.dart';
 import 'package:flutter/material.dart';
 import '../../data/models/models.dart';
 import './repositories.dart';
@@ -8,7 +9,13 @@ class RepertoireRepository {
   RepertoireRepository({@required this.repertoireApiClient})
       : assert(RepertoireApiClient != null);
 
-  // Future<Repertoire> getData() async {
-  //   return await repertoireApiClient.fetchData();
-  // }
+  Future<Repertoire> getRepertoire(DateTime date,
+      [List<String> cinemaIds]) async {
+    return await repertoireApiClient.fetchRepertoire(
+      DateHandler.convertDateToYYYY_MM_DD(
+        date,
+      ),
+      cinemaIds,
+    );
+  }
 }

@@ -1,6 +1,7 @@
 import './api_client.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import '../../data/models/models.dart';
 import 'dart:io';
 
 class RepertoireApiClient extends ApiClient {
@@ -9,9 +10,13 @@ class RepertoireApiClient extends ApiClient {
 
   final http.Client httpClient;
 
+  var _films = new Films();
+  var _events = new Events();
+  var _cinemas = new Cinemas();
+
   RepertoireApiClient({this.httpClient}) : assert(httpClient != null);
 
-  Future<List<dynamic>> fetchData(String date, [List<String> cinemaIds]) async {
+  Future<Repertoire> fetchRepertoire(String date, [List<String> cinemaIds]) async {
     List<http.Response> responseList =
         await Future.wait(cinemaIds.map((cinemaId) => httpClient.get(
               '${ApiClient.baseUrl}$_repertoireEndpoint$cinemaId/at-date/$date?attr=&lang=pl_PL',
@@ -33,13 +38,13 @@ class RepertoireApiClient extends ApiClient {
         extFilms.addAll(extResponse['body']['films']);
         extEvents.addAll(extResponse['body']['events']);
       }
-      
 
-    final List<dynamic> returnedData = [];
-    // List<dynamic> responseData = jsonParse(response);
-    // responseData.forEach((section) {
-    //   returnedData.add(OfficeInfoSection.fromJson(section));
-    // });
-    return returnedData;
+    _films.setFilms(extFilms);
+    _events.setEvents(extEvents);
+
+    var _repertoire = new Repertoire();
+    _repertoire.setItems(_films, _events, _cinemas);
+      
+    return _repertoire;
   }
 }

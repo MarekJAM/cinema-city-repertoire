@@ -11,7 +11,7 @@ class CinemasApiClient extends ApiClient {
 
   CinemasApiClient({this.httpClient}) : assert(httpClient != null);
 
-  Future<Cinemas> fetchData(String date) async {
+  Future<Cinemas> fetchCinemas(String date) async {
     final String url =
         'https://www.cinema-city.pl/$_cinemaseEndpoint$date?attr=&lang=pl_PL';
       
@@ -20,14 +20,16 @@ class CinemasApiClient extends ApiClient {
     try {
       final response = await http.get(url);
       final extractedData = json.decode(response.body) as Map<String, dynamic>;
+
+      if (response.statusCode != 200) {
+          throwException(response.statusCode, 'Error getting cinemas');
+      }
       
       if (extractedData == null) {
         return null;
       }
 
-      extractedData['body']['cinemas'].forEach((cinema) {
-        cinemas.items.add(Cinema.fromJson(cinema));
-      });
+      cinemas.setCinemas(extractedData['body']['cinemas']);
 
     } catch (error) {
       throw error;
