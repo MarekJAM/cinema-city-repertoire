@@ -29,6 +29,10 @@ class Events {
     return retEvents;
   }
 
+  List<Event> filterEventsByCinemaId(List<Event> events, String cinemaId) {
+    return events.where((element) => element.cinemaId == cinemaId).toList();
+  }
+
   void setEvents(List<dynamic> events) {
     List<Event> loadedEvents = [];
     events.forEach((event) {

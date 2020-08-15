@@ -1,18 +1,13 @@
-import 'package:cinema_city/Providers/cinemas.dart';
-import 'package:cinema_city/Providers/events.dart';
-import 'package:cinema_city/utils/date_handler.dart';
+import '../data/models/models.dart';
+import '../utils/date_handler.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class RepertoireFilmItem extends StatelessWidget {
-  final events = Events();
-  final cinemas = Cinemas();
+  final Map<String, dynamic> data;
 
-  final List<dynamic> data;
-  final int index;
-
-  RepertoireFilmItem(this.data, this.index);
+  RepertoireFilmItem(this.data);
 
   Color _getAgeRestrictionColor(String value) {
     var color;
@@ -31,6 +26,7 @@ class RepertoireFilmItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final deviceSize = MediaQuery.of(context).size;
+    final cinemas = data.keys.where((element) => element != "film").toList();
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 5),
@@ -39,7 +35,7 @@ class RepertoireFilmItem extends StatelessWidget {
           Expanded(
             flex: 2,
             child: Image.network(
-              data[0][index].posterLink,
+              data['film'].posterLink,
               height: deviceSize.height * 0.15,
             ),
           ),
@@ -50,7 +46,7 @@ class RepertoireFilmItem extends StatelessWidget {
               child: Column(
                 children: <Widget>[
                   Text(
-                    data[0][index].name,
+                    data['film'].name,
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                     ),
@@ -64,16 +60,16 @@ class RepertoireFilmItem extends StatelessWidget {
                       Container(
                         padding: EdgeInsets.all(3),
                         child: Text(
-                          data[0][index].ageRestriction,
+                          data['film'].ageRestriction,
                           style: TextStyle(fontSize: 10),
                         ),
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           color: _getAgeRestrictionColor(
-                              data[0][index].ageRestriction),
+                              data['film'].ageRestriction),
                         ),
                       ),
-                      for (var item in data[0][index].genres)
+                      for (var item in data['film'].genres)
                         Padding(
                           padding: const EdgeInsets.symmetric(
                             horizontal: 3,
@@ -97,7 +93,7 @@ class RepertoireFilmItem extends StatelessWidget {
                           ),
                         ),
                       Text(
-                        data[0][index].length.toString() + ' min',
+                        data['film'].length.toString() + ' min',
                         style: TextStyle(fontSize: 10),
                       )
                     ],
@@ -105,13 +101,11 @@ class RepertoireFilmItem extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.symmetric(vertical: 1),
                   ),
-                  for (var cinema in data[2])
+                  for (var cinema in cinemas)
                     RepertoireFilmItemRow(
-                        cinemas: cinemas,
-                        cinema: cinema,
-                        events: events,
-                        data: data,
-                        index: index)
+                      cinema: cinema,
+                      events: data[cinema],
+                    )
                 ],
                 crossAxisAlignment: CrossAxisAlignment.start,
               ),
@@ -125,20 +119,12 @@ class RepertoireFilmItem extends StatelessWidget {
 }
 
 class RepertoireFilmItemRow extends StatelessWidget {
-  const RepertoireFilmItemRow({
-    Key key,
-    @required this.cinemas,
-    @required this.cinema,
-    @required this.events,
-    @required this.data,
-    @required this.index,
-  }) : super(key: key);
+  const RepertoireFilmItemRow(
+      {Key key, @required this.events, @required this.cinema})
+      : super(key: key);
 
-  final Cinemas cinemas;
+  final List<Event> events;
   final String cinema;
-  final Events events;
-  final List data;
-  final int index;
 
   _launchURL(url) async {
     if (await canLaunch(url)) {
@@ -150,15 +136,12 @@ class RepertoireFilmItemRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return events
-            .findEventsByFilmId(
-                events.findEventsByCinemaId(data[1], cinema), data[0][index].id)
-            .isNotEmpty
+    return events.isNotEmpty
         ? Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
-                '${cinemas.getCinemaNameById(cinema)}',
+                '$cinema',
                 style: TextStyle(
                   fontSize: 12,
                 ),
@@ -169,9 +152,7 @@ class RepertoireFilmItemRow extends StatelessWidget {
                 spacing: 3,
                 runSpacing: 3,
                 children: <Widget>[
-                  for (var item in events.findEventsByFilmId(
-                      events.findEventsByCinemaId(data[1], cinema),
-                      data[0][index].id))
+                  for (var item in events)
                     GestureDetector(
                       onTap: () => _launchURL(item.bookingLink),
                       child: Column(

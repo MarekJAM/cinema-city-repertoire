@@ -50,12 +50,13 @@ class _RepertoireScreenState extends State<RepertoireScreen> {
         context: context, builder: (BuildContext context) => cinemaDialog);
   }
 
-  Future<void> _refreshRepertoire(BuildContext context) async {
-    Provider.of<Repertoire>(context, listen: false).fetchAndSetRepertoire(
-        DateHandler.convertDateToYYYY_MM_DD(
-          selectedDate,
-        ),
-        pickedCinemas);
+  Future<void> _refreshRepertoire() async {
+    BlocProvider.of<RepertoireBloc>(context).add(
+      FetchRepertoire(
+        selectedDate,
+        ["1076", "1090"],
+      ),
+    );
   }
 
   @override
@@ -129,17 +130,29 @@ class _RepertoireScreenState extends State<RepertoireScreen> {
       body: BlocListener<CinemasBloc, CinemasState>(
         listener: (context, state) {
           if (state is CinemasLoaded) {
-            BlocProvider.of<RepertoireBloc>(context)
-                .add(FetchRepertoire(DateTime.now(), ["1076", "1090"]));
+            BlocProvider.of<RepertoireBloc>(context).add(FetchRepertoire(
+                DateTime.now().add(new Duration(days: 1)), ["1076", "1090"]));
           }
         },
-        child: BlocListener<RepertoireBloc, RepertoireState>(
-          listener: (context, state) {
+        child: BlocBuilder<RepertoireBloc, RepertoireState>(
+          builder: (_, state) {
             if (state is RepertoireLoaded) {
-              print(state.data.items);
+              return RefreshIndicator(
+                onRefresh: () => _refreshRepertoire(),
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 5),
+                  child: ListView.separated(
+                      separatorBuilder: (ctx, index) => Divider(),
+                      itemCount: state.data.items.length,
+                      itemBuilder: (ctx, index) {
+                        return RepertoireFilmItem(state.data.items[index]);
+                      }),
+                ),
+              );
+            } else {
+              return Center(child: CircularProgressIndicator());
             }
           },
-          child: Container(),
         ),
       ),
     );
