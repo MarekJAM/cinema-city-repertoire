@@ -3,6 +3,7 @@ import 'package:cinema_city/Screens/repertoire_screen.dart';
 import 'package:cinema_city/bloc/repertoire/bloc.dart';
 import 'package:cinema_city/data/repositories/repositories.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -28,6 +29,7 @@ void main() {
   );
 
   WidgetsFlutterBinding.ensureInitialized();
+
   runApp(
     MultiBlocProvider(
       providers: [
@@ -51,7 +53,13 @@ class App extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
+
     BlocProvider.of<CinemasBloc>(context).add(FetchCinemas());
+    
     return MultiProvider(
       providers: [
         ChangeNotifierProvider.value(
