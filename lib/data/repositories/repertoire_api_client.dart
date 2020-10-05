@@ -2,7 +2,6 @@ import './api_client.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import '../../data/models/models.dart';
-import 'dart:io';
 
 class RepertoireApiClient extends ApiClient {
   final _repertoireEndpoint =
@@ -16,11 +15,17 @@ class RepertoireApiClient extends ApiClient {
 
   RepertoireApiClient({this.httpClient}) : assert(httpClient != null);
 
-  Future<Repertoire> fetchRepertoire(String date, [List<String> cinemaIds]) async {
-    List<http.Response> responseList =
-        await Future.wait(cinemaIds.map((cinemaId) => httpClient.get(
-              '${ApiClient.baseUrl}$_repertoireEndpoint$cinemaId/at-date/$date?attr=&lang=pl_PL',
-            )));
+  Future<Repertoire> fetchRepertoire(
+    String date, [
+    List<String> cinemaIds,
+  ]) async {
+    List<http.Response> responseList = await Future.wait(
+      cinemaIds.map(
+        (cinemaId) => httpClient.get(
+          '${ApiClient.baseUrl}$_repertoireEndpoint$cinemaId/at-date/$date?attr=&lang=pl_PL',
+        ),
+      ),
+    );
 
     responseList.forEach(
       (response) {
@@ -33,18 +38,18 @@ class RepertoireApiClient extends ApiClient {
     List<dynamic> extFilms = [];
     List<dynamic> extEvents = [];
 
-    for(var response in responseList){
-        var extResponse = json.decode(response.body);
-        extFilms.addAll(extResponse['body']['films']);
-        extEvents.addAll(extResponse['body']['events']);
-      }
+    for (var response in responseList) {
+      var extResponse = json.decode(response.body);
+      extFilms.addAll(extResponse['body']['films']);
+      extEvents.addAll(extResponse['body']['events']);
+    }
 
     _films.setFilms(extFilms);
     _events.setEvents(extEvents);
 
     var _repertoire = new Repertoire();
     _repertoire.setItems(_films, _events, _cinemas);
-      
+
     return _repertoire;
   }
 }

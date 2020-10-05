@@ -1,6 +1,7 @@
-import '../../data/models/models.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+
+import '../../data/models/models.dart';
 
 abstract class CinemasState extends Equatable {
   const CinemasState();

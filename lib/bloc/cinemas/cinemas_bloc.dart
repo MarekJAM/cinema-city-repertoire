@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../data/models/models.dart';
-import '../../bloc/cinemas/bloc.dart';
-import '../../data/repositories/exceptions.dart';
+
 import './bloc.dart';
+import '../../data/models/models.dart';
 import '../../data/repositories/repositories.dart';
-import '../../utils/date_handler.dart';
 
 class CinemasBloc extends Bloc<CinemasEvent, CinemasState> {
   final CinemasRepository _cinemasRepository;

@@ -1,24 +1,22 @@
-import 'package:cinema_city/Models/cinema.dart';
-import 'package:cinema_city/Providers/cinemas.dart';
-import 'package:cinema_city/Providers/repertoire.dart';
-import 'package:cinema_city/utils/date_handler.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../data/models/models.dart';
+import '../../bloc/repertoire/bloc.dart';
+
 
 class CinemasModal extends StatelessWidget {
   final List<Cinema> list;
   List<String> pickedCinemas;
-  final DateTime dateTime;
+  final DateTime pickedDate;
 
-  CinemasModal(this.list, this.dateTime, this.pickedCinemas);
+  CinemasModal(this.list, this.pickedDate, this.pickedCinemas);
 
   _saveCinemas() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setStringList('cinemas', pickedCinemas);
   }
-
- 
 
   @override
   Widget build(BuildContext context) {
@@ -43,12 +41,9 @@ class CinemasModal extends StatelessWidget {
             children: <Widget>[
               RaisedButton(
                 onPressed: () {
-                  Provider.of<Repertoire>(context, listen: false)
-                      .fetchAndSetRepertoire(
-                          DateHandler.convertDateToYYYY_MM_DD(
-                            dateTime,
-                          ),
-                          pickedCinemas);
+                  BlocProvider.of<RepertoireBloc>(context).add(
+                    FetchRepertoire(pickedDate, pickedCinemas),
+                  );
                   Navigator.of(context).pop();
                 },
                 child: Text('Wyświetl'),
@@ -56,7 +51,6 @@ class CinemasModal extends StatelessWidget {
               RaisedButton(
                 onPressed: () {
                   _saveCinemas();
-                  print('zapisano');
                 },
                 child: Text('Zapisz'),
               ),

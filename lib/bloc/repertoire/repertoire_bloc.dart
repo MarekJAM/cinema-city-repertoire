@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../data/models/models.dart';
-import '../../bloc/repertoire/bloc.dart';
-import '../../data/repositories/exceptions.dart';
+
 import './bloc.dart';
+import '../../data/models/models.dart';
+import '../../data/repositories/exceptions.dart';
 import '../../data/repositories/repositories.dart';
 
 class RepertoireBloc extends Bloc<RepertoireEvent, RepertoireState> {
