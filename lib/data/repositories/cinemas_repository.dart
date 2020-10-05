@@ -1,5 +1,6 @@
-import 'package:cinema_city/utils/date_handler.dart';
 import 'package:flutter/material.dart';
+
+import '../../utils/date_handler.dart';
 import '../../data/models/models.dart';
 import './repositories.dart';
 

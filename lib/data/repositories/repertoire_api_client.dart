@@ -1,6 +1,7 @@
-import './api_client.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+
+import './api_client.dart';
 import '../../data/models/models.dart';
 
 class RepertoireApiClient extends ApiClient {

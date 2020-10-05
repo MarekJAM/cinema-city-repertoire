@@ -1,7 +1,8 @@
-import '../../data/models/models.dart';
-import './api_client.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+
+import '../../data/models/models.dart';
+import './api_client.dart';
 
 class CinemasApiClient extends ApiClient {
   final _cinemaseEndpoint =
