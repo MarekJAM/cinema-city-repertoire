@@ -5,13 +5,13 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../data/models/models.dart';
 import '../../bloc/repertoire/bloc.dart';
 
-
-class CinemasModal extends StatelessWidget {
+class CinemasList extends StatelessWidget {
   final List<Cinema> list;
   List<String> pickedCinemas;
   final DateTime pickedDate;
+  final double height;
 
-  CinemasModal(this.list, this.pickedDate, this.pickedCinemas);
+  CinemasList(this.list, this.pickedDate, this.pickedCinemas, this.height);
 
   _saveCinemas() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -21,40 +21,52 @@ class CinemasModal extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 300.0,
-      width: 300.0,
+      height: height,
       child: Column(
         children: <Widget>[
-          SizedBox(
-            height: 250,
+          Container(
+            decoration: BoxDecoration(
+              border: Border(
+                bottom: BorderSide(color: Colors.black),
+              ),
+            ),
+            height: height * 0.9,
             child: ListView.builder(
+              padding: EdgeInsets.zero,
               itemBuilder: (context, index) => Row(
                 children: <Widget>[
-                  CinemaModalRow(list[index], pickedCinemas),
+                  CinemaItemRow(list[index], pickedCinemas),
                 ],
               ),
               itemCount: list.length,
             ),
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
-              RaisedButton(
-                onPressed: () {
-                  BlocProvider.of<RepertoireBloc>(context).add(
-                    FetchRepertoire(pickedDate, pickedCinemas),
-                  );
-                  Navigator.of(context).pop();
-                },
-                child: Text('Wyświetl'),
+          Expanded(
+            child: Container(
+              decoration: BoxDecoration(
+                color: Theme.of(context).cardColor,
               ),
-              RaisedButton(
-                onPressed: () {
-                  _saveCinemas();
-                },
-                child: Text('Zapisz'),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  RaisedButton(
+                    onPressed: () {
+                      BlocProvider.of<RepertoireBloc>(context).add(
+                        FetchRepertoire(pickedDate, pickedCinemas),
+                      );
+                      Navigator.of(context).pop();
+                    },
+                    child: Text('Wyświetl'),
+                  ),
+                  RaisedButton(
+                    onPressed: () {
+                      _saveCinemas();
+                    },
+                    child: Text('Zapisz'),
+                  ),
+                ],
               ),
-            ],
+            ),
           )
         ],
       ),
@@ -62,17 +74,17 @@ class CinemasModal extends StatelessWidget {
   }
 }
 
-class CinemaModalRow extends StatefulWidget {
+class CinemaItemRow extends StatefulWidget {
   final Cinema cinemaData;
   final List<String> pickedCinemas;
 
-  CinemaModalRow(this.cinemaData, this.pickedCinemas);
+  CinemaItemRow(this.cinemaData, this.pickedCinemas);
 
   @override
-  _CinemaModalRowState createState() => _CinemaModalRowState();
+  _CinemaItemRowState createState() => _CinemaItemRowState();
 }
 
-class _CinemaModalRowState extends State<CinemaModalRow> {
+class _CinemaItemRowState extends State<CinemaItemRow> {
   bool _isChecked;
 
   @override
