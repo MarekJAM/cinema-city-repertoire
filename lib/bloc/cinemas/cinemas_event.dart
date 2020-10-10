@@ -9,5 +9,5 @@ abstract class CinemasEvent extends Equatable {
 
 class FetchCinemas extends CinemasEvent {
   @override
-  String toString() => 'FetchCinemasDetails';
+  String toString() => 'FetchCinemas';
 }

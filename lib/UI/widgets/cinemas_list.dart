@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../data/models/models.dart';
 import '../../bloc/repertoire/bloc.dart';
+import '../../utils/storage.dart';
 
 class CinemasList extends StatelessWidget {
   final List<Cinema> list;
@@ -13,9 +13,8 @@ class CinemasList extends StatelessWidget {
 
   CinemasList(this.list, this.pickedDate, this.pickedCinemas, this.height);
 
-  _saveCinemas() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setStringList('cinemas', pickedCinemas);
+  _saveFavoriteCinemas() async {
+    Storage.setFavoriteCinemas(pickedCinemas);
   }
 
   @override
@@ -60,7 +59,7 @@ class CinemasList extends StatelessWidget {
                   ),
                   RaisedButton(
                     onPressed: () {
-                      _saveCinemas();
+                      _saveFavoriteCinemas();
                     },
                     child: Text('Zapisz'),
                   ),
@@ -95,15 +94,17 @@ class _CinemaItemRowState extends State<CinemaItemRow> {
           Checkbox(
             value: widget.pickedCinemas.contains(widget.cinemaData.id),
             onChanged: (val) {
-              setState(() {
-                _isChecked = val;
-                if (_isChecked) {
-                  widget.pickedCinemas.add(widget.cinemaData.id);
-                } else {
-                  widget.pickedCinemas
-                      .removeWhere((item) => item == widget.cinemaData.id);
-                }
-              });
+              setState(
+                () {
+                  _isChecked = val;
+                  if (_isChecked) {
+                    widget.pickedCinemas.add(widget.cinemaData.id);
+                  } else {
+                    widget.pickedCinemas
+                        .removeWhere((item) => item == widget.cinemaData.id);
+                  }
+                },
+              );
             },
           ),
           Expanded(

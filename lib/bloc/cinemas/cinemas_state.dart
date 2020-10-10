@@ -22,11 +22,12 @@ class CinemasLoading extends CinemasState {
 
 class CinemasLoaded extends CinemasState {
   final List<Cinema> data;
+  final List<String> favoriteCinemaIds;
 
-  const CinemasLoaded({@required this.data}) : assert(data != null);
+  const CinemasLoaded({@required this.data, @required this.favoriteCinemaIds}) : assert(data != null), assert(favoriteCinemaIds != null);
 
   @override
-  String toString() => 'CinemasLoaded $data';
+  String toString() => 'CinemasLoaded $data, $favoriteCinemaIds';
 }
 
 class CinemasError extends CinemasState {

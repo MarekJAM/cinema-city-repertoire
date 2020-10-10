@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../data/models/models.dart';
 import '../../bloc/cinemas/bloc.dart';
 import '../../bloc/repertoire/bloc.dart';
 import '../../utils/date_handler.dart';
@@ -40,8 +39,20 @@ class _RepertoireScreenState extends State<RepertoireScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      endDrawer:
-          CinemasDrawer(pickedDate: pickedDate, pickedCinemas: pickedCinemas),
+      endDrawer: BlocBuilder<CinemasBloc, CinemasState>(
+        builder: (context, state) {
+          if (state is CinemasLoaded) {
+            pickedCinemas = state.favoriteCinemaIds;
+
+            return CinemasDrawer(
+              pickedDate: pickedDate,
+              pickedCinemas: pickedCinemas,
+              cinemas: state.data,
+            );
+          }
+          return null;
+        },
+      ),
       endDrawerEnableOpenDragGesture: isCinemaListLoaded,
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -96,10 +107,11 @@ class _RepertoireScreenState extends State<RepertoireScreen> {
       ),
       body: BlocConsumer<CinemasBloc, CinemasState>(listener: (context, state) {
         if (state is CinemasLoaded) {
+          pickedCinemas = state.favoriteCinemaIds;
           _fetchRepertoire(pickedDate, pickedCinemas);
         }
-      }, builder: (context, state) {
-        if (state is CinemasLoaded) {
+      }, builder: (context, cinemasState) {
+        if (cinemasState is CinemasLoaded) {
           return BlocBuilder<RepertoireBloc, RepertoireState>(
             builder: (context, state) {
               if (state is RepertoireLoaded) {
@@ -149,11 +161,11 @@ class _RepertoireScreenState extends State<RepertoireScreen> {
               }
             },
           );
-        } else if (state is CinemasLoading) {
+        } else if (cinemasState is CinemasLoading) {
           return Center(child: CircularProgressIndicator());
-        } else if (state is CinemasError) {
+        } else if (cinemasState is CinemasError) {
           return ErrorColumn(
-            errorMessage: state.message,
+            errorMessage: cinemasState.message,
             buttonMessage: 'Odśwież',
             buttonOnPressed: _fetchCinemas,
           );

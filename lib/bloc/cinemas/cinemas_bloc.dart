@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import './bloc.dart';
 import '../../data/models/models.dart';
 import '../../data/repositories/repositories.dart';
+import '../../utils/storage.dart';
 
 class CinemasBloc extends Bloc<CinemasEvent, CinemasState> {
   final CinemasRepository _cinemasRepository;
@@ -24,7 +25,9 @@ class CinemasBloc extends Bloc<CinemasEvent, CinemasState> {
     yield CinemasLoading();
     try {
       final Cinemas data = await _cinemasRepository.getAllCinemas();
-      yield CinemasLoaded(data: data.items);
+      final List<String> favoriteCinemaIds = await Storage.getFavoriteCinemas();
+      
+      yield CinemasLoaded(data: data.items, favoriteCinemaIds: favoriteCinemaIds);
     } on ClientException catch (e) {
       print(e);
       yield CinemasError(message: 'Błąd połączenia.');

@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../bloc/cinemas/bloc.dart';
 import 'widgets.dart';
+import '../../data/models/models.dart';
 
 class CinemasDrawer extends StatelessWidget {
   const CinemasDrawer({
     @required this.pickedDate,
     @required this.pickedCinemas,
+    @required this.cinemas,
   });
 
   final DateTime pickedDate;
   final List<String> pickedCinemas;
+  final List<Cinema> cinemas;
 
   @override
   Widget build(BuildContext context) {
@@ -36,19 +37,14 @@ class CinemasDrawer extends StatelessWidget {
                 ),
               ),
             ),
-            BlocBuilder<CinemasBloc, CinemasState>(builder: (context, state) {
-              if (state is CinemasLoaded) {
-                return Container(
-                  child: CinemasList(
-                    state.data,
-                    pickedDate,
-                    pickedCinemas,
-                    deviceSize.height - headerHeight
-                  ),
-                );
-              }
-              return Container();
-            })
+            Container(
+              child: CinemasList(
+                cinemas,
+                pickedDate,
+                pickedCinemas,
+                deviceSize.height - headerHeight,
+              ),
+            ),
           ],
         ),
       ),
