@@ -57,7 +57,7 @@ class _RepertoireScreenState extends State<RepertoireScreen> {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: Text(
-          'Cinema city',
+          'Cinema City \nRepertuar',
           style: TextStyle(color: Colors.orange, fontSize: 22),
         ),
         actions: <Widget>[
