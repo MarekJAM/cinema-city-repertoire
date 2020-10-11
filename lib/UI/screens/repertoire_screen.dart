@@ -56,9 +56,14 @@ class _RepertoireScreenState extends State<RepertoireScreen> {
       endDrawerEnableOpenDragGesture: isCinemaListLoaded,
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: Text(
-          'Cinema City \nRepertuar',
-          style: TextStyle(color: Colors.orange, fontSize: 22),
+        title: RichText(
+          text: TextSpan(
+            children: [
+              TextSpan(text: 'Cinema City\n'),
+              TextSpan(text: 'Repertuar', style: TextStyle(fontSize: 16)),
+            ],
+            style: TextStyle(color: Colors.orange, fontSize: 22),
+          ),
         ),
         actions: <Widget>[
           Padding(
