@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 import '../../data/models/models.dart';
 import '../../bloc/repertoire/bloc.dart';
@@ -7,14 +8,14 @@ import '../../utils/storage.dart';
 
 class CinemasList extends StatelessWidget {
   final List<Cinema> list;
-  List<String> pickedCinemas;
+  final List<String> pickedCinemas;
   final DateTime pickedDate;
   final double height;
 
   CinemasList(this.list, this.pickedDate, this.pickedCinemas, this.height);
 
-  _saveFavoriteCinemas() async {
-    Storage.setFavoriteCinemas(pickedCinemas);
+  Future<void> _saveFavoriteCinemas() async {
+    await Storage.setFavoriteCinemas(pickedCinemas);
   }
 
   @override
@@ -58,8 +59,15 @@ class CinemasList extends StatelessWidget {
                     child: Text('Wyświetl'),
                   ),
                   RaisedButton(
-                    onPressed: () {
-                      _saveFavoriteCinemas();
+                    onPressed: () async {
+                      await _saveFavoriteCinemas();
+                      Fluttertoast.showToast(
+                          msg: "Zapisano kina jako ulubione.",
+                          gravity: ToastGravity.CENTER,
+                          toastLength: Toast.LENGTH_LONG,
+                          backgroundColor: Colors.green,
+                          textColor: Colors.white,
+                          fontSize: 16.0);
                     },
                     child: Text('Zapisz'),
                   ),
