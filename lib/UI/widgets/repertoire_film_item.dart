@@ -173,7 +173,7 @@ class RepertoireFilmItemRow extends StatelessWidget {
                               ],
                             ),
                             decoration: BoxDecoration(
-                              border: Border.all(color: Colors.orange),
+                              border: Border.all(color: Theme.of(context).accentColor),
                               borderRadius: BorderRadius.all(
                                 Radius.circular(5),
                               ),

@@ -56,22 +56,23 @@ class App extends StatelessWidget {
     BlocProvider.of<CinemasBloc>(context).add(FetchCinemas());
 
     return MaterialApp(
-        localizationsDelegates: [
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate,
-        ],
-        supportedLocales: [
-          const Locale('en'),
-          const Locale('pl'),
-        ],
-        title: 'Cinema City Repertuar',
-        theme: ThemeData(
-            primarySwatch: Colors.orange, brightness: Brightness.dark),
-        darkTheme: ThemeData(
-          brightness: Brightness.dark,
-        ),
-        home: RepertoireScreen(),
-      );
+      localizationsDelegates: [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: [
+        const Locale('en'),
+        const Locale('pl'),
+      ],
+      title: 'Cinema City Repertuar',
+      theme: ThemeData(
+        primarySwatch: Colors.orange,
+        brightness: Brightness.dark,
+        indicatorColor: Colors.orange,
+        accentColor: Colors.orange,
+      ),
+      home: RepertoireScreen(),
+    );
   }
 }
