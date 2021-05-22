@@ -19,7 +19,7 @@ class CinemasApiClient extends ApiClient {
     final Cinemas cinemas = new Cinemas();
 
     try {
-      final response = await http.get(url);
+      final response = await http.get(Uri.parse(url));
       final extractedData = json.decode(response.body) as Map<String, dynamic>;
 
       if (response.statusCode != 200) {

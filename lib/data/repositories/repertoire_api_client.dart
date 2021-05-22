@@ -23,7 +23,7 @@ class RepertoireApiClient extends ApiClient {
     List<http.Response> responseList = await Future.wait(
       cinemaIds.map(
         (cinemaId) => httpClient.get(
-          '${ApiClient.baseUrl}$_repertoireEndpoint$cinemaId/at-date/$date?attr=&lang=pl_PL',
+          Uri.parse('${ApiClient.baseUrl}$_repertoireEndpoint$cinemaId/at-date/$date?attr=&lang=pl_PL'),
         ),
       ),
     );
