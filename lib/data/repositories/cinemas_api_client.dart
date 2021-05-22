@@ -5,17 +5,15 @@ import '../../data/models/models.dart';
 import './api_client.dart';
 
 class CinemasApiClient extends ApiClient {
-  final _cinemaseEndpoint =
-      'pl/data-api-service/v1/quickbook/10103/cinemas/with-event/until/';
+  final _cinemasEndpoint = 'pl/data-api-service/v1/quickbook/10103/cinemas/with-event/until/';
 
   final http.Client httpClient;
 
   CinemasApiClient({this.httpClient}) : assert(httpClient != null);
 
   Future<Cinemas> fetchCinemas(String date) async {
-    final String url =
-        'https://www.cinema-city.pl/$_cinemaseEndpoint$date?attr=&lang=pl_PL';
-      
+    final String url = 'https://www.cinema-city.pl/$_cinemasEndpoint$date?attr=&lang=pl_PL';
+
     final Cinemas cinemas = new Cinemas();
 
     try {
@@ -23,15 +21,14 @@ class CinemasApiClient extends ApiClient {
       final extractedData = json.decode(response.body) as Map<String, dynamic>;
 
       if (response.statusCode != 200) {
-          throwException(response.statusCode, 'Error getting cinemas');
+        throwException(response.statusCode, 'Error getting cinemas');
       }
-      
+
       if (extractedData == null) {
         return null;
       }
 
       cinemas.setCinemas(extractedData['body']['cinemas']);
-
     } catch (error) {
       throw error;
     }

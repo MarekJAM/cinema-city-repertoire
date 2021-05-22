@@ -5,8 +5,7 @@ import './api_client.dart';
 import '../../data/models/models.dart';
 
 class RepertoireApiClient extends ApiClient {
-  final _repertoireEndpoint =
-      '/pl/data-api-service/v1/quickbook/10103/film-events/in-cinema/';
+  final _repertoireEndpoint = '/pl/data-api-service/v1/quickbook/10103/film-events/in-cinema/';
 
   final http.Client httpClient;
 

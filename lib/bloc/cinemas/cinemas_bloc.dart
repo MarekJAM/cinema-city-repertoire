@@ -26,7 +26,7 @@ class CinemasBloc extends Bloc<CinemasEvent, CinemasState> {
     try {
       final Cinemas data = await _cinemasRepository.getAllCinemas();
       final List<String> favoriteCinemaIds = await Storage.getFavoriteCinemas();
-      
+
       yield CinemasLoaded(data: data.items, favoriteCinemaIds: favoriteCinemaIds);
     } on ClientException catch (e) {
       print(e);
