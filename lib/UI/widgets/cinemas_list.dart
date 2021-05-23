@@ -49,7 +49,7 @@ class CinemasList extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
-                  RaisedButton(
+                  ElevatedButton(
                     onPressed: () {
                       BlocProvider.of<RepertoireBloc>(context).add(
                         FetchRepertoire(pickedDate, pickedCinemas),
@@ -58,7 +58,7 @@ class CinemasList extends StatelessWidget {
                     },
                     child: Text('Wyświetl'),
                   ),
-                  RaisedButton(
+                  ElevatedButton(
                     onPressed: () async {
                       await _saveFavoriteCinemas();
                       Fluttertoast.showToast(

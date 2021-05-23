@@ -5,10 +5,11 @@ class ErrorColumn extends StatelessWidget {
   final String buttonMessage;
   final Function buttonOnPressed;
 
-  ErrorColumn(
-      {@required this.errorMessage,
-      @required this.buttonMessage,
-      @required this.buttonOnPressed});
+  ErrorColumn({
+    @required this.errorMessage,
+    @required this.buttonMessage,
+    @required this.buttonOnPressed,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -23,11 +24,10 @@ class ErrorColumn extends StatelessWidget {
           Padding(
             padding: EdgeInsets.only(top: 10),
           ),
-          FlatButton(
+          ElevatedButton(
             onPressed: () {
               buttonOnPressed();
             },
-            color: Theme.of(context).buttonColor,
             child: Text(buttonMessage),
           ),
         ],
