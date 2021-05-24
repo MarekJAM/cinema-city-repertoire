@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 import '../../data/models/models.dart';
-import '../../bloc/repertoire/bloc.dart';
+import '../../bloc/blocs.dart';
 import '../../utils/storage.dart';
 
 class CinemasList extends StatelessWidget {
@@ -54,6 +54,10 @@ class CinemasList extends StatelessWidget {
                       BlocProvider.of<RepertoireBloc>(context).add(
                         FetchRepertoire(pickedDate, pickedCinemas),
                       );
+                      BlocProvider.of<DatesCubit>(context).fetchDates(
+                        DateTime.now().add(Duration(days: 365)),
+                        pickedCinemas,
+                      );
                       Navigator.of(context).pop();
                     },
                     child: Text('Wyświetl'),
@@ -62,12 +66,13 @@ class CinemasList extends StatelessWidget {
                     onPressed: () async {
                       await _saveFavoriteCinemas();
                       Fluttertoast.showToast(
-                          msg: "Zapisano kina jako ulubione.",
-                          gravity: ToastGravity.CENTER,
-                          toastLength: Toast.LENGTH_LONG,
-                          backgroundColor: Colors.green,
-                          textColor: Colors.white,
-                          fontSize: 16.0);
+                        msg: "Zapisano kina jako ulubione.",
+                        gravity: ToastGravity.CENTER,
+                        toastLength: Toast.LENGTH_LONG,
+                        backgroundColor: Colors.green,
+                        textColor: Colors.white,
+                        fontSize: 16.0,
+                      );
                     },
                     child: Text('Zapisz'),
                   ),
@@ -109,8 +114,7 @@ class _CinemaItemRowState extends State<CinemaItemRow> {
                   if (_isChecked) {
                     widget.pickedCinemas.add(widget.cinemaData.id);
                   } else {
-                    widget.pickedCinemas
-                        .removeWhere((item) => item == widget.cinemaData.id);
+                    widget.pickedCinemas.removeWhere((item) => item == widget.cinemaData.id);
                   }
                 },
               );

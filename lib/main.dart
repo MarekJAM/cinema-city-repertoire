@@ -5,10 +5,9 @@ import 'package:http/http.dart' as http;
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 import './bloc/simple_bloc_delegate.dart';
-import './bloc/cinemas/bloc.dart';
+import './bloc/blocs.dart';
 import './data/repositories/repositories.dart';
 import './UI/screens/repertoire_screen.dart';
-import './bloc/repertoire/bloc.dart';
 
 void main() {
   Bloc.observer = SimpleBlocObserver();
@@ -38,6 +37,9 @@ void main() {
           create: (context) => RepertoireBloc(
             repertoireRepository: repertoireRepository,
           ),
+        ),
+        BlocProvider<DatesCubit>(
+          create: (context) => DatesCubit(repertoireRepository),
         ),
       ],
       child: App(),

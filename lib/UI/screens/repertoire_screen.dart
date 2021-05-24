@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../bloc/cinemas/bloc.dart';
-import '../../bloc/repertoire/bloc.dart';
+import '../../bloc/blocs.dart';
 import '../../utils/date_handler.dart';
 import '../widgets/widgets.dart';
 
@@ -17,19 +16,33 @@ class _RepertoireScreenState extends State<RepertoireScreen> {
   var dateInAYear = DateTime.now().add(new Duration(days: 365));
   List<String> pickedCinemas = [];
   var isCinemaListLoaded = false;
+  DateTime picked;
+  List<DateTime> selectableDates = [];
 
   Future<Null> _selectDate(BuildContext context) async {
-    final DateTime picked = await showDatePicker(
+    picked = await showDatePicker(
         context: context,
-        initialDate: pickedDate,
+        initialDate: selectableDates.isEmpty
+            ? pickedDate
+            : selectableDates.any((el) => el.isSameDate(pickedDate))
+                ? pickedDate
+                : selectableDates[0],
         firstDate: DateTime(todayDate.year, todayDate.month, todayDate.day),
-        lastDate: DateTime(2101));
+        lastDate: DateTime(2101),
+        selectableDayPredicate: _decideWhichDayToEnable);
     if (picked != null && picked != pickedDate) {
       pickedDate = picked;
       setState(() {
         _fetchRepertoire(pickedDate, pickedCinemas);
       });
     }
+  }
+
+  bool _decideWhichDayToEnable(DateTime day) {
+    if (selectableDates.isEmpty || selectableDates.any((el) => el.isSameDate(day))) {
+      return true;
+    }
+    return false;
   }
 
   Future<void> _refreshRepertoire() async {
@@ -80,33 +93,44 @@ class _RepertoireScreenState extends State<RepertoireScreen> {
               ),
             ),
           ),
-          BlocBuilder<CinemasBloc, CinemasState>(builder: (ctx, state) {
-            if (state is CinemasLoaded) {
-              if (state.data != null) {
-                return Padding(
-                  padding: EdgeInsets.only(right: 20),
-                  child: GestureDetector(
-                    onTap: () => Scaffold.of(ctx).openEndDrawer(),
-                    child: Center(
-                      child: Icon(
-                        Icons.local_movies,
-                        color: Colors.white,
+          BlocListener<DatesCubit, DatesState>(
+            listener: (context, state) {
+              if (state is DatesLoaded) {
+                selectableDates = state.dates;
+              }
+            },
+            child: BlocConsumer<CinemasBloc, CinemasState>(listener: (context, state) {
+              if (state is CinemasLoaded) {
+                BlocProvider.of<DatesCubit>(context).fetchDates(dateInAYear, state.favoriteCinemaIds);
+              }
+            }, builder: (ctx, state) {
+              if (state is CinemasLoaded) {
+                if (state.data != null) {
+                  return Padding(
+                    padding: EdgeInsets.only(right: 20),
+                    child: GestureDetector(
+                      onTap: () => Scaffold.of(ctx).openEndDrawer(),
+                      child: Center(
+                        child: Icon(
+                          Icons.local_movies,
+                          color: Colors.white,
+                        ),
                       ),
                     ),
-                  ),
-                );
+                  );
+                }
               }
-            }
-            return Padding(
-              padding: EdgeInsets.only(right: 20),
-              child: Center(
-                child: Icon(
-                  Icons.local_movies,
-                  color: Colors.grey,
+              return Padding(
+                padding: EdgeInsets.only(right: 20),
+                child: Center(
+                  child: Icon(
+                    Icons.local_movies,
+                    color: Colors.grey,
+                  ),
                 ),
-              ),
-            );
-          })
+              );
+            }),
+          )
         ],
         backgroundColor: Colors.black,
       ),

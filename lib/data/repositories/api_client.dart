@@ -1,7 +1,7 @@
 import 'exceptions.dart';
 
 class ApiClient {
-  static const baseUrl = 'https://www.cinema-city.pl';
+  static const baseUrl = 'https://www.cinema-city.pl/pl/data-api-service/v1/quickbook/10103';
 
   void throwException(int statusCode, String message) {
     if (statusCode > 400 && 500 > statusCode) {

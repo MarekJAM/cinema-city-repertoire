@@ -27,4 +27,14 @@ class RepertoireRepository {
       await Storage.getFavoriteCinemas(),
     );
   }
+
+  Future<List<DateTime>> getDates(DateTime date, List<String> cinemaIds) async {
+    var stringDates = await repertoireApiClient.fetchDates(
+      DateHandler.convertDateToYYYY_MM_DD(
+        date,
+      ),
+      cinemaIds,
+    );
+    return stringDates.map((date) => DateTime.parse(date)).toList();
+  }
 }

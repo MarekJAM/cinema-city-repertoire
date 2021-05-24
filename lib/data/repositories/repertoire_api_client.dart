@@ -5,7 +5,8 @@ import './api_client.dart';
 import '../../data/models/models.dart';
 
 class RepertoireApiClient extends ApiClient {
-  final _repertoireEndpoint = '/pl/data-api-service/v1/quickbook/10103/film-events/in-cinema/';
+  final _repertoireEndpoint = '/film-events/in-cinema/';
+  final _datesEndpoint = '/dates/in-cinema/';
 
   final http.Client httpClient;
 
@@ -51,5 +52,36 @@ class RepertoireApiClient extends ApiClient {
     _repertoire.setItems(_films, _events, _cinemas);
 
     return _repertoire;
+  }
+
+  Future<List<String>> fetchDates(String date, List<String> cinemaIds) async {
+    List<http.Response> responseList = await Future.wait(
+      cinemaIds.map(
+        (cinemaId) => httpClient.get(
+          Uri.parse('${ApiClient.baseUrl}$_datesEndpoint$cinemaId/until/$date?attr=&lang=pl_PL'),
+        ),
+      ),
+    );
+
+    responseList.forEach(
+      (response) {
+        if (response.statusCode != 200) {
+          throwException(response.statusCode, 'Error getting dates');
+        }
+      },
+    );
+
+    List<String> dates = [];
+
+    for (var response in responseList) {
+      var extResponse = json.decode(response.body);
+      extResponse['body']['dates'].forEach((el) {
+        if (!dates.contains(el)) {
+          dates.add(el);
+        }
+      });
+    }
+
+    return dates;
   }
 }
