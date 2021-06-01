@@ -12,10 +12,13 @@ class Repertoire {
       Map<String, dynamic> filmTile = {};
       filmTile.putIfAbsent('film', () => film);
       var filmEvents = events.findEventsByFilmId(film.id);
-      filmEvents.forEach((event) { 
-        filmTile.putIfAbsent(cinemas.getCinemaNameById(event.cinemaId), () => events.filterEventsByCinemaId(filmEvents, event.cinemaId));
+      filmEvents.forEach((event) {
+        filmTile.putIfAbsent(
+            cinemas.getCinemaNameById(event.cinemaId), () => events.filterEventsByCinemaId(filmEvents, event.cinemaId));
       });
-      _items.add(filmTile);
+      if (filmEvents.length > 0) {
+        _items.add(filmTile);
+      }
     });
   }
 }
