@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import '../../data/models/models.dart';
 import '../../utils/date_handler.dart';
+import 'widgets.dart';
 
 class RepertoireFilmItem extends StatelessWidget {
   final Map<String, dynamic> data;
@@ -65,8 +65,7 @@ class RepertoireFilmItem extends StatelessWidget {
                         ),
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          color: _getAgeRestrictionColor(
-                              data['film'].ageRestriction),
+                          color: _getAgeRestrictionColor(data['film'].ageRestriction),
                         ),
                       ),
                       for (var item in data['film'].genres)
@@ -103,6 +102,7 @@ class RepertoireFilmItem extends StatelessWidget {
                   ),
                   for (var cinema in cinemas)
                     RepertoireFilmItemRow(
+                      film: data["film"],
                       cinema: cinema,
                       events: data[cinema],
                     )
@@ -119,20 +119,16 @@ class RepertoireFilmItem extends StatelessWidget {
 }
 
 class RepertoireFilmItemRow extends StatelessWidget {
-  const RepertoireFilmItemRow(
-      {Key key, @required this.events, @required this.cinema})
-      : super(key: key);
+  const RepertoireFilmItemRow({
+    Key key,
+    @required this.film,
+    @required this.events,
+    @required this.cinema,
+  }) : super(key: key);
 
+  final Film film;
   final List<Event> events;
   final String cinema;
-
-  _launchURL(url) async {
-    if (await canLaunch(url)) {
-      await launch(url);
-    } else {
-      throw 'Could not launch $url';
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -154,14 +150,20 @@ class RepertoireFilmItemRow extends StatelessWidget {
                 children: <Widget>[
                   for (var item in events)
                     GestureDetector(
-                      onTap: () => _launchURL(item.bookingLink),
+                      onTap: () {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return FilmEventDialog(film: film, cinema: cinema, item: item);
+                          },
+                        );
+                      },
                       child: Column(
                         children: <Widget>[
                           Container(
                             child: Column(
                               children: <Widget>[
-                                Text(DateHandler.convertDateToHH_MM(
-                                    item.dateTime)),
+                                Text(DateHandler.convertDateToHH_MM(item.dateTime)),
                                 Text(
                                   '${item.type}',
                                   style: TextStyle(fontSize: 7),
