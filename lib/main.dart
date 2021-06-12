@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -10,7 +11,9 @@ import './data/repositories/repositories.dart';
 import './UI/screens/repertoire_screen.dart';
 
 void main() {
-  Bloc.observer = SimpleBlocObserver();
+  if (kDebugMode) {
+    Bloc.observer = SimpleBlocObserver();
+  }
 
   final CinemasRepository cinemasRepository = CinemasRepository(
     cinemasApiClient: CinemasApiClient(
