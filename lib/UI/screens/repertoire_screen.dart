@@ -87,7 +87,7 @@ class _RepertoireScreenState extends State<RepertoireScreen> {
               },
               child: Center(
                 child: Text(
-                  DateHandler.convertDateToDD_MM(pickedDate),
+                  DateHandler.convertDateToDDMM(pickedDate),
                   style: TextStyle(color: Colors.white),
                 ),
               ),

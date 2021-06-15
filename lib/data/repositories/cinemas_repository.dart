@@ -13,7 +13,7 @@ class CinemasRepository {
     var dateInAYear = DateTime.now().add(new Duration(days: 365));
 
     return await cinemasApiClient.fetchCinemas(
-      DateHandler.convertDateToYYYY_MM_DD(
+      DateHandler.convertDateToYYYYMMDD(
         dateInAYear,
       ),
     );

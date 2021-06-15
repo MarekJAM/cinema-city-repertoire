@@ -49,7 +49,7 @@ class FilmEventDialog extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(2.0),
               child: Text(
-                DateHandler.convertDateToHH_MM(item.dateTime),
+                DateHandler.convertDateToHHMM(item.dateTime),
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 14),
               ),

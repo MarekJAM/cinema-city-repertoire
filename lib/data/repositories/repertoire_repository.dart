@@ -12,7 +12,7 @@ class RepertoireRepository {
 
   Future<Repertoire> getRepertoire(DateTime date, [List<String> cinemaIds]) async {
     return await repertoireApiClient.fetchRepertoire(
-      DateHandler.convertDateToYYYY_MM_DD(
+      DateHandler.convertDateToYYYYMMDD(
         date,
       ),
       cinemaIds,
@@ -21,7 +21,7 @@ class RepertoireRepository {
 
   Future<Repertoire> getRepertoireForFavoriteCinemas(DateTime date) async {
     return await repertoireApiClient.fetchRepertoire(
-      DateHandler.convertDateToYYYY_MM_DD(
+      DateHandler.convertDateToYYYYMMDD(
         date,
       ),
       await Storage.getFavoriteCinemas(),
@@ -30,7 +30,7 @@ class RepertoireRepository {
 
   Future<List<DateTime>> getDates(DateTime date, List<String> cinemaIds) async {
     var stringDates = await repertoireApiClient.fetchDates(
-      DateHandler.convertDateToYYYY_MM_DD(
+      DateHandler.convertDateToYYYYMMDD(
         date,
       ),
       cinemaIds,
