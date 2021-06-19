@@ -67,7 +67,6 @@ class App extends StatelessWidget {
         GlobalCupertinoLocalizations.delegate,
       ],
       supportedLocales: [
-        const Locale('en'),
         const Locale('pl'),
       ],
       title: 'Cinema City Repertuar',
