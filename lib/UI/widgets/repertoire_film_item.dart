@@ -55,7 +55,8 @@ class RepertoireFilmItem extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.symmetric(vertical: 1),
                   ),
-                  Row(
+                  Wrap(
+                    crossAxisAlignment: WrapCrossAlignment.center,
                     children: <Widget>[
                       Container(
                         padding: EdgeInsets.all(3),
