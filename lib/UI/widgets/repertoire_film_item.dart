@@ -66,7 +66,9 @@ class RepertoireFilmItem extends StatelessWidget {
                         ),
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          color: _getAgeRestrictionColor(data['film'].ageRestriction),
+                          color: _getAgeRestrictionColor(
+                            data['film'].ageRestriction,
+                          ),
                         ),
                       ),
                       for (var item in data['film'].genres)

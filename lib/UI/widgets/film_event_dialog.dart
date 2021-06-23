@@ -108,8 +108,10 @@ class _FilmEventDialogState extends State<FilmEventDialog> {
                         "Ustaw przypomnienie",
                       ),
                       onPressed: () {
-                        _showNotification('${widget.film.name}',
-                            '${widget.item.dateTime.month}.${widget.item.dateTime.day} - ${widget.item.dateTime.hour}:${widget.item.dateTime.minute}');
+                        _showNotification(
+                          '${widget.film.name}',
+                          '${widget.item.dateTime.month}.${widget.item.dateTime.day} - ${widget.item.dateTime.hour}:${widget.item.dateTime.minute}',
+                        );
                       },
                     );
                   },

@@ -14,7 +14,9 @@ class Repertoire {
       var filmEvents = events.findEventsByFilmId(film.id);
       filmEvents.forEach((event) {
         filmTile.putIfAbsent(
-            cinemas.getCinemaNameById(event.cinemaId), () => events.filterEventsByCinemaId(filmEvents, event.cinemaId));
+          cinemas.getCinemaNameById(event.cinemaId),
+          () => events.filterEventsByCinemaId(filmEvents, event.cinemaId),
+        );
       });
       if (filmEvents.length > 0) {
         _items.add(filmTile);
