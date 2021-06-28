@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:timezone/timezone.dart' as tz;
 
 import '../../data/models/models.dart';
 import '../../utils/date_handler.dart';
@@ -32,11 +35,31 @@ class _FilmEventDialogState extends State<FilmEventDialog> {
     }
   }
 
-  _showNotification(String title, String body) async {
-    var androidPlatformChannelSpecifics = AndroidNotificationDetails('channelId', 'Local notification', 'Just a test',
-        importance: Importance.max, priority: Priority.high, showWhen: false);
-    var platformChannelSpecifics = NotificationDetails(android: androidPlatformChannelSpecifics);
-    await localNotification.show(22, title, body, platformChannelSpecifics);
+  _scheduleNotification(String title, Event event) async {
+    await localNotification.zonedSchedule(
+      int.tryParse(event.id) ?? 0,
+      title,
+      'Przypomnienie o seansie - ${event.dateTime.hour}:${event.dateTime.minute}',
+      tz.TZDateTime.from(event.dateTime.subtract(Duration(minutes: 30)), tz.local),
+      const NotificationDetails(
+        android: AndroidNotificationDetails(
+          'channelId',
+          'Cinema City Repertuar',
+          'Cinema City Repertuar Powiadomienie',
+        ),
+      ),
+      androidAllowWhileIdle: true,
+      uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
+    );
+
+    Fluttertoast.showToast(
+      msg: "Zaplanowano przypomnienie.",
+      gravity: ToastGravity.CENTER,
+      toastLength: Toast.LENGTH_LONG,
+      backgroundColor: Colors.green,
+      textColor: Colors.white,
+      fontSize: 16.0,
+    );
   }
 
   @override
@@ -108,9 +131,9 @@ class _FilmEventDialogState extends State<FilmEventDialog> {
                         "Ustaw przypomnienie",
                       ),
                       onPressed: () {
-                        _showNotification(
+                        _scheduleNotification(
                           '${widget.film.name}',
-                          '${widget.item.dateTime.month}.${widget.item.dateTime.day} - ${widget.item.dateTime.hour}:${widget.item.dateTime.minute}',
+                          widget.item,
                         );
                       },
                     );
