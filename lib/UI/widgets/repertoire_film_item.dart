@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../data/models/models.dart';
 import '../../utils/date_handler.dart';
+import '../screens/film_details_screen.dart';
 import 'widgets.dart';
 
 class RepertoireFilmItem extends StatelessWidget {
@@ -34,9 +35,20 @@ class RepertoireFilmItem extends StatelessWidget {
         children: <Widget>[
           Expanded(
             flex: 2,
-            child: Image.network(
-              data['film'].posterLink,
-              height: deviceSize.height * 0.15,
+            child: GestureDetector(
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (BuildContext context) => FilmDetailsScreen(
+                      film: data['film'],
+                    ),
+                  ),
+                );
+              },
+              child: Image.network(
+                data['film'].posterLink,
+                height: deviceSize.height * 0.15,
+              ),
             ),
           ),
           Expanded(
