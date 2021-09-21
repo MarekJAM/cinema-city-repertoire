@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:timezone/data/latest.dart' as tz;
 
 import './bloc/simple_bloc_delegate.dart';
 import './bloc/blocs.dart';
@@ -14,6 +15,8 @@ void main() {
   if (kDebugMode) {
     Bloc.observer = SimpleBlocObserver();
   }
+
+  tz.initializeTimeZones();
 
   final CinemasRepository cinemasRepository = CinemasRepository(
     cinemasApiClient: CinemasApiClient(

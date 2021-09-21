@@ -28,7 +28,9 @@ class ErrorColumn extends StatelessWidget {
             onPressed: () {
               buttonOnPressed();
             },
-            child: Text(buttonMessage),
+            child: Text(
+              buttonMessage,
+            ),
           ),
         ],
       ),

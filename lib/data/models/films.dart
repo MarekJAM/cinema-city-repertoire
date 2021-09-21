@@ -24,7 +24,9 @@ class Films {
         ),
       );
     }
+    
     loadedFilms.sort((a, b) => a.name.compareTo(b.name));
+
     _items = loadedFilms;
   }
 }

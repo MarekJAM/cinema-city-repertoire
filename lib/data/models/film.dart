@@ -54,8 +54,7 @@ class Film {
         }
       });
       if (attr.toString().contains('plus')) {
-        tempAgeRestriction =
-            attr.toString().substring(0, attr.toString().indexOf('-'));
+        tempAgeRestriction = attr.toString().substring(0, attr.toString().indexOf('-'));
       }
     });
 
