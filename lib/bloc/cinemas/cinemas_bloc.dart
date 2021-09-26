@@ -7,36 +7,28 @@ import '../../data/repositories/repositories.dart';
 import '../../utils/storage.dart';
 
 class CinemasBloc extends Bloc<CinemasEvent, CinemasState> {
-  final CinemasRepository _cinemasRepository;
+  final CinemasRepository cinemasRepository;
 
-  CinemasBloc({@required CinemasRepository cinemasRepository})
-      : assert(CinemasRepository != null),
-        _cinemasRepository = cinemasRepository,
-        super(CinemasInitial());
-
-  @override
-  Stream<CinemasState> mapEventToState(CinemasEvent event) async* {
-    if (event is FetchCinemas) {
-      yield* _mapFetchCinemasToState();
-    }
+  CinemasBloc({@required this.cinemasRepository}) : super(CinemasInitial()) {
+    on<FetchCinemas>(_onFetchCinemas);
   }
 
-  Stream<CinemasState> _mapFetchCinemasToState() async* {
-    yield CinemasLoading();
+  void _onFetchCinemas(FetchCinemas event, Emitter<CinemasState> emit) async {
+    emit(CinemasLoading());
     try {
-      final Cinemas data = await _cinemasRepository.getAllCinemas();
+      final Cinemas data = await cinemasRepository.getAllCinemas();
       final List<String> favoriteCinemaIds = await Storage.getFavoriteCinemas();
 
-      yield CinemasLoaded(data: data.items, favoriteCinemaIds: favoriteCinemaIds);
+      emit(CinemasLoaded(data: data.items, favoriteCinemaIds: favoriteCinemaIds));
     } on ClientException catch (e) {
       print(e);
-      yield CinemasError(message: 'Błąd połączenia.');
+      emit(CinemasError(message: 'Błąd połączenia.'));
     } on ServerException catch (e) {
       print(e);
-      yield CinemasError(message: 'Błąd wewnętrzny serwera.');
+      emit(CinemasError(message: 'Błąd wewnętrzny serwera.'));
     } catch (e) {
       print(e);
-      yield CinemasError(message: 'Wystąpił nieznany błąd.');
+      emit(CinemasError(message: 'Wystąpił nieznany błąd.'));
     }
   }
 }

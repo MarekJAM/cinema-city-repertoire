@@ -7,34 +7,26 @@ import '../../data/repositories/exceptions.dart';
 import '../../data/repositories/repositories.dart';
 
 class RepertoireBloc extends Bloc<RepertoireEvent, RepertoireState> {
-  final RepertoireRepository _repertoireRepository;
+  final RepertoireRepository repertoireRepository;
 
-  RepertoireBloc({@required RepertoireRepository repertoireRepository})
-      : assert(RepertoireRepository != null),
-        _repertoireRepository = repertoireRepository,
-        super(RepertoireInitial());
-
-  @override
-  Stream<RepertoireState> mapEventToState(RepertoireEvent event) async* {
-    if (event is FetchRepertoire) {
-      yield* _mapFetchRepertoireToState(event);
-    }
+  RepertoireBloc({@required this.repertoireRepository}) : super(RepertoireInitial()) {
+    on<FetchRepertoire>(_onFetchRepertoire);
   }
 
-  Stream<RepertoireState> _mapFetchRepertoireToState(event) async* {
-    yield RepertoireLoading();
+  void _onFetchRepertoire(FetchRepertoire event, Emitter<RepertoireState> emit) async {
+    emit(RepertoireLoading());
     try {
-      final Repertoire data = await _repertoireRepository.getRepertoire(event.date, event.cinemaIds);
-      yield RepertoireLoaded(data: data);
+      final Repertoire data = await repertoireRepository.getRepertoire(event.date, event.cinemaIds);
+      emit(RepertoireLoaded(data: data));
     } on ClientException catch (e) {
       print(e);
-      yield RepertoireError(message: 'Błąd połączenia.');
+      emit(RepertoireError(message: 'Błąd połączenia.'));
     } on ServerException catch (e) {
       print(e);
-      yield RepertoireError(message: 'Błąd wewnętrzny serwera.');
+      emit(RepertoireError(message: 'Błąd wewnętrzny serwera.'));
     } catch (e) {
       print(e);
-      yield RepertoireError(message: 'Wystąpił nieznany błąd.');
+      emit(RepertoireError(message: 'Wystąpił nieznany błąd.'));
     }
   }
 }
