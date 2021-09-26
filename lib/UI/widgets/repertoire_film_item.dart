@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../data/models/models.dart';
+import '../../bloc/blocs.dart';
 import '../../utils/date_handler.dart';
 import '../screens/film_details_screen.dart';
 import 'widgets.dart';
@@ -37,6 +39,7 @@ class RepertoireFilmItem extends StatelessWidget {
             flex: 2,
             child: GestureDetector(
               onTap: () {
+                BlocProvider.of<FilmDetailsCubit>(context).getFilmDetails(data['film']);
                 Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (BuildContext context) => FilmDetailsScreen(

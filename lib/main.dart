@@ -1,3 +1,5 @@
+import 'package:cinema_city/bloc/film_details/film_details_cubit.dart';
+import 'package:cinema_city/data/repositories/film_api_client.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -27,6 +29,9 @@ void main() {
     repertoireApiClient: RepertoireApiClient(
       httpClient: http.Client(),
     ),
+    filmApiClient: FilmApiClient(
+      httpClient: http.Client(),
+    ),
   );
 
   WidgetsFlutterBinding.ensureInitialized();
@@ -47,6 +52,9 @@ void main() {
         BlocProvider<DatesCubit>(
           create: (context) => DatesCubit(repertoireRepository),
         ),
+        BlocProvider<FilmDetailsCubit>(
+          create: (context) => FilmDetailsCubit(repertoireRepository: repertoireRepository),
+        ),
       ],
       child: App(),
     ),
@@ -61,7 +69,7 @@ class App extends StatelessWidget {
       DeviceOrientation.portraitDown,
     ]);
 
-    BlocProvider.of<CinemasBloc>(context).add(FetchCinemas());
+    BlocProvider.of<CinemasBloc>(context).add(GetCinemas());
 
     return MaterialApp(
       localizationsDelegates: [

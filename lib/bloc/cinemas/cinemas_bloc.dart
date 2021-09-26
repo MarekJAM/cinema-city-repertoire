@@ -10,10 +10,10 @@ class CinemasBloc extends Bloc<CinemasEvent, CinemasState> {
   final CinemasRepository cinemasRepository;
 
   CinemasBloc({@required this.cinemasRepository}) : super(CinemasInitial()) {
-    on<FetchCinemas>(_onFetchCinemas);
+    on<GetCinemas>(_onGetCinemas);
   }
 
-  void _onFetchCinemas(FetchCinemas event, Emitter<CinemasState> emit) async {
+  void _onGetCinemas(GetCinemas event, Emitter<CinemasState> emit) async {
     emit(CinemasLoading());
     try {
       final Cinemas data = await cinemasRepository.getAllCinemas();

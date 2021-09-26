@@ -11,7 +11,7 @@ class CinemasApiClient extends ApiClient {
 
   CinemasApiClient({this.httpClient}) : assert(httpClient != null);
 
-  Future<Cinemas> fetchCinemas(String date) async {
+  Future<Cinemas> getCinemas(String date) async {
     final Cinemas cinemas = new Cinemas();
 
     try {

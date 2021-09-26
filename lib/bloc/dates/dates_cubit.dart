@@ -9,7 +9,7 @@ class DatesCubit extends Cubit<DatesState> {
 
   DatesCubit(this.repertoireRepository) : super(DatesInitial());
 
-  void fetchDates(DateTime date, List<String> cinemaIds) async {
+  void getDates(DateTime date, List<String> cinemaIds) async {
     emit(DatesLoading());
     try {
       var dates = await repertoireRepository.getDates(date, cinemaIds);

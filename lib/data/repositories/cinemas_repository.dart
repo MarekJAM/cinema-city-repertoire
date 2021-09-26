@@ -12,7 +12,7 @@ class CinemasRepository {
   Future<Cinemas> getAllCinemas() async {
     var dateInAYear = DateTime.now().add(new Duration(days: 365));
 
-    return await cinemasApiClient.fetchCinemas(
+    return await cinemasApiClient.getCinemas(
       DateHandler.convertDateToYYYYMMDD(
         dateInAYear,
       ),

@@ -7,7 +7,7 @@ abstract class CinemasEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class FetchCinemas extends CinemasEvent {
+class GetCinemas extends CinemasEvent {
   @override
-  String toString() => 'FetchCinemas';
+  String toString() => 'GetCinemas';
 }

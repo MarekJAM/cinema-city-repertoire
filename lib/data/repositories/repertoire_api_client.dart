@@ -16,7 +16,7 @@ class RepertoireApiClient extends ApiClient {
 
   RepertoireApiClient({this.httpClient}) : assert(httpClient != null);
 
-  Future<Repertoire> fetchRepertoire(
+  Future<Repertoire> getRepertoire(
     String date, [
     List<String> cinemaIds,
   ]) async {
@@ -54,7 +54,7 @@ class RepertoireApiClient extends ApiClient {
     return _repertoire;
   }
 
-  Future<List<String>> fetchDates(String date, List<String> cinemaIds) async {
+  Future<List<String>> getDates(String date, List<String> cinemaIds) async {
     List<http.Response> responseList = await Future.wait(
       cinemaIds.map(
         (cinemaId) => httpClient.get(

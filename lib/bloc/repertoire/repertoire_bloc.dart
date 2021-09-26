@@ -10,10 +10,10 @@ class RepertoireBloc extends Bloc<RepertoireEvent, RepertoireState> {
   final RepertoireRepository repertoireRepository;
 
   RepertoireBloc({@required this.repertoireRepository}) : super(RepertoireInitial()) {
-    on<FetchRepertoire>(_onFetchRepertoire);
+    on<GetRepertoire>(_onGetRepertoire);
   }
 
-  void _onFetchRepertoire(FetchRepertoire event, Emitter<RepertoireState> emit) async {
+  void _onGetRepertoire(GetRepertoire event, Emitter<RepertoireState> emit) async {
     emit(RepertoireLoading());
     try {
       final Repertoire data = await repertoireRepository.getRepertoire(event.date, event.cinemaIds);

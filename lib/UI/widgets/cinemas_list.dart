@@ -52,9 +52,9 @@ class CinemasList extends StatelessWidget {
                   ElevatedButton(
                     onPressed: () {
                       BlocProvider.of<RepertoireBloc>(context).add(
-                        FetchRepertoire(pickedDate, pickedCinemas),
+                        GetRepertoire(pickedDate, pickedCinemas),
                       );
-                      BlocProvider.of<DatesCubit>(context).fetchDates(
+                      BlocProvider.of<DatesCubit>(context).getDates(
                         DateTime.now().add(Duration(days: 365)),
                         pickedCinemas,
                       );

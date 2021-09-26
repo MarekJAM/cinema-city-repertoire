@@ -33,7 +33,7 @@ class _RepertoireScreenState extends State<RepertoireScreen> {
     if (picked != null && picked != pickedDate) {
       pickedDate = picked;
       setState(() {
-        _fetchRepertoire(pickedDate, pickedCinemas);
+        _getRepertoire(pickedDate, pickedCinemas);
       });
     }
   }
@@ -46,7 +46,7 @@ class _RepertoireScreenState extends State<RepertoireScreen> {
   }
 
   Future<void> _refreshRepertoire() async {
-    _fetchRepertoire(pickedDate, pickedCinemas);
+    _getRepertoire(pickedDate, pickedCinemas);
   }
 
   @override
@@ -101,7 +101,7 @@ class _RepertoireScreenState extends State<RepertoireScreen> {
             },
             child: BlocConsumer<CinemasBloc, CinemasState>(listener: (context, state) {
               if (state is CinemasLoaded) {
-                BlocProvider.of<DatesCubit>(context).fetchDates(dateInAYear, state.favoriteCinemaIds);
+                BlocProvider.of<DatesCubit>(context).getDates(dateInAYear, state.favoriteCinemaIds);
               }
             }, builder: (ctx, state) {
               if (state is CinemasLoaded) {
@@ -137,7 +137,7 @@ class _RepertoireScreenState extends State<RepertoireScreen> {
       body: BlocConsumer<CinemasBloc, CinemasState>(listener: (context, state) {
         if (state is CinemasLoaded) {
           pickedCinemas = state.favoriteCinemaIds;
-          _fetchRepertoire(pickedDate, pickedCinemas);
+          _getRepertoire(pickedDate, pickedCinemas);
         }
       }, builder: (context, cinemasState) {
         if (cinemasState is CinemasLoaded) {
@@ -182,7 +182,7 @@ class _RepertoireScreenState extends State<RepertoireScreen> {
                   errorMessage: state.message,
                   buttonMessage: 'Odśwież',
                   buttonOnPressed: () {
-                    _fetchRepertoire(pickedDate, pickedCinemas);
+                    _getRepertoire(pickedDate, pickedCinemas);
                   },
                 );
               } else {
@@ -196,7 +196,7 @@ class _RepertoireScreenState extends State<RepertoireScreen> {
           return ErrorColumn(
             errorMessage: cinemasState.message,
             buttonMessage: 'Odśwież',
-            buttonOnPressed: _fetchCinemas,
+            buttonOnPressed: _getCinemas,
           );
         } else {
           return Container();
@@ -205,13 +205,13 @@ class _RepertoireScreenState extends State<RepertoireScreen> {
     );
   }
 
-  void _fetchCinemas() {
-    BlocProvider.of<CinemasBloc>(context).add(FetchCinemas());
+  void _getCinemas() {
+    BlocProvider.of<CinemasBloc>(context).add(GetCinemas());
   }
 
-  void _fetchRepertoire(DateTime date, List<String> pickedCinemas) {
+  void _getRepertoire(DateTime date, List<String> pickedCinemas) {
     BlocProvider.of<RepertoireBloc>(context).add(
-      FetchRepertoire(pickedDate, pickedCinemas),
+      GetRepertoire(pickedDate, pickedCinemas),
     );
   }
 }

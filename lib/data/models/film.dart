@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'film_details.dart';
+
 const Map<String, String> genreMap = {
   'action': 'Akcja',
   'adventure': 'Przygodowy',
@@ -32,6 +34,7 @@ class Film {
   final List<String> genres;
   final String ageRestriction;
   final String link;
+  final FilmDetails details;
 
   Film({
     @required this.id,
@@ -41,6 +44,7 @@ class Film {
     @required this.genres,
     @required this.ageRestriction,
     @required this.link,
+    this.details,
   });
 
   factory Film.fromJson(Map<String, dynamic> json) {

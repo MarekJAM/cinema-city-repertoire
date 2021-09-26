@@ -7,12 +7,12 @@ abstract class RepertoireEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class FetchRepertoire extends RepertoireEvent {
+class GetRepertoire extends RepertoireEvent {
   final DateTime date;
   final List<String> cinemaIds;
 
-  const FetchRepertoire(this.date, this.cinemaIds);
+  const GetRepertoire(this.date, this.cinemaIds);
 
   @override
-  String toString() => 'FetchRepertoireDetails { date: $date, cinemaIds: $cinemaIds }';
+  String toString() => 'GetRepertoireDetails { date: $date, cinemaIds: $cinemaIds }';
 }

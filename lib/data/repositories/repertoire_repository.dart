@@ -1,3 +1,4 @@
+import 'package:cinema_city/data/repositories/film_api_client.dart';
 import 'package:flutter/material.dart';
 
 import '../../utils/date_handler.dart';
@@ -7,11 +8,13 @@ import './repositories.dart';
 
 class RepertoireRepository {
   final RepertoireApiClient repertoireApiClient;
+  final FilmApiClient filmApiClient;
 
-  RepertoireRepository({@required this.repertoireApiClient}) : assert(RepertoireApiClient != null);
+  RepertoireRepository({@required this.repertoireApiClient, @required this.filmApiClient})
+      : assert(repertoireApiClient != null, filmApiClient != null);
 
   Future<Repertoire> getRepertoire(DateTime date, [List<String> cinemaIds]) async {
-    return await repertoireApiClient.fetchRepertoire(
+    return await repertoireApiClient.getRepertoire(
       DateHandler.convertDateToYYYYMMDD(
         date,
       ),
@@ -20,7 +23,7 @@ class RepertoireRepository {
   }
 
   Future<Repertoire> getRepertoireForFavoriteCinemas(DateTime date) async {
-    return await repertoireApiClient.fetchRepertoire(
+    return await repertoireApiClient.getRepertoire(
       DateHandler.convertDateToYYYYMMDD(
         date,
       ),
@@ -29,12 +32,16 @@ class RepertoireRepository {
   }
 
   Future<List<DateTime>> getDates(DateTime date, List<String> cinemaIds) async {
-    var stringDates = await repertoireApiClient.fetchDates(
+    var stringDates = await repertoireApiClient.getDates(
       DateHandler.convertDateToYYYYMMDD(
         date,
       ),
       cinemaIds,
     );
     return stringDates.map((date) => DateTime.parse(date)).toList();
+  }
+
+  Future<Film> getFilmDetails(Film film) async {
+    return await filmApiClient.getFilmDetails(film);
   }
 }
