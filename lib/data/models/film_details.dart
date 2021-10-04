@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 
 class FilmDetails {
   final String description;
-  final DateTime premiereDate;
+  final String premiereDate;
   final String cast;
   final String director;
 

@@ -34,7 +34,7 @@ class Film {
   final List<String> genres;
   final String ageRestriction;
   final String link;
-  final FilmDetails details;
+  FilmDetails details;
 
   Film({
     @required this.id,
