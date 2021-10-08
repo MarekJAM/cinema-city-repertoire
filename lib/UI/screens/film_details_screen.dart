@@ -1,3 +1,4 @@
+import 'package:cinema_city/UI/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -11,74 +12,86 @@ class FilmDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var mediaQuery = MediaQuery.of(context);
     return Scaffold(
       body: SafeArea(
-        child: BlocBuilder<FilmDetailsCubit, FilmDetailsState>(
-          builder: (context, state) {
-            if (state is FilmDetailsLoaded) {
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Container(
-                    width: double.infinity,
-                    color: Colors.black,
-                    child: Center(
-                      child: Image.network(
-                        film.posterLink.replaceAll("md.jpg", "lg.jpg"),
+        child: Container(
+          height: mediaQuery.size.height,
+          color: Colors.black,
+          child: BlocBuilder<FilmDetailsCubit, FilmDetailsState>(
+            builder: (context, state) {
+              if (state is FilmDetailsLoaded) {
+                return CustomScrollView(
+                  slivers: [
+                    SliverPersistentHeader(
+                      pinned: true,
+                      floating: true,
+                      delegate: SliverHeader(
+                        imageUrl: film.posterLink.replaceAll("md.jpg", "lg.jpg"),
+                        maxExtent: 450,
+                        minExtent: 0,
                       ),
                     ),
-                  ),
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 8, right: 8, top: 8),
-                      child: SingleChildScrollView(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: [
-                                Expanded(
-                                  child: DetailsColumnRow(
-                                    icon: Icons.calendar_today,
-                                    title: "Premiera",
-                                    content: film.details.premiereDate,
+                    SliverToBoxAdapter(
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(15),
+                        child: Container(
+                          color: Colors.grey[900],
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 8, right: 8, top: 8),
+                            child: SingleChildScrollView(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    children: [
+                                      Expanded(
+                                        child: DetailsColumnRow(
+                                          icon: Icons.calendar_today,
+                                          title: "Premiera",
+                                          content: film.details.premiereDate,
+                                        ),
+                                      ),
+                                      Expanded(
+                                        child: DetailsColumnRow(
+                                          icon: Icons.timer,
+                                          title: "Czas trwania",
+                                          content: "${film.length} min",
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                ),
-                                Expanded(
-                                  child: DetailsColumnRow(
-                                    icon: Icons.timer,
-                                    title: "Czas trwania",
-                                    content: "${film.length} min",
+                                  Divider(
+                                    color: Colors.orange,
                                   ),
-                                ),
-                              ],
+                                  Text("Tytuł: ${film.name}"),
+                                  Divider(),
+                                  Text("Gatunek: ${film.genres}"),
+                                  Divider(),
+                                  Text("Obsada: ${film.details.cast}"),
+                                  Divider(),
+                                  Text("Reżyser: ${film.details.director}"),
+                                  Divider(),
+                                  Text("Produkcja: ${film.details.production}"),
+                                  Divider(),
+                                  Text("Opis: ${film.details.description}"),
+                                ],
+                              ),
                             ),
-                            Divider(color: Colors.orange,),
-                            Text("Tytuł: ${film.name}"),
-                            Divider(),
-                            Text("Gatunek: ${film.genres}"),
-                            Divider(),
-                            Text("Obsada: ${film.details.cast}"),
-                            Divider(),
-                            Text("Reżyser: ${film.details.director}"),
-                            Divider(),
-                            Text("Produkcja: ${film.details.production}"),
-                            Divider(),
-                            Text("Opis: ${film.details.description}"),
-                          ],
+                          ),
                         ),
                       ),
-                    ),
-                  ),
-                ],
-              );
-            } else if (state is FilmDetailsLoading) {
-              return Center(
-                child: CircularProgressIndicator(),
-              );
-            }
-            return Container();
-          },
+                    )
+                  ],
+                );
+              } else if (state is FilmDetailsLoading) {
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+              return Container();
+            },
+          ),
         ),
       ),
     );
