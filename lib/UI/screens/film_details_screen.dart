@@ -66,7 +66,13 @@ class FilmDetailsScreen extends StatelessWidget {
                                   ),
                                   Text("Tytuł: ${film.name}"),
                                   Divider(),
-                                  Text("Gatunek: ${film.genres}"),
+                                  Wrap(
+                                    children: [
+                                      Text("Gatunek: "),
+                                      for (int i = 0; i < film.genres.length; i++)
+                                        Text("${film.genres[i]}" + (i < film.genres.length -1 ? ", " : "")),
+                                    ],
+                                  ),
                                   Divider(),
                                   Text("Obsada: ${film.details.cast}"),
                                   Divider(),
