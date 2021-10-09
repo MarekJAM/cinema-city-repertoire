@@ -63,6 +63,7 @@ class FilmDetailsScreen extends StatelessWidget {
                                   ),
                                   Divider(
                                     color: Colors.orange,
+                                    thickness: 2,
                                   ),
                                   Text("Tytuł: ${film.name}"),
                                   Divider(),
@@ -79,8 +80,9 @@ class FilmDetailsScreen extends StatelessWidget {
                                   Text("Reżyser: ${film.details.director}"),
                                   Divider(),
                                   Text("Produkcja: ${film.details.production}"),
-                                  Divider(),
+                                  Divider(color: Colors.orange,),
                                   Text("Opis: ${film.details.description}"),
+                                  SizedBox(height: 10,)
                                 ],
                               ),
                             ),
