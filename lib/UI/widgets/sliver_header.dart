@@ -32,7 +32,11 @@ class SliverHeader extends SliverPersistentHeaderDelegate {
           return AnimatedCrossFade(
             firstChild: Container(
               height: maxExtent,
-              child: Container(),
+              child: Container(
+                child: Center(
+                  child: CircularProgressIndicator(),
+                ),
+              ),
             ),
             secondChild: Container(
               width: double.infinity,
