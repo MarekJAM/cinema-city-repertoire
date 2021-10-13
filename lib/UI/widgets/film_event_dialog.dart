@@ -75,6 +75,12 @@ class _FilmEventDialogState extends State<FilmEventDialog> {
   @override
   Widget build(BuildContext context) {
     return Dialog(
+      shape: RoundedRectangleBorder(
+        side: BorderSide(
+          color: Colors.orange,
+        ),
+        borderRadius: BorderRadius.circular(20),
+      ),
       child: Padding(
         padding: EdgeInsets.all(8),
         child: Column(
