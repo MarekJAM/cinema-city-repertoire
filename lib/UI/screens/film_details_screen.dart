@@ -71,7 +71,8 @@ class FilmDetailsScreen extends StatelessWidget {
                                     children: [
                                       Text("Gatunek: "),
                                       for (int i = 0; i < film.genres.length; i++)
-                                        Text("${film.genres[i]}" + (i < film.genres.length -1 ? ", " : "")),
+                                        Text("${film.genres[i]}" +
+                                            (i < film.genres.length - 1 ? ", " : "")),
                                     ],
                                   ),
                                   Divider(),
@@ -80,9 +81,13 @@ class FilmDetailsScreen extends StatelessWidget {
                                   Text("Reżyser: ${film.details.director}"),
                                   Divider(),
                                   Text("Produkcja: ${film.details.production}"),
-                                  Divider(color: Colors.orange,),
+                                  Divider(
+                                    color: Colors.orange,
+                                  ),
                                   Text("Opis: ${film.details.description}"),
-                                  SizedBox(height: 10,)
+                                  SizedBox(
+                                    height: 10,
+                                  )
                                 ],
                               ),
                             ),
@@ -95,6 +100,14 @@ class FilmDetailsScreen extends StatelessWidget {
               } else if (state is FilmDetailsLoading) {
                 return Center(
                   child: CircularProgressIndicator(),
+                );
+              } else if (state is FilmDetailsError) {
+                return ErrorColumn(
+                  errorMessage: state.message,
+                  buttonMessage: 'Odśwież',
+                  buttonOnPressed: () {
+                    BlocProvider.of<FilmDetailsCubit>(context).getFilmDetails(film);
+                  },
                 );
               }
               return Container();

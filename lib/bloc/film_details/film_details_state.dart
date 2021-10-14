@@ -14,5 +14,11 @@ class FilmDetailsLoading extends FilmDetailsState {}
 class FilmDetailsLoaded extends FilmDetailsState {
   final Film film;
 
-  FilmDetailsLoaded({@required this.film});
+  const FilmDetailsLoaded({@required this.film});
+}
+
+class FilmDetailsError extends FilmDetailsState {
+  final String message;
+
+  const FilmDetailsError({@required this.message});
 }
