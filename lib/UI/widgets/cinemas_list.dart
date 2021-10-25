@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -65,14 +67,28 @@ class CinemasList extends StatelessWidget {
                   ElevatedButton(
                     onPressed: () async {
                       await _saveFavoriteCinemas();
-                      Fluttertoast.showToast(
-                        msg: "Zapisano kina jako ulubione.",
-                        gravity: ToastGravity.CENTER,
-                        toastLength: Toast.LENGTH_LONG,
-                        backgroundColor: Colors.green,
-                        textColor: Colors.white,
-                        fontSize: 16.0,
-                      );
+                      if (Platform.isAndroid || Platform.isIOS) {
+                        Fluttertoast.showToast(
+                          msg: "Zapisano kina jako ulubione.",
+                          gravity: ToastGravity.CENTER,
+                          toastLength: Toast.LENGTH_LONG,
+                          backgroundColor: Colors.green,
+                          textColor: Colors.white,
+                          fontSize: 16.0,
+                        );
+                      } else {
+                        ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            backgroundColor: Colors.green,
+                            content: Text(
+                              "Zapisano kina jako ulubione.",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ),
+                        );
+                      }
                     },
                     child: Text('Zapisz'),
                   ),

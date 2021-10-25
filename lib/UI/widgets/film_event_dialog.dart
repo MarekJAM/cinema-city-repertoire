@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -52,14 +54,28 @@ class _FilmEventDialogState extends State<FilmEventDialog> {
       uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
     );
 
-    Fluttertoast.showToast(
-      msg: "Zaplanowano przypomnienie.",
-      gravity: ToastGravity.CENTER,
-      toastLength: Toast.LENGTH_LONG,
-      backgroundColor: Colors.green,
-      textColor: Colors.white,
-      fontSize: 16.0,
-    );
+    if (Platform.isAndroid || Platform.isIOS) {
+      Fluttertoast.showToast(
+        msg: "Zaplanowano przypomnienie.",
+        gravity: ToastGravity.CENTER,
+        toastLength: Toast.LENGTH_LONG,
+        backgroundColor: Colors.green,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+    } else {
+      ScaffoldMessenger.of(context).hideCurrentSnackBar();
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          backgroundColor: Colors.green,
+          content: Text(
+            "Zaplanowano przypomnienie.",
+            textAlign: TextAlign.center,
+            style: TextStyle(color: Colors.white),
+          ),
+        ),
+      );
+    }
   }
 
   @override
