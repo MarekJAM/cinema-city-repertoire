@@ -44,20 +44,17 @@ class FilmDetailsScreen extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                                     children: [
-                                      Expanded(
-                                        child: DetailsColumnRow(
-                                          icon: Icons.calendar_today,
-                                          title: "Premiera",
-                                          content: film.details.premiereDate,
-                                        ),
+                                      DetailsColumnRow(
+                                        icon: Icons.calendar_today,
+                                        title: "Premiera",
+                                        content: film.details.premiereDate,
                                       ),
-                                      Expanded(
-                                        child: DetailsColumnRow(
-                                          icon: Icons.timer,
-                                          title: "Czas trwania",
-                                          content: "${film.length} min",
-                                        ),
+                                      DetailsColumnRow(
+                                        icon: Icons.timer,
+                                        title: "Czas trwania",
+                                        content: "${film.length} min",
                                       ),
                                     ],
                                   ),
@@ -71,8 +68,7 @@ class FilmDetailsScreen extends StatelessWidget {
                                     children: [
                                       Text("Gatunek: "),
                                       for (int i = 0; i < film.genres.length; i++)
-                                        Text("${film.genres[i]}" +
-                                            (i < film.genres.length - 1 ? ", " : "")),
+                                        Text("${film.genres[i]}" + (i < film.genres.length - 1 ? ", " : "")),
                                     ],
                                   ),
                                   Divider(),
