@@ -86,6 +86,15 @@ class RepertoireFilmItem extends StatelessWidget {
                           ),
                         ),
                       ),
+                      Padding(
+                        padding: const EdgeInsets.only(
+                          left: 3,
+                        ),
+                        child: Text(
+                          data['film'].length.toString() + ' min',
+                          style: TextStyle(fontSize: 10),
+                        ),
+                      ),
                       for (var item in data['film'].genres)
                         Padding(
                           padding: const EdgeInsets.symmetric(
@@ -109,10 +118,6 @@ class RepertoireFilmItem extends StatelessWidget {
                             ),
                           ),
                         ),
-                      Text(
-                        data['film'].length.toString() + ' min',
-                        style: TextStyle(fontSize: 10),
-                      )
                     ],
                   ),
                   Padding(
@@ -160,6 +165,9 @@ class RepertoireFilmItemRow extends StatelessWidget {
                   fontSize: 12,
                 ),
               ),
+              SizedBox(
+                height: 2,
+              ),
               Wrap(
                 direction: Axis.horizontal,
                 alignment: WrapAlignment.start,
@@ -204,7 +212,9 @@ class RepertoireFilmItemRow extends StatelessWidget {
                     ),
                 ],
               ),
-              Padding(padding: EdgeInsets.only(bottom: 2))
+              Padding(
+                padding: EdgeInsets.only(bottom: 2),
+              ),
             ],
           )
         : Container();
