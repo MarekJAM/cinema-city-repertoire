@@ -128,7 +128,7 @@ class RepertoireFilmItem extends StatelessWidget {
                       film: data["film"],
                       cinema: cinema,
                       events: data[cinema],
-                    )
+                    ),
                 ],
                 crossAxisAlignment: CrossAxisAlignment.start,
               ),

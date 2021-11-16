@@ -29,4 +29,31 @@ class WebScrapingHelper {
       return null;
     }
   }
+
+  static String scrapFilmWebScore(Film film, String responseBody) {
+    var document = parser.parse(responseBody);
+
+    try {
+      var results = document.getElementById("searchResult").children[0].children[0].children;
+
+      if (results != null) {
+        for (var i = 0; i < results.length; i++) {
+          var prodYear = results[i].getElementsByClassName("filmPreview__year")[0].innerHtml;
+         
+          if (prodYear == film.releaseYear || results.length == 1) {
+            var rate = results[i]
+                    .getElementsByClassName("filmPreview__rateBox rateBox")[0]
+                    ?.attributes['data-rate'] ??
+                null;
+                
+            return rate.substring(0, 3);
+          } 
+        }
+      }
+      return null;
+    } catch (e) {
+      print(e);
+      return null;
+    }
+  }
 }

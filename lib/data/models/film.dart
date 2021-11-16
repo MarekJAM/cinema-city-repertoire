@@ -33,8 +33,10 @@ class Film {
   final String posterLink;
   final List<String> genres;
   final String ageRestriction;
+  final String releaseYear;
   final String link;
   FilmDetails details;
+  String filmWebScore;
 
   Film({
     @required this.id,
@@ -43,8 +45,10 @@ class Film {
     @required this.posterLink,
     @required this.genres,
     @required this.ageRestriction,
+    @required this.releaseYear,
     @required this.link,
     this.details,
+    this.filmWebScore,
   });
 
   factory Film.fromJson(Map<String, dynamic> json) {
@@ -69,6 +73,7 @@ class Film {
       genres: loadedGenres,
       length: json['length'],
       posterLink: json['posterLink'],
+      releaseYear: json['releaseYear'],
       link: json['link']
     );
   }

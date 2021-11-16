@@ -32,6 +32,9 @@ void main() {
     filmApiClient: FilmApiClient(
       httpClient: http.Client(),
     ),
+    filmScoresApiClient: FilmScoresApiClient(
+      httpClient: http.Client(),
+    ),
   );
 
   WidgetsFlutterBinding.ensureInitialized();

@@ -9,8 +9,12 @@ import './repositories.dart';
 class RepertoireRepository {
   final RepertoireApiClient repertoireApiClient;
   final FilmApiClient filmApiClient;
+  final FilmScoresApiClient filmScoresApiClient;
 
-  RepertoireRepository({@required this.repertoireApiClient, @required this.filmApiClient})
+  RepertoireRepository(
+      {@required this.repertoireApiClient,
+      @required this.filmApiClient,
+      @required this.filmScoresApiClient})
       : assert(repertoireApiClient != null, filmApiClient != null);
 
   Future<Repertoire> getRepertoire(DateTime date, [List<String> cinemaIds]) async {
@@ -43,5 +47,12 @@ class RepertoireRepository {
 
   Future<Film> getFilmDetails(Film film) async {
     return await filmApiClient.getFilmDetails(film);
+  }
+
+  Future<void> getFilmWebScores(Repertoire repertoire) async {
+    for (var film in repertoire.items) {
+      print(repertoire.items.first);
+      await filmScoresApiClient.getFilmWebScore(film.values.first as Film);
+    }
   }
 }
