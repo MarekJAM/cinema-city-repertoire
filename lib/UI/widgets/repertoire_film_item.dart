@@ -121,7 +121,23 @@ class RepertoireFilmItem extends StatelessWidget {
                     ],
                   ),
                   Padding(
-                    padding: EdgeInsets.symmetric(vertical: 1),
+                    padding: EdgeInsets.symmetric(vertical: 2),
+                  ),
+                  BlocBuilder<FilmScoresCubit, FilmScoresState>(
+                    builder: (context, state) {
+                      return Wrap(
+                        crossAxisAlignment: WrapCrossAlignment.center,
+                        children: [
+                          Image.asset('assets/filmweb-logo.png', width: 70,),
+                          SizedBox(width: 5,),
+                          data['film'].filmWebScore != null ? 
+                          Text(data['film'].filmWebScore ?? 'no data') : Container(child: CircularProgressIndicator(strokeWidth: 2,), height: 10, width: 10),
+                        ],
+                      );
+                    },
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(vertical: 2),
                   ),
                   for (var cinema in cinemas)
                     RepertoireFilmItemRow(
@@ -185,7 +201,7 @@ class RepertoireFilmItemRow extends StatelessWidget {
                         );
                       },
                       child: Column(
-                        children: <Widget>[
+                        children: [
                           Container(
                             child: Column(
                               children: <Widget>[

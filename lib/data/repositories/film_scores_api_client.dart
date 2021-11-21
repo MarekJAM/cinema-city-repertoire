@@ -9,9 +9,9 @@ class FilmScoresApiClient extends ApiClient {
 
   FilmScoresApiClient({this.httpClient}) : assert(httpClient != null);
 
-  final String _filmWebBaseUrl = 'https://www.filmweb.pl/films/search?q=';
+  static const String _filmWebBaseUrl = 'https://www.filmweb.pl/films/search?q=';
 
-  Future<Film> getFilmWebScore(Film film) async {
+  static Future<Film> getFilmWebScore(Film film) async {
     var response = await http.get(
       Uri.parse(
         _filmWebBaseUrl + film.name,
@@ -22,7 +22,7 @@ class FilmScoresApiClient extends ApiClient {
       return null;
     }
 
-    film.filmWebScore = WebScrapingHelper.scrapFilmWebScore(film, response.body) ?? '-';
+    film.filmWebScore = await WebScrapingHelper.scrapFilmWebScore(film, response.body) ?? '-';
 
     return film;
   }

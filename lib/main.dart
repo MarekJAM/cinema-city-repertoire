@@ -36,8 +36,20 @@ void main() {
       httpClient: http.Client(),
     ),
   );
+  final FilmScoresRepository filmScoresRepository = FilmScoresRepository(
+    filmScoresApiClient: FilmScoresApiClient(
+      httpClient: http.Client(),
+    ),
+  );
 
   WidgetsFlutterBinding.ensureInitialized();
+
+  final repertoireBloc = RepertoireBloc(
+    repertoireRepository: repertoireRepository,
+  );
+
+  final filmScoresCubit =
+      FilmScoresCubit(repertoireBloc: repertoireBloc, filmScoresRepository: filmScoresRepository);
 
   runApp(
     MultiBlocProvider(
@@ -48,9 +60,7 @@ void main() {
           ),
         ),
         BlocProvider<RepertoireBloc>(
-          create: (context) => RepertoireBloc(
-            repertoireRepository: repertoireRepository,
-          ),
+          create: (context) => repertoireBloc,
         ),
         BlocProvider<DatesCubit>(
           create: (context) => DatesCubit(repertoireRepository),
@@ -58,6 +68,9 @@ void main() {
         BlocProvider<FilmDetailsCubit>(
           create: (context) => FilmDetailsCubit(repertoireRepository: repertoireRepository),
         ),
+        BlocProvider<FilmScoresCubit>(
+          create: (context) => filmScoresCubit,
+        )
       ],
       child: App(),
     ),

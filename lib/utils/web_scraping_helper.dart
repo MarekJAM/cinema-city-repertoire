@@ -45,7 +45,6 @@ class WebScrapingHelper {
                     .getElementsByClassName("filmPreview__rateBox rateBox")[0]
                     ?.attributes['data-rate'] ??
                 null;
-                
             return rate.substring(0, 3);
           } 
         }

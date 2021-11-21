@@ -1,4 +1,5 @@
 import 'package:cinema_city/data/repositories/film_api_client.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../../utils/date_handler.dart';
@@ -47,12 +48,5 @@ class RepertoireRepository {
 
   Future<Film> getFilmDetails(Film film) async {
     return await filmApiClient.getFilmDetails(film);
-  }
-
-  Future<void> getFilmWebScores(Repertoire repertoire) async {
-    for (var film in repertoire.items) {
-      print(repertoire.items.first);
-      await filmScoresApiClient.getFilmWebScore(film.values.first as Film);
-    }
   }
 }
