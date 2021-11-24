@@ -68,7 +68,8 @@ class FilmDetailsScreen extends StatelessWidget {
                                     children: [
                                       Text("Gatunek: "),
                                       for (int i = 0; i < film.genres.length; i++)
-                                        Text("${film.genres[i]}" + (i < film.genres.length - 1 ? ", " : "")),
+                                        Text("${film.genres[i]}" +
+                                            (i < film.genres.length - 1 ? ", " : "")),
                                     ],
                                   ),
                                   Divider(),
@@ -77,6 +78,41 @@ class FilmDetailsScreen extends StatelessWidget {
                                   Text("Reżyser: ${film.details.director}"),
                                   Divider(),
                                   Text("Produkcja: ${film.details.production}"),
+                                  Divider(),
+                                  BlocBuilder<FilmScoresCubit, FilmScoresState>(
+                                    builder: (context, state) {
+                                      return Wrap(
+                                        crossAxisAlignment: WrapCrossAlignment.center,
+                                        children: [
+                                          Text('Ocena: '),
+                                          Image.asset(
+                                            'assets/filmweb-logo.png',
+                                            width: 60,
+                                          ),
+                                          SizedBox(
+                                            width: 5,
+                                          ),
+                                          film.filmWebScore != null
+                                              ? Text(
+                                                  film.filmWebScore ?? 'no data',
+                                                )
+                                              : Padding(
+                                                  padding: const EdgeInsets.symmetric(
+                                                    horizontal: 3.5,
+                                                    vertical: 2,
+                                                  ),
+                                                  child: Container(
+                                                    child: CircularProgressIndicator(
+                                                      strokeWidth: 2,
+                                                    ),
+                                                    height: 10,
+                                                    width: 10,
+                                                  ),
+                                                ),
+                                        ],
+                                      );
+                                    },
+                                  ),
                                   Divider(
                                     color: Colors.orange,
                                   ),

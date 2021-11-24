@@ -48,9 +48,44 @@ class RepertoireFilmItem extends StatelessWidget {
                   ),
                 );
               },
-              child: Image.network(
-                data['film'].posterLink,
-                height: deviceSize.height * 0.15,
+              child: Column(
+                children: [
+                  Image.network(
+                    data['film'].posterLink,
+                    height: deviceSize.height * 0.15,
+                  ),
+                  BlocBuilder<FilmScoresCubit, FilmScoresState>(
+                    builder: (context, state) {
+                      return Wrap(
+                        crossAxisAlignment: WrapCrossAlignment.center,
+                        children: [
+                          Image.asset(
+                            'assets/filmweb-logo.png',
+                            width: 50,
+                          ),
+                          SizedBox(
+                            width: 5,
+                          ),
+                          data['film'].filmWebScore != null
+                              ? Text(
+                                  data['film'].filmWebScore ?? 'no data',
+                                  style: TextStyle(fontSize: 12),
+                                )
+                              : Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 3.5, vertical: 2),
+                                child: Container(
+                                    child: CircularProgressIndicator(
+                                      strokeWidth: 2,
+                                    ),
+                                    height: 10,
+                                    width: 10,
+                                  ),
+                              ),
+                        ],
+                      );
+                    },
+                  ),
+                ],
               ),
             ),
           ),
@@ -122,19 +157,6 @@ class RepertoireFilmItem extends StatelessWidget {
                   ),
                   Padding(
                     padding: EdgeInsets.symmetric(vertical: 2),
-                  ),
-                  BlocBuilder<FilmScoresCubit, FilmScoresState>(
-                    builder: (context, state) {
-                      return Wrap(
-                        crossAxisAlignment: WrapCrossAlignment.center,
-                        children: [
-                          Image.asset('assets/filmweb-logo.png', width: 70,),
-                          SizedBox(width: 5,),
-                          data['film'].filmWebScore != null ? 
-                          Text(data['film'].filmWebScore ?? 'no data') : Container(child: CircularProgressIndicator(strokeWidth: 2,), height: 10, width: 10),
-                        ],
-                      );
-                    },
                   ),
                   Padding(
                     padding: EdgeInsets.symmetric(vertical: 2),
