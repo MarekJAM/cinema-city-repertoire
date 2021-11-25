@@ -14,66 +14,69 @@ import './data/repositories/repositories.dart';
 import './UI/screens/repertoire_screen.dart';
 
 void main() {
-  if (kDebugMode) {
-    Bloc.observer = SimpleBlocObserver();
-  }
+  BlocOverrides.runZoned(
+    () {
+      tz.initializeTimeZones();
 
-  tz.initializeTimeZones();
-
-  final CinemasRepository cinemasRepository = CinemasRepository(
-    cinemasApiClient: CinemasApiClient(
-      httpClient: http.Client(),
-    ),
-  );
-  final RepertoireRepository repertoireRepository = RepertoireRepository(
-    repertoireApiClient: RepertoireApiClient(
-      httpClient: http.Client(),
-    ),
-    filmApiClient: FilmApiClient(
-      httpClient: http.Client(),
-    ),
-    filmScoresApiClient: FilmScoresApiClient(
-      httpClient: http.Client(),
-    ),
-  );
-  final FilmScoresRepository filmScoresRepository = FilmScoresRepository(
-    filmScoresApiClient: FilmScoresApiClient(
-      httpClient: http.Client(),
-    ),
-  );
-
-  WidgetsFlutterBinding.ensureInitialized();
-
-  final repertoireBloc = RepertoireBloc(
-    repertoireRepository: repertoireRepository,
-  );
-
-  final filmScoresCubit =
-      FilmScoresCubit(repertoireBloc: repertoireBloc, filmScoresRepository: filmScoresRepository);
-
-  runApp(
-    MultiBlocProvider(
-      providers: [
-        BlocProvider<CinemasBloc>(
-          create: (context) => CinemasBloc(
-            cinemasRepository: cinemasRepository,
-          ),
+      final CinemasRepository cinemasRepository = CinemasRepository(
+        cinemasApiClient: CinemasApiClient(
+          httpClient: http.Client(),
         ),
-        BlocProvider<RepertoireBloc>(
-          create: (context) => repertoireBloc,
+      );
+
+      final RepertoireRepository repertoireRepository = RepertoireRepository(
+        repertoireApiClient: RepertoireApiClient(
+          httpClient: http.Client(),
         ),
-        BlocProvider<DatesCubit>(
-          create: (context) => DatesCubit(repertoireRepository),
+        filmApiClient: FilmApiClient(
+          httpClient: http.Client(),
         ),
-        BlocProvider<FilmDetailsCubit>(
-          create: (context) => FilmDetailsCubit(repertoireRepository: repertoireRepository),
+        filmScoresApiClient: FilmScoresApiClient(
+          httpClient: http.Client(),
         ),
-        BlocProvider<FilmScoresCubit>(
-          create: (context) => filmScoresCubit,
-        )
-      ],
-      child: App(),
-    ),
+      );
+
+      final FilmScoresRepository filmScoresRepository = FilmScoresRepository(
+        filmScoresApiClient: FilmScoresApiClient(
+          httpClient: http.Client(),
+        ),
+      );
+
+      WidgetsFlutterBinding.ensureInitialized();
+
+      final repertoireBloc = RepertoireBloc(
+        repertoireRepository: repertoireRepository,
+      );
+
+      final filmScoresCubit =
+          FilmScoresCubit(repertoireBloc: repertoireBloc, filmScoresRepository: filmScoresRepository);
+
+      runApp(
+        MultiBlocProvider(
+          providers: [
+            BlocProvider<CinemasBloc>(
+              create: (context) => CinemasBloc(
+                cinemasRepository: cinemasRepository,
+              ),
+            ),
+            BlocProvider<RepertoireBloc>(
+              create: (context) => repertoireBloc,
+            ),
+            BlocProvider<DatesCubit>(
+              create: (context) => DatesCubit(repertoireRepository),
+            ),
+            BlocProvider<FilmDetailsCubit>(
+              create: (context) => FilmDetailsCubit(repertoireRepository: repertoireRepository),
+            ),
+            BlocProvider<FilmScoresCubit>(
+              create: (context) => filmScoresCubit,
+            )
+          ],
+          child: App(),
+        ),
+      );
+    },
+    blocObserver: kDebugMode ? SimpleBlocObserver() : null,
   );
 }
 
