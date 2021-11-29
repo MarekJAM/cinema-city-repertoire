@@ -57,7 +57,7 @@ void main() {
             BlocProvider<CinemasBloc>(
               create: (context) => CinemasBloc(
                 cinemasRepository: cinemasRepository,
-              ),
+              )..add(GetCinemas()),
             ),
             BlocProvider<RepertoireBloc>(
               create: (context) => repertoireBloc,
@@ -87,8 +87,6 @@ class App extends StatelessWidget {
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
-
-    BlocProvider.of<CinemasBloc>(context).add(GetCinemas());
 
     return MaterialApp(
       localizationsDelegates: [
