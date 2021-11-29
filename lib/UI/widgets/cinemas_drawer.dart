@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'widgets.dart';
 import '../../data/models/models.dart';
-import '../../configurable/custom_colors.dart';
 
 class CinemasDrawer extends StatelessWidget {
   const CinemasDrawer({
