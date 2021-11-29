@@ -17,7 +17,7 @@ class FilmDetailsScreen extends StatelessWidget {
       body: SafeArea(
         child: Container(
           height: mediaQuery.size.height,
-          color: Colors.black,
+          color: Theme.of(context).primaryColor,
           child: BlocBuilder<FilmDetailsCubit, FilmDetailsState>(
             builder: (context, state) {
               if (state is FilmDetailsLoaded) {
@@ -59,7 +59,7 @@ class FilmDetailsScreen extends StatelessWidget {
                                     ],
                                   ),
                                   Divider(
-                                    color: Colors.orange,
+                                    color: Theme.of(context).colorScheme.secondary,
                                     thickness: 2,
                                   ),
                                   Text("Tytuł: ${film.name}"),
@@ -114,7 +114,7 @@ class FilmDetailsScreen extends StatelessWidget {
                                     },
                                   ),
                                   Divider(
-                                    color: Colors.orange,
+                                    color: Theme.of(context).colorScheme.secondary,
                                   ),
                                   Text("Opis: ${film.details.description}"),
                                   SizedBox(

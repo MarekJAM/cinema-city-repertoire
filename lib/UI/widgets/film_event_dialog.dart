@@ -93,7 +93,7 @@ class _FilmEventDialogState extends State<FilmEventDialog> {
     return Dialog(
       shape: RoundedRectangleBorder(
         side: BorderSide(
-          color: Colors.orange,
+          color: Theme.of(context).colorScheme.secondary,
         ),
         borderRadius: BorderRadius.circular(20),
       ),

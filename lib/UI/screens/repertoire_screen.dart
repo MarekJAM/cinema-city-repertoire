@@ -75,7 +75,7 @@ class _RepertoireScreenState extends State<RepertoireScreen> {
               TextSpan(text: 'Cinema City\n'),
               TextSpan(text: 'Repertuar', style: TextStyle(fontSize: 16)),
             ],
-            style: TextStyle(color: Colors.orange, fontSize: 22),
+            style: TextStyle(color: Theme.of(context).colorScheme.secondary, fontSize: 22),
           ),
         ),
         actions: <Widget>[

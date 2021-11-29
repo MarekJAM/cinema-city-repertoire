@@ -121,7 +121,7 @@ class _CinemaItemRowState extends State<CinemaItemRow> {
       child: Row(
         children: <Widget>[
           Checkbox(
-            activeColor: Theme.of(context).accentColor,
+            activeColor: Theme.of(context).colorScheme.secondary,
             value: widget.pickedCinemas.contains(widget.cinemaData.id),
             onChanged: (val) {
               setState(

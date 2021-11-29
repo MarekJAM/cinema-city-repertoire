@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'widgets.dart';
 import '../../data/models/models.dart';
+import '../../configurable/custom_colors.dart';
 
 class CinemasDrawer extends StatelessWidget {
   const CinemasDrawer({
@@ -30,10 +31,12 @@ class CinemasDrawer extends StatelessWidget {
               child: DrawerHeader(
                 child: Text(
                   'Kina',
-                  style: TextStyle(fontSize: 20),
+                  style: TextStyle(
+                    fontSize: 20,
+                  ),
                 ),
                 decoration: BoxDecoration(
-                  color: Theme.of(context).buttonColor,
+                  color: Theme.of(context).colorScheme.secondary,
                 ),
               ),
             ),
