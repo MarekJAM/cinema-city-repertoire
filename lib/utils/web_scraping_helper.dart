@@ -31,28 +31,22 @@ class WebScrapingHelper {
   }
 
   static String scrapFilmWebScore(Film film, String responseBody) {
-    var document = parser.parse(responseBody);
+    var scoreRegex = new RegExp(r'data-rate="+[0-9]+\.+[0-9]{15,20}');
+    var releaseRegex = new RegExp(r'data-release="+[0-9]+[0-9]+[0-9]+[0-9]');
+  
+    var scores = scoreRegex.allMatches(responseBody).map((e) => responseBody.substring(e.start + 11, e.start + 14)).toList();
+    var releaseYears = releaseRegex.allMatches(responseBody).map((e) => responseBody.substring(e.start + 14, e.start + 18)).toList();
 
-    try {
-      var results = document.getElementById("searchResult").children[0].children[0].children;
-
-      if (results != null) {
-        for (var i = 0; i < results.length; i++) {
-          var prodYear = results[i].getElementsByClassName("filmPreview__year")[0].innerHtml;
-         
-          if (prodYear == film.releaseYear || results.length == 1) {
-            var rate = results[i]
-                    .getElementsByClassName("filmPreview__rateBox rateBox")[0]
-                    ?.attributes['data-rate'] ??
-                null;
-            return rate.substring(0, 3);
-          } 
-        }
-      }
-      return null;
-    } catch (e) {
-      print(e);
-      return null;
+    if (scores.length == 1) {
+      return scores[0];
     }
+
+    for (int i = 0; i < scores.length; i ++) {
+      if (releaseYears[i] == film.releaseYear) {
+        return scores[i];
+      }
+    }
+
+    return null;
   }
 }
