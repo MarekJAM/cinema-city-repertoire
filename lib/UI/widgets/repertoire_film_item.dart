@@ -28,65 +28,67 @@ class RepertoireFilmItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final deviceSize = MediaQuery.of(context).size;
     final cinemas = data.keys.where((element) => element != "film").toList();
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 5),
       child: Row(
         children: <Widget>[
-          Expanded(
-            flex: 2,
-            child: GestureDetector(
-              onTap: () {
-                BlocProvider.of<FilmDetailsCubit>(context).getFilmDetails(data['film']);
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (BuildContext context) => FilmDetailsScreen(
-                      film: data['film'],
-                    ),
+          GestureDetector(
+            onTap: () {
+              BlocProvider.of<FilmDetailsCubit>(context).getFilmDetails(data['film']);
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (BuildContext context) => FilmDetailsScreen(
+                    film: data['film'],
                   ),
-                );
-              },
-              child: Column(
-                children: [
-                  Image.network(
+                ),
+              );
+            },
+            child: Column(
+              children: [
+                Container(
+                  height: 120,
+                  width: 80,
+                  child: Image.network(
                     data['film'].posterLink,
-                    height: deviceSize.height * 0.15,
                   ),
-                  BlocBuilder<FilmScoresCubit, FilmScoresState>(
-                    builder: (context, state) {
-                      return Wrap(
-                        crossAxisAlignment: WrapCrossAlignment.center,
-                        children: [
-                          Image.asset(
-                            'assets/filmweb-logo.png',
-                            width: 50,
-                          ),
-                          SizedBox(
-                            width: 5,
-                          ),
-                          data['film'].filmWebScore != null
-                              ? Text(
-                                  data['film'].filmWebScore ?? 'no data',
-                                  style: TextStyle(fontSize: 12),
-                                )
-                              : Padding(
+                ),
+                SizedBox(
+                  height: 2,
+                ),
+                BlocBuilder<FilmScoresCubit, FilmScoresState>(
+                  builder: (context, state) {
+                    return Wrap(
+                      crossAxisAlignment: WrapCrossAlignment.center,
+                      children: [
+                        Image.asset(
+                          'assets/filmweb-logo.png',
+                          width: 50,
+                        ),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        data['film'].filmWebScore != null
+                            ? Text(
+                                data['film'].filmWebScore ?? 'no data',
+                                style: TextStyle(fontSize: 12),
+                              )
+                            : Padding(
                                 padding: const EdgeInsets.symmetric(horizontal: 3.5, vertical: 2),
                                 child: Container(
-                                    child: CircularProgressIndicator(
-                                      strokeWidth: 2,
-                                    ),
-                                    height: 10,
-                                    width: 10,
+                                  child: CircularProgressIndicator(
+                                    strokeWidth: 2,
                                   ),
+                                  height: 10,
+                                  width: 10,
+                                ),
                               ),
-                        ],
-                      );
-                    },
-                  ),
-                ],
-              ),
+                      ],
+                    );
+                  },
+                ),
+              ],
             ),
           ),
           Expanded(

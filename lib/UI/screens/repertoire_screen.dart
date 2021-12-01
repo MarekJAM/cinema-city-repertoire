@@ -146,6 +146,7 @@ class _RepertoireScreenState extends State<RepertoireScreen> {
               if (state is RepertoireLoaded) {
                 return RefreshIndicator(
                   onRefresh: () => _refreshRepertoire(),
+                  backgroundColor: Theme.of(context).primaryColor,
                   child: state.data.items.length != 0
                       ? Padding(
                           padding: const EdgeInsets.only(top: 5),
