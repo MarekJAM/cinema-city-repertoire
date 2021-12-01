@@ -31,7 +31,7 @@ class WebScrapingHelper {
   }
 
   static String scrapFilmWebScore(Film film, String responseBody) {
-    var scoreRegex = new RegExp(r'data-rate="+[0-9]+\.+[0-9]{15,20}');
+    var scoreRegex = new RegExp(r'data-rate="+[0-9]+\.+[0-9]{1,30}');
     var releaseRegex = new RegExp(r'data-release="+[0-9]+[0-9]+[0-9]+[0-9]');
   
     var scores = scoreRegex.allMatches(responseBody).map((e) => responseBody.substring(e.start + 11, e.start + 14)).toList();
