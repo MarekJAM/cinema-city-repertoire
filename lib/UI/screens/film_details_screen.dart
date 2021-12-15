@@ -72,12 +72,15 @@ class FilmDetailsScreen extends StatelessWidget {
                                           Text("${film.genres[i]}" + (i < film.genres.length - 1 ? ", " : "")),
                                       ],
                                     ),
-                                  Divider(),
-                                  Text("Obsada: ${film.details.cast}"),
-                                  Divider(),
-                                  Text("Reżyser: ${film.details.director}"),
-                                  Divider(),
-                                  Text("Produkcja: ${film.details.production}"),
+                                  if (film.details.cast.isNotEmpty) Divider(),
+                                  if (film.details.cast.isNotEmpty)
+                                    Text("Obsada: ${film.details.cast}"),
+                                  if (film.details.director.isNotEmpty) Divider(),
+                                  if (film.details.director.isNotEmpty)
+                                    Text("Reżyser: ${film.details.director}"),
+                                  if (film.details.production.isNotEmpty) Divider(),
+                                  if (film.details.production.isNotEmpty) 
+                                    Text("Produkcja: ${film.details.production}"),
                                   Divider(),
                                   BlocBuilder<FilmScoresCubit, FilmScoresState>(
                                     builder: (context, state) {

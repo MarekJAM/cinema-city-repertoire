@@ -6,3 +6,4 @@ export './cinemas_api_client.dart';
 export './cinemas_repository.dart';
 export './film_scores_api_client.dart';
 export './film_scores_repository.dart';
+export './film_api_client.dart';

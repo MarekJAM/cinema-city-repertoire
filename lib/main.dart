@@ -1,5 +1,3 @@
-import 'package:cinema_city/bloc/film_details/film_details_cubit.dart';
-import 'package:cinema_city/data/repositories/film_api_client.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
