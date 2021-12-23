@@ -1,14 +1,17 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class SliverHeader extends SliverPersistentHeaderDelegate {
   final String imageUrl;
+  final String videoUrl;
   final double minExtent;
   final double maxExtent;
 
   SliverHeader({
     @required this.imageUrl,
+    @required this.videoUrl,
     this.minExtent,
     @required this.maxExtent,
   });
@@ -50,7 +53,8 @@ class SliverHeader extends SliverPersistentHeaderDelegate {
                   ),
                 ),
                 duration: const Duration(milliseconds: 500),
-                crossFadeState: frame == null ? CrossFadeState.showFirst : CrossFadeState.showSecond,
+                crossFadeState:
+                    frame == null ? CrossFadeState.showFirst : CrossFadeState.showSecond,
               );
             },
           ),
@@ -64,7 +68,24 @@ class SliverHeader extends SliverPersistentHeaderDelegate {
               },
               icon: Icon(Icons.arrow_back),
             ),
-          )
+          ),
+        Positioned(
+          right: 10,
+          bottom: 5,
+          child: ElevatedButton(
+            child: Text('Zobacz zwiastun'),
+            onPressed: () async {
+              if (await canLaunch(videoUrl)) {
+                await launch(videoUrl);
+              } else {
+                throw 'Could not launch $videoUrl';
+              }
+            },
+            style: ButtonStyle(
+              backgroundColor: MaterialStateProperty.all(Theme.of(context).colorScheme.secondary),
+            ),
+          ),
+        )
       ],
     );
   }

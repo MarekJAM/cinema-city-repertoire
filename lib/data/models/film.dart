@@ -35,6 +35,7 @@ class Film {
   final String ageRestriction;
   final String releaseYear;
   final String link;
+  final String videoLink;
   FilmDetails details;
   String filmWebScore;
 
@@ -47,6 +48,7 @@ class Film {
     @required this.ageRestriction,
     @required this.releaseYear,
     @required this.link,
+    @required this.videoLink,
     this.details,
     this.filmWebScore,
   });
@@ -74,7 +76,8 @@ class Film {
       length: json['length'],
       posterLink: json['posterLink'],
       releaseYear: json['releaseYear'],
-      link: json['link']
+      link: json['link'],
+      videoLink: json['videoLink']
     );
   }
 }
