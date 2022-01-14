@@ -47,12 +47,12 @@ class FilmDetailsScreen extends StatelessWidget {
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                                     children: [
-                                      DetailsColumnRow(
+                                      DetailsHeaderRow(
                                         icon: Icons.calendar_today,
                                         title: "Premiera",
                                         content: film.details.premiereDate,
                                       ),
-                                      DetailsColumnRow(
+                                      DetailsHeaderRow(
                                         icon: Icons.timer,
                                         title: "Czas trwania",
                                         content: "${film.length} min",
@@ -63,64 +63,68 @@ class FilmDetailsScreen extends StatelessWidget {
                                     color: Theme.of(context).colorScheme.secondary,
                                     thickness: 2,
                                   ),
-                                  Text("Tytuł: ${film.name}"),
+                                  DetailsDataRow(title: "Tytuł:", content: film.name),
                                   if (film.genres.isNotEmpty) Divider(),
                                   if (film.genres.isNotEmpty)
-                                    Wrap(
-                                      children: [
-                                        Text("Gatunek: "),
-                                        for (int i = 0; i < film.genres.length; i++)
-                                          Text("${film.genres[i]}" + (i < film.genres.length - 1 ? ", " : "")),
-                                      ],
+                                    DetailsDataRow(
+                                      title: "Gatunek:",
+                                      widget: Wrap(
+                                        children: [
+                                          for (int i = 0; i < film.genres.length; i++)
+                                            Text("${film.genres[i]}" +
+                                                (i < film.genres.length - 1 ? ", " : "")),
+                                        ],
+                                      ),
                                     ),
                                   if (film.details.cast.isNotEmpty) Divider(),
                                   if (film.details.cast.isNotEmpty)
-                                    Text("Obsada: ${film.details.cast}"),
+                                    DetailsDataRow(title: "Obsada:", content: film.details.cast),
                                   if (film.details.director.isNotEmpty) Divider(),
                                   if (film.details.director.isNotEmpty)
-                                    Text("Reżyser: ${film.details.director}"),
+                                    DetailsDataRow(title: "Reżyser:", content: film.details.director),
                                   if (film.details.production.isNotEmpty) Divider(),
-                                  if (film.details.production.isNotEmpty) 
-                                    Text("Produkcja: ${film.details.production}"),
+                                  if (film.details.production.isNotEmpty)
+                                    DetailsDataRow(title: "Produkcja:", content: film.details.production),
                                   Divider(),
-                                  BlocBuilder<FilmScoresCubit, FilmScoresState>(
-                                    builder: (context, state) {
-                                      return Wrap(
-                                        crossAxisAlignment: WrapCrossAlignment.center,
-                                        children: [
-                                          Text('Ocena: '),
-                                          Image.asset(
-                                            'assets/filmweb-logo.png',
-                                            width: 60,
-                                          ),
-                                          SizedBox(
-                                            width: 5,
-                                          ),
-                                          film.filmWebScore != null
-                                              ? Text(
-                                                  film.filmWebScore ?? 'no data',
-                                                )
-                                              : Padding(
-                                                  padding: const EdgeInsets.symmetric(
-                                                    horizontal: 3.5,
-                                                    vertical: 2,
-                                                  ),
-                                                  child: Container(
-                                                    child: CircularProgressIndicator(
-                                                      strokeWidth: 2,
+                                  DetailsDataRow(
+                                    title: "Ocena:",
+                                    widget: BlocBuilder<FilmScoresCubit, FilmScoresState>(
+                                      builder: (context, state) {
+                                        return Wrap(
+                                          children: [
+                                            Image.asset(
+                                              'assets/filmweb-logo.png',
+                                              width: 60,
+                                            ),
+                                            SizedBox(
+                                              width: 5,
+                                            ),
+                                            film.filmWebScore != null
+                                                ? Text(
+                                                    film.filmWebScore ?? 'no data',
+                                                  )
+                                                : Padding(
+                                                    padding: const EdgeInsets.symmetric(
+                                                      horizontal: 3.5,
+                                                      vertical: 2,
                                                     ),
-                                                    height: 10,
-                                                    width: 10,
+                                                    child: Container(
+                                                      child: CircularProgressIndicator(
+                                                        strokeWidth: 2,
+                                                      ),
+                                                      height: 10,
+                                                      width: 10,
+                                                    ),
                                                   ),
-                                                ),
-                                        ],
-                                      );
-                                    },
+                                          ],
+                                        );
+                                      },
+                                    ),
                                   ),
                                   Divider(
                                     color: Theme.of(context).colorScheme.secondary,
                                   ),
-                                  Text("Opis: ${film.details.description}"),
+                                  Text("${film.details.description}"),
                                   SizedBox(
                                     height: 10,
                                   )
@@ -155,12 +159,12 @@ class FilmDetailsScreen extends StatelessWidget {
   }
 }
 
-class DetailsColumnRow extends StatelessWidget {
+class DetailsHeaderRow extends StatelessWidget {
   final IconData icon;
   final String title;
   final String content;
 
-  const DetailsColumnRow({
+  const DetailsHeaderRow({
     @required this.icon,
     @required this.title,
     @required this.content,
@@ -195,6 +199,29 @@ class DetailsColumnRow extends StatelessWidget {
             )
           ],
         ),
+      ],
+    );
+  }
+}
+
+class DetailsDataRow extends StatelessWidget {
+  final String title;
+  final String content;
+  final Widget widget;
+
+  const DetailsDataRow({@required this.title, this.content, this.widget});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Container(
+          width: 80,
+          child: Text(title),
+        ),
+        Expanded(
+          child: content != null ? Text(content) : widget,
+        )
       ],
     );
   }
