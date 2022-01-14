@@ -143,24 +143,24 @@ class _FilmEventDialogState extends State<FilmEventDialog> {
                     _launchURL(widget.item.bookingLink);
                   },
                 ),
-                Builder(
-                  builder: (context) {
-                    return ElevatedButton(
-                      style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all(Colors.grey),
-                      ),
-                      child: Text(
-                        "Ustaw przypomnienie",
-                      ),
-                      onPressed: () {
-                        _scheduleNotification(
-                          '${widget.film.name}',
-                          widget.item,
-                        );
-                      },
-                    );
-                  },
-                ),
+                // Builder(
+                //   builder: (context) {
+                //     return ElevatedButton(
+                //       style: ButtonStyle(
+                //         backgroundColor: MaterialStateProperty.all(Colors.grey),
+                //       ),
+                //       child: Text(
+                //         "Ustaw przypomnienie",
+                //       ),
+                //       onPressed: () {
+                //         _scheduleNotification(
+                //           '${widget.film.name}',
+                //           widget.item,
+                //         );
+                //       },
+                //     );
+                //   },
+                // ),
               ],
             ),
           ],
