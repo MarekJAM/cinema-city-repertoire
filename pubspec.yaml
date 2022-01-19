@@ -26,7 +26,7 @@ dependencies:
   shared_preferences: any
   url_launcher: 6.0.4
   equatable: ^2.0.3
-  flutter_bloc: ^8.0.0
+  flutter_bloc: ^8.0.1
   fluttertoast: ^8.0.7
   html: ^0.15.0
 
