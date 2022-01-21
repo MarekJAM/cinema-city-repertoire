@@ -154,9 +154,16 @@ class _RepertoireScreenState extends State<RepertoireScreen> {
                             separatorBuilder: (ctx, index) => Divider(),
                             itemCount: state.data.items.length,
                             itemBuilder: (ctx, index) {
-                              return RepertoireFilmItem(
-                                state.data.items[index],
-                              );
+                              return index != state.data.items.length - 1
+                                  ? RepertoireFilmItem(
+                                      state.data.items[index],
+                                    )
+                                  : Padding(
+                                      padding: const EdgeInsets.only(bottom: 8),
+                                      child: RepertoireFilmItem(
+                                        state.data.items[index],
+                                      ),
+                                    );
                             },
                           ),
                         )

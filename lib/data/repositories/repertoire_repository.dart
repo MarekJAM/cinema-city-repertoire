@@ -1,4 +1,3 @@
-import 'package:cinema_city/data/repositories/film_api_client.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -12,11 +11,11 @@ class RepertoireRepository {
   final FilmApiClient filmApiClient;
   final FilmScoresApiClient filmScoresApiClient;
 
-  RepertoireRepository(
-      {@required this.repertoireApiClient,
-      @required this.filmApiClient,
-      @required this.filmScoresApiClient})
-      : assert(repertoireApiClient != null, filmApiClient != null);
+  RepertoireRepository({
+    @required this.repertoireApiClient,
+    @required this.filmApiClient,
+    @required this.filmScoresApiClient,
+  }) : assert(repertoireApiClient != null, filmApiClient != null);
 
   Future<Repertoire> getRepertoire(DateTime date, [List<String> cinemaIds]) async {
     return await repertoireApiClient.getRepertoire(
