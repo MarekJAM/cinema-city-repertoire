@@ -9,6 +9,7 @@ import 'package:timezone/timezone.dart' as tz;
 
 import '../../data/models/models.dart';
 import '../../utils/date_handler.dart';
+import '../../utils/time_zone.dart';
 
 class FilmEventDialog extends StatefulWidget {
   const FilmEventDialog({
@@ -37,17 +38,17 @@ class _FilmEventDialogState extends State<FilmEventDialog> {
     }
   }
 
-  _scheduleNotification(String title, Event event) async {
+  _scheduleNotification(String title, Event event, tz.TZDateTime tzDateTime) async {
     await localNotification.zonedSchedule(
       int.tryParse(event.id) ?? 0,
       title,
       'Przypomnienie o seansie - ${event.dateTime.hour}:${event.dateTime.minute}',
-      tz.TZDateTime.from(event.dateTime.subtract(Duration(minutes: 30)), tz.local),
+      tzDateTime,
       const NotificationDetails(
         android: AndroidNotificationDetails(
           'channelId',
           'Cinema City Repertuar',
-          'Cinema City Repertuar Powiadomienie',
+          channelDescription: 'Cinema City Repertuar Powiadomienie',
         ),
       ),
       androidAllowWhileIdle: true,
@@ -143,24 +144,65 @@ class _FilmEventDialogState extends State<FilmEventDialog> {
                     _launchURL(widget.item.bookingLink);
                   },
                 ),
-                // Builder(
-                //   builder: (context) {
-                //     return ElevatedButton(
-                //       style: ButtonStyle(
-                //         backgroundColor: MaterialStateProperty.all(Colors.grey),
-                //       ),
-                //       child: Text(
-                //         "Ustaw przypomnienie",
-                //       ),
-                //       onPressed: () {
-                //         _scheduleNotification(
-                //           '${widget.film.name}',
-                //           widget.item,
-                //         );
-                //       },
-                //     );
-                //   },
-                // ),
+                Builder(
+                  builder: (context) {
+                    return ElevatedButton(
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all(Colors.grey),
+                      ),
+                      child: Text(
+                        "Ustaw przypomnienie",
+                      ),
+                      onPressed: () async {
+                        final eventDateTime = widget.item.dateTime;
+
+                        final pickedTime = await showTimePicker(
+                          context: context,
+                          initialEntryMode: TimePickerEntryMode.input,
+                          helpText: "Wybierz godzinę przypomnienia",
+                          initialTime: TimeOfDay.fromDateTime(
+                            widget.item.dateTime.subtract(
+                              Duration(minutes: 30),
+                            ),
+                          ),
+                        );
+
+                        if (pickedTime != null) {
+                          final timeZone = TimeZone();
+                          final timeZoneName = await timeZone.getTimeZoneName();
+
+                          final location = await timeZone.getLocation(timeZoneName);
+
+                          final pickedTzDateTime = tz.TZDateTime(
+                            location,
+                            eventDateTime.year,
+                            eventDateTime.month,
+                            eventDateTime.day,
+                            pickedTime.hour,
+                            pickedTime.minute,
+                          );
+
+                          if (pickedTzDateTime.isAfter(tz.TZDateTime.now(location))) {
+                            _scheduleNotification(
+                              '${widget.film.name}',
+                              widget.item,
+                              pickedTzDateTime,
+                            );
+                          } else {
+                            Fluttertoast.showToast(
+                              msg: "Nie można wybrać godziny wcześniejszej niż aktualna.",
+                              gravity: ToastGravity.CENTER,
+                              toastLength: Toast.LENGTH_LONG,
+                              backgroundColor: Colors.red,
+                              textColor: Colors.white,
+                              fontSize: 16.0,
+                            );
+                          }
+                        }
+                      },
+                    );
+                  },
+                ),
               ],
             ),
           ],
