@@ -42,7 +42,7 @@ class _FilmEventDialogState extends State<FilmEventDialog> {
     await localNotification.zonedSchedule(
       int.tryParse(event.id) ?? 0,
       title,
-      'Przypomnienie o seansie - ${event.dateTime.hour}:${event.dateTime.minute}',
+      'Przypomnienie o seansie - ${event.dateTime.hour}:${event.dateTime.minute == 0 ? "00" : event.dateTime.minute}',
       tzDateTime,
       const NotificationDetails(
         android: AndroidNotificationDetails(
