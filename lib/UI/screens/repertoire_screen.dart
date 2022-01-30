@@ -80,17 +80,20 @@ class _RepertoireScreenState extends State<RepertoireScreen> {
         ),
         actions: <Widget>[
           Padding(
-            padding: EdgeInsets.only(right: 20),
-            child: GestureDetector(
-              onTap: () {
-                _selectDate(context);
-              },
-              child: Center(
-                child: Text(
-                  DateHandler.convertDateToDDMM(pickedDate),
-                  style: TextStyle(color: Colors.white),
+            padding: const EdgeInsets.all(8.0),
+            child: TextButton(
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(
+                  Theme.of(context).indicatorColor,
                 ),
               ),
+              child: Text(
+                DateHandler.convertDateToDDMM(pickedDate),
+                style: TextStyle(color: Colors.white),
+              ),
+              onPressed: () {
+                _selectDate(context);
+              },
             ),
           ),
           BlocListener<DatesCubit, DatesState>(
@@ -99,38 +102,32 @@ class _RepertoireScreenState extends State<RepertoireScreen> {
                 selectableDates = state.dates;
               }
             },
-            child: BlocConsumer<CinemasBloc, CinemasState>(listener: (context, state) {
-              if (state is CinemasLoaded) {
-                BlocProvider.of<DatesCubit>(context).getDates(dateInAYear, state.favoriteCinemaIds);
-              }
-            }, builder: (ctx, state) {
-              if (state is CinemasLoaded) {
-                if (state.data != null) {
-                  return Padding(
-                    padding: EdgeInsets.only(right: 20),
-                    child: GestureDetector(
-                      onTap: () => Scaffold.of(ctx).openEndDrawer(),
-                      child: Center(
-                        child: Icon(
-                          Icons.local_movies,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  );
+            child: BlocConsumer<CinemasBloc, CinemasState>(
+              listener: (context, state) {
+                if (state is CinemasLoaded) {
+                  BlocProvider.of<DatesCubit>(context)
+                      .getDates(dateInAYear, state.favoriteCinemaIds);
                 }
-              }
-              return Padding(
-                padding: EdgeInsets.only(right: 20),
-                child: Center(
-                  child: Icon(
-                    Icons.local_movies,
-                    color: Colors.grey,
-                  ),
-                ),
-              );
-            }),
-          )
+              },
+              builder: (ctx, state) {
+                return PopupMenuButton(
+                  itemBuilder: (BuildContext context) {
+                    return [
+                      PopupMenuItem<String>(
+                        child: Text("Kina"),
+                        enabled: state is CinemasLoaded,
+                        onTap: () => Scaffold.of(context).openEndDrawer(),
+                      ),
+                      PopupMenuItem<String>(
+                        child: Text("Filtry"),
+                        enabled: false,
+                      ),
+                    ];
+                  },
+                );
+              },
+            ),
+          ),
         ],
         backgroundColor: Colors.black,
       ),
