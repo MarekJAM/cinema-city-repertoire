@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -59,7 +57,7 @@ class SliverHeader extends SliverPersistentHeaderDelegate {
             },
           ),
         ),
-        if (!Platform.isAndroid && !Platform.isIOS)
+        
           Padding(
             padding: EdgeInsets.only(left: 15, top: 15),
             child: IconButton(
