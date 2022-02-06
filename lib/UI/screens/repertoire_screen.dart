@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../bloc/blocs.dart';
 import '../../utils/date_handler.dart';
 import '../widgets/widgets.dart';
+import 'filters_screen.dart';
 
 class RepertoireScreen extends StatefulWidget {
   @override
@@ -120,7 +121,16 @@ class _RepertoireScreenState extends State<RepertoireScreen> {
                       ),
                       PopupMenuItem<String>(
                         child: Text("Filtry"),
-                        enabled: false,
+                        // enabled: false,
+                        onTap: () async {
+                          // Navigator.of(context).pop();
+                          await Future.delayed(Duration(microseconds: 3));
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (BuildContext context) => FiltersScreen(),
+                            ),
+                          );
+                        },
                       ),
                     ];
                   },
