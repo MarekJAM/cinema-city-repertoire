@@ -6,3 +6,4 @@ export './films.dart';
 export './cinemas.dart';
 export './repertoire.dart';
 export './film_details.dart';
+export './repertoire_filters.dart';

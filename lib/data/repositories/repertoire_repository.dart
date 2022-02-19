@@ -48,4 +48,16 @@ class RepertoireRepository {
   Future<Film> getFilmDetails(Film film) async {
     return await filmApiClient.getFilmDetails(film);
   }
+
+  Repertoire filterRepertoire(List<RepertoireFilter> filters, Repertoire repertoire) {
+    var filteredRepertoire = repertoire;
+
+    if (filters.length > 0) {
+      filters.forEach((el) {
+        filteredRepertoire = el.filter(filteredRepertoire);
+      });
+    }
+
+    return filteredRepertoire;
+  }
 }

@@ -9,8 +9,6 @@ class Films {
 
   void setFilms(List<dynamic> films) {
     for (var film in films) {
-      print(film);
-
       if ((_items.firstWhere((el) => el.id == film['id'], orElse: () => null)) == null) {
         _items.add(
           Film.fromJson(film)
