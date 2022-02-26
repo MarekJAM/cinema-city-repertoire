@@ -11,12 +11,20 @@ class GenreFilter implements RepertoireFilter {
 
   @override
   Repertoire filter(Repertoire repertoire) {
-    var items = repertoire.items
-        .map((el) =>
-            (el['film'] as Film).genres.any((gen) => genres.contains(gen))
-                ? el
-                : null)
-        .toList();
+    var items = repertoire.items;
+    var toRemove = [];
+
+    items.forEach((el) {
+      if ((el['film'] as Film)
+              .genres
+              .firstWhere((el) => genres.contains(el), orElse: () => null) ==
+          null) {
+            toRemove.add(el);
+          }
+    });
+
+    items.removeWhere((el) => toRemove.contains(el));
+
     return Repertoire()..items = items;
   }
 }

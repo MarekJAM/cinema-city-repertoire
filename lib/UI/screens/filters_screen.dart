@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 
-import '../../data/models/film.dart';
-import '../../data/models/event.dart';
+import '../../data/models/models.dart';
+import '../../bloc/repertoire/bloc.dart';
 
 class FiltersScreen extends StatefulWidget {
   const FiltersScreen();
@@ -48,7 +49,8 @@ class _FiltersScreenState extends State<FiltersScreen> {
                     ),
                     ElevatedButton(
                       onPressed: () {
-                        print(_pickedGenres);
+                        BlocProvider.of<RepertoireBloc>(context).add(FiltersChanged([GenreFilter(_pickedGenres)]));
+                        Navigator.of(context).pop();
                       },
                       child: Text('Zatwierdź'),
                     ),

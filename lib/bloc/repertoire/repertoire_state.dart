@@ -1,13 +1,9 @@
-import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
 import '../../data/models/models.dart';
 
-abstract class RepertoireState extends Equatable {
+abstract class RepertoireState {
   const RepertoireState();
-
-  @override
-  List<Object> get props => [];
 }
 
 class RepertoireInitial extends RepertoireState {

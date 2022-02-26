@@ -46,8 +46,10 @@ void main() {
         repertoireRepository: repertoireRepository,
       );
 
-      final filmScoresCubit =
-          FilmScoresCubit(repertoireBloc: repertoireBloc, filmScoresRepository: filmScoresRepository);
+      final filmScoresCubit = FilmScoresCubit(
+        repertoireBloc: repertoireBloc,
+        filmScoresRepository: filmScoresRepository,
+      );
 
       runApp(
         MultiBlocProvider(
@@ -64,11 +66,12 @@ void main() {
               create: (context) => DatesCubit(repertoireRepository),
             ),
             BlocProvider<FilmDetailsCubit>(
-              create: (context) => FilmDetailsCubit(repertoireRepository: repertoireRepository),
+              create: (context) =>
+                  FilmDetailsCubit(repertoireRepository: repertoireRepository),
             ),
             BlocProvider<FilmScoresCubit>(
               create: (context) => filmScoresCubit,
-            )
+            ),
           ],
           child: App(),
         ),

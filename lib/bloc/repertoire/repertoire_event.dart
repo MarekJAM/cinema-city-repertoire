@@ -1,5 +1,7 @@
 import 'package:equatable/equatable.dart';
 
+import '../../data/models/models.dart';
+
 abstract class RepertoireEvent extends Equatable {
   const RepertoireEvent();
 
@@ -15,4 +17,13 @@ class GetRepertoire extends RepertoireEvent {
 
   @override
   String toString() => 'GetRepertoireDetails { date: $date, cinemaIds: $cinemaIds }';
+}
+
+class FiltersChanged extends RepertoireEvent {
+  final List<RepertoireFilter> filters;
+
+  const FiltersChanged(this.filters);
+
+  @override
+  String toString() => 'FiltersChanged { filters: $filters';
 }
