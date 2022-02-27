@@ -6,6 +6,12 @@ import 'package:multi_select_flutter/multi_select_flutter.dart';
 import '../../data/models/models.dart';
 import '../../bloc/repertoire/bloc.dart';
 
+var _genres = genreMap.values.toList();
+var _eventTypes = eventTypes;
+
+var _pickedGenres = genreMap.values.toList();
+var _pickedEventTypes = eventTypes.toList();
+
 class FiltersScreen extends StatefulWidget {
   const FiltersScreen();
 
@@ -14,12 +20,6 @@ class FiltersScreen extends StatefulWidget {
 }
 
 class _FiltersScreenState extends State<FiltersScreen> {
-  var _genres = genreMap.values.toList();
-  var _eventTypes = eventTypes;
-
-  var _pickedGenres = genreMap.values.toList();
-  var _pickedEventTypes = eventTypes.toList();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,7 +49,18 @@ class _FiltersScreenState extends State<FiltersScreen> {
                     ),
                     ElevatedButton(
                       onPressed: () {
-                        BlocProvider.of<RepertoireBloc>(context).add(FiltersChanged([GenreFilter(_pickedGenres)]));
+                        BlocProvider.of<RepertoireBloc>(context).add(
+                          FiltersChanged(
+                            [
+                              GenreFilter(
+                                _pickedGenres,
+                              ),
+                              EventTypeFilter(
+                                _pickedEventTypes,
+                              )
+                            ],
+                          ),
+                        );
                         Navigator.of(context).pop();
                       },
                       child: Text('Zatwierdź'),
@@ -66,10 +77,11 @@ class _FiltersScreenState extends State<FiltersScreen> {
 }
 
 class FilterMultiSelectDialog extends StatelessWidget {
-  const FilterMultiSelectDialog(
-      {@required this.title,
-      @required this.values,
-      @required this.pickedValues});
+  const FilterMultiSelectDialog({
+    @required this.title,
+    @required this.values,
+    @required this.pickedValues,
+  });
 
   final String title;
   final List<String> values;
