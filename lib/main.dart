@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hive/hive.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:timezone/data/latest.dart' as tz;
@@ -12,8 +15,15 @@ import './data/repositories/repositories.dart';
 import './UI/screens/repertoire_screen.dart';
 
 void main() {
+
   BlocOverrides.runZoned(
-    () {
+    () async {
+      var path = Directory.current.path;
+
+      await Hive.init(path);
+
+      var box = await Hive.openBox('filtersBox');
+
       tz.initializeTimeZones();
 
       final CinemasRepository cinemasRepository = CinemasRepository(
