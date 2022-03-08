@@ -1,6 +1,13 @@
+import 'package:hive/hive.dart';
+
 import '../models.dart';
 
+part 'genre_filter.g.dart';
+
+@HiveType(typeId: 1)
 class GenreFilter implements RepertoireFilter {
+  
+  @HiveField(0)
   final List<String> genres;
 
   GenreFilter(this.genres);

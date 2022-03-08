@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 
 import '../../data/models/models.dart';
-import '../../bloc/repertoire/bloc.dart';
+import '../../bloc/blocs.dart';
 
 var _genres = genreMap.values.toList();
 var _eventTypes = eventTypes;
