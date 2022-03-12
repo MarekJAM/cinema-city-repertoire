@@ -11,7 +11,7 @@ class FiltersStorageHive implements FiltersStorage {
   @override
   List<RepertoireFilter> loadFilters() {
     final filters = box.get('filters');
-    return [...filters];
+    return filters != null ? [...filters] : [];
   }
 
   @override
