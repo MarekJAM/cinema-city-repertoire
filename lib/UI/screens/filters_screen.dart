@@ -27,30 +27,41 @@ class _FiltersScreenState extends State<FiltersScreen> {
         child: Center(
           child: Padding(
             padding: EdgeInsets.all(5),
-            child: ListView(
-              shrinkWrap: true,
-              children: [
-                FilterMultiSelectDialog(
-                  title: "Gatunek",
-                  values: _genres,
-                  pickedValues: _pickedGenres,
-                ),
-                FilterMultiSelectDialog(
-                  title: "Rodzaj seansu",
-                  values: _eventTypes,
-                  pickedValues: _pickedEventTypes,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    TextButton(
-                      onPressed: () => Navigator.of(context).pop(),
-                      child: Text('Powrót'),
-                    ),
-                    ElevatedButton(
-                      onPressed: () {
-                        BlocProvider.of<RepertoireBloc>(context).add(
-                          FiltersChanged(
+            child: BlocBuilder<FiltersCubit, FiltersState>(builder: (context, state) {
+              if (state is FiltersLoaded) {
+                state.filters.forEach(
+                  (filter) {
+                    if (filter is GenreFilter) {
+                      _pickedGenres = filter.genres;
+                    } else if (filter is EventTypeFilter) {
+                      _pickedEventTypes = filter.eventTypes;
+                    }
+                  },
+                );
+              }
+              return ListView(
+                shrinkWrap: true,
+                children: [
+                  FilterMultiSelectDialog(
+                    title: "Gatunek",
+                    values: _genres,
+                    pickedValues: _pickedGenres,
+                  ),
+                  FilterMultiSelectDialog(
+                    title: "Rodzaj seansu",
+                    values: _eventTypes,
+                    pickedValues: _pickedEventTypes,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      TextButton(
+                        onPressed: () => Navigator.of(context).pop(),
+                        child: Text('Powrót'),
+                      ),
+                      ElevatedButton(
+                        onPressed: () {
+                          BlocProvider.of<FiltersCubit>(context).saveFilters(
                             [
                               GenreFilter(
                                 _pickedGenres,
@@ -59,16 +70,16 @@ class _FiltersScreenState extends State<FiltersScreen> {
                                 _pickedEventTypes,
                               )
                             ],
-                          ),
-                        );
-                        Navigator.of(context).pop();
-                      },
-                      child: Text('Zatwierdź'),
-                    ),
-                  ],
-                )
-              ],
-            ),
+                          );
+                          Navigator.of(context).pop();
+                        },
+                        child: Text('Zatwierdź'),
+                      ),
+                    ],
+                  )
+                ],
+              );
+            }),
           ),
         ),
       ),
@@ -109,7 +120,6 @@ class FilterMultiSelectDialog extends StatelessWidget {
         autovalidateMode: AutovalidateMode.always,
         onConfirm: (items) {
           pickedValues.clear();
-          print(items);
           items.forEach((el) {
             pickedValues.add(el);
           });

@@ -1,5 +1,4 @@
 import 'package:bloc/bloc.dart';
-import 'package:equatable/equatable.dart';
 
 import '../../data/repositories/repositories.dart';
 import '../../data/models/filters/filters.dart';
@@ -17,11 +16,11 @@ class FiltersCubit extends Cubit<FiltersState> {
   }
 
   void updateFilters(List<RepertoireFilter> filters) {
-    emit(FiltersUpdated(filters));
+    emit(FiltersLoaded(filters));
   }
 
   void saveFilters(List<RepertoireFilter> filters) {
     filtersRepository.saveFilters(filters);
-    emit(FiltersUpdated(filters));
+    emit(FiltersLoaded(filters));
   }
 }

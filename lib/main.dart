@@ -55,16 +55,17 @@ void main() {
 
       WidgetsFlutterBinding.ensureInitialized();
 
+      final filtersCubit = FiltersCubit(filtersRepository)..loadFiltersOnAppStarted();
+
       final repertoireBloc = RepertoireBloc(
         repertoireRepository: repertoireRepository,
+        filtersCubit: filtersCubit,
       );
 
       final filmScoresCubit = FilmScoresCubit(
         repertoireBloc: repertoireBloc,
         filmScoresRepository: filmScoresRepository,
       );
-
-      final filtersCubit = FiltersCubit(filtersRepository)..loadFiltersOnAppStarted();
 
       runApp(
         MultiBlocProvider(
