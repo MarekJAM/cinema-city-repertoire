@@ -25,7 +25,7 @@ class FilmDetailsScreen extends StatelessWidget {
                   slivers: [
                     SliverPersistentHeader(
                       pinned: true,
-                      floating: true,
+                      floating: false,
                       delegate: SliverHeader(
                         imageUrl: film.posterLink.replaceAll("md.jpg", "lg.jpg"),
                         videoUrl: film.videoLink,
@@ -40,96 +40,94 @@ class FilmDetailsScreen extends StatelessWidget {
                           color: Colors.grey[900],
                           child: Padding(
                             padding: const EdgeInsets.only(left: 8, right: 8, top: 8),
-                            child: SingleChildScrollView(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                    children: [
-                                      DetailsHeaderRow(
-                                        icon: Icons.calendar_today,
-                                        title: "Premiera",
-                                        content: film.details.premiereDate,
-                                      ),
-                                      DetailsHeaderRow(
-                                        icon: Icons.timer,
-                                        title: "Czas trwania",
-                                        content: "${film.length} min",
-                                      ),
-                                    ],
-                                  ),
-                                  Divider(
-                                    color: Theme.of(context).colorScheme.secondary,
-                                    thickness: 2,
-                                  ),
-                                  DetailsDataRow(title: "Tytuł:", content: film.name),
-                                  if (film.genres.isNotEmpty) Divider(),
-                                  if (film.genres.isNotEmpty)
-                                    DetailsDataRow(
-                                      title: "Gatunek:",
-                                      widget: Wrap(
-                                        children: [
-                                          for (int i = 0; i < film.genres.length; i++)
-                                            Text("${film.genres[i]}" +
-                                                (i < film.genres.length - 1 ? ", " : "")),
-                                        ],
-                                      ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                  children: [
+                                    DetailsHeaderRow(
+                                      icon: Icons.calendar_today,
+                                      title: "Premiera",
+                                      content: film.details.premiereDate,
                                     ),
-                                  if (film.details.cast.isNotEmpty) Divider(),
-                                  if (film.details.cast.isNotEmpty)
-                                    DetailsDataRow(title: "Obsada:", content: film.details.cast),
-                                  if (film.details.director.isNotEmpty) Divider(),
-                                  if (film.details.director.isNotEmpty)
-                                    DetailsDataRow(title: "Reżyser:", content: film.details.director),
-                                  if (film.details.production.isNotEmpty) Divider(),
-                                  if (film.details.production.isNotEmpty)
-                                    DetailsDataRow(title: "Produkcja:", content: film.details.production),
-                                  Divider(),
+                                    DetailsHeaderRow(
+                                      icon: Icons.timer,
+                                      title: "Czas trwania",
+                                      content: "${film.length} min",
+                                    ),
+                                  ],
+                                ),
+                                Divider(
+                                  color: Theme.of(context).colorScheme.secondary,
+                                  thickness: 2,
+                                ),
+                                DetailsDataRow(title: "Tytuł:", content: film.name),
+                                if (film.genres.isNotEmpty) Divider(),
+                                if (film.genres.isNotEmpty)
                                   DetailsDataRow(
-                                    title: "Ocena:",
-                                    widget: BlocBuilder<FilmScoresCubit, FilmScoresState>(
-                                      builder: (context, state) {
-                                        return Wrap(
-                                          children: [
-                                            Image.asset(
-                                              'assets/filmweb-logo.png',
-                                              width: 60,
-                                            ),
-                                            SizedBox(
-                                              width: 5,
-                                            ),
-                                            film.filmWebScore != null
-                                                ? Text(
-                                                    film.filmWebScore ?? 'no data',
-                                                  )
-                                                : Padding(
-                                                    padding: const EdgeInsets.symmetric(
-                                                      horizontal: 3.5,
-                                                      vertical: 2,
-                                                    ),
-                                                    child: Container(
-                                                      child: CircularProgressIndicator(
-                                                        strokeWidth: 2,
-                                                      ),
-                                                      height: 10,
-                                                      width: 10,
-                                                    ),
-                                                  ),
-                                          ],
-                                        );
-                                      },
+                                    title: "Gatunek:",
+                                    widget: Wrap(
+                                      children: [
+                                        for (int i = 0; i < film.genres.length; i++)
+                                          Text("${film.genres[i]}" +
+                                              (i < film.genres.length - 1 ? ", " : "")),
+                                      ],
                                     ),
                                   ),
-                                  Divider(
-                                    color: Theme.of(context).colorScheme.secondary,
+                                if (film.details.cast.isNotEmpty) Divider(),
+                                if (film.details.cast.isNotEmpty)
+                                  DetailsDataRow(title: "Obsada:", content: film.details.cast),
+                                if (film.details.director.isNotEmpty) Divider(),
+                                if (film.details.director.isNotEmpty)
+                                  DetailsDataRow(title: "Reżyser:", content: film.details.director),
+                                if (film.details.production.isNotEmpty) Divider(),
+                                if (film.details.production.isNotEmpty)
+                                  DetailsDataRow(title: "Produkcja:", content: film.details.production),
+                                Divider(),
+                                DetailsDataRow(
+                                  title: "Ocena:",
+                                  widget: BlocBuilder<FilmScoresCubit, FilmScoresState>(
+                                    builder: (context, state) {
+                                      return Wrap(
+                                        children: [
+                                          Image.asset(
+                                            'assets/filmweb-logo.png',
+                                            width: 60,
+                                          ),
+                                          SizedBox(
+                                            width: 5,
+                                          ),
+                                          film.filmWebScore != null
+                                              ? Text(
+                                                  film.filmWebScore ?? 'no data',
+                                                )
+                                              : Padding(
+                                                  padding: const EdgeInsets.symmetric(
+                                                    horizontal: 3.5,
+                                                    vertical: 2,
+                                                  ),
+                                                  child: Container(
+                                                    child: CircularProgressIndicator(
+                                                      strokeWidth: 2,
+                                                    ),
+                                                    height: 10,
+                                                    width: 10,
+                                                  ),
+                                                ),
+                                        ],
+                                      );
+                                    },
                                   ),
-                                  Text("${film.details.description}"),
-                                  SizedBox(
-                                    height: 10,
-                                  )
-                                ],
-                              ),
+                                ),
+                                Divider(
+                                  color: Theme.of(context).colorScheme.secondary,
+                                ),
+                                Text("${film.details.description}"),
+                                SizedBox(
+                                  height: 10,
+                                )
+                              ],
                             ),
                           ),
                         ),
