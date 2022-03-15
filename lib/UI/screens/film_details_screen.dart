@@ -24,8 +24,6 @@ class FilmDetailsScreen extends StatelessWidget {
                 return CustomScrollView(
                   slivers: [
                     SliverPersistentHeader(
-                      pinned: true,
-                      floating: false,
                       delegate: SliverHeader(
                         imageUrl: film.posterLink.replaceAll("md.jpg", "lg.jpg"),
                         videoUrl: film.videoLink,
