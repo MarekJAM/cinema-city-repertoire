@@ -31,22 +31,20 @@ class WebScrapingHelper {
   }
 
   static String scrapFilmWebScore(Film film, String responseBody) {
-    var scoreRegex = new RegExp(r'data-rate="+[0-9]+\.+[0-9]{1,30}');
-    var releaseRegex = new RegExp(r'data-release="+[0-9]+[0-9]+[0-9]+[0-9]');
-  
-    var scores = scoreRegex.allMatches(responseBody).map((e) => responseBody.substring(e.start + 11, e.start + 14)).toList();
-    var releaseYears = releaseRegex.allMatches(responseBody).map((e) => responseBody.substring(e.start + 14, e.start + 18)).toList();
+    var filmRegex = new RegExp('(?<=${film.name}).*?(> <div class=\"content__sidebar\">)');
 
-    if (scores.length == 1) {
-      return scores[0];
+    var scoreRegex = new RegExp(r'ratingValue">+[0-9]+\,+[0-9]');
+
+    var searchedFilmsStrings = filmRegex.allMatches(responseBody).map((e) => e.group(0)).toList();
+
+    String score;
+    String retScore;
+
+    if (searchedFilmsStrings != null && searchedFilmsStrings.length > 0) {
+      score = scoreRegex.stringMatch(searchedFilmsStrings[0])?.substring(13, 16);
+      retScore = score.replaceFirst(RegExp(r','), '.');
     }
 
-    for (int i = 0; i < scores.length; i ++) {
-      if (releaseYears[i] == film.releaseYear) {
-        return scores[i];
-      }
-    }
-
-    return null;
+    return retScore;
   }
 }
