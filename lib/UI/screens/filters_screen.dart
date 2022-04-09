@@ -20,7 +20,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
   @override
   void initState() {
     _pickedGenres.addAll(_genres);
-    _pickedEventTypes.addAll(eventTypes);
+    _pickedEventTypes.addAll(_eventTypes);
     super.initState();
   }
 
@@ -31,7 +31,8 @@ class _FiltersScreenState extends State<FiltersScreen> {
         child: Center(
           child: Padding(
             padding: EdgeInsets.all(5),
-            child: BlocBuilder<FiltersCubit, FiltersState>(builder: (context, state) {
+            child: BlocBuilder<FiltersCubit, FiltersState>(
+                builder: (context, state) {
               if (state is FiltersLoaded) {
                 state.filters.forEach(
                   (filter) {
@@ -70,10 +71,10 @@ class _FiltersScreenState extends State<FiltersScreen> {
                           BlocProvider.of<FiltersCubit>(context).saveFilters(
                             [
                               GenreFilter(
-                                _pickedGenres,
+                                [..._pickedGenres],
                               ),
                               EventTypeFilter(
-                                _pickedEventTypes,
+                                [..._pickedEventTypes],
                               )
                             ],
                           );
@@ -117,7 +118,11 @@ class FilterMultiSelectDialog extends StatelessWidget {
             builder: (BuildContext context) => Dialog(
               child: Padding(
                 padding: const EdgeInsets.all(10.0),
-                child: DialogColumn(title: title, values: values, pickedValues: pickedValues),
+                child: DialogColumn(
+                  title: title,
+                  values: values,
+                  pickedValues: pickedValues,
+                ),
               ),
             ),
           );
@@ -156,69 +161,74 @@ class _DialogColumnState extends State<DialogColumn> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              widget.title,
-              style: TextStyle(
-                fontSize: 22,
+    return SingleChildScrollView(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                widget.title,
+                style: TextStyle(
+                  fontSize: 22,
+                ),
               ),
-            ),
-            IconButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              icon: Icon(
-                Icons.cancel,
-              ),
-            )
-          ],
-        ),
-        Divider(),
-        Wrap(
-          children: [
-            for (int i = 0; i < widget.values.length; i++)
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 2),
-                child: FilterValueButton(
-                  value: widget.values[i],
-                  pickedValues: tempPickedValues,
-                  tween: ColorTween(
-                    begin: _isInitiallySelected(widget.values[i]) ? Colors.orange : Colors.grey,
-                    end: _isInitiallySelected(widget.values[i]) ? Colors.grey : Colors.orange,
-                  ),
+              IconButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                icon: Icon(
+                  Icons.cancel,
                 ),
               )
-          ],
-        ),
-        Divider(),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            OutlinedButton(
-              onPressed: () {
-                setState(() {
-                  tempPickedValues.clear();
-                  tempPickedValues.addAll(widget.values);
-                });
-              },
-              child: Text('Reset'),
-            ),
-            SizedBox(
-              width: 5,
-            ),
-            OutlinedButton(
-              onPressed: () {},
-              child: Text('Zatwierdź'),
-            ),
-          ],
-        )
-      ],
+            ],
+          ),
+          Divider(),
+          Wrap(
+            children: [
+              for (int i = 0; i < widget.values.length; i++)
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 2),
+                  child: FilterValueButton(
+                    value: widget.values[i],
+                    pickedValues: tempPickedValues,
+                    isInitiallySelected: _isInitiallySelected(
+                      widget.values[i],
+                    ),
+                  ),
+                ),
+            ],
+          ),
+          Divider(),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              OutlinedButton(
+                onPressed: () {
+                  setState(() {
+                    tempPickedValues.clear();
+                    tempPickedValues.addAll(widget.values);
+                  });
+                },
+                child: Text('Reset'),
+              ),
+              SizedBox(
+                width: 5,
+              ),
+              OutlinedButton(
+                onPressed: () {
+                  widget.pickedValues.clear();
+                  widget.pickedValues.addAll(tempPickedValues);
+                  Navigator.of(context).pop();
+                },
+                child: Text('Zatwierdź'),
+              ),
+            ],
+          )
+        ],
+      ),
     );
   }
 }
@@ -228,27 +238,44 @@ class FilterValueButton extends StatefulWidget {
     Key key,
     @required this.value,
     @required this.pickedValues,
-    @required this.tween,
+    @required this.isInitiallySelected,
   }) : super(key: key);
 
   final String value;
   final List<String> pickedValues;
-  final ColorTween tween;
+  final bool isInitiallySelected;
 
   @override
   State<FilterValueButton> createState() => _FilterValueButtonState();
 }
 
-class _FilterValueButtonState extends State<FilterValueButton> with TickerProviderStateMixin {
+class _FilterValueButtonState extends State<FilterValueButton>
+    with TickerProviderStateMixin {
   AnimationController _animationController;
   Animation _colorTween;
 
   @override
   void initState() {
-    _animationController = AnimationController(vsync: this, duration: Duration(milliseconds: 300));
-    _colorTween = widget.tween.animate(_animationController);
+    _animationController = AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: 300),
+      value: widget.isInitiallySelected ? 0 : 1,
+    );
+    _colorTween = ColorTween(
+      begin: Colors.orange,
+      end: Colors.grey,
+    ).animate(_animationController);
 
     super.initState();
+  }
+
+  @override
+  void didUpdateWidget(covariant FilterValueButton oldWidget) {
+    if (widget.isInitiallySelected) {
+      _animationController.animateBack(0, duration: Duration(milliseconds: 0));
+    }
+
+    super.didUpdateWidget(oldWidget);
   }
 
   @override
@@ -266,7 +293,12 @@ class _FilterValueButtonState extends State<FilterValueButton> with TickerProvid
             _animationController.reverse();
             toggleValue();
           } else {
-            _animationController.forward();
+            _animationController.animateTo(
+              1,
+              duration: Duration(
+                milliseconds: 0,
+              ),
+            );
             toggleValue();
           }
         },

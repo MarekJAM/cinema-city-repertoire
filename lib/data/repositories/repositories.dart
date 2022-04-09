@@ -8,5 +8,5 @@ export './film_scores_api_client.dart';
 export './film_scores_repository.dart';
 export './film_api_client.dart';
 export './filters_storage.dart';
-export './filters_repertoire.dart';
+export 'filters_repository.dart';
 export './filters_storage_hive.dart';
