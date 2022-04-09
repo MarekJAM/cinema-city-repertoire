@@ -31,8 +31,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
         child: Center(
           child: Padding(
             padding: EdgeInsets.all(5),
-            child: BlocBuilder<FiltersCubit, FiltersState>(
-                builder: (context, state) {
+            child: BlocBuilder<FiltersCubit, FiltersState>(builder: (context, state) {
               if (state is FiltersLoaded) {
                 state.filters.forEach(
                   (filter) {
@@ -109,10 +108,8 @@ class FilterMultiSelectDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 10),
-      child: ListTile(
-        title: Text(title),
-        trailing: Icon(Icons.arrow_drop_down),
-        onTap: () {
+      child: OutlinedButton(
+        onPressed: () {
           showDialog(
             context: context,
             builder: (BuildContext context) => Dialog(
@@ -127,6 +124,10 @@ class FilterMultiSelectDialog extends StatelessWidget {
             ),
           );
         },
+        child: ListTile(
+          title: Text(title),
+          trailing: Icon(Icons.arrow_drop_down),
+        ),
       ),
     );
   }
@@ -249,8 +250,7 @@ class FilterValueButton extends StatefulWidget {
   State<FilterValueButton> createState() => _FilterValueButtonState();
 }
 
-class _FilterValueButtonState extends State<FilterValueButton>
-    with TickerProviderStateMixin {
+class _FilterValueButtonState extends State<FilterValueButton> with TickerProviderStateMixin {
   AnimationController _animationController;
   Animation _colorTween;
 
