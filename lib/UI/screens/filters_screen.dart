@@ -37,11 +37,13 @@ class _FiltersScreenState extends State<FiltersScreen> {
                 state.filters.forEach(
                   (filter) {
                     if (filter is GenreFilter) {
-                      _pickedGenres.clear();
-                      _pickedGenres.addAll(filter.genres);
+                      _pickedGenres
+                        ..clear()
+                        ..addAll(filter.genres);
                     } else if (filter is EventTypeFilter) {
-                      _pickedEventTypes.clear();
-                      _pickedEventTypes.addAll(filter.eventTypes);
+                      _pickedEventTypes
+                        ..clear()
+                        ..addAll(filter.eventTypes);
                     }
                   },
                 );

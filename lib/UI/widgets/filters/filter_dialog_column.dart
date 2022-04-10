@@ -77,10 +77,13 @@ class _FilterDialogColumnState extends State<FilterDialogColumn> {
             children: [
               OutlinedButton(
                 onPressed: () {
-                  setState(() {
-                    tempPickedValues.clear();
-                    tempPickedValues.addAll(widget.values);
-                  });
+                  setState(
+                    () {
+                      tempPickedValues
+                        ..clear()
+                        ..addAll(widget.values);
+                    },
+                  );
                 },
                 child: Text('Reset'),
               ),
@@ -89,8 +92,9 @@ class _FilterDialogColumnState extends State<FilterDialogColumn> {
               ),
               OutlinedButton(
                 onPressed: () {
-                  widget.pickedValues.clear();
-                  widget.pickedValues.addAll(tempPickedValues);
+                  widget.pickedValues
+                    ..clear()
+                    ..addAll(tempPickedValues);
                   Navigator.of(context).pop();
                 },
                 child: Text('Zatwierdź'),
