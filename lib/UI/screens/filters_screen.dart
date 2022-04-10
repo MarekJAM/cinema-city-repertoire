@@ -7,6 +7,7 @@ import '../widgets/filters/filter_widgets.dart';
 
 var _genres = genreMap.values.toList()..sort();
 var _eventTypes = eventTypes;
+var _scoreFilter = ScoreFilter(0, true);
 final List<String> _pickedGenres = [];
 final List<String> _pickedEventTypes = [];
 
@@ -44,6 +45,8 @@ class _FiltersScreenState extends State<FiltersScreen> {
                       _pickedEventTypes
                         ..clear()
                         ..addAll(filter.eventTypes);
+                    } else if (filter is ScoreFilter) {
+                      _scoreFilter = filter;
                     }
                   },
                 );
@@ -51,20 +54,26 @@ class _FiltersScreenState extends State<FiltersScreen> {
               return ListView(
                 shrinkWrap: true,
                 children: [
-                  MinimalScoreSlider(),
-                  SizedBox(height: 10,),
+                  MinimalScoreSlider(scoreFilter: _scoreFilter,),
+                  SizedBox(
+                    height: 10,
+                  ),
                   FilterMultiSelectDialog(
                     title: "Gatunek",
                     values: _genres,
                     pickedValues: _pickedGenres,
                   ),
-                  SizedBox(height: 10,),
+                  SizedBox(
+                    height: 10,
+                  ),
                   FilterMultiSelectDialog(
                     title: "Rodzaj seansu",
                     values: _eventTypes,
                     pickedValues: _pickedEventTypes,
                   ),
-                  SizedBox(height: 10,),
+                  SizedBox(
+                    height: 10,
+                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
@@ -81,7 +90,8 @@ class _FiltersScreenState extends State<FiltersScreen> {
                               ),
                               EventTypeFilter(
                                 [..._pickedEventTypes],
-                              )
+                              ),
+                              _scoreFilter,
                             ],
                           );
                           Navigator.of(context).pop();

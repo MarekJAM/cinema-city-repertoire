@@ -1,4 +1,3 @@
-import 'package:cinema_city/data/models/filters/filters.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -12,6 +11,7 @@ import './bloc/simple_bloc_delegate.dart';
 import './bloc/blocs.dart';
 import './data/repositories/repositories.dart';
 import './UI/screens/repertoire_screen.dart';
+import './data/models/filters/filters.dart';
 
 void main() {
   BlocOverrides.runZoned(
@@ -20,6 +20,7 @@ void main() {
 
       Hive.registerAdapter(GenreFilterAdapter());
       Hive.registerAdapter(EventTypeFilterAdapter());
+      Hive.registerAdapter(ScoreFilterAdapter());
 
       final filtersBox =
           await Hive.openBox<dynamic>('filtersBox');

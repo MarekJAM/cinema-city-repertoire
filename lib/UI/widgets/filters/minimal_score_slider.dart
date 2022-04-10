@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 
+import '../../../data/models/filters/score_filter.dart';
+
 class MinimalScoreSlider extends StatefulWidget {
+  final ScoreFilter scoreFilter;
+
   const MinimalScoreSlider({
     Key key,
+    this.scoreFilter,
   }) : super(key: key);
 
   @override
@@ -10,9 +15,6 @@ class MinimalScoreSlider extends StatefulWidget {
 }
 
 class _MinimalScoreSliderState extends State<MinimalScoreSlider> {
-  double _sliderValue = 0;
-  bool _checkboxValue = true;
-
   @override
   Widget build(BuildContext context) {
     return OutlinedButton(
@@ -25,7 +27,7 @@ class _MinimalScoreSliderState extends State<MinimalScoreSlider> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10),
                 child: Text(
-                  'Minimalna ocena: ${_sliderValue.toStringAsFixed(1)}',
+                  'Minimalna ocena: ${widget.scoreFilter.score.toStringAsFixed(1)}',
                   style: TextStyle(
                     color: Theme.of(context).textTheme.bodyText1.color,
                     fontSize: 16,
@@ -43,11 +45,11 @@ class _MinimalScoreSliderState extends State<MinimalScoreSlider> {
                     ),
                   ),
                   Checkbox(
-                    value: _checkboxValue,
+                    value: widget.scoreFilter.showFilmsWithNoScore,
                     fillColor: MaterialStateProperty.all(Theme.of(context).colorScheme.secondary),
-                    onChanged: (_) {
+                    onChanged: (val) {
                       setState(() {
-                        _checkboxValue = !_checkboxValue;
+                        widget.scoreFilter.showFilmsWithNoScore = val;
                       });
                     },
                   )
@@ -56,10 +58,10 @@ class _MinimalScoreSliderState extends State<MinimalScoreSlider> {
             ],
           ),
           Slider(
-            value: _sliderValue,
+            value: widget.scoreFilter.score,
             onChanged: (val) {
               setState(() {
-                _sliderValue = val;
+                widget.scoreFilter.score = val;
               });
             },
             max: 10,
