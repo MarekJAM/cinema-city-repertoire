@@ -51,16 +51,20 @@ class _FiltersScreenState extends State<FiltersScreen> {
               return ListView(
                 shrinkWrap: true,
                 children: [
+                  MinimalScoreSlider(),
+                  SizedBox(height: 10,),
                   FilterMultiSelectDialog(
                     title: "Gatunek",
                     values: _genres,
                     pickedValues: _pickedGenres,
                   ),
+                  SizedBox(height: 10,),
                   FilterMultiSelectDialog(
                     title: "Rodzaj seansu",
                     values: _eventTypes,
                     pickedValues: _pickedEventTypes,
                   ),
+                  SizedBox(height: 10,),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
