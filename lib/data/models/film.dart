@@ -13,7 +13,7 @@ const Map<String, String> genreMap = {
   'drama': 'Dramat',
   'family': 'Familijny',
   'fantasy': 'Fantasy',
-  'history': 'Historczny',
+  'history': 'Historyczny',
   'horror': 'Horror',
   'kids-club': 'Dla dzieci',
   'live': 'Na żywo',
