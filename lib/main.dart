@@ -61,6 +61,7 @@ void main() {
       final repertoireBloc = RepertoireBloc(
         repertoireRepository: repertoireRepository,
         filtersCubit: filtersCubit,
+        filtersRepository: filtersRepository,
       );
 
       final filmScoresCubit = FilmScoresCubit(

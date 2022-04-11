@@ -33,7 +33,8 @@ class _FiltersScreenState extends State<FiltersScreen> {
         child: Center(
           child: Padding(
             padding: EdgeInsets.all(5),
-            child: BlocBuilder<FiltersCubit, FiltersState>(builder: (context, state) {
+            child: BlocBuilder<FiltersCubit, FiltersState>(
+                builder: (context, state) {
               if (state is FiltersLoaded) {
                 state.filters.forEach(
                   (filter) {
@@ -54,7 +55,9 @@ class _FiltersScreenState extends State<FiltersScreen> {
               return ListView(
                 shrinkWrap: true,
                 children: [
-                  MinimalScoreSlider(scoreFilter: _scoreFilter,),
+                  MinimalScoreSlider(
+                    scoreFilter: _scoreFilter,
+                  ),
                   SizedBox(
                     height: 10,
                   ),

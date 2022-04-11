@@ -8,13 +8,19 @@ import '../blocs.dart';
 class RepertoireBloc extends Bloc<RepertoireEvent, RepertoireState> {
   final RepertoireRepository repertoireRepository;
   final FiltersCubit filtersCubit;
+  final FiltersRepository filtersRepository;
   Repertoire loadedRepertoire;
+  List<RepertoireFilter> filters;
 
-  RepertoireBloc({@required this.repertoireRepository, @required this.filtersCubit}) : super(RepertoireInitial()) {
+  RepertoireBloc({
+    @required this.repertoireRepository,
+    @required this.filtersCubit,
+    @required this.filtersRepository,
+  }) : super(RepertoireInitial()) {
     on<GetRepertoire>(_onGetRepertoire);
     on<FiltersChanged>((event, emit) => _onFiltersChanged(event.filters, emit));
 
-    filtersCubit.stream.listen((state) { 
+    filtersCubit.stream.listen((state) {
       if (state is FiltersLoaded) {
         add(FiltersChanged(state.filters));
       }
@@ -25,7 +31,11 @@ class RepertoireBloc extends Bloc<RepertoireEvent, RepertoireState> {
     emit(RepertoireLoading());
     try {
       loadedRepertoire = await repertoireRepository.getRepertoire(event.date, event.cinemaIds);
-      emit(RepertoireLoaded(data: loadedRepertoire));
+
+      filters = filtersRepository.loadFilters();
+      var filteredRepertoire = repertoireRepository.filterRepertoire(filters, loadedRepertoire);
+
+      emit(RepertoireLoaded(data: filteredRepertoire));
     } on ClientException catch (e) {
       print(e);
       emit(RepertoireError(message: 'Błąd połączenia.'));
@@ -38,7 +48,11 @@ class RepertoireBloc extends Bloc<RepertoireEvent, RepertoireState> {
     }
   }
 
-  void _onFiltersChanged(List<RepertoireFilter> filters, Emitter<RepertoireState> emit) {
+  void _onFiltersChanged(
+    List<RepertoireFilter> changedFilters,
+    Emitter<RepertoireState> emit,
+  ) {
+    filters = changedFilters;
     if (state is RepertoireLoaded) {
       var filteredRepertoire = repertoireRepository.filterRepertoire(filters, loadedRepertoire);
       emit(RepertoireLoaded(data: filteredRepertoire));
