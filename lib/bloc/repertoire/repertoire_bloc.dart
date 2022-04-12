@@ -32,7 +32,7 @@ class RepertoireBloc extends Bloc<RepertoireEvent, RepertoireState> {
     try {
       loadedRepertoire = await repertoireRepository.getRepertoire(event.date, event.cinemaIds);
 
-      filters = filtersRepository.loadFilters();
+      filters ??= filtersRepository.loadFilters();
       var filteredRepertoire = repertoireRepository.filterRepertoire(filters, loadedRepertoire);
 
       emit(RepertoireLoaded(data: filteredRepertoire));
@@ -53,6 +53,7 @@ class RepertoireBloc extends Bloc<RepertoireEvent, RepertoireState> {
     Emitter<RepertoireState> emit,
   ) {
     filters = changedFilters;
+
     if (state is RepertoireLoaded) {
       var filteredRepertoire = repertoireRepository.filterRepertoire(filters, loadedRepertoire);
       emit(RepertoireLoaded(data: filteredRepertoire));
