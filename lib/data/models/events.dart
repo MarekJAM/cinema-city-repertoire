@@ -18,17 +18,6 @@ class Events {
     return retEvents;
   }
 
-  List<Event> findEventsByCinemaId(String id) {
-    List<Event> retEvents = [];
-    items.forEach((item) {
-      if (item.cinemaId == id) {
-        retEvents.add(item);
-      }
-    });
-
-    return retEvents;
-  }
-
   List<Event> filterEventsByCinemaId(List<Event> events, String cinemaId) {
     return events.where((element) => element.cinemaId == cinemaId).toList();
   }
