@@ -14,10 +14,13 @@ class EventTypeFilter implements RepertoireFilter {
 
   @override
   Repertoire filter(Repertoire repertoire) {
-    var items = repertoire.items;
+    var items = repertoire.filmItems;
     var toRemove = [];
 
-    items.forEach((el) {
+    repertoire.filmItems.forEach((filmItem) {
+      filmItem.repertoireFilmCinemaItems.
+
+
       el.keys.skip(1).forEach((cinema) {
         (el[cinema] as List<Event>).forEach((event) {
           if (eventTypes.firstWhere((et) => event.type.contains(et.toUpperCase()),

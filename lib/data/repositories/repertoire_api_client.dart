@@ -48,8 +48,7 @@ class RepertoireApiClient extends ApiClient {
     _films.setFilms(extFilms);
     _events.setEvents(extEvents);
 
-    var _repertoire = new Repertoire();
-    _repertoire.setRepertoire(_films, _events, _cinemas);
+    var _repertoire = Repertoire(films: _films, events: _events, cinemas: _cinemas);
 
     return _repertoire;
   }
