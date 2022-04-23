@@ -22,9 +22,9 @@ class FilmScoresCubit extends Cubit<FilmScoresState> {
       (state) {
         if (!kDebugMode) {
           if (state is RepertoireLoaded) {
-            for (var film in state.data.items) {
-              if ((film.values.first as Film).filmWebScore == null) {
-                getFilmScores(film.values.first);
+            for (var filmItem in state.data.filmItems) {
+              if (filmItem.film.filmWebScore == null) {
+                getFilmScores(filmItem.film);
               }
             }
           }

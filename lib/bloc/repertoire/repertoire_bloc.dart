@@ -9,6 +9,7 @@ class RepertoireBloc extends Bloc<RepertoireEvent, RepertoireState> {
   final RepertoireRepository repertoireRepository;
   final FiltersCubit filtersCubit;
   final FiltersRepository filtersRepository;
+  
   Repertoire loadedRepertoire;
   List<RepertoireFilter> filters;
 

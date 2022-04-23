@@ -61,7 +61,7 @@ class _RepertoireScreenState extends State<RepertoireScreen> {
             return CinemasDrawer(
               pickedDate: pickedDate,
               pickedCinemas: pickedCinemas,
-              cinemas: state.data,
+              cinemas: state.cinemas,
             );
           }
           return null;
@@ -154,21 +154,21 @@ class _RepertoireScreenState extends State<RepertoireScreen> {
                 return RefreshIndicator(
                   onRefresh: () => _refreshRepertoire(),
                   backgroundColor: Theme.of(context).primaryColor,
-                  child: state.data.items.length != 0
+                  child: state.data.filmItems.length != 0
                       ? Padding(
                           padding: const EdgeInsets.only(top: 5),
                           child: ListView.separated(
                             separatorBuilder: (ctx, index) => Divider(),
-                            itemCount: state.data.items.length,
+                            itemCount: state.data.filmItems.length,
                             itemBuilder: (ctx, index) {
-                              return index != state.data.items.length - 1
-                                  ? RepertoireFilmItem(
-                                      state.data.items[index],
+                              return index != state.data.filmItems.length - 1
+                                  ? RepertoireFilmItemWidget(
+                                      state.data.filmItems[index],
                                     )
                                   : Padding(
                                       padding: const EdgeInsets.only(bottom: 8),
-                                      child: RepertoireFilmItem(
-                                        state.data.items[index],
+                                      child: RepertoireFilmItemWidget(
+                                        state.data.filmItems[index],
                                       ),
                                     );
                             },

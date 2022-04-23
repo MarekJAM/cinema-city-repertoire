@@ -1,21 +1,21 @@
-import './film.dart';
+// import './film.dart';
 
-class Films {
-  List<Film> _items = [];
+// class Films {
+//   List<Film> _items = [];
 
-  List<Film> get items {
-    return [..._items];
-  }
+//   List<Film> get items {
+//     return [..._items];
+//   }
 
-  void setFilms(List<dynamic> films) {
-    for (var film in films) {
-      if ((_items.firstWhere((el) => el.id == film['id'], orElse: () => null)) == null) {
-        _items.add(
-          Film.fromJson(film)
-        );
-      }
-    }
+//   void setFilms(List<dynamic> films) {
+//     for (var film in films) {
+//       if ((_items.firstWhere((el) => el.id == film['id'], orElse: () => null)) == null) {
+//         _items.add(
+//           Film.fromJson(film)
+//         );
+//       }
+//     }
 
-    _items.sort((a, b) => a.name.compareTo(b.name));
-  }
-}
+//     _items.sort((a, b) => a.name.compareTo(b.name));
+//   }
+// }

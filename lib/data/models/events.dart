@@ -1,43 +1,32 @@
-import './event.dart';
+// import './event.dart';
 
-class Events {
-  List<Event> _items = [];
+// class Events {
+//   List<Event> _items = [];
 
-  List<Event> get items {
-    return [..._items];
-  }
+//   List<Event> get items {
+//     return [..._items];
+//   }
 
-  List<Event> findEventsByFilmId(String id) {
-    List<Event> retEvents = [];
-    items.forEach((item) {
-      if (item.filmId == id) {
-        retEvents.add(item);
-      }
-    });
+//   List<Event> findEventsByFilmId(String id) {
+//     List<Event> retEvents = [];
+//     items.forEach((item) {
+//       if (item.filmId == id) {
+//         retEvents.add(item);
+//       }
+//     });
 
-    return retEvents;
-  }
+//     return retEvents;
+//   }
 
-  List<Event> findEventsByCinemaId(String id) {
-    List<Event> retEvents = [];
-    items.forEach((item) {
-      if (item.cinemaId == id) {
-        retEvents.add(item);
-      }
-    });
+//   List<Event> filterEventsByCinemaId(List<Event> events, String cinemaId) {
+//     return events.where((element) => element.cinemaId == cinemaId).toList();
+//   }
 
-    return retEvents;
-  }
-
-  List<Event> filterEventsByCinemaId(List<Event> events, String cinemaId) {
-    return events.where((element) => element.cinemaId == cinemaId).toList();
-  }
-
-  void setEvents(List<dynamic> events) {
-    List<Event> loadedEvents = [];
-    events.forEach((event) {
-      loadedEvents.add(Event.fromJson(event));
-    });
-    _items = loadedEvents;
-  }
-}
+//   void setEvents(List<dynamic> events) {
+//     List<Event> loadedEvents = [];
+//     events.forEach((event) {
+//       loadedEvents.add(Event.fromJson(event));
+//     });
+//     _items = loadedEvents;
+//   }
+// }

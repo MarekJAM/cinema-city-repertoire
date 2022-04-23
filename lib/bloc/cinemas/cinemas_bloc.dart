@@ -16,10 +16,10 @@ class CinemasBloc extends Bloc<CinemasEvent, CinemasState> {
   void _onGetCinemas(GetCinemas event, Emitter<CinemasState> emit) async {
     emit(CinemasLoading());
     try {
-      final Cinemas data = await cinemasRepository.getAllCinemas();
+      final List<Cinema> cinemas = await cinemasRepository.getAllCinemas();
       final List<String> favoriteCinemaIds = await Storage.getFavoriteCinemas();
 
-      emit(CinemasLoaded(data: data.items, favoriteCinemaIds: favoriteCinemaIds));
+      emit(CinemasLoaded(cinemas: cinemas, favoriteCinemaIds: favoriteCinemaIds));
     } on ClientException catch (e) {
       print(e);
       emit(CinemasError(message: 'Błąd połączenia.'));
