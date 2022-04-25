@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -10,16 +11,14 @@ class RepertoireApiClient extends ApiClient {
 
   final http.Client httpClient;
 
-  var _films = new Films();
-  var _events = new Events();
-  var _cinemas = new Cinemas();
-
   RepertoireApiClient({this.httpClient}) : assert(httpClient != null);
 
   Future<Repertoire> getRepertoire(
-    String date, [
-    List<String> cinemaIds,
-  ]) async {
+    {
+    @required String date, 
+    @required List<Cinema> allCinemas,
+    @required List<String> cinemaIds,
+  }) async {
     List<http.Response> responseList = await Future.wait(
       cinemaIds.map(
         (cinemaId) => httpClient.get(
@@ -45,10 +44,22 @@ class RepertoireApiClient extends ApiClient {
       extEvents.addAll(extResponse['body']['events']);
     }
 
-    _films.setFilms(extFilms);
-    _events.setEvents(extEvents);
+    final List<Film> films = [];
+    final List<Event> events = [];
 
-    var _repertoire = Repertoire(films: _films, events: _events, cinemas: _cinemas);
+    extFilms.forEach((film)  {
+      if ((films.firstWhere((el) => el.id == film['id'], orElse: () => null)) == null) {
+        films.add(
+          Film.fromJson(film)
+        );
+      }
+    });
+
+    extEvents.forEach((event) {
+      events.add(Event.fromJson(event));
+    });
+
+    var _repertoire = Repertoire(films: films, events: events, cinemas: allCinemas);
 
     return _repertoire;
   }

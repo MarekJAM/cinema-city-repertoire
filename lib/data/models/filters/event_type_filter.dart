@@ -14,26 +14,23 @@ class EventTypeFilter implements RepertoireFilter {
 
   @override
   Repertoire filter(Repertoire repertoire) {
-    var items = repertoire.filmItems;
+    var items = [...repertoire.filmItems];
     var toRemove = [];
 
     repertoire.filmItems.forEach((filmItem) {
-      filmItem.repertoireFilmCinemaItems.
-
-
-      el.keys.skip(1).forEach((cinema) {
-        (el[cinema] as List<Event>).forEach((event) {
+      filmItem.repertoireFilmCinemaItems.forEach((cinemaItem) { 
+        cinemaItem.events.forEach((event) {
           if (eventTypes.firstWhere((et) => event.type.contains(et.toUpperCase()),
                   orElse: () => null) ==
               null) {
-            toRemove.add(el);
+            toRemove.add(event);
           }
         });
+
+        cinemaItem.events.removeWhere((el) => toRemove.contains(el));
       });
     });
 
-    items.removeWhere((el) => toRemove.contains(el));
-
-    return Repertoire()..items = items;
+    return Repertoire.fromFilmItems(items);
   }
 }

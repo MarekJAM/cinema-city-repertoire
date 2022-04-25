@@ -17,21 +17,13 @@ class RepertoireRepository {
     @required this.filmScoresApiClient,
   }) : assert(repertoireApiClient != null, filmApiClient != null);
 
-  Future<Repertoire> getRepertoire(DateTime date, [List<String> cinemaIds]) async {
+  Future<Repertoire> getRepertoire({@required DateTime date, @required List<Cinema> allCinemas, List<String> pickedCinemaIds}) async {
     return await repertoireApiClient.getRepertoire(
-      DateHandler.convertDateToYYYYMMDD(
+      date: DateHandler.convertDateToYYYYMMDD(
         date,
       ),
-      cinemaIds,
-    );
-  }
-
-  Future<Repertoire> getRepertoireForFavoriteCinemas(DateTime date) async {
-    return await repertoireApiClient.getRepertoire(
-      DateHandler.convertDateToYYYYMMDD(
-        date,
-      ),
-      await Storage.getFavoriteCinemas(),
+      allCinemas: allCinemas,
+      cinemaIds: pickedCinemaIds,
     );
   }
 
