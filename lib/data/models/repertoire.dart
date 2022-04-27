@@ -37,6 +37,6 @@ class Repertoire {
   }
 
   Repertoire.fromFilmItems(List<RepertoireFilmItem> filmItems) {
-    this.filmItems = filmItems;
+    this.filmItems = [...filmItems];
   }
 }

@@ -6,7 +6,6 @@ part 'event_type_filter.g.dart';
 
 @HiveType(typeId: 0)
 class EventTypeFilter implements RepertoireFilter {
-
   @HiveField(0)
   final List<String> eventTypes;
 
@@ -14,21 +13,27 @@ class EventTypeFilter implements RepertoireFilter {
 
   @override
   Repertoire filter(Repertoire repertoire) {
-    var items = [...repertoire.filmItems];
-    var toRemove = [];
+    var items = <RepertoireFilmItem>[];
 
     repertoire.filmItems.forEach((filmItem) {
-      filmItem.repertoireFilmCinemaItems.forEach((cinemaItem) { 
-        cinemaItem.events.forEach((event) {
-          if (eventTypes.firstWhere((et) => event.type.contains(et.toUpperCase()),
-                  orElse: () => null) ==
-              null) {
-            toRemove.add(event);
-          }
-        });
+      var item = filmItem.copyWith(
+        repertoireFilmCinemaItems: filmItem.repertoireFilmCinemaItems
+            .map(
+              (cinemaItem) => cinemaItem.copyWith(
+                events: cinemaItem.events
+                    .where((event) => (eventTypes.firstWhere(
+                            (et) => event.type.contains(et.toUpperCase()),
+                            orElse: () => null) !=
+                        null))
+                    .toList(),
+              ),
+            )
+            .toList(),
+      );
 
-        cinemaItem.events.removeWhere((el) => toRemove.contains(el));
-      });
+      if (item.repertoireFilmCinemaItems.any((item) => item.events.length > 0)) {
+              items.add(item);
+      }
     });
 
     return Repertoire.fromFilmItems(items);
