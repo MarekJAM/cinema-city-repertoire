@@ -11,8 +11,8 @@ class CinemasApiClient extends ApiClient {
 
   CinemasApiClient({this.httpClient}) : assert(httpClient != null);
 
-  Future<Cinemas> getCinemas(String date) async {
-    final Cinemas cinemas = new Cinemas();
+  Future<List<Cinema>> getCinemas(String date) async {
+    final List<Cinema> cinemas = [];
 
     try {
       final response = await http.get(Uri.parse('${ApiClient.baseUrl}$_cinemasEndpoint$date?attr=&lang=pl_PL'));
@@ -26,7 +26,7 @@ class CinemasApiClient extends ApiClient {
         return null;
       }
 
-      cinemas.setCinemas(extractedData['body']['cinemas']);
+      cinemas.addAll((extractedData['body']['cinemas'] as List).map((e) => Cinema.fromJson(e)));
     } catch (error) {
       throw error;
     }

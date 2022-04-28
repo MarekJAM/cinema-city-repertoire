@@ -7,10 +7,10 @@ import '../../utils/date_handler.dart';
 import '../screens/film_details_screen.dart';
 import 'widgets.dart';
 
-class RepertoireFilmItem extends StatelessWidget {
-  final Map<String, dynamic> data;
+class RepertoireFilmItemWidget extends StatelessWidget {
+  final RepertoireFilmItem data;
 
-  RepertoireFilmItem(this.data);
+  RepertoireFilmItemWidget(this.data);
 
   Color _getAgeRestrictionColor(String value) {
     var color;
@@ -28,19 +28,17 @@ class RepertoireFilmItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final cinemas = data.keys.where((element) => element != "film").toList();
-
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 5),
       child: Row(
         children: <Widget>[
           GestureDetector(
             onTap: () {
-              BlocProvider.of<FilmDetailsCubit>(context).getFilmDetails(data['film']);
+              BlocProvider.of<FilmDetailsCubit>(context).getFilmDetails(data.film);
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (BuildContext context) => FilmDetailsScreen(
-                    film: data['film'],
+                    film: data.film,
                   ),
                 ),
               );
@@ -51,7 +49,7 @@ class RepertoireFilmItem extends StatelessWidget {
                   height: 120,
                   width: 80,
                   child: Image.network(
-                    data['film'].posterLink,
+                    data.film.posterLink,
                   ),
                 ),
                 SizedBox(
@@ -69,9 +67,9 @@ class RepertoireFilmItem extends StatelessWidget {
                         SizedBox(
                           width: 5,
                         ),
-                        data['film'].filmWebScore != null
+                        data.film.filmWebScore != null
                             ? Text(
-                                data['film'].filmWebScore ?? 'no data',
+                                data.film.filmWebScore ?? 'no data',
                                 style: TextStyle(fontSize: 12),
                               )
                             : Padding(
@@ -98,7 +96,7 @@ class RepertoireFilmItem extends StatelessWidget {
               child: Column(
                 children: <Widget>[
                   Text(
-                    data['film'].name,
+                    data.film.name,
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                     ),
@@ -113,13 +111,13 @@ class RepertoireFilmItem extends StatelessWidget {
                       Container(
                         padding: EdgeInsets.all(3),
                         child: Text(
-                          data['film'].ageRestriction,
+                          data.film.ageRestriction,
                           style: TextStyle(fontSize: 10),
                         ),
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           color: _getAgeRestrictionColor(
-                            data['film'].ageRestriction,
+                            data.film.ageRestriction,
                           ),
                         ),
                       ),
@@ -128,11 +126,11 @@ class RepertoireFilmItem extends StatelessWidget {
                           left: 3,
                         ),
                         child: Text(
-                          data['film'].length.toString() + ' min',
+                          data.film.length.toString() + ' min',
                           style: TextStyle(fontSize: 10),
                         ),
                       ),
-                      for (var item in data['film'].genres)
+                      for (var item in data.film.genres)
                         Padding(
                           padding: const EdgeInsets.symmetric(
                             horizontal: 3,
@@ -163,11 +161,11 @@ class RepertoireFilmItem extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.symmetric(vertical: 2),
                   ),
-                  for (var cinema in cinemas)
+                  for (var cinemaItem in data.repertoireFilmCinemaItems)
                     RepertoireFilmItemRow(
-                      film: data["film"],
-                      cinema: cinema,
-                      events: data[cinema],
+                      film: data.film,
+                      cinema: cinemaItem.cinema.displayName,
+                      events: cinemaItem.events,
                     ),
                 ],
                 crossAxisAlignment: CrossAxisAlignment.start,

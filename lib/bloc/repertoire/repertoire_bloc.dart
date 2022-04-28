@@ -8,13 +8,17 @@ import '../blocs.dart';
 class RepertoireBloc extends Bloc<RepertoireEvent, RepertoireState> {
   final RepertoireRepository repertoireRepository;
   final FiltersCubit filtersCubit;
+  final CinemasBloc cinemasBloc;
   final FiltersRepository filtersRepository;
+
   Repertoire loadedRepertoire;
   List<RepertoireFilter> filters;
+  List<Cinema> cinemas;
 
   RepertoireBloc({
     @required this.repertoireRepository,
     @required this.filtersCubit,
+    @required this.cinemasBloc,
     @required this.filtersRepository,
   }) : super(RepertoireInitial()) {
     on<GetRepertoire>(_onGetRepertoire);
@@ -25,12 +29,18 @@ class RepertoireBloc extends Bloc<RepertoireEvent, RepertoireState> {
         add(FiltersChanged(state.filters));
       }
     });
+
+    cinemasBloc.stream.listen((state) { 
+      if (state is CinemasLoaded) {
+        cinemas ??= state.cinemas;
+      }
+    });
   }
 
   void _onGetRepertoire(GetRepertoire event, Emitter<RepertoireState> emit) async {
     emit(RepertoireLoading());
     try {
-      loadedRepertoire = await repertoireRepository.getRepertoire(event.date, event.cinemaIds);
+      loadedRepertoire = await repertoireRepository.getRepertoire(date: event.date, allCinemas: cinemas, pickedCinemaIds: event.cinemaIds);
 
       filters ??= filtersRepository.loadFilters();
       var filteredRepertoire = repertoireRepository.filterRepertoire(filters, loadedRepertoire);

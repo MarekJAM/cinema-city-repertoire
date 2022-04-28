@@ -9,7 +9,7 @@ class CinemasRepository {
 
   CinemasRepository({@required this.cinemasApiClient}) : assert(CinemasApiClient != null);
 
-  Future<Cinemas> getAllCinemas() async {
+  Future<List<Cinema>> getAllCinemas() async {
     var dateInAYear = DateTime.now().add(new Duration(days: 365));
 
     return await cinemasApiClient.getCinemas(

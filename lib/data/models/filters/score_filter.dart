@@ -15,11 +15,11 @@ class ScoreFilter implements RepertoireFilter {
 
   @override
   Repertoire filter(Repertoire repertoire) {
-    var items = repertoire.items;
+    var items = [...repertoire.filmItems];
     var toRemove = [];
 
     items.forEach((el) {
-      var itemScoreString = (el.values.first as Film).filmWebScore;
+      var itemScoreString = el.film.filmWebScore;
       var itemScoreDouble = itemScoreString != null ? double.tryParse(itemScoreString) : null;
 
       if ((itemScoreDouble != null && itemScoreDouble < this.score) ||
@@ -30,6 +30,6 @@ class ScoreFilter implements RepertoireFilter {
 
     items.removeWhere((el) => toRemove.contains(el));
 
-    return Repertoire()..items = items;
+    return Repertoire.fromFilmItems(items);
   }
 }

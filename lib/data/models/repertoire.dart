@@ -1,31 +1,42 @@
+import 'package:cinema_city/utils/cinema_helper.dart';
+import 'package:cinema_city/utils/event_helper.dart';
+import 'package:flutter/material.dart';
+
 import './models.dart';
 
 class Repertoire {
-  List<Map<String, dynamic>> _items = [];
+  List<RepertoireFilmItem> filmItems = [];
 
-  List<Map<String, dynamic>> get items {
-    return [..._items];
-  }
-  
-  set items(List<Map<String, dynamic>> items) {
-    this._items = items;
-  }
+  Repertoire({
+    @required List<Film> films,
+    @required List<Event> events,
+    @required List<Cinema> cinemas,
+  }) {
+    films.forEach((film) {
+      var filmEvents = EventHelper.filterEventsByFilmId(events, film.id);
 
-  void setRepertoire(Films films, Events events, Cinemas cinemas) {
-    films.items.forEach((film) {
-      Map<String, dynamic> filmTile = {};
-      filmTile.putIfAbsent('film', () => film);
-      var filmEvents = events.findEventsByFilmId(film.id);
+      var filmItem = filmItems.firstWhere((filmItem) => filmItem.film.name == film.name,
+          orElse: () => RepertoireFilmItem(film: film, repertoireFilmCinemaItems: []));
+
       filmEvents.forEach((event) {
-        filmTile.putIfAbsent(
-          cinemas.getCinemaNameById(event.cinemaId),
-          () => events.filterEventsByCinemaId(filmEvents, event.cinemaId),
-        );
+        var cinema = CinemaHelper.getCinemaById(cinemas, event.cinemaId);
+        if (filmItem.repertoireFilmCinemaItems
+                .firstWhere((item) => item.cinema.id == cinema.id, orElse: () => null) ==
+            null) {
+          filmItem.repertoireFilmCinemaItems.add(RepertoireFilmCinemaItem(
+            cinema: cinema,
+            events: EventHelper.filterEventsByCinemaId(filmEvents, event.cinemaId),
+          ));
+        }
       });
-      
+
       if (filmEvents.length > 0) {
-        _items.add(filmTile);
+        filmItems.add(filmItem);
       }
     });
+  }
+
+  Repertoire.fromFilmItems(List<RepertoireFilmItem> filmItems) {
+    this.filmItems = [...filmItems];
   }
 }

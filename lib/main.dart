@@ -22,8 +22,7 @@ void main() {
       Hive.registerAdapter(EventTypeFilterAdapter());
       Hive.registerAdapter(ScoreFilterAdapter());
 
-      final filtersBox =
-          await Hive.openBox<dynamic>('filtersBox');
+      final filtersBox = await Hive.openBox<dynamic>('filtersBox');
 
       tz.initializeTimeZones();
 
@@ -51,17 +50,21 @@ void main() {
         ),
       );
 
-      final filtersRepository =
-          FiltersRepository(FiltersStorageHive(filtersBox));
+      final filtersRepository = FiltersRepository(FiltersStorageHive(filtersBox));
 
       WidgetsFlutterBinding.ensureInitialized();
 
       final filtersCubit = FiltersCubit(filtersRepository)..loadFiltersOnAppStarted();
 
+      final cinemasBloc = CinemasBloc(
+        cinemasRepository: cinemasRepository,
+      )..add(GetCinemas());
+
       final repertoireBloc = RepertoireBloc(
         repertoireRepository: repertoireRepository,
         filtersCubit: filtersCubit,
         filtersRepository: filtersRepository,
+        cinemasBloc: cinemasBloc,
       );
 
       final filmScoresCubit = FilmScoresCubit(
@@ -81,7 +84,12 @@ void main() {
               create: (context) => repertoireBloc,
             ),
             BlocProvider<DatesCubit>(
-              create: (context) => DatesCubit(repertoireRepository),
+              create: (context) => DatesCubit(
+                repertoireRepository,
+              ),
+            ),
+            BlocProvider<CinemasBloc>(
+              create: (context) => cinemasBloc,
             ),
             BlocProvider<FilmDetailsCubit>(
               create: (context) => FilmDetailsCubit(
