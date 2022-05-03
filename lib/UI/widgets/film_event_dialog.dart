@@ -67,9 +67,9 @@ class _FilmEventDialogState extends State<FilmEventDialog> {
     } else {
       ScaffoldMessenger.of(context).hideCurrentSnackBar();
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+        const SnackBar(
           backgroundColor: Colors.green,
-          content: Text(
+          content: const Text(
             "Zaplanowano przypomnienie.",
             textAlign: TextAlign.center,
             style: TextStyle(color: Colors.white),
@@ -83,7 +83,7 @@ class _FilmEventDialogState extends State<FilmEventDialog> {
   void initState() {
     super.initState();
 
-    var initializationAndroid = AndroidInitializationSettings('@mipmap/ic_launcher');
+    var initializationAndroid = const AndroidInitializationSettings('@mipmap/ic_launcher');
     var initializationSettings = InitializationSettings(android: initializationAndroid);
     localNotification = FlutterLocalNotificationsPlugin();
     localNotification.initialize(initializationSettings);
@@ -99,22 +99,22 @@ class _FilmEventDialogState extends State<FilmEventDialog> {
         borderRadius: BorderRadius.circular(20),
       ),
       child: Padding(
-        padding: EdgeInsets.all(8),
+        padding: const EdgeInsets.all(8),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             Text(
-              '${widget.film.name}',
+              widget.film.name,
               textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 20),
+              style: const TextStyle(fontSize: 20),
             ),
-            Divider(),
+            const Divider(),
             Padding(
               padding: const EdgeInsets.only(bottom: 3.0),
               child: Text(
-                '${widget.cinema}',
+                widget.cinema,
                 textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 14),
+                style: const TextStyle(fontSize: 14),
               ),
             ),
             Padding(
@@ -122,7 +122,7 @@ class _FilmEventDialogState extends State<FilmEventDialog> {
               child: Text(
                 DateHandler.convertDateToHHMM(widget.item.dateTime),
                 textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 14),
+                style: const TextStyle(fontSize: 14),
               ),
             ),
             Padding(
@@ -130,14 +130,14 @@ class _FilmEventDialogState extends State<FilmEventDialog> {
               child: Text(
                 "${widget.item.language}, ${widget.item.type}",
                 textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 12),
+                style: const TextStyle(fontSize: 12),
               ),
             ),
             Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 ElevatedButton(
-                  child: Text(
+                  child: const Text(
                     "Kup bilet przez stronę",
                   ),
                   onPressed: () {
@@ -150,7 +150,7 @@ class _FilmEventDialogState extends State<FilmEventDialog> {
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all(Colors.grey),
                       ),
-                      child: Text(
+                      child: const Text(
                         "Ustaw przypomnienie",
                       ),
                       onPressed: () async {
@@ -162,7 +162,7 @@ class _FilmEventDialogState extends State<FilmEventDialog> {
                           helpText: "Wybierz godzinę przypomnienia",
                           initialTime: TimeOfDay.fromDateTime(
                             widget.item.dateTime.subtract(
-                              Duration(minutes: 30),
+                              const Duration(minutes: 30),
                             ),
                           ),
                         );

@@ -41,7 +41,7 @@ class _FilterDialogColumnState extends State<FilterDialogColumn> {
             children: [
               Text(
                 widget.title,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 22,
                 ),
               ),
@@ -49,13 +49,13 @@ class _FilterDialogColumnState extends State<FilterDialogColumn> {
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
-                icon: Icon(
+                icon: const Icon(
                   Icons.cancel,
                 ),
               )
             ],
           ),
-          Divider(),
+          const Divider(),
           Wrap(
             children: [
               for (int i = 0; i < widget.values.length; i++)
@@ -71,7 +71,7 @@ class _FilterDialogColumnState extends State<FilterDialogColumn> {
                 ),
             ],
           ),
-          Divider(),
+          const Divider(),
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
@@ -85,9 +85,9 @@ class _FilterDialogColumnState extends State<FilterDialogColumn> {
                     },
                   );
                 },
-                child: Text('Reset'),
+                child: const Text('Reset'),
               ),
-              SizedBox(
+              const SizedBox(
                 width: 5,
               ),
               OutlinedButton(
@@ -97,7 +97,7 @@ class _FilterDialogColumnState extends State<FilterDialogColumn> {
                     ..addAll(tempPickedValues);
                   Navigator.of(context).pop();
                 },
-                child: Text('Zatwierdź'),
+                child: const Text('Zatwierdź'),
               ),
             ],
           )

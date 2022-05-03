@@ -10,7 +10,7 @@ import 'widgets.dart';
 class RepertoireFilmItemWidget extends StatelessWidget {
   final RepertoireFilmItem data;
 
-  RepertoireFilmItemWidget(this.data);
+  const RepertoireFilmItemWidget(this.data);
 
   Color _getAgeRestrictionColor(String value) {
     var color;
@@ -52,7 +52,7 @@ class RepertoireFilmItemWidget extends StatelessWidget {
                     data.film.posterLink,
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 2,
                 ),
                 BlocBuilder<FilmScoresCubit, FilmScoresState>(
@@ -64,18 +64,18 @@ class RepertoireFilmItemWidget extends StatelessWidget {
                           'assets/filmweb-logo.png',
                           width: 50,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 5,
                         ),
                         data.film.filmWebScore != null
                             ? Text(
                                 data.film.filmWebScore ?? 'no data',
-                                style: TextStyle(fontSize: 12),
+                                style: const TextStyle(fontSize: 12),
                               )
                             : Padding(
                                 padding: const EdgeInsets.symmetric(horizontal: 3.5, vertical: 2),
                                 child: Container(
-                                  child: CircularProgressIndicator(
+                                  child: const CircularProgressIndicator(
                                     strokeWidth: 2,
                                   ),
                                   height: 10,
@@ -97,22 +97,22 @@ class RepertoireFilmItemWidget extends StatelessWidget {
                 children: <Widget>[
                   Text(
                     data.film.name,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontWeight: FontWeight.bold,
                     ),
                     softWrap: true,
                   ),
-                  Padding(
+                  const Padding(
                     padding: EdgeInsets.symmetric(vertical: 1),
                   ),
                   Wrap(
                     crossAxisAlignment: WrapCrossAlignment.center,
                     children: <Widget>[
                       Container(
-                        padding: EdgeInsets.all(3),
+                        padding: const EdgeInsets.all(3),
                         child: Text(
                           data.film.ageRestriction,
-                          style: TextStyle(fontSize: 10),
+                          style: const TextStyle(fontSize: 10),
                         ),
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
@@ -127,7 +127,7 @@ class RepertoireFilmItemWidget extends StatelessWidget {
                         ),
                         child: Text(
                           data.film.length.toString() + ' min',
-                          style: TextStyle(fontSize: 10),
+                          style: const TextStyle(fontSize: 10),
                         ),
                       ),
                       for (var item in data.film.genres)
@@ -136,17 +136,17 @@ class RepertoireFilmItemWidget extends StatelessWidget {
                             horizontal: 3,
                           ),
                           child: Container(
-                            padding: EdgeInsets.symmetric(
+                            padding: const EdgeInsets.symmetric(
                               horizontal: 3,
                             ),
                             child: Text(
                               item,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: 10,
                               ),
                             ),
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.all(
+                              borderRadius: const BorderRadius.all(
                                 Radius.circular(5),
                               ),
                               color: Colors.grey[700],
@@ -155,10 +155,10 @@ class RepertoireFilmItemWidget extends StatelessWidget {
                         ),
                     ],
                   ),
-                  Padding(
+                  const Padding(
                     padding: EdgeInsets.symmetric(vertical: 2),
                   ),
-                  Padding(
+                  const Padding(
                     padding: EdgeInsets.symmetric(vertical: 2),
                   ),
                   for (var cinemaItem in data.repertoireFilmCinemaItems)
@@ -198,12 +198,12 @@ class RepertoireFilmItemRow extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
-                '$cinema',
-                style: TextStyle(
+                cinema,
+                style: const TextStyle(
                   fontSize: 12,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 2,
               ),
               Wrap(
@@ -229,18 +229,18 @@ class RepertoireFilmItemRow extends StatelessWidget {
                               children: <Widget>[
                                 Text(DateHandler.convertDateToHHMM(item.dateTime)),
                                 Text(
-                                  '${item.type}',
-                                  style: TextStyle(fontSize: 7),
+                                  item.type,
+                                  style: const TextStyle(fontSize: 7),
                                 ),
                                 Text(
-                                  '${item.language}',
-                                  style: TextStyle(fontSize: 7),
+                                  item.language,
+                                  style: const TextStyle(fontSize: 7),
                                 ),
                               ],
                             ),
                             decoration: BoxDecoration(
                               border: Border.all(color: Theme.of(context).colorScheme.secondary),
-                              borderRadius: BorderRadius.all(
+                              borderRadius: const BorderRadius.all(
                                 Radius.circular(5),
                               ),
                             ),
@@ -250,7 +250,7 @@ class RepertoireFilmItemRow extends StatelessWidget {
                     ),
                 ],
               ),
-              Padding(
+              const Padding(
                 padding: EdgeInsets.only(bottom: 2),
               ),
             ],

@@ -4,7 +4,9 @@ import 'package:url_launcher/url_launcher.dart';
 class SliverHeader extends SliverPersistentHeaderDelegate {
   final String imageUrl;
   final String videoUrl;
+  @override
   final double minExtent;
+  @override
   final double maxExtent;
 
   SliverHeader({
@@ -38,8 +40,8 @@ class SliverHeader extends SliverPersistentHeaderDelegate {
                 firstChild: Container(
                   height: maxExtent,
                   child: Container(
-                    child: Center(
-                      child: CircularProgressIndicator(),
+                    child: const Center(
+                      child: const CircularProgressIndicator(),
                     ),
                   ),
                 ),
@@ -59,19 +61,19 @@ class SliverHeader extends SliverPersistentHeaderDelegate {
         ),
         
           Padding(
-            padding: EdgeInsets.only(left: 15, top: 15),
+            padding: const EdgeInsets.only(left: 15, top: 15),
             child: IconButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              icon: Icon(Icons.arrow_back),
+              icon: const Icon(Icons.arrow_back),
             ),
           ),
         Positioned(
           right: 10,
           bottom: 5,
           child: ElevatedButton(
-            child: Text('Zobacz zwiastun'),
+            child: const Text('Zobacz zwiastun'),
             onPressed: () async {
               if (await canLaunch(videoUrl)) {
                 await launch(videoUrl);

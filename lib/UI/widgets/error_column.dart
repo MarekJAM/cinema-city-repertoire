@@ -19,9 +19,9 @@ class ErrorColumn extends StatelessWidget {
         children: [
           Text(
             errorMessage,
-            style: TextStyle(fontSize: 18),
+            style: const TextStyle(fontSize: 18),
           ),
-          Padding(
+          const Padding(
             padding: EdgeInsets.only(top: 10),
           ),
           ElevatedButton(

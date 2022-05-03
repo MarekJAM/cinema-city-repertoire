@@ -24,7 +24,7 @@ class _FilterValueButtonState extends State<FilterValueButton> with TickerProvid
   void initState() {
     _animationController = AnimationController(
       vsync: this,
-      duration: Duration(milliseconds: 300),
+      duration: const Duration(milliseconds: 300),
       value: widget.isInitiallySelected ? 0 : 1,
     );
     _colorTween = ColorTween(
@@ -38,7 +38,7 @@ class _FilterValueButtonState extends State<FilterValueButton> with TickerProvid
   @override
   void didUpdateWidget(covariant FilterValueButton oldWidget) {
     if (widget.isInitiallySelected) {
-      _animationController.animateBack(0, duration: Duration(milliseconds: 0));
+      _animationController.animateBack(0, duration: const Duration(milliseconds: 0));
     }
 
     super.didUpdateWidget(oldWidget);
@@ -61,7 +61,7 @@ class _FilterValueButtonState extends State<FilterValueButton> with TickerProvid
           } else {
             _animationController.animateTo(
               1,
-              duration: Duration(
+              duration: const Duration(
                 milliseconds: 0,
               ),
             );
