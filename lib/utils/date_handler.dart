@@ -2,23 +2,23 @@ import 'package:intl/intl.dart';
 
 extension DateOnlyCompare on DateTime {
   bool isSameDate(DateTime other) {
-    return this.year == other.year && this.month == other.month && this.day == other.day;
+    return year == other.year && month == other.month && day == other.day;
   }
 }
 
 class DateHandler {
   static String convertDateToYYYYMMDD(DateTime date) {
-    var formatter = new DateFormat('yyyy-MM-dd');
+    var formatter = DateFormat('yyyy-MM-dd');
     return formatter.format(date);
   }
 
   static String convertDateToDDMM(DateTime date) {
-    var formatter = new DateFormat('dd-MM');
+    var formatter = DateFormat('dd-MM');
     return formatter.format(date);
   }
 
   static String convertDateToHHMM(DateTime date) {
-    var formatter = new DateFormat('HH:mm');
+    var formatter = DateFormat('HH:mm');
     return formatter.format(date);
   }
 }

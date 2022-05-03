@@ -21,13 +21,13 @@ class FilmDetailsCubit extends Cubit<FilmDetailsState> {
       emit(FilmDetailsLoaded(film: film));
     } on ClientException catch (e) {
       print(e);
-      emit(FilmDetailsError(message: 'Błąd połączenia.'));
+      emit(const FilmDetailsError(message: 'Błąd połączenia.'));
     } on ServerException catch (e) {
       print(e);
-      emit(FilmDetailsError(message: 'Błąd wewnętrzny serwera.'));
+      emit(const FilmDetailsError(message: 'Błąd wewnętrzny serwera.'));
     } catch (e) {
       print(e);
-      emit(FilmDetailsError(message: 'Wystąpił nieznany błąd.'));
+      emit(const FilmDetailsError(message: 'Wystąpił nieznany błąd.'));
     }
   }
 }

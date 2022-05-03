@@ -31,16 +31,16 @@ class WebScrapingHelper {
   }
 
   static String scrapFilmWebScore(Film film, String responseBody) {
-    var filmRegex = new RegExp('(?<=${film.name}).*?(> <div class=\"content__sidebar\">)');
+    var filmRegex = RegExp('(?<=${film.name}).*?(> <div class=\"content__sidebar\">)');
 
-    var scoreRegex = new RegExp(r'ratingValue">+[0-9]+\,+[0-9]');
+    var scoreRegex = RegExp(r'ratingValue">+[0-9]+\,+[0-9]');
 
     var searchedFilmsStrings = filmRegex.allMatches(responseBody).map((e) => e.group(0)).toList();
 
     String score;
     String retScore;
 
-    if (searchedFilmsStrings != null && searchedFilmsStrings.length > 0) {
+    if (searchedFilmsStrings != null && searchedFilmsStrings.isNotEmpty) {
       score = scoreRegex.stringMatch(searchedFilmsStrings[0])?.substring(13, 16);
       retScore = score.replaceFirst(RegExp(r','), '.');
     }

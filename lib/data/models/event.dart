@@ -52,7 +52,7 @@ class Event {
           language = 'NAPISY';
         }
       });
-      if (language == null) language = 'PL';
+      language ??= 'PL';
 
       attributes.putIfAbsent('language', () => language);
     }

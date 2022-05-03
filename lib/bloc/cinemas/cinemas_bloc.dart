@@ -22,13 +22,13 @@ class CinemasBloc extends Bloc<CinemasEvent, CinemasState> {
       emit(CinemasLoaded(cinemas: cinemas, favoriteCinemaIds: favoriteCinemaIds));
     } on ClientException catch (e) {
       print(e);
-      emit(CinemasError(message: 'Błąd połączenia.'));
+      emit(const CinemasError(message: 'Błąd połączenia.'));
     } on ServerException catch (e) {
       print(e);
-      emit(CinemasError(message: 'Błąd wewnętrzny serwera.'));
+      emit(const CinemasError(message: 'Błąd wewnętrzny serwera.'));
     } catch (e) {
       print(e);
-      emit(CinemasError(message: 'Wystąpił nieznany błąd.'));
+      emit(const CinemasError(message: 'Wystąpił nieznany błąd.'));
     }
   }
 }

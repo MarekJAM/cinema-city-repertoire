@@ -48,13 +48,13 @@ class RepertoireBloc extends Bloc<RepertoireEvent, RepertoireState> {
       emit(RepertoireLoaded(data: filteredRepertoire));
     } on ClientException catch (e) {
       print(e);
-      emit(RepertoireError(message: 'Błąd połączenia.'));
+      emit(const RepertoireError(message: 'Błąd połączenia.'));
     } on ServerException catch (e) {
       print(e);
-      emit(RepertoireError(message: 'Błąd wewnętrzny serwera.'));
+      emit(const RepertoireError(message: 'Błąd wewnętrzny serwera.'));
     } catch (e) {
       print(e);
-      emit(RepertoireError(message: 'Wystąpił nieznany błąd.'));
+      emit(const RepertoireError(message: 'Wystąpił nieznany błąd.'));
     }
   }
 
