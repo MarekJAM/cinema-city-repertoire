@@ -7,6 +7,8 @@ import '../widgets/widgets.dart';
 import 'filters_screen.dart';
 
 class RepertoireScreen extends StatefulWidget {
+  const RepertoireScreen({Key key}) : super(key: key);
+
   @override
   _RepertoireScreenState createState() => _RepertoireScreenState();
 }
@@ -14,13 +16,13 @@ class RepertoireScreen extends StatefulWidget {
 class _RepertoireScreenState extends State<RepertoireScreen> {
   var todayDate = DateTime.now();
   var pickedDate = DateTime.now();
-  var dateInAYear = DateTime.now().add(new Duration(days: 365));
+  var dateInAYear = DateTime.now().add(const Duration(days: 365));
   List<String> pickedCinemas = [];
   var isCinemaListLoaded = false;
   DateTime picked;
   List<DateTime> selectableDates = [];
 
-  Future<Null> _selectDate(BuildContext context) async {
+  Future<void> _selectDate(BuildContext context) async {
     picked = await showDatePicker(
         context: context,
         initialDate: selectableDates.isEmpty
@@ -72,7 +74,7 @@ class _RepertoireScreenState extends State<RepertoireScreen> {
         automaticallyImplyLeading: false,
         title: RichText(
           text: TextSpan(
-            children: [
+            children: const [
               TextSpan(text: 'Cinema City\n'),
               TextSpan(text: 'Repertuar', style: TextStyle(fontSize: 16)),
             ],
@@ -90,7 +92,7 @@ class _RepertoireScreenState extends State<RepertoireScreen> {
               ),
               child: Text(
                 DateHandler.convertDateToDDMM(pickedDate),
-                style: TextStyle(color: Colors.white),
+                style: const TextStyle(color: Colors.white),
               ),
               onPressed: () {
                 _selectDate(context);
@@ -115,19 +117,19 @@ class _RepertoireScreenState extends State<RepertoireScreen> {
                   itemBuilder: (BuildContext context) {
                     return [
                       PopupMenuItem<String>(
-                        child: Text("Kina"),
+                        child: const Text("Kina"),
                         enabled: state is CinemasLoaded,
                         onTap: () => Scaffold.of(context).openEndDrawer(),
                       ),
                       PopupMenuItem<String>(
-                        child: Text("Filtry"),
+                        child: const Text("Filtry"),
                         // enabled: false,
                         onTap: () async {
                           // Navigator.of(context).pop();
-                          await Future.delayed(Duration(microseconds: 3));
+                          await Future.delayed(const Duration(microseconds: 3));
                           Navigator.of(context).push(
                             MaterialPageRoute(
-                              builder: (BuildContext context) => FiltersScreen(),
+                              builder: (BuildContext context) => const FiltersScreen(),
                             ),
                           );
                         },
@@ -154,11 +156,11 @@ class _RepertoireScreenState extends State<RepertoireScreen> {
                 return RefreshIndicator(
                   onRefresh: () => _refreshRepertoire(),
                   backgroundColor: Theme.of(context).primaryColor,
-                  child: state.data.filmItems.length != 0
+                  child: state.data.filmItems.isNotEmpty
                       ? Padding(
                           padding: const EdgeInsets.only(top: 5),
                           child: ListView.separated(
-                            separatorBuilder: (ctx, index) => Divider(),
+                            separatorBuilder: (ctx, index) => const Divider(),
                             itemCount: state.data.filmItems.length,
                             itemBuilder: (ctx, index) {
                               return index != state.data.filmItems.length - 1
@@ -174,7 +176,7 @@ class _RepertoireScreenState extends State<RepertoireScreen> {
                             },
                           ),
                         )
-                      : pickedCinemas.length != 0
+                      : pickedCinemas.isNotEmpty
                           ? ErrorColumn(
                               errorMessage: 'Brak filmów do wyświetlenia.',
                               buttonMessage: 'Wybierz inną datę',
@@ -191,7 +193,7 @@ class _RepertoireScreenState extends State<RepertoireScreen> {
                             ),
                 );
               } else if (state is RepertoireLoading) {
-                return Center(child: CircularProgressIndicator());
+                return const Center(child: CircularProgressIndicator());
               } else if (state is RepertoireError) {
                 return ErrorColumn(
                   errorMessage: state.message,
@@ -206,7 +208,7 @@ class _RepertoireScreenState extends State<RepertoireScreen> {
             },
           );
         } else if (cinemasState is CinemasLoading) {
-          return Center(child: CircularProgressIndicator());
+          return const Center(child: CircularProgressIndicator());
         } else if (cinemasState is CinemasError) {
           return ErrorColumn(
             errorMessage: cinemasState.message,

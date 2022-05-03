@@ -22,7 +22,7 @@ class FilmScoresApiClient extends ApiClient {
       return null;
     }
 
-    film.filmWebScore = await WebScrapingHelper.scrapFilmWebScore(film, response.body) ?? '-';
+    film.filmWebScore = WebScrapingHelper.scrapFilmWebScore(film, response.body) ?? '-';
 
     return film;
   }

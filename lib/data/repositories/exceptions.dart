@@ -3,6 +3,7 @@ abstract class BaseException implements Exception {
 
   const BaseException([this.message = ""]);
 
+  @override
   String toString() => "BaseException: $message";
 }
 

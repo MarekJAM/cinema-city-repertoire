@@ -12,7 +12,7 @@ final List<String> _pickedGenres = [];
 final List<String> _pickedEventTypes = [];
 
 class FiltersScreen extends StatefulWidget {
-  const FiltersScreen();
+  const FiltersScreen({Key key}) : super(key: key);
 
   @override
   State<FiltersScreen> createState() => _FiltersScreenState();
@@ -32,12 +32,11 @@ class _FiltersScreenState extends State<FiltersScreen> {
       body: SafeArea(
         child: Center(
           child: Padding(
-            padding: EdgeInsets.all(5),
+            padding: const EdgeInsets.all(5),
             child: BlocBuilder<FiltersCubit, FiltersState>(
                 builder: (context, state) {
               if (state is FiltersLoaded) {
-                state.filters.forEach(
-                  (filter) {
+                for (var filter in state.filters) {
                     if (filter is GenreFilter) {
                       _pickedGenres
                         ..clear()
@@ -49,8 +48,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
                     } else if (filter is ScoreFilter) {
                       _scoreFilter = filter;
                     }
-                  },
-                );
+                  }
               }
               return ListView(
                 shrinkWrap: true,
@@ -58,7 +56,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
                   MinimalScoreSlider(
                     scoreFilter: _scoreFilter,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   FilterMultiSelectDialog(
@@ -66,7 +64,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
                     values: _genres,
                     pickedValues: _pickedGenres,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   FilterMultiSelectDialog(
@@ -74,7 +72,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
                     values: _eventTypes,
                     pickedValues: _pickedEventTypes,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   Row(
@@ -82,7 +80,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
                     children: [
                       TextButton(
                         onPressed: () => Navigator.of(context).pop(),
-                        child: Text('Powrót'),
+                        child: const Text('Powrót'),
                       ),
                       ElevatedButton(
                         onPressed: () {
@@ -99,7 +97,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
                           );
                           Navigator.of(context).pop();
                         },
-                        child: Text('Zastosuj'),
+                        child: const Text('Zastosuj'),
                       ),
                     ],
                   )

@@ -11,6 +11,6 @@ class FiltersRepository {
   }
 
   Future<void> saveFilters(List<RepertoireFilter> filters) async {
-    await storage.saveFilters(filters);
+    storage.saveFilters(filters);
   }
 }

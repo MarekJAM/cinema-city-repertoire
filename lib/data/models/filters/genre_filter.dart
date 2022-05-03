@@ -16,11 +16,11 @@ class GenreFilter implements RepertoireFilter {
     var items = [...repertoire.filmItems];
     var toRemove = [];
 
-    items.forEach((el) {
+    for (var el in items) {
       if (el.film.genres.firstWhere((el) => genres.contains(el), orElse: () => null) == null) {
         toRemove.add(el);
       }
-    });
+    }
 
     items.removeWhere((el) => toRemove.contains(el));
 

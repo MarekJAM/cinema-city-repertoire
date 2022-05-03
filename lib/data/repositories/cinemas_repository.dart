@@ -10,7 +10,7 @@ class CinemasRepository {
   CinemasRepository({@required this.cinemasApiClient}) : assert(CinemasApiClient != null);
 
   Future<List<Cinema>> getAllCinemas() async {
-    var dateInAYear = DateTime.now().add(new Duration(days: 365));
+    var dateInAYear = DateTime.now().add(const Duration(days: 365));
 
     return await cinemasApiClient.getCinemas(
       DateHandler.convertDateToYYYYMMDD(

@@ -35,7 +35,7 @@ class Event {
     if (json['attributeIds'] != null) {
       String language;
       json['attributeIds'].forEach((attr) {
-        eventTypes.forEach((type) {
+        for (var type in eventTypes) {
           if (attr == type) {
             attributes.update(
               'type',
@@ -43,7 +43,7 @@ class Event {
               ifAbsent: () => type.toString(),
             );
           }
-        });
+        }
         if (attr.contains('dubbed')) {
           language = 'DUBBING';
         } else if ((attr.contains('original') && (!attr.contains('pl')) ||

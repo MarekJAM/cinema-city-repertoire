@@ -28,7 +28,7 @@ class CinemasApiClient extends ApiClient {
 
       cinemas.addAll((extractedData['body']['cinemas'] as List).map((e) => Cinema.fromJson(e)));
     } catch (error) {
-      throw error;
+      rethrow;
     }
     return cinemas;
   }

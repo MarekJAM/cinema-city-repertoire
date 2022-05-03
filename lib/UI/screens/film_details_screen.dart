@@ -8,7 +8,7 @@ import '../../data/models/film.dart';
 class FilmDetailsScreen extends StatelessWidget {
   final Film film;
 
-  const FilmDetailsScreen({@required this.film});
+  const FilmDetailsScreen({Key key, @required this.film}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -61,28 +61,28 @@ class FilmDetailsScreen extends StatelessWidget {
                                   thickness: 2,
                                 ),
                                 DetailsDataRow(title: "Tytuł:", content: film.name),
-                                if (film.genres.isNotEmpty) Divider(),
+                                if (film.genres.isNotEmpty) const Divider(),
                                 if (film.genres.isNotEmpty)
                                   DetailsDataRow(
                                     title: "Gatunek:",
                                     widget: Wrap(
                                       children: [
                                         for (int i = 0; i < film.genres.length; i++)
-                                          Text("${film.genres[i]}" +
+                                          Text(film.genres[i] +
                                               (i < film.genres.length - 1 ? ", " : "")),
                                       ],
                                     ),
                                   ),
-                                if (film.details.cast.isNotEmpty) Divider(),
+                                if (film.details.cast.isNotEmpty) const Divider(),
                                 if (film.details.cast.isNotEmpty)
                                   DetailsDataRow(title: "Obsada:", content: film.details.cast),
-                                if (film.details.director.isNotEmpty) Divider(),
+                                if (film.details.director.isNotEmpty) const Divider(),
                                 if (film.details.director.isNotEmpty)
                                   DetailsDataRow(title: "Reżyser:", content: film.details.director),
-                                if (film.details.production.isNotEmpty) Divider(),
+                                if (film.details.production.isNotEmpty) const Divider(),
                                 if (film.details.production.isNotEmpty)
                                   DetailsDataRow(title: "Produkcja:", content: film.details.production),
-                                Divider(),
+                                const Divider(),
                                 DetailsDataRow(
                                   title: "Ocena:",
                                   widget: BlocBuilder<FilmScoresCubit, FilmScoresState>(
@@ -93,19 +93,19 @@ class FilmDetailsScreen extends StatelessWidget {
                                             'assets/filmweb-logo.png',
                                             width: 60,
                                           ),
-                                          SizedBox(
+                                          const SizedBox(
                                             width: 5,
                                           ),
                                           film.filmWebScore != null
                                               ? Text(
                                                   film.filmWebScore ?? 'no data',
                                                 )
-                                              : Padding(
-                                                  padding: const EdgeInsets.symmetric(
+                                              : const Padding(
+                                                  padding: EdgeInsets.symmetric(
                                                     horizontal: 3.5,
                                                     vertical: 2,
                                                   ),
-                                                  child: Container(
+                                                  child: SizedBox(
                                                     child: CircularProgressIndicator(
                                                       strokeWidth: 2,
                                                     ),
@@ -121,8 +121,8 @@ class FilmDetailsScreen extends StatelessWidget {
                                 Divider(
                                   color: Theme.of(context).colorScheme.secondary,
                                 ),
-                                Text("${film.details.description}"),
-                                SizedBox(
+                                Text(film.details.description),
+                                const SizedBox(
                                   height: 10,
                                 )
                               ],
@@ -134,7 +134,7 @@ class FilmDetailsScreen extends StatelessWidget {
                   ],
                 );
               } else if (state is FilmDetailsLoading) {
-                return Center(
+                return const Center(
                   child: CircularProgressIndicator(),
                 );
               } else if (state is FilmDetailsError) {
@@ -161,10 +161,11 @@ class DetailsHeaderRow extends StatelessWidget {
   final String content;
 
   const DetailsHeaderRow({
+    Key key,
     @required this.icon,
     @required this.title,
     @required this.content,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -175,7 +176,7 @@ class DetailsHeaderRow extends StatelessWidget {
           icon,
           size: 35,
         ),
-        SizedBox(
+        const SizedBox(
           width: 3,
         ),
         Column(
@@ -183,13 +184,13 @@ class DetailsHeaderRow extends StatelessWidget {
           children: [
             Text(
               "$title: ",
-              style: TextStyle(fontSize: 12),
+              style: const TextStyle(fontSize: 12),
             ),
             Wrap(
               children: [
                 Text(
-                  "$content",
-                  style: TextStyle(fontSize: 16),
+                  content,
+                  style: const TextStyle(fontSize: 16),
                 ),
               ],
             )
@@ -205,13 +206,13 @@ class DetailsDataRow extends StatelessWidget {
   final String content;
   final Widget widget;
 
-  const DetailsDataRow({@required this.title, this.content, this.widget});
+  const DetailsDataRow({Key key, @required this.title, this.content, this.widget}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Container(
+        SizedBox(
           width: 80,
           child: Text(title),
         ),

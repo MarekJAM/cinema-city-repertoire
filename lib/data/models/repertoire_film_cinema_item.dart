@@ -9,6 +9,6 @@ class RepertoireFilmCinemaItem {
   RepertoireFilmCinemaItem({@required this.cinema, @required this.events});
 
   RepertoireFilmCinemaItem copyWith({List<Event> events}) {
-    return RepertoireFilmCinemaItem(cinema: this.cinema, events: events ?? this.events);
+    return RepertoireFilmCinemaItem(cinema: cinema, events: events ?? this.events);
   }
 }

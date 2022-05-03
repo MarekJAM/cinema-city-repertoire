@@ -5,11 +5,12 @@ class ErrorColumn extends StatelessWidget {
   final String buttonMessage;
   final Function buttonOnPressed;
 
-  ErrorColumn({
+  const ErrorColumn({
+    Key key,
     @required this.errorMessage,
     @required this.buttonMessage,
     @required this.buttonOnPressed,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

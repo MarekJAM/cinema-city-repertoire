@@ -69,7 +69,7 @@ class _FilmEventDialogState extends State<FilmEventDialog> {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           backgroundColor: Colors.green,
-          content: const Text(
+          content: Text(
             "Zaplanowano przypomnienie.",
             textAlign: TextAlign.center,
             style: TextStyle(color: Colors.white),
@@ -184,7 +184,7 @@ class _FilmEventDialogState extends State<FilmEventDialog> {
 
                           if (pickedTzDateTime.isAfter(tz.TZDateTime.now(location))) {
                             _scheduleNotification(
-                              '${widget.film.name}',
+                              widget.film.name,
                               widget.item,
                               pickedTzDateTime,
                             );

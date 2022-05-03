@@ -4,10 +4,11 @@ import 'filter_widgets.dart';
 
 class FilterMultiSelectDialog extends StatelessWidget {
   const FilterMultiSelectDialog({
+    Key key,
     @required this.title,
     @required this.values,
     @required this.pickedValues,
-  });
+  }) : super(key: key);
 
   final String title;
   final List<String> values;
@@ -33,7 +34,7 @@ class FilterMultiSelectDialog extends StatelessWidget {
       },
       child: ListTile(
         title: Text(title),
-        trailing: Icon(Icons.arrow_drop_down),
+        trailing: const Icon(Icons.arrow_drop_down),
       ),
     );
   }

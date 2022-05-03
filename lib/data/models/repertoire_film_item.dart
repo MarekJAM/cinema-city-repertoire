@@ -9,6 +9,6 @@ class RepertoireFilmItem {
   RepertoireFilmItem({@required this.film, @required this.repertoireFilmCinemaItems});
 
   RepertoireFilmItem copyWith({List<RepertoireFilmCinemaItem> repertoireFilmCinemaItems}) {
-    return RepertoireFilmItem(film: this.film, repertoireFilmCinemaItems: repertoireFilmCinemaItems ?? this.repertoireFilmCinemaItems);
+    return RepertoireFilmItem(film: film, repertoireFilmCinemaItems: repertoireFilmCinemaItems ?? this.repertoireFilmCinemaItems);
   }
 }

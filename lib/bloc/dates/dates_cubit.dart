@@ -16,7 +16,7 @@ class DatesCubit extends Cubit<DatesState> {
       emit(DatesLoaded(dates));
     } catch (e) {
       print(e);
-      emit(DatesError("Failed to get dates."));
+      emit(const DatesError("Failed to get dates."));
     }
   }
 }

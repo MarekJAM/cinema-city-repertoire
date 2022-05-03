@@ -31,7 +31,7 @@ class WebScrapingHelper {
   }
 
   static String scrapFilmWebScore(Film film, String responseBody) {
-    var filmRegex = RegExp('(?<=${film.name}).*?(> <div class=\"content__sidebar\">)');
+    var filmRegex = RegExp('(?<=${film.name}).*?(> <div class="content__sidebar">)');
 
     var scoreRegex = RegExp(r'ratingValue">+[0-9]+\,+[0-9]');
 

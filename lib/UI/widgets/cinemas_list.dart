@@ -14,7 +14,7 @@ class CinemasList extends StatelessWidget {
   final DateTime pickedDate;
   final double height;
 
-  CinemasList(this.list, this.pickedDate, this.pickedCinemas, this.height);
+  const CinemasList(this.list, this.pickedDate, this.pickedCinemas, this.height, {Key key}) : super(key: key);
 
   Future<void> _saveFavoriteCinemas() async {
     await Storage.setFavoriteCinemas(pickedCinemas);
@@ -22,12 +22,12 @@ class CinemasList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: height,
       child: Column(
         children: <Widget>[
           Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               border: Border(
                 bottom: BorderSide(color: Colors.black),
               ),
@@ -57,12 +57,12 @@ class CinemasList extends StatelessWidget {
                         GetRepertoire(pickedDate, pickedCinemas),
                       );
                       BlocProvider.of<DatesCubit>(context).getDates(
-                        DateTime.now().add(Duration(days: 365)),
+                        DateTime.now().add(const Duration(days: 365)),
                         pickedCinemas,
                       );
                       Navigator.of(context).pop();
                     },
-                    child: Text('Wyświetl'),
+                    child: const Text('Wyświetl'),
                   ),
                   ElevatedButton(
                     onPressed: () async {
@@ -79,7 +79,7 @@ class CinemasList extends StatelessWidget {
                       } else {
                         ScaffoldMessenger.of(context).hideCurrentSnackBar();
                         ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
+                          const SnackBar(
                             backgroundColor: Colors.green,
                             content: Text(
                               "Zapisano kina jako ulubione.",
@@ -90,7 +90,7 @@ class CinemasList extends StatelessWidget {
                         );
                       }
                     },
-                    child: Text('Zapisz'),
+                    child: const Text('Zapisz'),
                   ),
                 ],
               ),
@@ -106,7 +106,7 @@ class CinemaItemRow extends StatefulWidget {
   final Cinema cinemaData;
   final List<String> pickedCinemas;
 
-  CinemaItemRow(this.cinemaData, this.pickedCinemas);
+  const CinemaItemRow(this.cinemaData, this.pickedCinemas, {Key key}) : super(key: key);
 
   @override
   _CinemaItemRowState createState() => _CinemaItemRowState();

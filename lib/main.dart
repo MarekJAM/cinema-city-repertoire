@@ -103,7 +103,7 @@ void main() {
               create: (context) => filtersCubit,
             ),
           ],
-          child: App(),
+          child: const App(),
         ),
       );
     },
@@ -112,6 +112,8 @@ void main() {
 }
 
 class App extends StatelessWidget {
+  const App({Key key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations([
@@ -128,19 +130,19 @@ class App extends StatelessWidget {
     );
 
     return MaterialApp(
-      localizationsDelegates: [
+      localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      supportedLocales: [
-        const Locale('pl'),
+      supportedLocales: const [
+        Locale('pl'),
       ],
       title: 'Cinema City Repertuar',
       theme: theme.copyWith(
         colorScheme: theme.colorScheme.copyWith(secondary: Colors.orange),
       ),
-      home: RepertoireScreen(),
+      home: const RepertoireScreen(),
     );
   }
 }

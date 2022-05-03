@@ -5,10 +5,11 @@ import '../../data/models/models.dart';
 
 class CinemasDrawer extends StatelessWidget {
   const CinemasDrawer({
+    Key key,
     @required this.pickedDate,
     @required this.pickedCinemas,
     @required this.cinemas,
-  });
+  }) :super(key: key);
 
   final DateTime pickedDate;
   final List<String> pickedCinemas;
@@ -17,18 +18,18 @@ class CinemasDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final deviceSize = MediaQuery.of(context).size;
-    final double headerHeight = 100;
+    const double headerHeight = 100;
 
     return Drawer(
-      child: Container(
+      child: SizedBox(
         height: deviceSize.height,
         child: ListView(
           padding: EdgeInsets.zero,
           children: <Widget>[
-            Container(
+            SizedBox(
               height: headerHeight,
               child: DrawerHeader(
-                child: Text(
+                child: const Text(
                   'Kina',
                   style: TextStyle(
                     fontSize: 20,
@@ -39,13 +40,11 @@ class CinemasDrawer extends StatelessWidget {
                 ),
               ),
             ),
-            Container(
-              child: CinemasList(
-                cinemas,
-                pickedDate,
-                pickedCinemas,
-                deviceSize.height - headerHeight,
-              ),
+            CinemasList(
+              cinemas,
+              pickedDate,
+              pickedCinemas,
+              deviceSize.height - headerHeight,
             ),
           ],
         ),

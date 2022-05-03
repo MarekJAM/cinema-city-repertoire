@@ -24,7 +24,7 @@ class SliverHeader extends SliverPersistentHeaderDelegate {
   ) {
     return Stack(
       children: [
-        Container(
+        SizedBox(
           width: double.infinity,
           child: Image.network(
             imageUrl,
@@ -37,12 +37,10 @@ class SliverHeader extends SliverPersistentHeaderDelegate {
               bool wasSynchronouslyLoaded,
             ) {
               return AnimatedCrossFade(
-                firstChild: Container(
+                firstChild: SizedBox(
                   height: maxExtent,
-                  child: Container(
-                    child: const Center(
-                      child: const CircularProgressIndicator(),
-                    ),
+                  child: const Center(
+                    child: CircularProgressIndicator(),
                   ),
                 ),
                 secondChild: Container(

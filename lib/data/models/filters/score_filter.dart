@@ -18,15 +18,15 @@ class ScoreFilter implements RepertoireFilter {
     var items = [...repertoire.filmItems];
     var toRemove = [];
 
-    items.forEach((el) {
+    for (var el in items) {
       var itemScoreString = el.film.filmWebScore;
       var itemScoreDouble = itemScoreString != null ? double.tryParse(itemScoreString) : null;
 
-      if ((itemScoreDouble != null && itemScoreDouble < this.score) ||
+      if ((itemScoreDouble != null && itemScoreDouble < score) ||
           (itemScoreDouble == null && itemScoreString != null && !showFilmsWithNoScore)) {
         toRemove.add(el);
       }
-    });
+    }
 
     items.removeWhere((el) => toRemove.contains(el));
 

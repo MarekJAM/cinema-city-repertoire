@@ -43,10 +43,10 @@ class RepertoireRepository {
   Repertoire filterRepertoire(List<RepertoireFilter> filters, Repertoire repertoire) {
     var filteredRepertoire = repertoire;
 
-    if (filters.length > 0) {
-      filters.forEach((el) {
+    if (filters.isNotEmpty) {
+      for (var el in filters) {
         filteredRepertoire = el.filter(filteredRepertoire);
-      });
+      }
     }
 
     return filteredRepertoire;

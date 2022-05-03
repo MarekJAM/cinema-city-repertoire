@@ -15,7 +15,7 @@ class EventTypeFilter implements RepertoireFilter {
   Repertoire filter(Repertoire repertoire) {
     var items = <RepertoireFilmItem>[];
 
-    repertoire.filmItems.forEach((filmItem) {
+    for (var filmItem in repertoire.filmItems) {
       var item = filmItem.copyWith(
         repertoireFilmCinemaItems: filmItem.repertoireFilmCinemaItems
             .map(
@@ -31,10 +31,10 @@ class EventTypeFilter implements RepertoireFilter {
             .toList(),
       );
 
-      if (item.repertoireFilmCinemaItems.any((item) => item.events.length > 0)) {
+      if (item.repertoireFilmCinemaItems.any((item) => item.events.isNotEmpty)) {
               items.add(item);
       }
-    });
+    }
 
     return Repertoire.fromFilmItems(items);
   }

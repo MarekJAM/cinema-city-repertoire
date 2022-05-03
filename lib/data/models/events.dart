@@ -9,11 +9,11 @@ class Events {
 
   List<Event> findEventsByFilmId(String id) {
     List<Event> retEvents = [];
-    items.forEach((item) {
+    for (var item in items) {
       if (item.filmId == id) {
         retEvents.add(item);
       }
-    });
+    }
 
     return retEvents;
   }
@@ -24,9 +24,9 @@ class Events {
 
   void setEvents(List<dynamic> events) {
     List<Event> loadedEvents = [];
-    events.forEach((event) {
+    for (var event in events) {
       loadedEvents.add(Event.fromJson(event));
-    });
+    }
     _items = loadedEvents;
   }
 }

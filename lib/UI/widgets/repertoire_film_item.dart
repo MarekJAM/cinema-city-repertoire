@@ -10,10 +10,10 @@ import 'widgets.dart';
 class RepertoireFilmItemWidget extends StatelessWidget {
   final RepertoireFilmItem data;
 
-  const RepertoireFilmItemWidget(this.data);
+  const RepertoireFilmItemWidget(this.data, {Key key}) : super(key: key);
 
   Color _getAgeRestrictionColor(String value) {
-    var color;
+    Color color;
     if (value == 'NA') {
       color = Colors.green;
     } else if (value == '18') {
@@ -45,7 +45,7 @@ class RepertoireFilmItemWidget extends StatelessWidget {
             },
             child: Column(
               children: [
-                Container(
+                SizedBox(
                   height: 120,
                   width: 80,
                   child: Image.network(
@@ -72,10 +72,10 @@ class RepertoireFilmItemWidget extends StatelessWidget {
                                 data.film.filmWebScore ?? 'no data',
                                 style: const TextStyle(fontSize: 12),
                               )
-                            : Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 3.5, vertical: 2),
-                                child: Container(
-                                  child: const CircularProgressIndicator(
+                            : const Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 3.5, vertical: 2),
+                                child: SizedBox(
+                                  child: CircularProgressIndicator(
                                     strokeWidth: 2,
                                   ),
                                   height: 10,

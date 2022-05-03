@@ -27,13 +27,11 @@ class RepertoireApiClient extends ApiClient {
       ),
     );
 
-    responseList.forEach(
-      (response) {
+    for (var response in responseList) {
         if (response.statusCode != 200) {
           throwException(response.statusCode, 'Error getting repertoire');
         }
-      },
-    );
+      }
 
     List<dynamic> extFilms = [];
     List<dynamic> extEvents = [];
@@ -47,17 +45,17 @@ class RepertoireApiClient extends ApiClient {
     final List<Film> films = [];
     final List<Event> events = [];
 
-    extFilms.forEach((film)  {
+    for (var film in extFilms) {
       if ((films.firstWhere((el) => el.id == film['id'], orElse: () => null)) == null) {
         films.add(
           Film.fromJson(film)
         );
       }
-    });
+    }
 
-    extEvents.forEach((event) {
+    for (var event in extEvents) {
       events.add(Event.fromJson(event));
-    });
+    }
 
     var _repertoire = Repertoire(films: films, events: events, cinemas: allCinemas);
 
@@ -73,13 +71,11 @@ class RepertoireApiClient extends ApiClient {
       ),
     );
 
-    responseList.forEach(
-      (response) {
+    for (var response in responseList) {
         if (response.statusCode != 200) {
           throwException(response.statusCode, 'Error getting dates');
         }
-      },
-    );
+      }
 
     List<String> dates = [];
 
