@@ -13,6 +13,8 @@ class RepertoireApiClient extends ApiClient {
 
   RepertoireApiClient({this.httpClient}) : assert(httpClient != null);
 
+  final _repertoire = Repertoire();
+
   Future<Repertoire> getRepertoire(
     {
     @required String date, 
@@ -57,7 +59,7 @@ class RepertoireApiClient extends ApiClient {
       events.add(Event.fromJson(event));
     }
 
-    var _repertoire = Repertoire(films: films, events: events, cinemas: allCinemas);
+    _repertoire.setItems(films: films, events: events, cinemas: allCinemas);
 
     return _repertoire;
   }

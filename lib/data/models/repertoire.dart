@@ -7,27 +7,34 @@ import './models.dart';
 class Repertoire {
   List<RepertoireFilmItem> filmItems = [];
 
-  Repertoire({
+  void setItems({
     @required List<Film> films,
     @required List<Event> events,
     @required List<Cinema> cinemas,
   }) {
+    var _tempItems = [...filmItems];
+
+    filmItems.clear();
+
     for (var film in films) {
       var filmEvents = EventHelper.filterEventsByFilmId(events, film.id);
 
-      var filmItem = filmItems.firstWhere((filmItem) => filmItem.film.name == film.name,
+      var filmItem = _tempItems.firstWhere((filmItem) => filmItem.film.name == film.name,
           orElse: () => RepertoireFilmItem(film: film, repertoireFilmCinemaItems: []));
 
       for (var event in filmEvents) {
         var cinema = CinemaHelper.getCinemaById(cinemas, event.cinemaId);
-        if (filmItem.repertoireFilmCinemaItems
-                .firstWhere((item) => item.cinema.id == cinema.id, orElse: () => null) ==
-            null) {
-          filmItem.repertoireFilmCinemaItems.add(RepertoireFilmCinemaItem(
-            cinema: cinema,
-            events: EventHelper.filterEventsByCinemaId(filmEvents, event.cinemaId),
-          ));
-        }
+        var item = filmItem.repertoireFilmCinemaItems
+            .firstWhere((item) => item.cinema.id == cinema.id, orElse: () => null);
+            
+        item == null
+            ? filmItem.repertoireFilmCinemaItems.add(
+                RepertoireFilmCinemaItem(
+                  cinema: cinema,
+                  events: EventHelper.filterEventsByCinemaId(filmEvents, event.cinemaId),
+                ),
+              )
+            : item.events = EventHelper.filterEventsByCinemaId(filmEvents, event.cinemaId);
       }
 
       if (filmEvents.isNotEmpty) {
@@ -35,6 +42,8 @@ class Repertoire {
       }
     }
   }
+
+  Repertoire();
 
   Repertoire.fromFilmItems(List<RepertoireFilmItem> filmItems) {
     this.filmItems = [...filmItems];
