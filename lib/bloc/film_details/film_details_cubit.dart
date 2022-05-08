@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
@@ -20,13 +22,13 @@ class FilmDetailsCubit extends Cubit<FilmDetailsState> {
 
       emit(FilmDetailsLoaded(film: film));
     } on ClientException catch (e) {
-      print(e);
+      log(e.message);
       emit(const FilmDetailsError(message: 'Błąd połączenia.'));
     } on ServerException catch (e) {
-      print(e);
+      log(e.message);
       emit(const FilmDetailsError(message: 'Błąd wewnętrzny serwera.'));
     } catch (e) {
-      print(e);
+      log(e.message);
       emit(const FilmDetailsError(message: 'Wystąpił nieznany błąd.'));
     }
   }

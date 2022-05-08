@@ -11,7 +11,7 @@ class RepertoireApiClient extends ApiClient {
 
   final http.Client httpClient;
 
-  RepertoireApiClient({this.httpClient}) : assert(httpClient != null);
+  RepertoireApiClient({@required this.httpClient}) : assert(httpClient != null);
 
   final _repertoire = Repertoire();
 

@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 import './api_client.dart';
@@ -7,7 +8,7 @@ import '../../utils/web_scraping_helper.dart';
 class FilmApiClient extends ApiClient {
   final http.Client httpClient;
 
-  FilmApiClient({this.httpClient}) : assert(httpClient != null);
+  FilmApiClient({@required this.httpClient}) : assert(httpClient != null);
 
   Future<Film> getFilmDetails(Film film) async {
     var response = await http.get(

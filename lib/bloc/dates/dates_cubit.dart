@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 
 import '../../data/repositories/repertoire_repository.dart';
@@ -15,7 +17,7 @@ class DatesCubit extends Cubit<DatesState> {
       var dates = await repertoireRepository.getDates(date, cinemaIds);
       emit(DatesLoaded(dates));
     } catch (e) {
-      print(e);
+      log(e.message);
       emit(const DatesError("Failed to get dates."));
     }
   }

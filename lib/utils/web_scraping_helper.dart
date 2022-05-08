@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import '../data/models/models.dart';
 import 'package:html/parser.dart' as parser;
 
@@ -25,7 +27,7 @@ class WebScrapingHelper {
         production: production,
       );
     } catch (e) {
-      print(e);
+      log(e.message);
       return null;
     }
   }

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -21,13 +23,13 @@ class CinemasBloc extends Bloc<CinemasEvent, CinemasState> {
 
       emit(CinemasLoaded(cinemas: cinemas, favoriteCinemaIds: favoriteCinemaIds));
     } on ClientException catch (e) {
-      print(e);
+      log(e.message);
       emit(const CinemasError(message: 'Błąd połączenia.'));
     } on ServerException catch (e) {
-      print(e);
+      log(e.message);
       emit(const CinemasError(message: 'Błąd wewnętrzny serwera.'));
     } catch (e) {
-      print(e);
+      log(e.message);
       emit(const CinemasError(message: 'Wystąpił nieznany błąd.'));
     }
   }

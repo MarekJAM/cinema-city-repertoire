@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -47,13 +49,13 @@ class RepertoireBloc extends Bloc<RepertoireEvent, RepertoireState> {
 
       emit(RepertoireLoaded(data: filteredRepertoire));
     } on ClientException catch (e) {
-      print(e);
+      log(e.message);
       emit(const RepertoireError(message: 'Błąd połączenia.'));
     } on ServerException catch (e) {
-      print(e);
+      log(e.message);
       emit(const RepertoireError(message: 'Błąd wewnętrzny serwera.'));
     } catch (e) {
-      print(e);
+      log(e.message);
       emit(const RepertoireError(message: 'Wystąpił nieznany błąd.'));
     }
   }
