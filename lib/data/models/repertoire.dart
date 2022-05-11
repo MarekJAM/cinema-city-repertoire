@@ -12,14 +12,14 @@ class Repertoire {
     @required List<Event> events,
     @required List<Cinema> cinemas,
   }) {
-    var _tempItems = [...filmItems];
-
-    filmItems.clear();
+    for (var item in filmItems) {
+      item.repertoireFilmCinemaItems.clear();
+    }
 
     for (var film in films) {
       var filmEvents = EventHelper.filterEventsByFilmId(events, film.id);
 
-      var filmItem = _tempItems.firstWhere((filmItem) => filmItem.film.name == film.name,
+      var filmItem = filmItems.firstWhere((filmItem) => filmItem.film.name == film.name,
           orElse: () => RepertoireFilmItem(film: film, repertoireFilmCinemaItems: []));
 
       for (var event in filmEvents) {
@@ -37,7 +37,7 @@ class Repertoire {
             : item.events = EventHelper.filterEventsByCinemaId(filmEvents, event.cinemaId);
       }
 
-      if (filmEvents.isNotEmpty) {
+      if (filmEvents.isNotEmpty && !filmItems.contains(filmItem)) {
         filmItems.add(filmItem);
       }
     }

@@ -32,7 +32,7 @@ class EventTypeFilter implements RepertoireFilter {
       );
 
       if (item.repertoireFilmCinemaItems.any((item) => item.events.isNotEmpty)) {
-              items.add(item);
+        items.add(item);
       }
     }
 
