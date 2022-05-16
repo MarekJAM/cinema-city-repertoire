@@ -8,14 +8,14 @@ import '../../utils/web_scraping_helper.dart';
 class FilmScoresApiClient extends ApiClient {
   final http.Client httpClient;
 
-  FilmScoresApiClient({@required this.httpClient}) : assert(httpClient != null);
+  FilmScoresApiClient({required this.httpClient}) : assert(httpClient != null);
 
   static const String _filmWebBaseUrl = 'https://www.filmweb.pl/films/search?q=';
 
-  static Future<Film> getFilmWebScore(Film film) async {
+  static Future<Film?> getFilmWebScore(Film film) async {
     var response = await http.get(
       Uri.parse(
-        _filmWebBaseUrl + film.name,
+        _filmWebBaseUrl + film.name!,
       ),
     );
 

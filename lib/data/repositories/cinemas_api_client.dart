@@ -10,21 +10,21 @@ class CinemasApiClient extends ApiClient {
 
   final http.Client httpClient;
 
-  CinemasApiClient({@required this.httpClient}) : assert(httpClient != null);
+  CinemasApiClient({required this.httpClient}) : assert(httpClient != null);
 
   Future<List<Cinema>> getCinemas(String date) async {
     final List<Cinema> cinemas = [];
 
     try {
       final response = await http.get(Uri.parse('${ApiClient.baseUrl}$_cinemasEndpoint$date?attr=&lang=pl_PL'));
-      final extractedData = json.decode(response.body) as Map<String, dynamic>;
+      final extractedData = json.decode(response.body) as Map<String, dynamic>?;
 
       if (response.statusCode != 200) {
         throwException(response.statusCode, 'Error getting cinemas');
       }
 
       if (extractedData == null) {
-        return null;
+        throw Exception("Extracting data issue");
       }
 
       cinemas.addAll((extractedData['body']['cinemas'] as List).map((e) => Cinema.fromJson(e)));

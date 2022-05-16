@@ -3,17 +3,17 @@ import 'package:url_launcher/url_launcher.dart';
 
 class SliverHeader extends SliverPersistentHeaderDelegate {
   final String imageUrl;
-  final String videoUrl;
+  final String? videoUrl;
   @override
   final double minExtent;
   @override
   final double maxExtent;
 
   SliverHeader({
-    @required this.imageUrl,
-    @required this.videoUrl,
-    this.minExtent,
-    @required this.maxExtent,
+    required this.imageUrl,
+    required this.videoUrl,
+    required this.minExtent,
+    required this.maxExtent,
   });
 
   @override
@@ -33,7 +33,7 @@ class SliverHeader extends SliverPersistentHeaderDelegate {
             frameBuilder: (
               BuildContext context,
               Widget child,
-              int frame,
+              int? frame,
               bool wasSynchronouslyLoaded,
             ) {
               return AnimatedCrossFade(

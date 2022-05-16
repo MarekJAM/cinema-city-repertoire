@@ -10,10 +10,10 @@ import 'widgets.dart';
 class RepertoireFilmItemWidget extends StatelessWidget {
   final RepertoireFilmItem data;
 
-  const RepertoireFilmItemWidget(this.data, {Key key}) : super(key: key);
+  const RepertoireFilmItemWidget(this.data, {Key? key}) : super(key: key);
 
-  Color _getAgeRestrictionColor(String value) {
-    Color color;
+  Color? _getAgeRestrictionColor(String value) {
+    Color? color;
     if (value == 'NA') {
       color = Colors.green;
     } else if (value == '18') {
@@ -50,7 +50,7 @@ class RepertoireFilmItemWidget extends StatelessWidget {
                   height: 120,
                   width: 80,
                   child: Image.network(
-                    data.film.posterLink,
+                    data.film.posterLink!,
                   ),
                 ),
                 const SizedBox(
@@ -98,7 +98,7 @@ class RepertoireFilmItemWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    data.film.name,
+                    data.film.name!,
                     style: const TextStyle(
                       fontWeight: FontWeight.bold,
                     ),
@@ -181,15 +181,15 @@ class RepertoireFilmItemWidget extends StatelessWidget {
 
 class RepertoireFilmItemRow extends StatelessWidget {
   const RepertoireFilmItemRow({
-    Key key,
-    @required this.film,
-    @required this.events,
-    @required this.cinema,
+    Key? key,
+    required this.film,
+    required this.events,
+    required this.cinema,
   }) : super(key: key);
 
   final Film film;
   final List<Event> events;
-  final String cinema;
+  final String? cinema;
 
   @override
   Widget build(BuildContext context) {
@@ -198,7 +198,7 @@ class RepertoireFilmItemRow extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
-                cinema,
+                cinema!,
                 style: const TextStyle(
                   fontSize: 12,
                 ),
@@ -235,11 +235,11 @@ class RepertoireFilmItemRow extends StatelessWidget {
                               children: <Widget>[
                                 Text(DateHandler.convertDateToHHMM(item.dateTime)),
                                 Text(
-                                  item.type,
+                                  item.type!,
                                   style: const TextStyle(fontSize: 7),
                                 ),
                                 Text(
-                                  item.language,
+                                  item.language!,
                                   style: const TextStyle(fontSize: 7),
                                 ),
                               ],

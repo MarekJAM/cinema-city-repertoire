@@ -4,10 +4,10 @@ import 'filter_widgets.dart';
 
 class FilterMultiSelectDialog extends StatelessWidget {
   const FilterMultiSelectDialog({
-    Key key,
-    @required this.title,
-    @required this.values,
-    @required this.pickedValues,
+    Key? key,
+    required this.title,
+    required this.values,
+    required this.pickedValues,
   }) : super(key: key);
 
   final String title;

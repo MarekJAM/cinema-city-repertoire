@@ -8,12 +8,12 @@ import '../../utils/web_scraping_helper.dart';
 class FilmApiClient extends ApiClient {
   final http.Client httpClient;
 
-  FilmApiClient({@required this.httpClient}) : assert(httpClient != null);
+  FilmApiClient({required this.httpClient}) : assert(httpClient != null);
 
   Future<Film> getFilmDetails(Film film) async {
     var response = await http.get(
       Uri.parse(
-        film.link,
+        film.link!,
       ),
     );
 

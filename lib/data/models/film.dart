@@ -27,28 +27,28 @@ const Map<String, String> genreMap = {
 };
 
 class Film {
-  final String id;
-  final String name;
-  final int length;
-  final String posterLink;
+  final String? id;
+  final String? name;
+  final int? length;
+  final String? posterLink;
   final List<String> genres;
   final String ageRestriction;
-  final String releaseYear;
-  final String link;
-  final String videoLink;
-  FilmDetails details;
-  String filmWebScore;
+  final String? releaseYear;
+  final String? link;
+  final String? videoLink;
+  FilmDetails? details;
+  String? filmWebScore;
 
   Film({
-    @required this.id,
-    @required this.name,
-    @required this.length,
-    @required this.posterLink,
-    @required this.genres,
-    @required this.ageRestriction,
-    @required this.releaseYear,
-    @required this.link,
-    @required this.videoLink,
+    required this.id,
+    required this.name,
+    required this.length,
+    required this.posterLink,
+    required this.genres,
+    required this.ageRestriction,
+    required this.releaseYear,
+    required this.link,
+    required this.videoLink,
     this.details,
     this.filmWebScore,
   });

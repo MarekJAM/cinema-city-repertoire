@@ -6,9 +6,9 @@ import '../../data/models/models.dart';
 class FilmScoresRepository {
   final FilmScoresApiClient filmScoresApiClient;
 
-  FilmScoresRepository({@required this.filmScoresApiClient});
+  FilmScoresRepository({required this.filmScoresApiClient});
 
-  static Future<Film> getFilmWebScores(Film film) async {
+  static Future<Film?> getFilmWebScores(Film film) async {
     return await FilmScoresApiClient.getFilmWebScore(film);
   }
 }

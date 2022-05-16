@@ -5,13 +5,13 @@ import '../../data/models/models.dart';
 
 class CinemasDrawer extends StatelessWidget {
   const CinemasDrawer({
-    Key key,
-    @required this.pickedDate,
-    @required this.pickedCinemas,
-    @required this.cinemas,
+    Key? key,
+    required this.pickedDate,
+    required this.pickedCinemas,
+    required this.cinemas,
   }) :super(key: key);
 
-  final DateTime pickedDate;
+  final DateTime? pickedDate;
   final List<String> pickedCinemas;
   final List<Cinema> cinemas;
 

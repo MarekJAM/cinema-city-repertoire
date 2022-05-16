@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 class FilterValueButton extends StatefulWidget {
   const FilterValueButton({
-    Key key,
-    @required this.value,
-    @required this.pickedValues,
-    @required this.isInitiallySelected,
+    Key? key,
+    required this.value,
+    required this.pickedValues,
+    required this.isInitiallySelected,
   }) : super(key: key);
 
   final String value;
@@ -17,8 +17,8 @@ class FilterValueButton extends StatefulWidget {
 }
 
 class _FilterValueButtonState extends State<FilterValueButton> with TickerProviderStateMixin {
-  AnimationController _animationController;
-  Animation _colorTween;
+  late AnimationController _animationController;
+  late Animation _colorTween;
 
   @override
   void initState() {

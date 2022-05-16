@@ -1,6 +1,6 @@
+import 'dart:async';
 import 'dart:developer';
 
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import './bloc.dart';
@@ -11,7 +11,7 @@ import '../../utils/storage.dart';
 class CinemasBloc extends Bloc<CinemasEvent, CinemasState> {
   final CinemasRepository cinemasRepository;
 
-  CinemasBloc({@required this.cinemasRepository}) : super(CinemasInitial()) {
+  CinemasBloc({required this.cinemasRepository}) : super(CinemasInitial()) {
     on<GetCinemas>(_onGetCinemas);
   }
 
@@ -23,13 +23,13 @@ class CinemasBloc extends Bloc<CinemasEvent, CinemasState> {
 
       emit(CinemasLoaded(cinemas: cinemas, favoriteCinemaIds: favoriteCinemaIds));
     } on ClientException catch (e) {
-      log(e.message);
+      log(e.message!);
       emit(const CinemasError(message: 'Błąd połączenia.'));
     } on ServerException catch (e) {
-      log(e.message);
+      log(e.message!);
       emit(const CinemasError(message: 'Błąd wewnętrzny serwera.'));
     } catch (e) {
-      log(e.message);
+      log('$e');
       emit(const CinemasError(message: 'Wystąpił nieznany błąd.'));
     }
   }

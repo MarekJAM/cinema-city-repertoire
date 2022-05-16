@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart' show IterableExtension;
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -11,15 +12,15 @@ class RepertoireApiClient extends ApiClient {
 
   final http.Client httpClient;
 
-  RepertoireApiClient({@required this.httpClient}) : assert(httpClient != null);
+  RepertoireApiClient({required this.httpClient}) : assert(httpClient != null);
 
   final _repertoire = Repertoire();
 
   Future<Repertoire> getRepertoire(
     {
-    @required String date, 
-    @required List<Cinema> allCinemas,
-    @required List<String> cinemaIds,
+    required String date, 
+    required List<Cinema>? allCinemas,
+    required List<String> cinemaIds,
   }) async {
     List<http.Response> responseList = await Future.wait(
       cinemaIds.map(
@@ -48,7 +49,7 @@ class RepertoireApiClient extends ApiClient {
     final List<Event> events = [];
 
     for (var film in extFilms) {
-      if ((films.firstWhere((el) => el.id == film['id'], orElse: () => null)) == null) {
+      if ((films.firstWhereOrNull((el) => el.id == film['id'])) == null) {
         films.add(
           Film.fromJson(film)
         );

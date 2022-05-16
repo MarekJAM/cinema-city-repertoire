@@ -6,10 +6,10 @@ class ErrorColumn extends StatelessWidget {
   final Function buttonOnPressed;
 
   const ErrorColumn({
-    Key key,
-    @required this.errorMessage,
-    @required this.buttonMessage,
-    @required this.buttonOnPressed,
+    Key? key,
+    required this.errorMessage,
+    required this.buttonMessage,
+    required this.buttonOnPressed,
   }) : super(key: key);
 
   @override

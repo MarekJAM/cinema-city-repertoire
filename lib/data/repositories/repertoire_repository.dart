@@ -11,12 +11,12 @@ class RepertoireRepository {
   final FilmScoresApiClient filmScoresApiClient;
 
   RepertoireRepository({
-    @required this.repertoireApiClient,
-    @required this.filmApiClient,
-    @required this.filmScoresApiClient,
+    required this.repertoireApiClient,
+    required this.filmApiClient,
+    required this.filmScoresApiClient,
   }) : assert(repertoireApiClient != null, filmApiClient != null);
 
-  Future<Repertoire> getRepertoire({@required DateTime date, @required List<Cinema> allCinemas, List<String> pickedCinemaIds}) async {
+  Future<Repertoire> getRepertoire({required DateTime date, required List<Cinema>? allCinemas, required List<String> pickedCinemaIds}) async {
     return await repertoireApiClient.getRepertoire(
       date: DateHandler.convertDateToYYYYMMDD(
         date,
@@ -40,7 +40,7 @@ class RepertoireRepository {
     return await filmApiClient.getFilmDetails(film);
   }
 
-  Repertoire filterRepertoire(List<RepertoireFilter> filters, Repertoire repertoire) {
+  Repertoire? filterRepertoire(List<RepertoireFilter> filters, Repertoire? repertoire) {
     var filteredRepertoire = repertoire;
 
     if (filters.isNotEmpty) {

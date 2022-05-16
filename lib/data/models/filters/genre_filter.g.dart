@@ -17,7 +17,7 @@ class GenreFilterAdapter extends TypeAdapter<GenreFilter> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return GenreFilter(
-      (fields[0] as List)?.cast<String>(),
+      (fields[0] as List?)?.cast<String>(),
     );
   }
 

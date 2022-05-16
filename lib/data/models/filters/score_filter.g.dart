@@ -17,8 +17,8 @@ class ScoreFilterAdapter extends TypeAdapter<ScoreFilter> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return ScoreFilter(
-      fields[0] as double,
-      fields[1] as bool,
+      fields[0] as double?,
+      fields[1] as bool?,
     );
   }
 

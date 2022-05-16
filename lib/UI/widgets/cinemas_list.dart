@@ -11,10 +11,10 @@ import '../../utils/storage.dart';
 class CinemasList extends StatelessWidget {
   final List<Cinema> list;
   final List<String> pickedCinemas;
-  final DateTime pickedDate;
+  final DateTime? pickedDate;
   final double height;
 
-  const CinemasList(this.list, this.pickedDate, this.pickedCinemas, this.height, {Key key}) : super(key: key);
+  const CinemasList(this.list, this.pickedDate, this.pickedCinemas, this.height, {Key? key}) : super(key: key);
 
   Future<void> _saveFavoriteCinemas() async {
     await Storage.setFavoriteCinemas(pickedCinemas);
@@ -104,16 +104,16 @@ class CinemasList extends StatelessWidget {
 
 class CinemaItemRow extends StatefulWidget {
   final Cinema cinemaData;
-  final List<String> pickedCinemas;
+  final List<String?> pickedCinemas;
 
-  const CinemaItemRow(this.cinemaData, this.pickedCinemas, {Key key}) : super(key: key);
+  const CinemaItemRow(this.cinemaData, this.pickedCinemas, {Key? key}) : super(key: key);
 
   @override
   _CinemaItemRowState createState() => _CinemaItemRowState();
 }
 
 class _CinemaItemRowState extends State<CinemaItemRow> {
-  bool _isChecked;
+  bool? _isChecked;
 
   @override
   Widget build(BuildContext context) {
@@ -127,7 +127,7 @@ class _CinemaItemRowState extends State<CinemaItemRow> {
               setState(
                 () {
                   _isChecked = val;
-                  if (_isChecked) {
+                  if (_isChecked!) {
                     widget.pickedCinemas.add(widget.cinemaData.id);
                   } else {
                     widget.pickedCinemas.removeWhere((item) => item == widget.cinemaData.id);
@@ -138,7 +138,7 @@ class _CinemaItemRowState extends State<CinemaItemRow> {
           ),
           Expanded(
             child: Text(
-              widget.cinemaData.displayName,
+              widget.cinemaData.displayName!,
               softWrap: true,
             ),
           ),

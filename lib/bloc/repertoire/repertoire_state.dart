@@ -19,7 +19,7 @@ class RepertoireLoading extends RepertoireState {
 class RepertoireLoaded extends RepertoireState {
   final Repertoire data;
 
-  const RepertoireLoaded({@required this.data}) : assert(data != null);
+  const RepertoireLoaded({required this.data}) : assert(data != null);
 
   @override
   String toString() => 'RepertoireLoaded $data';
@@ -28,7 +28,7 @@ class RepertoireLoaded extends RepertoireState {
 class RepertoireError extends RepertoireState {
   final String message;
 
-  const RepertoireError({@required this.message}) : assert(message != null);
+  const RepertoireError({required this.message}) : assert(message != null);
 
   @override
   String toString() => 'RepertoireError';

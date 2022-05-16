@@ -12,7 +12,7 @@ final List<String> _pickedGenres = [];
 final List<String> _pickedEventTypes = [];
 
 class FiltersScreen extends StatefulWidget {
-  const FiltersScreen({Key key}) : super(key: key);
+  const FiltersScreen({Key? key}) : super(key: key);
 
   @override
   State<FiltersScreen> createState() => _FiltersScreenState();
@@ -40,11 +40,11 @@ class _FiltersScreenState extends State<FiltersScreen> {
                     if (filter is GenreFilter) {
                       _pickedGenres
                         ..clear()
-                        ..addAll(filter.genres);
+                        ..addAll(filter.genres!);
                     } else if (filter is EventTypeFilter) {
                       _pickedEventTypes
                         ..clear()
-                        ..addAll(filter.eventTypes);
+                        ..addAll(filter.eventTypes!);
                     } else if (filter is ScoreFilter) {
                       _scoreFilter = filter;
                     }

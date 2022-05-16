@@ -7,7 +7,7 @@ import '../widgets/widgets.dart';
 import 'filters_screen.dart';
 
 class RepertoireScreen extends StatefulWidget {
-  const RepertoireScreen({Key key}) : super(key: key);
+  const RepertoireScreen({Key? key}) : super(key: key);
 
   @override
   _RepertoireScreenState createState() => _RepertoireScreenState();
@@ -15,20 +15,20 @@ class RepertoireScreen extends StatefulWidget {
 
 class _RepertoireScreenState extends State<RepertoireScreen> {
   var todayDate = DateTime.now();
-  var pickedDate = DateTime.now();
+  DateTime? pickedDate = DateTime.now();
   var dateInAYear = DateTime.now().add(const Duration(days: 365));
   List<String> pickedCinemas = [];
   var isCinemaListLoaded = false;
-  DateTime picked;
+  DateTime? picked;
   List<DateTime> selectableDates = [];
 
   Future<void> _selectDate(BuildContext context) async {
     picked = await showDatePicker(
         context: context,
         initialDate: selectableDates.isEmpty
-            ? pickedDate
-            : selectableDates.any((el) => el.isSameDate(pickedDate))
-                ? pickedDate
+            ? pickedDate!
+            : selectableDates.any((el) => el.isSameDate(pickedDate!))
+                ? pickedDate!
                 : selectableDates[0],
         firstDate: DateTime(todayDate.year, todayDate.month, todayDate.day),
         lastDate: DateTime(2101),
@@ -66,7 +66,7 @@ class _RepertoireScreenState extends State<RepertoireScreen> {
               cinemas: state.cinemas,
             );
           }
-          return null;
+          return Container();
         },
       ),
       endDrawerEnableOpenDragGesture: isCinemaListLoaded,
@@ -91,7 +91,7 @@ class _RepertoireScreenState extends State<RepertoireScreen> {
                 ),
               ),
               child: Text(
-                DateHandler.convertDateToDDMM(pickedDate),
+                DateHandler.convertDateToDDMM(pickedDate!),
                 style: const TextStyle(color: Colors.white),
               ),
               onPressed: () {
@@ -226,7 +226,7 @@ class _RepertoireScreenState extends State<RepertoireScreen> {
     BlocProvider.of<CinemasBloc>(context).add(GetCinemas());
   }
 
-  void _getRepertoire(DateTime date, List<String> pickedCinemas) {
+  void _getRepertoire(DateTime? date, List<String> pickedCinemas) {
     BlocProvider.of<RepertoireBloc>(context).add(
       GetRepertoire(pickedDate, pickedCinemas),
     );

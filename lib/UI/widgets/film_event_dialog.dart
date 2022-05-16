@@ -13,14 +13,14 @@ import '../../utils/time_zone.dart';
 
 class FilmEventDialog extends StatefulWidget {
   const FilmEventDialog({
-    Key key,
-    @required this.film,
-    @required this.cinema,
-    @required this.item,
+    Key? key,
+    required this.film,
+    required this.cinema,
+    required this.item,
   }) : super(key: key);
 
   final Film film;
-  final String cinema;
+  final String? cinema;
   final Event item;
 
   @override
@@ -28,7 +28,7 @@ class FilmEventDialog extends StatefulWidget {
 }
 
 class _FilmEventDialogState extends State<FilmEventDialog> {
-  FlutterLocalNotificationsPlugin localNotification;
+  late FlutterLocalNotificationsPlugin localNotification;
 
   _launchURL(url) async {
     if (await canLaunchUrl(Uri(path: url))) {
@@ -38,9 +38,9 @@ class _FilmEventDialogState extends State<FilmEventDialog> {
     }
   }
 
-  _scheduleNotification(String title, Event event, tz.TZDateTime tzDateTime) async {
+  _scheduleNotification(String? title, Event event, tz.TZDateTime tzDateTime) async {
     await localNotification.zonedSchedule(
-      int.tryParse(event.id) ?? 0,
+      int.tryParse(event.id!) ?? 0,
       title,
       'Przypomnienie o seansie - ${event.dateTime.hour}:${event.dateTime.minute == 0 ? "00" : event.dateTime.minute}',
       tzDateTime,
@@ -104,7 +104,7 @@ class _FilmEventDialogState extends State<FilmEventDialog> {
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             Text(
-              widget.film.name,
+              widget.film.name!,
               textAlign: TextAlign.center,
               style: const TextStyle(fontSize: 20),
             ),
@@ -112,7 +112,7 @@ class _FilmEventDialogState extends State<FilmEventDialog> {
             Padding(
               padding: const EdgeInsets.only(bottom: 3.0),
               child: Text(
-                widget.cinema,
+                widget.cinema!,
                 textAlign: TextAlign.center,
                 style: const TextStyle(fontSize: 14),
               ),

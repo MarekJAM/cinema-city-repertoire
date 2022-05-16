@@ -12,7 +12,7 @@ part 'film_details_state.dart';
 class FilmDetailsCubit extends Cubit<FilmDetailsState> {
   final RepertoireRepository repertoireRepository;
 
-  FilmDetailsCubit({@required this.repertoireRepository}) : super(FilmDetailsInitial());
+  FilmDetailsCubit({required this.repertoireRepository}) : super(FilmDetailsInitial());
 
   void getFilmDetails(Film film) async {
     emit(FilmDetailsLoading());
@@ -22,13 +22,13 @@ class FilmDetailsCubit extends Cubit<FilmDetailsState> {
 
       emit(FilmDetailsLoaded(film: film));
     } on ClientException catch (e) {
-      log(e.message);
+      log(e.message!);
       emit(const FilmDetailsError(message: 'Błąd połączenia.'));
     } on ServerException catch (e) {
-      log(e.message);
+      log(e.message!);
       emit(const FilmDetailsError(message: 'Błąd wewnętrzny serwera.'));
     } catch (e) {
-      log(e.message);
+      log('$e');
       emit(const FilmDetailsError(message: 'Wystąpił nieznany błąd.'));
     }
   }

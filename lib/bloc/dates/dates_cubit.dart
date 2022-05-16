@@ -17,7 +17,7 @@ class DatesCubit extends Cubit<DatesState> {
       var dates = await repertoireRepository.getDates(date, cinemaIds);
       emit(DatesLoaded(dates));
     } catch (e) {
-      log(e.message);
+      log('$e');
       emit(const DatesError("Failed to get dates."));
     }
   }

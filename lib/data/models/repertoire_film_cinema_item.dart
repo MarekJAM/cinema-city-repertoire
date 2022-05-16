@@ -6,9 +6,9 @@ class RepertoireFilmCinemaItem {
   final Cinema cinema;
   List<Event> events;
 
-  RepertoireFilmCinemaItem({@required this.cinema, @required this.events});
+  RepertoireFilmCinemaItem({required this.cinema, required this.events});
 
-  RepertoireFilmCinemaItem copyWith({List<Event> events}) {
+  RepertoireFilmCinemaItem copyWith({List<Event>? events}) {
     return RepertoireFilmCinemaItem(cinema: cinema, events: events ?? this.events);
   }
 }

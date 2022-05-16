@@ -1,5 +1,5 @@
 abstract class BaseException implements Exception {
-  final String message;
+  final String? message;
 
   const BaseException([this.message = ""]);
 
@@ -8,14 +8,14 @@ abstract class BaseException implements Exception {
 }
 
 class ClientException extends BaseException {
-  const ClientException([String message]) : super(message);
+  const ClientException([String? message]) : super(message);
 
   @override
   String toString() => "ClientException: $message";
 }
 
 class ServerException extends BaseException {
-  const ServerException([String message]) : super(message);
+  const ServerException([String? message]) : super(message);
 
   @override
   String toString() => "ServerException: $message";

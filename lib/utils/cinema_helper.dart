@@ -5,7 +5,7 @@ class CinemaHelper {
     return cinemas.where((cinema) => idList.contains(cinema.id)).toList();
   }
 
-  static Cinema getCinemaById(List<Cinema> cinemas, String id) {
+  static Cinema getCinemaById(List<Cinema> cinemas, String? id) {
     return cinemas.firstWhere((cinema) => id == cinema.id);
   }
 }

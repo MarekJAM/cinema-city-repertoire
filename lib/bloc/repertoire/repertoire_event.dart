@@ -10,7 +10,7 @@ abstract class RepertoireEvent extends Equatable {
 }
 
 class GetRepertoire extends RepertoireEvent {
-  final DateTime date;
+  final DateTime? date;
   final List<String> cinemaIds;
 
   const GetRepertoire(this.date, this.cinemaIds);

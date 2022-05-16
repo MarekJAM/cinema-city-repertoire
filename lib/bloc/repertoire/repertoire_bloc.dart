@@ -13,15 +13,15 @@ class RepertoireBloc extends Bloc<RepertoireEvent, RepertoireState> {
   final CinemasBloc cinemasBloc;
   final FiltersRepository filtersRepository;
 
-  Repertoire loadedRepertoire;
-  List<RepertoireFilter> filters;
-  List<Cinema> cinemas;
+  Repertoire? loadedRepertoire;
+  List<RepertoireFilter>? filters;
+  List<Cinema>? cinemas;
 
   RepertoireBloc({
-    @required this.repertoireRepository,
-    @required this.filtersCubit,
-    @required this.cinemasBloc,
-    @required this.filtersRepository,
+    required this.repertoireRepository,
+    required this.filtersCubit,
+    required this.cinemasBloc,
+    required this.filtersRepository,
   }) : super(RepertoireInitial()) {
     on<GetRepertoire>(_onGetRepertoire);
     on<FiltersChanged>((event, emit) => _onFiltersChanged(event.filters, emit));
@@ -42,20 +42,20 @@ class RepertoireBloc extends Bloc<RepertoireEvent, RepertoireState> {
   void _onGetRepertoire(GetRepertoire event, Emitter<RepertoireState> emit) async {
     emit(RepertoireLoading());
     try {
-      loadedRepertoire = await repertoireRepository.getRepertoire(date: event.date, allCinemas: cinemas, pickedCinemaIds: event.cinemaIds);
+      loadedRepertoire = await repertoireRepository.getRepertoire(date: event.date!, allCinemas: cinemas, pickedCinemaIds: event.cinemaIds);
 
       filters ??= filtersRepository.loadFilters();
-      var filteredRepertoire = repertoireRepository.filterRepertoire(filters, loadedRepertoire);
+      var filteredRepertoire = repertoireRepository.filterRepertoire(filters!, loadedRepertoire)!;
 
       emit(RepertoireLoaded(data: filteredRepertoire));
     } on ClientException catch (e) {
-      log(e.message);
+      log(e.message!);
       emit(const RepertoireError(message: 'Błąd połączenia.'));
     } on ServerException catch (e) {
-      log(e.message);
+      log(e.message!);
       emit(const RepertoireError(message: 'Błąd wewnętrzny serwera.'));
     } catch (e) {
-      log(e.message);
+      log('$e');
       emit(const RepertoireError(message: 'Wystąpił nieznany błąd.'));
     }
   }
@@ -67,7 +67,7 @@ class RepertoireBloc extends Bloc<RepertoireEvent, RepertoireState> {
     filters = changedFilters;
 
     if (state is RepertoireLoaded) {
-      var filteredRepertoire = repertoireRepository.filterRepertoire(filters, loadedRepertoire);
+      var filteredRepertoire = repertoireRepository.filterRepertoire(filters!, loadedRepertoire)!;
       emit(RepertoireLoaded(data: filteredRepertoire));
     }
   }
