@@ -31,6 +31,7 @@ class RepertoireFilmItemWidget extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 5),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           GestureDetector(
             onTap: () {
@@ -75,11 +76,11 @@ class RepertoireFilmItemWidget extends StatelessWidget {
                             : const Padding(
                                 padding: EdgeInsets.symmetric(horizontal: 3.5, vertical: 2),
                                 child: SizedBox(
+                                  height: 10,
+                                  width: 10,
                                   child: CircularProgressIndicator(
                                     strokeWidth: 2,
                                   ),
-                                  height: 10,
-                                  width: 10,
                                 ),
                               ),
                       ],
@@ -94,6 +95,7 @@ class RepertoireFilmItemWidget extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.only(left: 5),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
                     data.film.name,
@@ -110,15 +112,15 @@ class RepertoireFilmItemWidget extends StatelessWidget {
                     children: <Widget>[
                       Container(
                         padding: const EdgeInsets.all(3),
-                        child: Text(
-                          data.film.ageRestriction,
-                          style: const TextStyle(fontSize: 10),
-                        ),
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           color: _getAgeRestrictionColor(
                             data.film.ageRestriction,
                           ),
+                        ),
+                        child: Text(
+                          data.film.ageRestriction,
+                          style: const TextStyle(fontSize: 10),
                         ),
                       ),
                       Padding(
@@ -126,7 +128,7 @@ class RepertoireFilmItemWidget extends StatelessWidget {
                           left: 3,
                         ),
                         child: Text(
-                          data.film.length.toString() + ' min',
+                          '${data.film.length} min',
                           style: const TextStyle(fontSize: 10),
                         ),
                       ),
@@ -139,17 +141,17 @@ class RepertoireFilmItemWidget extends StatelessWidget {
                             padding: const EdgeInsets.symmetric(
                               horizontal: 3,
                             ),
-                            child: Text(
-                              item,
-                              style: const TextStyle(
-                                fontSize: 10,
-                              ),
-                            ),
                             decoration: BoxDecoration(
                               borderRadius: const BorderRadius.all(
                                 Radius.circular(5),
                               ),
                               color: Colors.grey[700],
+                            ),
+                            child: Text(
+                              item,
+                              style: const TextStyle(
+                                fontSize: 10,
+                              ),
                             ),
                           ),
                         ),
@@ -168,12 +170,10 @@ class RepertoireFilmItemWidget extends StatelessWidget {
                       events: cinemaItem.events,
                     ),
                 ],
-                crossAxisAlignment: CrossAxisAlignment.start,
               ),
             ),
           )
         ],
-        crossAxisAlignment: CrossAxisAlignment.start,
       ),
     );
   }
@@ -225,6 +225,12 @@ class RepertoireFilmItemRow extends StatelessWidget {
                       child: Column(
                         children: [
                           Container(
+                            decoration: BoxDecoration(
+                              border: Border.all(color: Theme.of(context).colorScheme.secondary),
+                              borderRadius: const BorderRadius.all(
+                                Radius.circular(5),
+                              ),
+                            ),
                             child: Column(
                               children: <Widget>[
                                 Text(DateHandler.convertDateToHHMM(item.dateTime)),
@@ -237,12 +243,6 @@ class RepertoireFilmItemRow extends StatelessWidget {
                                   style: const TextStyle(fontSize: 7),
                                 ),
                               ],
-                            ),
-                            decoration: BoxDecoration(
-                              border: Border.all(color: Theme.of(context).colorScheme.secondary),
-                              borderRadius: const BorderRadius.all(
-                                Radius.circular(5),
-                              ),
                             ),
                           ),
                         ],

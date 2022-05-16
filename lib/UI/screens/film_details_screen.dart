@@ -106,11 +106,11 @@ class FilmDetailsScreen extends StatelessWidget {
                                                     vertical: 2,
                                                   ),
                                                   child: SizedBox(
+                                                    height: 10,
+                                                    width: 10,
                                                     child: CircularProgressIndicator(
                                                       strokeWidth: 2,
                                                     ),
-                                                    height: 10,
-                                                    width: 10,
                                                   ),
                                                 ),
                                         ],

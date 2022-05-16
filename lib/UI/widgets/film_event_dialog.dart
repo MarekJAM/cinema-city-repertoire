@@ -31,8 +31,8 @@ class _FilmEventDialogState extends State<FilmEventDialog> {
   FlutterLocalNotificationsPlugin localNotification;
 
   _launchURL(url) async {
-    if (await canLaunch(url)) {
-      await launch(url);
+    if (await canLaunchUrl(Uri(path: url))) {
+      await launchUrl(Uri(path: url));
     } else {
       throw 'Could not launch $url';
     }

@@ -71,10 +71,9 @@ class SliverHeader extends SliverPersistentHeaderDelegate {
           right: 10,
           bottom: 5,
           child: ElevatedButton(
-            child: const Text('Zobacz zwiastun'),
             onPressed: () async {
-              if (await canLaunch(videoUrl)) {
-                await launch(videoUrl);
+              if (await canLaunchUrl(Uri(path: videoUrl))) {
+                await launchUrl(Uri(path: videoUrl));
               } else {
                 throw 'Could not launch $videoUrl';
               }
@@ -82,6 +81,7 @@ class SliverHeader extends SliverPersistentHeaderDelegate {
             style: ButtonStyle(
               backgroundColor: MaterialStateProperty.all(Theme.of(context).colorScheme.secondary),
             ),
+            child: const Text('Zobacz zwiastun'),
           ),
         )
       ],

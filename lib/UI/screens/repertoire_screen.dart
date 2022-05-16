@@ -117,9 +117,9 @@ class _RepertoireScreenState extends State<RepertoireScreen> {
                   itemBuilder: (BuildContext context) {
                     return [
                       PopupMenuItem<String>(
-                        child: const Text("Kina"),
                         enabled: state is CinemasLoaded,
                         onTap: () => Scaffold.of(context).openEndDrawer(),
+                        child: const Text("Kina"),
                       ),
                       PopupMenuItem<String>(
                         child: const Text("Filtry"),

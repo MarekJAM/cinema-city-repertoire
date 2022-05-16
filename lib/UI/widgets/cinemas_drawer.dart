@@ -29,14 +29,14 @@ class CinemasDrawer extends StatelessWidget {
             SizedBox(
               height: headerHeight,
               child: DrawerHeader(
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.secondary,
+                ),
                 child: const Text(
                   'Kina',
                   style: TextStyle(
                     fontSize: 20,
                   ),
-                ),
-                decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.secondary,
                 ),
               ),
             ),
