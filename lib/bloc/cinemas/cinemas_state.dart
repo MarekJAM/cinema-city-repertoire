@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
 
 import '../../data/models/models.dart';
 
@@ -24,7 +23,7 @@ class CinemasLoaded extends CinemasState {
   final List<Cinema> cinemas;
   final List<String> favoriteCinemaIds;
 
-  const CinemasLoaded({required this.cinemas, required this.favoriteCinemaIds}) : assert(cinemas != null), assert(favoriteCinemaIds != null);
+  const CinemasLoaded({required this.cinemas, required this.favoriteCinemaIds});
 
   @override
   String toString() => 'CinemasLoaded $cinemas, $favoriteCinemaIds';
@@ -33,7 +32,7 @@ class CinemasLoaded extends CinemasState {
 class CinemasError extends CinemasState {
   final String message;
 
-  const CinemasError({required this.message}) : assert(message != null);
+  const CinemasError({required this.message});
 
   @override
   String toString() => 'CinemasError';

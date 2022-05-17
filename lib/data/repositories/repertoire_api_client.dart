@@ -1,5 +1,4 @@
 import 'package:collection/collection.dart' show IterableExtension;
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -12,7 +11,7 @@ class RepertoireApiClient extends ApiClient {
 
   final http.Client httpClient;
 
-  RepertoireApiClient({required this.httpClient}) : assert(httpClient != null);
+  RepertoireApiClient({required this.httpClient});
 
   final _repertoire = Repertoire();
 

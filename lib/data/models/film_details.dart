@@ -1,5 +1,3 @@
-import 'package:flutter/foundation.dart';
-
 class FilmDetails {
   final String? description;
   final String? premiereDate;

@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 import 'film_details.dart';
 
 const Map<String, String> genreMap = {

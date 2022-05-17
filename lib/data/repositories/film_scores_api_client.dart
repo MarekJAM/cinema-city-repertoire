@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 import './api_client.dart';
@@ -8,7 +7,7 @@ import '../../utils/web_scraping_helper.dart';
 class FilmScoresApiClient extends ApiClient {
   final http.Client httpClient;
 
-  FilmScoresApiClient({required this.httpClient}) : assert(httpClient != null);
+  FilmScoresApiClient({required this.httpClient});
 
   static const String _filmWebBaseUrl = 'https://www.filmweb.pl/films/search?q=';
 

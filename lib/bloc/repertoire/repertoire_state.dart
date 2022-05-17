@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 import '../../data/models/models.dart';
 
 abstract class RepertoireState {
@@ -19,7 +17,7 @@ class RepertoireLoading extends RepertoireState {
 class RepertoireLoaded extends RepertoireState {
   final Repertoire data;
 
-  const RepertoireLoaded({required this.data}) : assert(data != null);
+  const RepertoireLoaded({required this.data});
 
   @override
   String toString() => 'RepertoireLoaded $data';
@@ -28,7 +26,7 @@ class RepertoireLoaded extends RepertoireState {
 class RepertoireError extends RepertoireState {
   final String message;
 
-  const RepertoireError({required this.message}) : assert(message != null);
+  const RepertoireError({required this.message});
 
   @override
   String toString() => 'RepertoireError';

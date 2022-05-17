@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 class Cinema {
   final String? id;
   final String? displayName;

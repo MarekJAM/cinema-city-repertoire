@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -10,7 +9,7 @@ class CinemasApiClient extends ApiClient {
 
   final http.Client httpClient;
 
-  CinemasApiClient({required this.httpClient}) : assert(httpClient != null);
+  CinemasApiClient({required this.httpClient});
 
   Future<List<Cinema>> getCinemas(String date) async {
     final List<Cinema> cinemas = [];

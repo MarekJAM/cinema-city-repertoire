@@ -1,6 +1,3 @@
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
-
 import '../../utils/date_handler.dart';
 import '../../data/models/models.dart';
 import './repositories.dart';
@@ -14,7 +11,7 @@ class RepertoireRepository {
     required this.repertoireApiClient,
     required this.filmApiClient,
     required this.filmScoresApiClient,
-  }) : assert(repertoireApiClient != null, filmApiClient != null);
+  });
 
   Future<Repertoire> getRepertoire({required DateTime date, required List<Cinema>? allCinemas, required List<String> pickedCinemaIds}) async {
     return await repertoireApiClient.getRepertoire(

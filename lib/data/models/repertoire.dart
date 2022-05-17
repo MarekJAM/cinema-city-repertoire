@@ -1,7 +1,6 @@
 import 'package:cinema_city/utils/cinema_helper.dart';
 import 'package:cinema_city/utils/event_helper.dart';
 import 'package:collection/collection.dart' show IterableExtension;
-import 'package:flutter/material.dart';
 
 import './models.dart';
 
