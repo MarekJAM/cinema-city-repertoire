@@ -6,6 +6,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:timezone/timezone.dart' as tz;
+import 'package:url_launcher/url_launcher_string.dart';
 
 import '../../data/models/models.dart';
 import '../../utils/date_handler.dart';
@@ -31,8 +32,8 @@ class _FilmEventDialogState extends State<FilmEventDialog> {
   late FlutterLocalNotificationsPlugin localNotification;
 
   _launchURL(url) async {
-    if (await canLaunchUrl(Uri(path: url))) {
-      await launchUrl(Uri(path: url));
+    if (await canLaunchUrlString(url)) {
+      await launchUrlString(url);
     } else {
       throw 'Could not launch $url';
     }
