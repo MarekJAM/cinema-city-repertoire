@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:timezone/timezone.dart' as tz;
 import 'package:url_launcher/url_launcher_string.dart';
 
@@ -105,7 +104,7 @@ class _FilmEventDialogState extends State<FilmEventDialog> {
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             Text(
-              widget.film.name!,
+              widget.film.name,
               textAlign: TextAlign.center,
               style: const TextStyle(fontSize: 20),
             ),

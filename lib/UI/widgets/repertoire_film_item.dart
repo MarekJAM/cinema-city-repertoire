@@ -98,7 +98,7 @@ class RepertoireFilmItemWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    data.film.name!,
+                    data.film.name,
                     style: const TextStyle(
                       fontWeight: FontWeight.bold,
                     ),

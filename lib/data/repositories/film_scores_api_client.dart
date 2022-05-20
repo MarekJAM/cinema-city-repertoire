@@ -14,7 +14,7 @@ class FilmScoresApiClient extends ApiClient {
   static Future<Film?> getFilmWebScore(Film film) async {
     var response = await http.get(
       Uri.parse(
-        _filmWebBaseUrl + film.name!,
+        _filmWebBaseUrl + film.name,
       ),
     );
 

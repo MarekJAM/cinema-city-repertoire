@@ -12,7 +12,7 @@ class FilmApiClient extends ApiClient {
   Future<Film> getFilmDetails(Film film) async {
     var response = await http.get(
       Uri.parse(
-        film.link!,
+        film.link,
       ),
     );
 

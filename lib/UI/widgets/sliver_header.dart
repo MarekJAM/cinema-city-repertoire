@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class SliverHeader extends SliverPersistentHeaderDelegate {
   final String imageUrl;
-  final String? videoUrl;
+  final String videoUrl;
   @override
   final double minExtent;
   @override
@@ -72,8 +72,8 @@ class SliverHeader extends SliverPersistentHeaderDelegate {
           bottom: 5,
           child: ElevatedButton(
             onPressed: () async {
-              if (await canLaunchUrl(Uri(path: videoUrl))) {
-                await launchUrl(Uri(path: videoUrl));
+              if (await canLaunchUrlString(videoUrl)) {
+                await launchUrlString(videoUrl);
               } else {
                 throw 'Could not launch $videoUrl';
               }
