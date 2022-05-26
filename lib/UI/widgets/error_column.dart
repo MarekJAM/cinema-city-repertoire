@@ -2,14 +2,16 @@ import 'package:flutter/material.dart';
 
 class ErrorColumn extends StatelessWidget {
   final String errorMessage;
-  final String buttonMessage;
-  final Function buttonOnPressed;
+  final String? buttonMessage;
+  final Function? buttonOnPressed;
+  final List<Widget>? buttons;
 
   const ErrorColumn({
     Key? key,
     required this.errorMessage,
-    required this.buttonMessage,
-    required this.buttonOnPressed,
+    this.buttonMessage,
+    this.buttonOnPressed,
+    this.buttons,
   }) : super(key: key);
 
   @override
@@ -20,19 +22,26 @@ class ErrorColumn extends StatelessWidget {
         children: [
           Text(
             errorMessage,
+            textAlign: TextAlign.center,
             style: const TextStyle(fontSize: 18),
           ),
           const Padding(
             padding: EdgeInsets.only(top: 10),
           ),
-          ElevatedButton(
-            onPressed: () {
-              buttonOnPressed();
-            },
-            child: Text(
-              buttonMessage,
+          if (buttons != null)
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [...buttons!],
             ),
-          ),
+          if (buttonOnPressed != null)
+            ElevatedButton(
+              onPressed: () {
+                buttonOnPressed!();
+              },
+              child: Text(
+                buttonMessage!,
+              ),
+            ),
         ],
       ),
     );

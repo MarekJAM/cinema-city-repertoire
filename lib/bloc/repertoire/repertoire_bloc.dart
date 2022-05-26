@@ -12,7 +12,7 @@ class RepertoireBloc extends Bloc<RepertoireEvent, RepertoireState> {
   final CinemasBloc cinemasBloc;
   final FiltersRepository filtersRepository;
 
-  Repertoire? loadedRepertoire;
+  late Repertoire loadedRepertoire;
   List<RepertoireFilter>? filters;
   List<Cinema>? cinemas;
 
@@ -46,7 +46,9 @@ class RepertoireBloc extends Bloc<RepertoireEvent, RepertoireState> {
       filters ??= filtersRepository.loadFilters();
       var filteredRepertoire = repertoireRepository.filterRepertoire(filters!, loadedRepertoire)!;
 
-      emit(RepertoireLoaded(data: filteredRepertoire));
+      var hasFilteringLimitedResults = loadedRepertoire.filmItems.isNotEmpty && filteredRepertoire.filmItems.isEmpty; 
+
+      emit(RepertoireLoaded(data: filteredRepertoire, hasFilteringLimitedResults: hasFilteringLimitedResults));
     } on ClientException catch (e) {
       log(e.message!);
       emit(const RepertoireError(message: 'Błąd połączenia.'));
@@ -67,7 +69,9 @@ class RepertoireBloc extends Bloc<RepertoireEvent, RepertoireState> {
 
     if (state is RepertoireLoaded) {
       var filteredRepertoire = repertoireRepository.filterRepertoire(filters!, loadedRepertoire)!;
-      emit(RepertoireLoaded(data: filteredRepertoire));
+      var hasFilteringLimitedResults = loadedRepertoire.filmItems.isNotEmpty && filteredRepertoire.filmItems.isEmpty; 
+
+      emit(RepertoireLoaded(data: filteredRepertoire, hasFilteringLimitedResults: hasFilteringLimitedResults));
     }
   }
 }

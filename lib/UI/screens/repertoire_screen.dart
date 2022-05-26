@@ -177,13 +177,42 @@ class _RepertoireScreenState extends State<RepertoireScreen> {
                           ),
                         )
                       : pickedCinemas.isNotEmpty
-                          ? ErrorColumn(
-                              errorMessage: 'Brak filmów do wyświetlenia.',
-                              buttonMessage: 'Wybierz inną datę',
-                              buttonOnPressed: () {
-                                _selectDate(context);
-                              },
-                            )
+                          ? state.hasFilteringLimitedResults
+                              ? ErrorColumn(
+                                  errorMessage:
+                                      'Brak filmów do wyświetlenia. Wybierz inną datę lub dostosuj filtry.',
+                                  buttons: [
+                                    ElevatedButton(
+                                      onPressed: () {
+                                        _selectDate(context);
+                                      },
+                                      child: const Text(
+                                        "Wybierz inną datę",
+                                      ),
+                                    ),
+                                    ElevatedButton(
+                                      onPressed: () {
+                                        Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                            builder: (BuildContext context) =>
+                                                const FiltersScreen(),
+                                          ),
+                                        );
+                                      },
+                                      child: const Text(
+                                        "Dostosuj filtry",
+                                      ),
+                                    ),
+                                  ],
+                           
+                                )
+                              : ErrorColumn(
+                                  errorMessage: 'Brak filmów do wyświetlenia.',
+                                  buttonMessage: 'Wybierz inną datę',
+                                  buttonOnPressed: () {
+                                    _selectDate(context);
+                                  },
+                                )
                           : ErrorColumn(
                               errorMessage: 'Brak filmów do wyświetlenia.',
                               buttonMessage: 'Wybierz kina',

@@ -16,8 +16,9 @@ class RepertoireLoading extends RepertoireState {
 
 class RepertoireLoaded extends RepertoireState {
   final Repertoire data;
+  final bool hasFilteringLimitedResults;
 
-  const RepertoireLoaded({required this.data});
+  const RepertoireLoaded({required this.data, required this.hasFilteringLimitedResults});
 
   @override
   String toString() => 'RepertoireLoaded $data';
