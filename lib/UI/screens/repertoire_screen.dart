@@ -123,9 +123,7 @@ class _RepertoireScreenState extends State<RepertoireScreen> {
                       ),
                       PopupMenuItem<String>(
                         child: const Text("Filtry"),
-                        // enabled: false,
                         onTap: () async {
-                          // Navigator.of(context).pop();
                           await Future.delayed(const Duration(microseconds: 3));
                           Navigator.of(context).push(
                             MaterialPageRoute(
