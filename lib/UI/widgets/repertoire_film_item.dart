@@ -138,9 +138,7 @@ class RepertoireFilmItemWidget extends StatelessWidget {
                             horizontal: 3,
                           ),
                           child: Container(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 3,
-                            ),
+                            padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 1),
                             decoration: BoxDecoration(
                               borderRadius: const BorderRadius.all(
                                 Radius.circular(5),
@@ -241,6 +239,9 @@ class RepertoireFilmItemRow extends StatelessWidget {
                                 Text(
                                   item.language!,
                                   style: const TextStyle(fontSize: 7),
+                                ),
+                                const Padding(
+                                  padding: EdgeInsets.only(bottom: 2),
                                 ),
                               ],
                             ),

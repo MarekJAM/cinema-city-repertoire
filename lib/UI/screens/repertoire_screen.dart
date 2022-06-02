@@ -125,6 +125,8 @@ class _RepertoireScreenState extends State<RepertoireScreen> {
                         child: const Text("Filtry"),
                         onTap: () async {
                           await Future.delayed(const Duration(microseconds: 3));
+
+                          if (!mounted) return;         
                           Navigator.of(context).push(
                             MaterialPageRoute(
                               builder: (BuildContext context) => const FiltersScreen(),
