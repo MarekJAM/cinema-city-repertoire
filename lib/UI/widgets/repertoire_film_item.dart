@@ -51,6 +51,14 @@ class RepertoireFilmItemWidget extends StatelessWidget {
                   width: 80,
                   child: Image.network(
                     data.film.posterLink!,
+                    errorBuilder: (context, exception, stackTrace) {
+                      return const Center(
+                        child: Text(
+                          'Brak plakatu',
+                          textAlign: TextAlign.center,
+                        ),
+                      );
+                    },
                   ),
                 ),
                 const SizedBox(

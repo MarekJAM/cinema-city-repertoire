@@ -30,6 +30,14 @@ class SliverHeader extends SliverPersistentHeaderDelegate {
             imageUrl,
             fit: BoxFit.fitWidth,
             width: 300,
+            errorBuilder: (context, exception, stackTrace) {
+              return const Center(
+                child: Text(
+                  'Brak plakatu',
+                  textAlign: TextAlign.center,
+                ),
+              );
+            },
             frameBuilder: (
               BuildContext context,
               Widget child,
@@ -57,16 +65,15 @@ class SliverHeader extends SliverPersistentHeaderDelegate {
             },
           ),
         ),
-        
-          Padding(
-            padding: const EdgeInsets.only(left: 15, top: 15),
-            child: IconButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              icon: const Icon(Icons.arrow_back),
-            ),
+        Padding(
+          padding: const EdgeInsets.only(left: 15, top: 15),
+          child: IconButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            icon: const Icon(Icons.arrow_back),
           ),
+        ),
         Positioned(
           right: 10,
           bottom: 5,
