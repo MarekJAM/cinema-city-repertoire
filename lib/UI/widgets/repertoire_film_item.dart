@@ -238,7 +238,7 @@ class RepertoireFilmItemRow extends StatelessWidget {
                               ),
                             ),
                             child: Column(
-                              children: <Widget>[
+                              children: [
                                 Text(DateHandler.convertDateToHHMM(item.dateTime)),
                                 Text(
                                   item.type!,

@@ -126,7 +126,7 @@ class _RepertoireScreenState extends State<RepertoireScreen> {
                         onTap: () async {
                           await Future.delayed(const Duration(microseconds: 3));
 
-                          if (!mounted) return;         
+                          if (!mounted) return;
                           Navigator.of(context).push(
                             MaterialPageRoute(
                               builder: (BuildContext context) => const FiltersScreen(),
@@ -204,7 +204,6 @@ class _RepertoireScreenState extends State<RepertoireScreen> {
                                       ),
                                     ),
                                   ],
-                           
                                 )
                               : ErrorColumn(
                                   errorMessage: 'Brak filmów do wyświetlenia.',
