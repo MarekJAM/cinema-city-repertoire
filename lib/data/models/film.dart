@@ -33,7 +33,7 @@ class Film {
   final String ageRestriction;
   final String? releaseYear;
   final String link;
-  final String videoLink;
+  final String? videoLink;
   FilmDetails? details;
   String? filmWebScore;
 
@@ -46,7 +46,7 @@ class Film {
     required this.ageRestriction,
     required this.releaseYear,
     required this.link,
-    required this.videoLink,
+    this.videoLink,
     this.details,
     this.filmWebScore,
   });

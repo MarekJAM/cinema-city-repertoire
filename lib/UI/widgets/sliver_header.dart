@@ -3,7 +3,7 @@ import 'package:url_launcher/url_launcher_string.dart';
 
 class SliverHeader extends SliverPersistentHeaderDelegate {
   final String imageUrl;
-  final String videoUrl;
+  final String? videoUrl;
   @override
   final double minExtent;
   @override
@@ -11,9 +11,9 @@ class SliverHeader extends SliverPersistentHeaderDelegate {
 
   SliverHeader({
     required this.imageUrl,
-    required this.videoUrl,
     required this.minExtent,
     required this.maxExtent,
+    this.videoUrl,
   });
 
   @override
@@ -74,23 +74,24 @@ class SliverHeader extends SliverPersistentHeaderDelegate {
             icon: const Icon(Icons.arrow_back),
           ),
         ),
-        Positioned(
-          right: 10,
-          bottom: 5,
-          child: ElevatedButton(
-            onPressed: () async {
-              if (await canLaunchUrlString(videoUrl)) {
-                await launchUrlString(videoUrl);
-              } else {
-                throw 'Could not launch $videoUrl';
-              }
-            },
-            style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all(Theme.of(context).colorScheme.secondary),
+        if (videoUrl != null)
+          Positioned(
+            right: 10,
+            bottom: 5,
+            child: ElevatedButton(
+              onPressed: () async {
+                if (await canLaunchUrlString(videoUrl!)) {
+                  await launchUrlString(videoUrl!);
+                } else {
+                  throw 'Could not launch $videoUrl';
+                }
+              },
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(Theme.of(context).colorScheme.secondary),
+              ),
+              child: const Text('Zobacz zwiastun'),
             ),
-            child: const Text('Zobacz zwiastun'),
-          ),
-        )
+          )
       ],
     );
   }
