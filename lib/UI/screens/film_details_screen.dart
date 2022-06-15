@@ -98,7 +98,7 @@ class FilmDetailsScreen extends StatelessWidget {
                                           ),
                                           film.filmWebScore != null
                                               ? Text(
-                                                  film.filmWebScore ?? 'no data',
+                                                  film.filmWebScore ?? 'Brak danych',
                                                 )
                                               : const Padding(
                                                   padding: EdgeInsets.symmetric(

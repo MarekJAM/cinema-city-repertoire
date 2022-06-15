@@ -9,7 +9,7 @@ class CinemasDrawer extends StatelessWidget {
     required this.pickedDate,
     required this.pickedCinemas,
     required this.cinemas,
-  }) :super(key: key);
+  }) : super(key: key);
 
   final DateTime? pickedDate;
   final List<String> pickedCinemas;
