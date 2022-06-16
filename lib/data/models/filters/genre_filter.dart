@@ -1,3 +1,4 @@
+import 'package:cinema_city/UI/screens/filters_screen.dart';
 import 'package:collection/collection.dart' show IterableExtension;
 import 'package:hive/hive.dart';
 
@@ -18,6 +19,9 @@ class GenreFilter implements RepertoireFilter {
     var toRemove = [];
 
     for (var el in items) {
+      if (el.film.genres.isEmpty && genres!.contains(noGenresData)) {
+        continue;
+      }
       if (el.film.genres.firstWhereOrNull((el) => genres!.contains(el)) == null) {
         toRemove.add(el);
       }

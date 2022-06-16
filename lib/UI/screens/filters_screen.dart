@@ -5,7 +5,8 @@ import '../../data/models/models.dart';
 import '../../bloc/blocs.dart';
 import '../widgets/filters/filter_widgets.dart';
 
-var _genres = genreMap.values.toList()..sort();
+const String noGenresData = "Nieokreślony";
+var _genres = genreMap.values.toList()..add(noGenresData)..sort();
 var _eventTypes = eventTypes;
 var _scoreFilter = ScoreFilter(0, true);
 final List<String> _pickedGenres = [];
