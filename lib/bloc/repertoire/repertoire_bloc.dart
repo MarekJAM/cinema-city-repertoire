@@ -1,5 +1,7 @@
+import 'dart:async';
 import 'dart:developer';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../data/models/models.dart';
@@ -11,6 +13,11 @@ class RepertoireBloc extends Bloc<RepertoireEvent, RepertoireState> {
   final FiltersCubit filtersCubit;
   final CinemasBloc cinemasBloc;
   final FiltersRepository filtersRepository;
+  final FilmScoresCubit filmScoresCubit;
+
+  late StreamSubscription filmScoresSubscription;
+  late StreamSubscription filtersSubscription;
+  late StreamSubscription cinemasSubscription;
 
   late Repertoire loadedRepertoire;
   List<RepertoireFilter>? filters;
@@ -21,21 +28,37 @@ class RepertoireBloc extends Bloc<RepertoireEvent, RepertoireState> {
     required this.filtersCubit,
     required this.cinemasBloc,
     required this.filtersRepository,
+    required this.filmScoresCubit
   }) : super(RepertoireInitial()) {
     on<GetRepertoire>(_onGetRepertoire);
     on<FiltersChanged>((event, emit) => _onFiltersChanged(event.filters, emit));
 
-    filtersCubit.stream.listen((state) {
+    filtersSubscription = filtersCubit.stream.listen((state) {
       if (state is FiltersLoaded) {
         add(FiltersChanged(state.filters));
       }
     });
 
-    cinemasBloc.stream.listen((state) { 
+    cinemasSubscription = cinemasBloc.stream.listen((state) { 
       if (state is CinemasLoaded) {
         cinemas ??= state.cinemas;
       }
     });
+
+    //TODO: implement more elegant solution
+    filmScoresSubscription = filmScoresCubit.stream.listen((state) {
+      if (state is FilmScoresChanged) {
+        add(FiltersChanged(filters!));
+      }
+    });
+  }
+
+  @override
+  Future<void> close() {
+    filtersSubscription.cancel();
+    cinemasSubscription.cancel();
+    filmScoresSubscription.cancel();
+    return super.close();
   }
 
   void _onGetRepertoire(GetRepertoire event, Emitter<RepertoireState> emit) async {
@@ -47,6 +70,14 @@ class RepertoireBloc extends Bloc<RepertoireEvent, RepertoireState> {
       var filteredRepertoire = repertoireRepository.filterRepertoire(filters!, loadedRepertoire)!;
 
       var hasFilteringLimitedResults = loadedRepertoire.filmItems.isNotEmpty && filteredRepertoire.filmItems.isEmpty; 
+
+      if (!kDebugMode) {
+        for (var filmItem in filteredRepertoire.filmItems) {
+          if (filmItem.film.filmWebScore == null) {
+            filmScoresCubit.getFilmScores(filmItem.film);
+          }
+        }
+      }
 
       emit(RepertoireLoaded(data: filteredRepertoire, hasFilteringLimitedResults: hasFilteringLimitedResults));
     } on ClientException catch (e) {

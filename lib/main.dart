@@ -60,16 +60,16 @@ void main() {
         cinemasRepository: cinemasRepository,
       )..add(GetCinemas());
 
+      final filmScoresCubit = FilmScoresCubit(
+        filmScoresRepository: filmScoresRepository,
+      );
+
       final repertoireBloc = RepertoireBloc(
         repertoireRepository: repertoireRepository,
         filtersCubit: filtersCubit,
         filtersRepository: filtersRepository,
         cinemasBloc: cinemasBloc,
-      );
-
-      final filmScoresCubit = FilmScoresCubit(
-        repertoireBloc: repertoireBloc,
-        filmScoresRepository: filmScoresRepository,
+        filmScoresCubit: filmScoresCubit
       );
 
       runApp(
