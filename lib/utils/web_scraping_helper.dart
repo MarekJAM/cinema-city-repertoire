@@ -44,7 +44,7 @@ class WebScrapingHelper {
 
     if (searchedFilmsStrings.isNotEmpty) {
       score = scoreRegex.stringMatch(searchedFilmsStrings[0]!)?.substring(13, 16);
-      retScore = score!.replaceFirst(RegExp(r','), '.');
+      retScore = score?.replaceFirst(RegExp(r','), '.');
     }
 
     return retScore;
