@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:http/http.dart' as http;
 
 import './api_client.dart';
@@ -11,7 +13,7 @@ class FilmScoresApiClient extends ApiClient {
 
   static const String _filmWebBaseUrl = 'https://www.filmweb.pl/films/search?q=';
 
-  static Future<Film?> getFilmWebScore(Film film) async {
+  Future<String> getFilmId(Film film) async {
     var response = await http.get(
       Uri.parse(
         _filmWebBaseUrl + film.name,
@@ -19,10 +21,24 @@ class FilmScoresApiClient extends ApiClient {
     );
 
     if (response.statusCode != 200) {
-      return null;
+      throw Exception('Could not get film id.');
     }
 
-    film.filmWebScore = WebScrapingHelper.scrapFilmWebScore(film, response.body) ?? '-';
+    return WebScrapingHelper.scrapFilmId(film, response.body);
+  }
+
+  Future<Film> getFilmScore(Film film, String filmId) async {
+    var response = await http.get(
+          Uri.parse('https://www.filmweb.pl/api/v1/film/$filmId/rating'),
+        );
+
+    if (response.statusCode != 200) {
+      throw Exception('Could not get film score.');
+    }
+
+    var body = json.decode(response.body);
+
+    film.filmWebScore = body['rate'].toString().substring(0, 3);
 
     return film;
   }

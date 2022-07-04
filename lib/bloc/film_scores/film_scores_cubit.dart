@@ -14,7 +14,7 @@ class FilmScoresCubit extends Cubit<FilmScoresState> {
   }) : super(FilmScoresInitial());
 
   void getFilmScores(Film film) async {
-    film.filmWebScore = await compute(FilmScoresRepository.getFilmWebScores, film).then((value) {
+    film.filmWebScore = await compute(filmScoresRepository.getFilmWebScores, film).then((value) {
       emit(FilmScoresChanged());
       return value!.filmWebScore;
     });

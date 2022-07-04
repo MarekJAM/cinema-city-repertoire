@@ -6,7 +6,8 @@ class FilmScoresRepository {
 
   FilmScoresRepository({required this.filmScoresApiClient});
 
-  static Future<Film?> getFilmWebScores(Film film) async {
-    return await FilmScoresApiClient.getFilmWebScore(film);
+  Future<Film?> getFilmWebScores(Film film) async {
+    var filmId = await filmScoresApiClient.getFilmId(film);
+    return filmScoresApiClient.getFilmScore(film, filmId);
   }
 }

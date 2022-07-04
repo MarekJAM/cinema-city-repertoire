@@ -32,21 +32,17 @@ class WebScrapingHelper {
     }
   }
 
-  static String? scrapFilmWebScore(Film film, String responseBody) {
-    var filmRegex = RegExp('(?<=${film.name}).*?(> <div class="content__sidebar">)');
+  static String scrapFilmId(Film film, String responseBody) {
+    var filmIdRegex = RegExp(r'data-film-id="[0-9]*"');
 
-    var scoreRegex = RegExp(r'ratingValue">+[0-9]+\,+[0-9]');
+    var searchedFilmIdsStrings = filmIdRegex.allMatches(responseBody).map((e) => e.group(0)).toList();
 
-    var searchedFilmsStrings = filmRegex.allMatches(responseBody).map((e) => e.group(0)).toList();
+    String filmId = '';
 
-    String? score;
-    String? retScore;
-
-    if (searchedFilmsStrings.isNotEmpty) {
-      score = scoreRegex.stringMatch(searchedFilmsStrings[0]!)?.substring(13, 16);
-      retScore = score?.replaceFirst(RegExp(r','), '.');
+    if (searchedFilmIdsStrings.isNotEmpty) {
+      filmId = RegExp(r'[0-9]+').stringMatch(searchedFilmIdsStrings[0]!)?.toString() ?? '';
     }
 
-    return retScore;
+    return filmId;
   }
 }
