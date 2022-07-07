@@ -28,158 +28,164 @@ class RepertoireFilmItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 5),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          GestureDetector(
-            onTap: () {
-              BlocProvider.of<FilmDetailsCubit>(context).getFilmDetails(data.film);
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (BuildContext context) => FilmDetailsScreen(
-                    film: data.film,
+    return Card(
+      color: Theme.of(context).backgroundColor,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            GestureDetector(
+              onTap: () {
+                BlocProvider.of<FilmDetailsCubit>(context).getFilmDetails(data.film);
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (BuildContext context) => FilmDetailsScreen(
+                      film: data.film,
+                    ),
                   ),
-                ),
-              );
-            },
-            child: Column(
-              children: [
-                SizedBox(
-                  height: 120,
-                  width: 80,
-                  child: Image.network(
-                    data.film.posterLink!,
-                    errorBuilder: (context, exception, stackTrace) {
-                      return const Center(
-                        child: Text(
-                          'Brak plakatu',
-                          textAlign: TextAlign.center,
-                        ),
+                );
+              },
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: 120,
+                    width: 80,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(5),
+                      child: Image.network(
+                        data.film.posterLink!,
+                        errorBuilder: (context, exception, stackTrace) {
+                          return const Center(
+                            child: Text(
+                              'Brak plakatu',
+                              textAlign: TextAlign.center,
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 2,
+                  ),
+                  BlocBuilder<FilmScoresCubit, FilmScoresState>(
+                    builder: (context, state) {
+                      return Wrap(
+                        crossAxisAlignment: WrapCrossAlignment.center,
+                        children: [
+                          Image.asset(
+                            'assets/filmweb-logo.png',
+                            width: 50,
+                          ),
+                          const SizedBox(
+                            width: 5,
+                          ),
+                          data.film.filmWebScore != null
+                              ? Text(
+                                  data.film.filmWebScore ?? 'no data',
+                                  style: const TextStyle(fontSize: 12),
+                                )
+                              : const Padding(
+                                  padding: EdgeInsets.symmetric(horizontal: 3.5, vertical: 2),
+                                  child: SizedBox(
+                                    height: 10,
+                                    width: 10,
+                                    child: CircularProgressIndicator(
+                                      strokeWidth: 2,
+                                    ),
+                                  ),
+                                ),
+                        ],
                       );
                     },
                   ),
-                ),
-                const SizedBox(
-                  height: 2,
-                ),
-                BlocBuilder<FilmScoresCubit, FilmScoresState>(
-                  builder: (context, state) {
-                    return Wrap(
-                      crossAxisAlignment: WrapCrossAlignment.center,
-                      children: [
-                        Image.asset(
-                          'assets/filmweb-logo.png',
-                          width: 50,
-                        ),
-                        const SizedBox(
-                          width: 5,
-                        ),
-                        data.film.filmWebScore != null
-                            ? Text(
-                                data.film.filmWebScore ?? 'no data',
-                                style: const TextStyle(fontSize: 12),
-                              )
-                            : const Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 3.5, vertical: 2),
-                                child: SizedBox(
-                                  height: 10,
-                                  width: 10,
-                                  child: CircularProgressIndicator(
-                                    strokeWidth: 2,
-                                  ),
-                                ),
-                              ),
-                      ],
-                    );
-                  },
-                ),
-              ],
-            ),
-          ),
-          Expanded(
-            flex: 8,
-            child: Padding(
-              padding: const EdgeInsets.only(left: 5),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    data.film.name,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                    ),
-                    softWrap: true,
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 1),
-                  ),
-                  Wrap(
-                    crossAxisAlignment: WrapCrossAlignment.center,
-                    children: <Widget>[
-                      Container(
-                        padding: const EdgeInsets.all(3),
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: _getAgeRestrictionColor(
-                            data.film.ageRestriction,
-                          ),
-                        ),
-                        child: Text(
-                          data.film.ageRestriction,
-                          style: const TextStyle(fontSize: 10),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                          left: 3,
-                        ),
-                        child: Text(
-                          '${data.film.length} min',
-                          style: const TextStyle(fontSize: 10),
-                        ),
-                      ),
-                      for (var item in data.film.genres)
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 3,
-                          ),
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 1),
-                            decoration: BoxDecoration(
-                              borderRadius: const BorderRadius.all(
-                                Radius.circular(5),
-                              ),
-                              color: Colors.grey[700],
-                            ),
-                            child: Text(
-                              item,
-                              style: const TextStyle(
-                                fontSize: 10,
-                              ),
-                            ),
-                          ),
-                        ),
-                    ],
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 2),
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 2),
-                  ),
-                  for (var cinemaItem in data.repertoireFilmCinemaItems)
-                    RepertoireFilmItemRow(
-                      film: data.film,
-                      cinema: cinemaItem.cinema.displayName,
-                      events: cinemaItem.events,
-                    ),
                 ],
               ),
             ),
-          )
-        ],
+            Expanded(
+              flex: 8,
+              child: Padding(
+                padding: const EdgeInsets.only(left: 5),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      data.film.name,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
+                      softWrap: true,
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 1),
+                    ),
+                    Wrap(
+                      crossAxisAlignment: WrapCrossAlignment.center,
+                      children: <Widget>[
+                        Container(
+                          padding: const EdgeInsets.all(3),
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: _getAgeRestrictionColor(
+                              data.film.ageRestriction,
+                            ),
+                          ),
+                          child: Text(
+                            data.film.ageRestriction,
+                            style: const TextStyle(fontSize: 10),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(
+                            left: 3,
+                          ),
+                          child: Text(
+                            '${data.film.length} min',
+                            style: const TextStyle(fontSize: 10),
+                          ),
+                        ),
+                        for (var item in data.film.genres)
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 3,
+                            ),
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 1),
+                              decoration: BoxDecoration(
+                                borderRadius: const BorderRadius.all(
+                                  Radius.circular(5),
+                                ),
+                                color: Colors.grey[700],
+                              ),
+                              child: Text(
+                                item,
+                                style: const TextStyle(
+                                  fontSize: 10,
+                                ),
+                              ),
+                            ),
+                          ),
+                      ],
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 2),
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 2),
+                    ),
+                    for (var cinemaItem in data.repertoireFilmCinemaItems)
+                      RepertoireFilmItemRow(
+                        film: data.film,
+                        cinema: cinemaItem.cinema.displayName,
+                        events: cinemaItem.events,
+                      ),
+                  ],
+                ),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

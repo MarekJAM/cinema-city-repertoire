@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:http/http.dart' as http;
 
@@ -21,7 +22,7 @@ class FilmScoresApiClient extends ApiClient {
     );
 
     if (response.statusCode != 200) {
-      throw Exception('Could not get film id.');
+      log('Could not get film id - : ${film.name}');
     }
 
     return WebScrapingHelper.scrapFilmId(film, response.body);
@@ -33,7 +34,9 @@ class FilmScoresApiClient extends ApiClient {
         );
 
     if (response.statusCode != 200) {
-      throw Exception('Could not get film score.');
+      log('Error getting filmWeb score: ${response.body}');
+      film.filmWebScore = '-';
+      return film;
     }
 
     var body = json.decode(response.body);

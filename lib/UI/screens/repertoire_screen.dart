@@ -69,6 +69,7 @@ class _RepertoireScreenState extends State<RepertoireScreen> {
           return Container();
         },
       ),
+      backgroundColor: Colors.black,
       endDrawerEnableOpenDragGesture: isCinemaListLoaded,
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -158,9 +159,8 @@ class _RepertoireScreenState extends State<RepertoireScreen> {
                   backgroundColor: Theme.of(context).primaryColor,
                   child: state.data.filmItems.isNotEmpty
                       ? Padding(
-                          padding: const EdgeInsets.only(top: 5),
-                          child: ListView.separated(
-                            separatorBuilder: (ctx, index) => const Divider(),
+                          padding: const EdgeInsets.only(top: 8),
+                          child: ListView.builder(
                             itemCount: state.data.filmItems.length,
                             itemBuilder: (ctx, index) {
                               return index != state.data.filmItems.length - 1
