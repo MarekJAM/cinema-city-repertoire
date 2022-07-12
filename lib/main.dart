@@ -69,7 +69,7 @@ void main() {
         filtersCubit: filtersCubit,
         filtersRepository: filtersRepository,
         cinemasBloc: cinemasBloc,
-        filmScoresCubit: filmScoresCubit
+        filmScoresRepository: filmScoresRepository,
       );
 
       runApp(

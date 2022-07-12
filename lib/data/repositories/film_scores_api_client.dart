@@ -14,7 +14,7 @@ class FilmScoresApiClient extends ApiClient {
 
   static const String _filmWebBaseUrl = 'https://www.filmweb.pl/films/search?q=';
 
-  Future<String> getFilmId(Film film) async {
+  Future<String> _getFilmId(Film film) async {
     var response = await http.get(
       Uri.parse(
         _filmWebBaseUrl + film.name,
@@ -28,7 +28,7 @@ class FilmScoresApiClient extends ApiClient {
     return WebScrapingHelper.scrapFilmId(film, response.body);
   }
 
-  Future<Film> getFilmScore(Film film, String filmId) async {
+  Future<Film> _getFilmScore(Film film, String filmId) async {
     var response = await http.get(
           Uri.parse('https://www.filmweb.pl/api/v1/film/$filmId/rating'),
         );
@@ -44,5 +44,10 @@ class FilmScoresApiClient extends ApiClient {
     film.filmWebScore = body['rate'].toString().substring(0, 3);
 
     return film;
+  }
+
+  Future<Film> getFilmWebScore(Film film) async {
+    var filmId = await _getFilmId(film);
+    return _getFilmScore(film, filmId);
   }
 }

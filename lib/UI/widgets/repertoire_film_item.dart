@@ -69,37 +69,7 @@ class RepertoireFilmItemWidget extends StatelessWidget {
                   const SizedBox(
                     height: 2,
                   ),
-                  BlocBuilder<FilmScoresCubit, FilmScoresState>(
-                    builder: (context, state) {
-                      return Wrap(
-                        crossAxisAlignment: WrapCrossAlignment.center,
-                        children: [
-                          Image.asset(
-                            'assets/filmweb-logo.png',
-                            width: 50,
-                          ),
-                          const SizedBox(
-                            width: 5,
-                          ),
-                          data.film.filmWebScore != null
-                              ? Text(
-                                  data.film.filmWebScore ?? 'no data',
-                                  style: const TextStyle(fontSize: 12),
-                                )
-                              : const Padding(
-                                  padding: EdgeInsets.symmetric(horizontal: 3.5, vertical: 2),
-                                  child: SizedBox(
-                                    height: 10,
-                                    width: 10,
-                                    child: CircularProgressIndicator(
-                                      strokeWidth: 2,
-                                    ),
-                                  ),
-                                ),
-                        ],
-                      );
-                    },
-                  ),
+                  FilmWebScoreWrap(data: data),
                 ],
               ),
             ),
@@ -187,6 +157,46 @@ class RepertoireFilmItemWidget extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+class FilmWebScoreWrap extends StatelessWidget {
+  const FilmWebScoreWrap({
+    Key? key,
+    required this.data,
+  }) : super(key: key);
+
+  final RepertoireFilmItem data;
+
+  @override
+  Widget build(BuildContext context) {
+    return Wrap(
+      crossAxisAlignment: WrapCrossAlignment.center,
+      children: [
+        Image.asset(
+          'assets/filmweb-logo.png',
+          width: 50,
+        ),
+        const SizedBox(
+          width: 5,
+        ),
+        data.film.filmWebScore != null
+            ? Text(
+                data.film.filmWebScore ?? 'no data',
+                style: const TextStyle(fontSize: 12),
+              )
+            : const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 3.5, vertical: 2),
+                child: SizedBox(
+                  height: 10,
+                  width: 10,
+                  child: CircularProgressIndicator(
+                    strokeWidth: 2,
+                  ),
+                ),
+              ),
+      ],
     );
   }
 }

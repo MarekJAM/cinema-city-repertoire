@@ -13,7 +13,7 @@ class RepertoireBloc extends Bloc<RepertoireEvent, RepertoireState> {
   final FiltersCubit filtersCubit;
   final CinemasBloc cinemasBloc;
   final FiltersRepository filtersRepository;
-  final FilmScoresCubit filmScoresCubit;
+  final FilmScoresRepository filmScoresRepository;
 
   late StreamSubscription filmScoresSubscription;
   late StreamSubscription filtersSubscription;
@@ -28,7 +28,7 @@ class RepertoireBloc extends Bloc<RepertoireEvent, RepertoireState> {
     required this.filtersCubit,
     required this.cinemasBloc,
     required this.filtersRepository,
-    required this.filmScoresCubit
+    required this.filmScoresRepository,
   }) : super(RepertoireInitial()) {
     on<GetRepertoire>(_onGetRepertoire);
     on<FiltersChanged>((event, emit) => _onFiltersChanged(event.filters, emit));
@@ -39,17 +39,15 @@ class RepertoireBloc extends Bloc<RepertoireEvent, RepertoireState> {
       }
     });
 
-    cinemasSubscription = cinemasBloc.stream.listen((state) { 
+    cinemasSubscription = cinemasBloc.stream.listen((state) {
       if (state is CinemasLoaded) {
         cinemas ??= state.cinemas;
       }
     });
 
     //TODO: implement more elegant solution
-    filmScoresSubscription = filmScoresCubit.stream.listen((state) {
-      if (state is FilmScoresChanged) {
-        add(FiltersChanged(filters!));
-      }
+    filmScoresSubscription = filmScoresRepository.watchScores.listen((data) {
+      add(FiltersChanged(filters!));
     });
   }
 
@@ -64,22 +62,29 @@ class RepertoireBloc extends Bloc<RepertoireEvent, RepertoireState> {
   void _onGetRepertoire(GetRepertoire event, Emitter<RepertoireState> emit) async {
     emit(RepertoireLoading());
     try {
-      loadedRepertoire = await repertoireRepository.getRepertoire(date: event.date!, allCinemas: cinemas, pickedCinemaIds: event.cinemaIds);
+      loadedRepertoire = await repertoireRepository.getRepertoire(
+          date: event.date!, allCinemas: cinemas, pickedCinemaIds: event.cinemaIds);
 
       filters ??= filtersRepository.loadFilters();
       var filteredRepertoire = repertoireRepository.filterRepertoire(filters!, loadedRepertoire)!;
 
-      var hasFilteringLimitedResults = loadedRepertoire.filmItems.isNotEmpty && filteredRepertoire.filmItems.isEmpty; 
+      var hasFilteringLimitedResults =
+          loadedRepertoire.filmItems.isNotEmpty && filteredRepertoire.filmItems.isEmpty;
 
       if (!kDebugMode) {
         for (var filmItem in filteredRepertoire.filmItems) {
           if (filmItem.film.filmWebScore == null) {
-            filmScoresCubit.getFilmScores(filmItem.film);
+            filmScoresRepository.computeFilmWebScore(filmItem.film);
           }
         }
       }
 
-      emit(RepertoireLoaded(data: filteredRepertoire, hasFilteringLimitedResults: hasFilteringLimitedResults));
+      emit(
+        RepertoireLoaded(
+          data: filteredRepertoire,
+          hasFilteringLimitedResults: hasFilteringLimitedResults,
+        ),
+      );
     } on ClientException catch (e) {
       log(e.message!);
       emit(const RepertoireError(message: 'Błąd połączenia.'));
@@ -100,9 +105,15 @@ class RepertoireBloc extends Bloc<RepertoireEvent, RepertoireState> {
 
     if (state is RepertoireLoaded) {
       var filteredRepertoire = repertoireRepository.filterRepertoire(filters!, loadedRepertoire)!;
-      var hasFilteringLimitedResults = loadedRepertoire.filmItems.isNotEmpty && filteredRepertoire.filmItems.isEmpty; 
+      var hasFilteringLimitedResults =
+          loadedRepertoire.filmItems.isNotEmpty && filteredRepertoire.filmItems.isEmpty;
 
-      emit(RepertoireLoaded(data: filteredRepertoire, hasFilteringLimitedResults: hasFilteringLimitedResults));
+      emit(
+        RepertoireLoaded(
+          data: filteredRepertoire,
+          hasFilteringLimitedResults: hasFilteringLimitedResults,
+        ),
+      );
     }
   }
 }
