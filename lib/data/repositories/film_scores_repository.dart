@@ -14,9 +14,9 @@ class FilmScoresRepository {
   final _scoresSubject = BehaviorSubject<Film>();
   Stream<Film> get watchScores => _scoresSubject.stream;
 
-  void computeFilmWebScore(Film film) async {
-    film.filmWebScore = await compute(filmScoresApiClient.getFilmWebScore, film).then((film) {
-      return film.filmWebScore;
+  void getFilmWebScore(Film film) async {
+    film.filmWebScore = await compute(filmScoresApiClient.getFilmWebScore, film).then((score) {
+      return score;
     });
     _scoresSubject.add(film);
   }

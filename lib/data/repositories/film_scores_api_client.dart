@@ -28,26 +28,23 @@ class FilmScoresApiClient extends ApiClient {
     return WebScrapingHelper.scrapFilmId(film, response.body);
   }
 
-  Future<Film> _getFilmScore(Film film, String filmId) async {
+  Future<String> _getFilmScore(String filmId) async {
     var response = await http.get(
           Uri.parse('https://www.filmweb.pl/api/v1/film/$filmId/rating'),
         );
 
     if (response.statusCode != 200) {
       log('Error getting filmWeb score: ${response.body}');
-      film.filmWebScore = '-';
-      return film;
+      return '-';
     }
 
     var body = json.decode(response.body);
 
-    film.filmWebScore = body['rate'].toString().substring(0, 3);
-
-    return film;
+    return body['rate'].toString().substring(0, 3);
   }
 
-  Future<Film> getFilmWebScore(Film film) async {
+  Future<String> getFilmWebScore(Film film) async {
     var filmId = await _getFilmId(film);
-    return _getFilmScore(film, filmId);
+    return _getFilmScore(filmId);
   }
 }
