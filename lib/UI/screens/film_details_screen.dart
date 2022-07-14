@@ -25,7 +25,7 @@ class FilmDetailsScreen extends StatelessWidget {
                   slivers: [
                     SliverPersistentHeader(
                       delegate: SliverHeader(
-                        imageUrl: film.posterLink!.replaceAll("md.jpg", "lg.jpg"),
+                        imageUrl: film.posterLink ?? "",
                         videoUrl: film.videoLink,
                         maxExtent: 450,
                         minExtent: 0,

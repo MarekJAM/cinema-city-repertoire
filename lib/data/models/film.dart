@@ -72,7 +72,7 @@ class Film {
       ageRestriction: tempAgeRestriction,
       genres: loadedGenres,
       length: json['length'],
-      posterLink: json['posterLink'],
+      posterLink: json['posterLink']?.replaceFirst("md.jpg", "lg.jpg"),
       releaseYear: json['releaseYear'],
       link: json['link'],
       videoLink: json['videoLink']
