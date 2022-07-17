@@ -41,6 +41,8 @@ class Repertoire {
         filmItems.add(filmItem);
       }
     }
+
+    filmItems.sort((a, b) => a.film.name.compareTo(b.film.name));
   }
 
   Repertoire();
