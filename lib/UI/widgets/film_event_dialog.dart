@@ -24,7 +24,7 @@ class FilmEventDialog extends StatefulWidget {
   final Event item;
 
   @override
-  _FilmEventDialogState createState() => _FilmEventDialogState();
+  State<FilmEventDialog> createState() => _FilmEventDialogState();
 }
 
 class _FilmEventDialogState extends State<FilmEventDialog> {
@@ -65,6 +65,7 @@ class _FilmEventDialogState extends State<FilmEventDialog> {
         fontSize: 16.0,
       );
     } else {
+      if(!mounted) return;
       ScaffoldMessenger.of(context).hideCurrentSnackBar();
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(

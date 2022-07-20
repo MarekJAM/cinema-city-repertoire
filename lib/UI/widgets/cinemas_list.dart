@@ -8,7 +8,7 @@ import '../../data/models/models.dart';
 import '../../bloc/blocs.dart';
 import '../../utils/storage.dart';
 
-class CinemasList extends StatelessWidget {
+class CinemasList extends StatefulWidget {
   final List<Cinema> list;
   final List<String> pickedCinemas;
   final DateTime? pickedDate;
@@ -16,14 +16,19 @@ class CinemasList extends StatelessWidget {
 
   const CinemasList(this.list, this.pickedDate, this.pickedCinemas, this.height, {Key? key}) : super(key: key);
 
+  @override
+  State<CinemasList> createState() => _CinemasListState();
+}
+
+class _CinemasListState extends State<CinemasList> {
   Future<void> _saveFavoriteCinemas() async {
-    await Storage.setFavoriteCinemas(pickedCinemas);
+    await Storage.setFavoriteCinemas(widget.pickedCinemas);
   }
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: height,
+      height: widget.height,
       child: Column(
         children: <Widget>[
           Container(
@@ -32,15 +37,15 @@ class CinemasList extends StatelessWidget {
                 bottom: BorderSide(color: Colors.black),
               ),
             ),
-            height: height * 0.9,
+            height: widget.height * 0.9,
             child: ListView.builder(
               padding: EdgeInsets.zero,
               itemBuilder: (context, index) => Row(
                 children: <Widget>[
-                  CinemaItemRow(list[index], pickedCinemas),
+                  CinemaItemRow(widget.list[index], widget.pickedCinemas),
                 ],
               ),
-              itemCount: list.length,
+              itemCount: widget.list.length,
             ),
           ),
           Expanded(
@@ -54,11 +59,11 @@ class CinemasList extends StatelessWidget {
                   ElevatedButton(
                     onPressed: () {
                       BlocProvider.of<RepertoireBloc>(context).add(
-                        GetRepertoire(pickedDate, pickedCinemas),
+                        GetRepertoire(widget.pickedDate, widget.pickedCinemas),
                       );
                       BlocProvider.of<DatesCubit>(context).getDates(
                         DateTime.now().add(const Duration(days: 365)),
-                        pickedCinemas,
+                        widget.pickedCinemas,
                       );
                       Navigator.of(context).pop();
                     },
@@ -77,6 +82,7 @@ class CinemasList extends StatelessWidget {
                           fontSize: 16.0,
                         );
                       } else {
+                        if(!mounted) return;
                         ScaffoldMessenger.of(context).hideCurrentSnackBar();
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
@@ -109,7 +115,7 @@ class CinemaItemRow extends StatefulWidget {
   const CinemaItemRow(this.cinemaData, this.pickedCinemas, {Key? key}) : super(key: key);
 
   @override
-  _CinemaItemRowState createState() => _CinemaItemRowState();
+  State<CinemaItemRow> createState() => _CinemaItemRowState();
 }
 
 class _CinemaItemRowState extends State<CinemaItemRow> {

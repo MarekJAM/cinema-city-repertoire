@@ -10,7 +10,7 @@ class RepertoireScreen extends StatefulWidget {
   const RepertoireScreen({Key? key}) : super(key: key);
 
   @override
-  _RepertoireScreenState createState() => _RepertoireScreenState();
+  State<RepertoireScreen> createState() => _RepertoireScreenState();
 }
 
 class _RepertoireScreenState extends State<RepertoireScreen> {
