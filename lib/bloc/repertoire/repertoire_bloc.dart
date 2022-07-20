@@ -45,7 +45,6 @@ class RepertoireBloc extends Bloc<RepertoireEvent, RepertoireState> {
       }
     });
 
-    //TODO: implement more elegant solution
     filmScoresSubscription = filmScoresRepository.watchScores.listen((data) {
       add(FiltersChanged(filters!));
     });
