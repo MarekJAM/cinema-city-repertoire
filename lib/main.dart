@@ -54,9 +54,9 @@ void main() {
 
       final filtersCubit = FiltersCubit(filtersRepository)..loadFiltersOnAppStarted();
 
-      final cinemasBloc = CinemasBloc(
+      final cinemasCubit = CinemasCubit(
         cinemasRepository: cinemasRepository,
-      )..add(GetCinemas());
+      )..getCinemas();
 
       final filmScoresCubit = FilmScoresCubit(
         filmScoresRepository: filmScoresRepository,
@@ -66,17 +66,14 @@ void main() {
         repertoireRepository: repertoireRepository,
         filtersCubit: filtersCubit,
         filtersRepository: filtersRepository,
-        cinemasBloc: cinemasBloc,
         filmScoresRepository: filmScoresRepository,
       );
 
       runApp(
         MultiBlocProvider(
           providers: [
-            BlocProvider<CinemasBloc>(
-              create: (context) => CinemasBloc(
-                cinemasRepository: cinemasRepository,
-              )..add(GetCinemas()),
+            BlocProvider<CinemasCubit>(
+              create: (context) => cinemasCubit,
             ),
             BlocProvider<RepertoireBloc>(
               create: (context) => repertoireBloc,
@@ -86,8 +83,8 @@ void main() {
                 repertoireRepository,
               ),
             ),
-            BlocProvider<CinemasBloc>(
-              create: (context) => cinemasBloc,
+            BlocProvider<CinemasCubit>(
+              create: (context) => cinemasCubit,
             ),
             BlocProvider<FilmDetailsCubit>(
               create: (context) => FilmDetailsCubit(

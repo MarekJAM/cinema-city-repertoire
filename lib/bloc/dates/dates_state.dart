@@ -1,21 +1,35 @@
 part of 'dates_cubit.dart';
 
-abstract class DatesState {
-  const DatesState();
+enum DatesStatus {
+  initial,
+  loading,
+  success,
+  failure;
+
+  bool get isLoading => this == DatesStatus.loading;
+  bool get isSuccess => this == DatesStatus.success;
+  bool get isFailure => this == DatesStatus.failure;
 }
 
-class DatesInitial extends DatesState {}
-
-class DatesLoading extends DatesState {}
-
-class DatesLoaded extends DatesState {
+class DatesState extends Equatable {
+  final DatesStatus status;
+  final DateTime selectedDate;
   final List<DateTime> dates;
 
-  const DatesLoaded(this.dates);
-}
+  const DatesState({
+    this.status = DatesStatus.initial,
+    required this.selectedDate,
+    this.dates = const [],
+  });
 
-class DatesError extends DatesState {
-  final String message;
+  DatesState copyWith({DatesStatus? status, DateTime? selectedDate, List<DateTime>? dates}) {
+    return DatesState(
+      status: status ?? this.status,
+      selectedDate: selectedDate ?? this.selectedDate,
+      dates: dates ?? this.dates,
+    );
+  }
 
-  const DatesError(this.message);
+  @override
+  List<Object?> get props => [status, selectedDate, dates];
 }

@@ -11,22 +11,21 @@ import '../blocs.dart';
 class RepertoireBloc extends Bloc<RepertoireEvent, RepertoireState> {
   final RepertoireRepository repertoireRepository;
   final FiltersCubit filtersCubit;
-  final CinemasBloc cinemasBloc;
   final FiltersRepository filtersRepository;
   final FilmScoresRepository filmScoresRepository;
 
   late StreamSubscription filmScoresSubscription;
   late StreamSubscription filtersSubscription;
-  late StreamSubscription cinemasSubscription;
 
-  late Repertoire loadedRepertoire;
   List<RepertoireFilter>? filters;
-  List<Cinema>? cinemas;
+  late Repertoire _loadedRepertoire;
+  late List<Cinema> _allCinemas;
+  late List<String> _pickedCinemaIds;
+  late DateTime _pickedDate;
 
   RepertoireBloc({
     required this.repertoireRepository,
     required this.filtersCubit,
-    required this.cinemasBloc,
     required this.filtersRepository,
     required this.filmScoresRepository,
   }) : super(RepertoireInitial()) {
@@ -39,12 +38,6 @@ class RepertoireBloc extends Bloc<RepertoireEvent, RepertoireState> {
       }
     });
 
-    cinemasSubscription = cinemasBloc.stream.listen((state) {
-      if (state is CinemasLoaded) {
-        cinemas ??= state.cinemas;
-      }
-    });
-
     filmScoresSubscription = filmScoresRepository.watchScores.listen((data) {
       add(FiltersChanged(filters!));
     });
@@ -53,7 +46,6 @@ class RepertoireBloc extends Bloc<RepertoireEvent, RepertoireState> {
   @override
   Future<void> close() {
     filtersSubscription.cancel();
-    cinemasSubscription.cancel();
     filmScoresSubscription.cancel();
     return super.close();
   }
@@ -61,14 +53,21 @@ class RepertoireBloc extends Bloc<RepertoireEvent, RepertoireState> {
   void _onGetRepertoire(GetRepertoire event, Emitter<RepertoireState> emit) async {
     emit(RepertoireLoading());
     try {
-      loadedRepertoire = await repertoireRepository.getRepertoire(
-          date: event.date!, allCinemas: cinemas, pickedCinemaIds: event.cinemaIds);
+      if (event.date != null) _pickedDate = event.date!;
+      if (event.allCinemas != null) _allCinemas = [...event.allCinemas!];
+      if (event.pickedCinemaIds != null) _pickedCinemaIds = [...event.pickedCinemaIds!];
+
+      _loadedRepertoire = await repertoireRepository.getRepertoire(
+        date: _pickedDate,
+        allCinemas: _allCinemas,
+        pickedCinemaIds: _pickedCinemaIds,
+      );
 
       filters ??= filtersRepository.loadFilters();
-      var filteredRepertoire = repertoireRepository.filterRepertoire(filters!, loadedRepertoire)!;
+      var filteredRepertoire = repertoireRepository.filterRepertoire(filters!, _loadedRepertoire)!;
 
       var hasFilteringLimitedResults =
-          loadedRepertoire.filmItems.isNotEmpty && filteredRepertoire.filmItems.isEmpty;
+          _loadedRepertoire.filmItems.isNotEmpty && filteredRepertoire.filmItems.isEmpty;
 
       if (!kDebugMode) {
         for (var filmItem in filteredRepertoire.filmItems) {
@@ -103,9 +102,9 @@ class RepertoireBloc extends Bloc<RepertoireEvent, RepertoireState> {
     filters = changedFilters;
 
     if (state is RepertoireLoaded) {
-      var filteredRepertoire = repertoireRepository.filterRepertoire(filters!, loadedRepertoire)!;
+      var filteredRepertoire = repertoireRepository.filterRepertoire(filters!, _loadedRepertoire)!;
       var hasFilteringLimitedResults =
-          loadedRepertoire.filmItems.isNotEmpty && filteredRepertoire.filmItems.isEmpty;
+          _loadedRepertoire.filmItems.isNotEmpty && filteredRepertoire.filmItems.isEmpty;
 
       emit(
         RepertoireLoaded(

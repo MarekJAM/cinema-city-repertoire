@@ -11,12 +11,13 @@ abstract class RepertoireEvent extends Equatable {
 
 class GetRepertoire extends RepertoireEvent {
   final DateTime? date;
-  final List<String> cinemaIds;
+  final List<String>? pickedCinemaIds;
+  final List<Cinema>? allCinemas;
 
-  const GetRepertoire(this.date, this.cinemaIds);
+  const GetRepertoire({this.date, this.pickedCinemaIds, this.allCinemas});
 
   @override
-  String toString() => 'GetRepertoireDetails { date: $date, cinemaIds: $cinemaIds }';
+  String toString() => 'GetRepertoireDetails { date: $date, cinemaIds: $pickedCinemaIds }';
 }
 
 class FiltersChanged extends RepertoireEvent {

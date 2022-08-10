@@ -1,4 +1,4 @@
-import '../../utils/date_handler.dart';
+import '../../utils/date_helper.dart';
 import '../../data/models/models.dart';
 import './repositories.dart';
 
@@ -11,7 +11,7 @@ class CinemasRepository {
     var dateInAYear = DateTime.now().add(const Duration(days: 365));
 
     return await cinemasApiClient.getCinemas(
-      DateHandler.convertDateToYYYYMMDD(
+      DateHelper.convertDateToYYYYMMDD(
         dateInAYear,
       ),
     );

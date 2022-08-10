@@ -58,9 +58,7 @@ class _CinemasListState extends State<CinemasList> {
                 children: <Widget>[
                   ElevatedButton(
                     onPressed: () {
-                      BlocProvider.of<RepertoireBloc>(context).add(
-                        GetRepertoire(widget.pickedDate, widget.pickedCinemas),
-                      );
+                      context.read<CinemasCubit>().pickCinemas(widget.pickedCinemas);
                       BlocProvider.of<DatesCubit>(context).getDates(
                         DateTime.now().add(const Duration(days: 365)),
                         widget.pickedCinemas,

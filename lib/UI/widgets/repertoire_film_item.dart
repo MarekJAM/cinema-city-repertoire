@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../data/models/models.dart';
 import '../../bloc/blocs.dart';
-import '../../utils/date_handler.dart';
+import '../../utils/date_helper.dart';
 import '../screens/film_details_screen.dart';
 import 'widgets.dart';
 
@@ -255,7 +255,7 @@ class RepertoireFilmItemRow extends StatelessWidget {
                             ),
                             child: Column(
                               children: [
-                                Text(DateHandler.convertDateToHHMM(item.dateTime)),
+                                Text(DateHelper.convertDateToHHMM(item.dateTime)),
                                 Text(
                                   item.type!,
                                   style: const TextStyle(fontSize: 7),

@@ -1,39 +1,47 @@
-import 'package:equatable/equatable.dart';
+part of 'cinemas_cubit.dart';
 
-import '../../data/models/models.dart';
+enum CinemasStatus {
+  initial,
+  loading,
+  success,
+  failure;
 
-abstract class CinemasState extends Equatable {
-  const CinemasState();
-
-  @override
-  List<Object> get props => [];
+  bool get isLoading => this == CinemasStatus.loading;
+  bool get isSuccess => this == CinemasStatus.success;
+  bool get isFailure => this == CinemasStatus.failure;
 }
 
-class CinemasInitial extends CinemasState {
-  @override
-  String toString() => 'CinemasInitial';
-}
-
-class CinemasLoading extends CinemasState {
-  @override
-  String toString() => 'CinemasLoading';
-}
-
-class CinemasLoaded extends CinemasState {
+class CinemasState extends Equatable {
+  final CinemasStatus status;
   final List<Cinema> cinemas;
   final List<String> favoriteCinemaIds;
+  final List<String> pickedCinemaIds;
+  final String errorMessage;
 
-  const CinemasLoaded({required this.cinemas, required this.favoriteCinemaIds});
+  const CinemasState({
+    this.status = CinemasStatus.initial,
+    this.cinemas = const [],
+    this.favoriteCinemaIds = const [],
+    this.pickedCinemaIds = const [],
+    this.errorMessage = '',
+  });
+
+  CinemasState copyWith({
+    CinemasStatus? status,
+    List<Cinema>? cinemas,
+    List<String>? favoriteCinemaIds,
+    List<String>? pickedCinemaIds,
+    String? errorMessage,
+  }) {
+    return CinemasState(
+      status: status ?? this.status,
+      cinemas: cinemas ?? this.cinemas,
+      favoriteCinemaIds: favoriteCinemaIds ?? this.favoriteCinemaIds,
+      pickedCinemaIds: pickedCinemaIds ?? this.pickedCinemaIds,
+      errorMessage: errorMessage ?? this.errorMessage,
+    );
+  }
 
   @override
-  String toString() => 'CinemasLoaded $cinemas, $favoriteCinemaIds';
-}
-
-class CinemasError extends CinemasState {
-  final String message;
-
-  const CinemasError({required this.message});
-
-  @override
-  String toString() => 'CinemasError';
+  List<Object> get props => [status, cinemas, favoriteCinemaIds, pickedCinemaIds, errorMessage];
 }

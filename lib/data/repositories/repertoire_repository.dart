@@ -1,4 +1,4 @@
-import '../../utils/date_handler.dart';
+import '../../utils/date_helper.dart';
 import '../../data/models/models.dart';
 import './repositories.dart';
 
@@ -15,7 +15,7 @@ class RepertoireRepository {
 
   Future<Repertoire> getRepertoire({required DateTime date, required List<Cinema>? allCinemas, required List<String> pickedCinemaIds}) async {
     return await repertoireApiClient.getRepertoire(
-      date: DateHandler.convertDateToYYYYMMDD(
+      date: DateHelper.convertDateToYYYYMMDD(
         date,
       ),
       allCinemas: allCinemas,
@@ -25,7 +25,7 @@ class RepertoireRepository {
 
   Future<List<DateTime>> getDates(DateTime date, List<String> cinemaIds) async {
     var stringDates = await repertoireApiClient.getDates(
-      DateHandler.convertDateToYYYYMMDD(
+      DateHelper.convertDateToYYYYMMDD(
         date,
       ),
       cinemaIds,

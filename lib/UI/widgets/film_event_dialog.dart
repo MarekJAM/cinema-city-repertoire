@@ -8,7 +8,7 @@ import 'package:timezone/timezone.dart' as tz;
 import 'package:url_launcher/url_launcher_string.dart';
 
 import '../../data/models/models.dart';
-import '../../utils/date_handler.dart';
+import '../../utils/date_helper.dart';
 import '../../utils/time_zone.dart';
 
 class FilmEventDialog extends StatefulWidget {
@@ -121,7 +121,7 @@ class _FilmEventDialogState extends State<FilmEventDialog> {
             Padding(
               padding: const EdgeInsets.all(2.0),
               child: Text(
-                DateHandler.convertDateToHHMM(widget.item.dateTime),
+                DateHelper.convertDateToHHMM(widget.item.dateTime),
                 textAlign: TextAlign.center,
                 style: const TextStyle(fontSize: 14),
               ),
