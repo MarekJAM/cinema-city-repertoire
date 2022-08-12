@@ -23,7 +23,7 @@ class CinemasCubit extends Cubit<CinemasState> {
       emit(state.copyWith(status: CinemasStatus.success, cinemas: cinemas, favoriteCinemaIds: favoriteCinemaIds, pickedCinemaIds: favoriteCinemaIds));
     } catch (e) {
       log('$e');
-      emit(state.copyWith(errorMessage: 'Nie udało się pobrać listy kin.'));
+      emit(state.copyWith(status: CinemasStatus.failure, errorMessage: 'Nie udało się pobrać listy kin.'));
     }
   }
 
