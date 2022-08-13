@@ -1,19 +1,11 @@
 import 'package:flutter/material.dart';
 
 import 'widgets.dart';
-import '../../data/models/models.dart';
 
 class CinemasDrawer extends StatelessWidget {
   const CinemasDrawer({
     Key? key,
-    required this.pickedDate,
-    required this.pickedCinemas,
-    required this.cinemas,
   }) : super(key: key);
-
-  final DateTime? pickedDate;
-  final List<String> pickedCinemas;
-  final List<Cinema> cinemas;
 
   @override
   Widget build(BuildContext context) {
@@ -41,9 +33,6 @@ class CinemasDrawer extends StatelessWidget {
               ),
             ),
             CinemasList(
-              cinemas,
-              pickedDate,
-              pickedCinemas,
               deviceSize.height - headerHeight,
             ),
           ],

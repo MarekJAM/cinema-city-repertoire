@@ -59,6 +59,7 @@ class _RepertoireAppBarState extends State<RepertoireAppBar> {
             ),
           ),
           BlocConsumer<CinemasCubit, CinemasState>(
+            listenWhen: (prev, cur) => prev.status.isLoading && cur.status.isSuccess,
             listener: (context, state) {
               if (state.status.isSuccess) {
                 BlocProvider.of<DatesCubit>(context)

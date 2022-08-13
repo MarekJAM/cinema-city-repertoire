@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:timezone/data/latest.dart' as tz;
 
 import './bloc/simple_bloc_delegate.dart';
@@ -10,6 +11,7 @@ import './bloc/blocs.dart';
 import './data/repositories/repositories.dart';
 import './data/models/filters/filters.dart';
 import 'app.dart';
+import 'data/repositories/cinemas_local_storage_api.dart';
 
 void main() {
   BlocOverrides.runZoned(
@@ -27,6 +29,9 @@ void main() {
       final cinemasRepository = CinemasRepository(
         cinemasApiClient: CinemasApiClient(
           httpClient: http.Client(),
+        ),
+        cinemasLocalStorageApi: CinemasLocalStorageApi(
+          plugin: await SharedPreferences.getInstance(),
         ),
       );
 

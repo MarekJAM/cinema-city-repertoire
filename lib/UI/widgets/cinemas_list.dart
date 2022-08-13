@@ -6,102 +6,98 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 import '../../data/models/models.dart';
 import '../../bloc/blocs.dart';
-import '../../utils/storage.dart';
 
 class CinemasList extends StatefulWidget {
-  final List<Cinema> list;
-  final List<String> pickedCinemas;
-  final DateTime? pickedDate;
   final double height;
 
-  const CinemasList(this.list, this.pickedDate, this.pickedCinemas, this.height, {Key? key}) : super(key: key);
+  const CinemasList(this.height, {Key? key}) : super(key: key);
 
   @override
   State<CinemasList> createState() => _CinemasListState();
 }
 
 class _CinemasListState extends State<CinemasList> {
-  Future<void> _saveFavoriteCinemas() async {
-    await Storage.setFavoriteCinemas(widget.pickedCinemas);
-  }
-
   @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: widget.height,
-      child: Column(
-        children: <Widget>[
-          Container(
-            decoration: const BoxDecoration(
-              border: Border(
-                bottom: BorderSide(color: Colors.black),
+  Widget build(BuildContext context) {    
+    return BlocBuilder<CinemasCubit, CinemasState>(
+      buildWhen: (prev, cur) => prev.status != cur.status,
+      builder: (context, state) {
+        final pickedCinemaIds = [...state.pickedCinemaIds];
+        return SizedBox(
+          height: widget.height,
+          child: Column(
+            children: <Widget>[
+              Container(
+                decoration: const BoxDecoration(
+                  border: Border(
+                    bottom: BorderSide(color: Colors.black),
+                  ),
+                ),
+                height: widget.height * 0.9,
+                child: ListView.builder(
+                  padding: EdgeInsets.zero,
+                  itemBuilder: (context, index) => Row(
+                    children: <Widget>[
+                      CinemaItemRow(state.cinemas[index], pickedCinemaIds),
+                    ],
+                  ),
+                  itemCount: state.cinemas.length,
+                ),
               ),
-            ),
-            height: widget.height * 0.9,
-            child: ListView.builder(
-              padding: EdgeInsets.zero,
-              itemBuilder: (context, index) => Row(
-                children: <Widget>[
-                  CinemaItemRow(widget.list[index], widget.pickedCinemas),
-                ],
-              ),
-              itemCount: widget.list.length,
-            ),
+              Expanded(
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).cardColor,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      ElevatedButton(
+                        onPressed: () {
+                          context.read<CinemasCubit>().pickCinemas(pickedCinemaIds);
+                          context.read<DatesCubit>().getDates(
+                              DateTime.now().add(const Duration(days: 365)), pickedCinemaIds);
+                          Navigator.of(context).pop();
+                        },
+                        child: const Text('Wyświetl'),
+                      ),
+                      ElevatedButton(
+                        onPressed: () async {
+                          context.read<CinemasCubit>().saveFavoriteCinemas(pickedCinemaIds);
+                          if (Platform.isAndroid || Platform.isIOS) {
+                            Fluttertoast.showToast(
+                              msg: "Zapisano kina jako ulubione.",
+                              gravity: ToastGravity.CENTER,
+                              toastLength: Toast.LENGTH_LONG,
+                              backgroundColor: Colors.green,
+                              textColor: Colors.white,
+                              fontSize: 16.0,
+                            );
+                          } else {
+                            if (!mounted) return;
+                            ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                backgroundColor: Colors.green,
+                                content: Text(
+                                  "Zapisano kina jako ulubione.",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              ),
+                            );
+                          }
+                        },
+                        child: const Text('Zapisz'),
+                      ),
+                    ],
+                  ),
+                ),
+              )
+            ],
           ),
-          Expanded(
-            child: Container(
-              decoration: BoxDecoration(
-                color: Theme.of(context).cardColor,
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  ElevatedButton(
-                    onPressed: () {
-                      context.read<CinemasCubit>().pickCinemas(widget.pickedCinemas);
-                      BlocProvider.of<DatesCubit>(context).getDates(
-                        DateTime.now().add(const Duration(days: 365)),
-                        widget.pickedCinemas,
-                      );
-                      Navigator.of(context).pop();
-                    },
-                    child: const Text('Wyświetl'),
-                  ),
-                  ElevatedButton(
-                    onPressed: () async {
-                      await _saveFavoriteCinemas();
-                      if (Platform.isAndroid || Platform.isIOS) {
-                        Fluttertoast.showToast(
-                          msg: "Zapisano kina jako ulubione.",
-                          gravity: ToastGravity.CENTER,
-                          toastLength: Toast.LENGTH_LONG,
-                          backgroundColor: Colors.green,
-                          textColor: Colors.white,
-                          fontSize: 16.0,
-                        );
-                      } else {
-                        if(!mounted) return;
-                        ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            backgroundColor: Colors.green,
-                            content: Text(
-                              "Zapisano kina jako ulubione.",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(color: Colors.white),
-                            ),
-                          ),
-                        );
-                      }
-                    },
-                    child: const Text('Zapisz'),
-                  ),
-                ],
-              ),
-            ),
-          )
-        ],
-      ),
+        );
+      },
     );
   }
 }
