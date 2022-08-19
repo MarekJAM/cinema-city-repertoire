@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../bloc/blocs.dart';
 import '../../utils/date_helper.dart';
-import '../screens/filters_screen.dart';
+import '../pages/filters_page.dart';
 import 'date_selector.dart';
 
 class RepertoireAppBar extends StatefulWidget implements PreferredSizeWidget {

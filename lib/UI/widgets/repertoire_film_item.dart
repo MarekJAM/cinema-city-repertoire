@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../data/models/models.dart';
 import '../../bloc/blocs.dart';
 import '../../utils/date_helper.dart';
-import '../screens/film_details_screen.dart';
+import '../pages/film_details_page.dart';
 import 'widgets.dart';
 
 class RepertoireFilmItemWidget extends StatelessWidget {

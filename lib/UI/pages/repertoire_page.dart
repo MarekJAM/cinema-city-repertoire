@@ -4,16 +4,25 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../bloc/blocs.dart';
 import '../widgets/date_selector.dart';
 import '../widgets/widgets.dart';
-import 'filters_screen.dart';
+import 'filters_page.dart';
 
-class RepertoireScreen extends StatefulWidget {
-  const RepertoireScreen({Key? key}) : super(key: key);
+class RepertoirePage extends StatelessWidget {
+  const RepertoirePage({Key? key}) : super(key: key);
 
   @override
-  State<RepertoireScreen> createState() => _RepertoireScreenState();
+  Widget build(BuildContext context) {
+    return const RepertoireView();
+  }
 }
 
-class _RepertoireScreenState extends State<RepertoireScreen> {
+class RepertoireView extends StatefulWidget {
+  const RepertoireView({Key? key}) : super(key: key);
+
+  @override
+  State<RepertoireView> createState() => _RepertoireViewState();
+}
+
+class _RepertoireViewState extends State<RepertoireView> {
   @override
   Widget build(BuildContext context) {
     final selectedDate = context.select<DatesCubit, DateTime>((cubit) => cubit.state.selectedDate);

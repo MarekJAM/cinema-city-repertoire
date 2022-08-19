@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
-import 'UI/screens/repertoire_screen.dart';
+import 'UI/pages/repertoire_page.dart';
 
 class App extends StatelessWidget {
   const App({Key? key}) : super(key: key);
@@ -35,7 +35,7 @@ class App extends StatelessWidget {
       theme: theme.copyWith(
         colorScheme: theme.colorScheme.copyWith(secondary: Colors.orange),
       ),
-      home: const RepertoireScreen(),
+      home: const RepertoirePage(),
     );
   }
 }

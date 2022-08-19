@@ -1,16 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../data/models/event_types.dart';
 import '../../data/models/models.dart';
 import '../../bloc/blocs.dart';
 import '../widgets/filters/filter_widgets.dart';
 
-const String noGenresData = "Nieokreślony";
-var _genres = genreMap.values.toList()..add(noGenresData)..sort();
-var _eventTypes = eventTypes;
-var _scoreFilter = ScoreFilter(0, true);
-final List<String> _pickedGenres = [];
-final List<String> _pickedEventTypes = [];
+
 
 class FiltersScreen extends StatefulWidget {
   const FiltersScreen({Key? key}) : super(key: key);
@@ -20,12 +16,10 @@ class FiltersScreen extends StatefulWidget {
 }
 
 class _FiltersScreenState extends State<FiltersScreen> {
-  @override
-  void initState() {
-    _pickedGenres.addAll(_genres);
-    _pickedEventTypes.addAll(_eventTypes);
-    super.initState();
-  }
+  final _genres = genreMap.values.toList()..add(noGenresData)..sort();
+  final List<String> _pickedGenres = [...genreMap.values.toList()..add(noGenresData)..sort()];
+  final List<String> _pickedEventTypes = [...eventTypes];
+  var _scoreFilter = ScoreFilter(0, true);
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +64,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
                   ),
                   FilterMultiSelectDialog(
                     title: "Rodzaj seansu",
-                    values: _eventTypes,
+                    values: eventTypes,
                     pickedValues: _pickedEventTypes,
                   ),
                   const SizedBox(

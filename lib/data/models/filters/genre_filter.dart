@@ -1,4 +1,3 @@
-import 'package:cinema_city/UI/screens/filters_screen.dart';
 import 'package:collection/collection.dart' show IterableExtension;
 import 'package:hive/hive.dart';
 

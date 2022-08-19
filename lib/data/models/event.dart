@@ -1,13 +1,4 @@
-const List<String> eventTypes = [
-  '2d',
-  '3d',
-  'dolby-atmos',
-  'screening',
-  'screenx',
-  '4dx',
-  'imax',
-  'vip'
-];
+import 'event_types.dart';
 
 class Event {
   final String? id;
