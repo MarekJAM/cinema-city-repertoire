@@ -39,11 +39,7 @@ class RepertoireFilmItemWidget extends StatelessWidget {
               onTap: () {
                 BlocProvider.of<FilmDetailsCubit>(context).getFilmDetails(data.film);
                 Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (BuildContext context) => FilmDetailsScreen(
-                      film: data.film,
-                    ),
-                  ),
+                  FilmDetailsPage.route(data.film),
                 );
               },
               child: Column(

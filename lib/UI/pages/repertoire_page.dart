@@ -28,7 +28,8 @@ class _RepertoireViewState extends State<RepertoireView> {
     final selectedDate = context.select<DatesCubit, DateTime>((cubit) => cubit.state.selectedDate);
 
     return BlocConsumer<CinemasCubit, CinemasState>(
-      listenWhen: (prev, cur) => prev.status != cur.status  || prev.pickedCinemaIds != cur.pickedCinemaIds,
+      listenWhen: (prev, cur) =>
+          prev.status != cur.status || prev.pickedCinemaIds != cur.pickedCinemaIds,
       listener: (context, state) {
         if (state.status.isSuccess) {
           context.read<RepertoireBloc>().add(
@@ -40,7 +41,8 @@ class _RepertoireViewState extends State<RepertoireView> {
               );
         }
       },
-      buildWhen: (prev, cur) => prev.status != cur.status || prev.pickedCinemaIds != cur.pickedCinemaIds,
+      buildWhen: (prev, cur) =>
+          prev.status != cur.status || prev.pickedCinemaIds != cur.pickedCinemaIds,
       builder: (context, cinemasState) {
         return Scaffold(
           endDrawer: cinemasState.status.isSuccess ? const CinemasDrawer() : null,
@@ -95,10 +97,7 @@ class _RepertoireViewState extends State<RepertoireView> {
                                             ElevatedButton(
                                               onPressed: () {
                                                 Navigator.of(context).push(
-                                                  MaterialPageRoute(
-                                                    builder: (BuildContext context) =>
-                                                        const FiltersScreen(),
-                                                  ),
+                                                  FiltersPage.route(),
                                                 );
                                               },
                                               child: const Text(

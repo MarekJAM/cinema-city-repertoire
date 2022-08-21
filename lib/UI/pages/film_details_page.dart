@@ -5,10 +5,29 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../bloc/blocs.dart';
 import '../../data/models/film.dart';
 
-class FilmDetailsScreen extends StatelessWidget {
+class FilmDetailsPage extends StatelessWidget {
   final Film film;
 
-  const FilmDetailsScreen({Key? key, required this.film}) : super(key: key);
+  const FilmDetailsPage({Key? key, required this.film}) : super(key: key);
+
+  static Route<void> route(Film film) {
+    return MaterialPageRoute(
+      builder: (BuildContext context) => FilmDetailsPage(
+        film: film,
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return FilmDetailsView(film: film);
+  }
+}
+
+class FilmDetailsView extends StatelessWidget {
+  final Film film;
+
+  const FilmDetailsView({Key? key, required this.film}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -78,10 +97,12 @@ class FilmDetailsScreen extends StatelessWidget {
                                   DetailsDataRow(title: "Obsada:", content: film.details!.cast),
                                 if (film.details!.director.isNotEmpty) const Divider(),
                                 if (film.details!.director.isNotEmpty)
-                                  DetailsDataRow(title: "Reżyser:", content: film.details!.director),
+                                  DetailsDataRow(
+                                      title: "Reżyser:", content: film.details!.director),
                                 if (film.details!.production.isNotEmpty) const Divider(),
                                 if (film.details!.production.isNotEmpty)
-                                  DetailsDataRow(title: "Produkcja:", content: film.details!.production),
+                                  DetailsDataRow(
+                                      title: "Produkcja:", content: film.details!.production),
                                 const Divider(),
                                 DetailsDataRow(
                                   title: "Ocena:",
@@ -206,7 +227,8 @@ class DetailsDataRow extends StatelessWidget {
   final String? content;
   final Widget? widget;
 
-  const DetailsDataRow({Key? key, required this.title, this.content, this.widget}) : super(key: key);
+  const DetailsDataRow({Key? key, required this.title, this.content, this.widget})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {

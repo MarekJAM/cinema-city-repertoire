@@ -1,24 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../data/models/event_types.dart';
 import '../../data/models/models.dart';
 import '../../bloc/blocs.dart';
 import '../widgets/filters/filter_widgets.dart';
 
+class FiltersPage extends StatelessWidget {
+  const FiltersPage({Key? key}) : super(key: key);
 
-
-class FiltersScreen extends StatefulWidget {
-  const FiltersScreen({Key? key}) : super(key: key);
+  static Route<void> route() {
+    return MaterialPageRoute(
+      builder: (BuildContext context) => const FiltersPage(),
+    );
+  }
 
   @override
-  State<FiltersScreen> createState() => _FiltersScreenState();
+  Widget build(BuildContext context) {
+    return const FiltersView();
+  }
 }
 
-class _FiltersScreenState extends State<FiltersScreen> {
-  final _genres = genreMap.values.toList()..add(noGenresData)..sort();
-  final List<String> _pickedGenres = [...genreMap.values.toList()..add(noGenresData)..sort()];
-  final List<String> _pickedEventTypes = [...eventTypes];
+class FiltersView extends StatefulWidget {
+  const FiltersView({Key? key}) : super(key: key);
+
+  @override
+  State<FiltersView> createState() => _FiltersViewState();
+}
+
+class _FiltersViewState extends State<FiltersView> {
+  final _allGenres = genreMap.values.toList()
+    ..add(noGenresData)
+    ..sort();
+  final List<String> _pickedGenres = [];
+  final List<String> _pickedEventTypes = [];
   var _scoreFilter = ScoreFilter(0, true);
 
   @override
@@ -28,22 +42,21 @@ class _FiltersScreenState extends State<FiltersScreen> {
         child: Center(
           child: Padding(
             padding: const EdgeInsets.all(5),
-            child: BlocBuilder<FiltersCubit, FiltersState>(
-                builder: (context, state) {
+            child: BlocBuilder<FiltersCubit, FiltersState>(builder: (context, state) {
               if (state is FiltersLoaded) {
                 for (var filter in state.filters) {
-                    if (filter is GenreFilter) {
-                      _pickedGenres
-                        ..clear()
-                        ..addAll(filter.genres!);
-                    } else if (filter is EventTypeFilter) {
-                      _pickedEventTypes
-                        ..clear()
-                        ..addAll(filter.eventTypes!);
-                    } else if (filter is ScoreFilter) {
-                      _scoreFilter = filter;
-                    }
+                  if (filter is GenreFilter) {
+                    _pickedGenres
+                      ..clear()
+                      ..addAll(filter.genres!);
+                  } else if (filter is EventTypeFilter) {
+                    _pickedEventTypes
+                      ..clear()
+                      ..addAll(filter.eventTypes!);
+                  } else if (filter is ScoreFilter) {
+                    _scoreFilter = filter;
                   }
+                }
               }
               return ListView(
                 shrinkWrap: true,
@@ -56,7 +69,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
                   ),
                   FilterMultiSelectDialog(
                     title: "Gatunek",
-                    values: _genres,
+                    values: _allGenres,
                     pickedValues: _pickedGenres,
                   ),
                   const SizedBox(

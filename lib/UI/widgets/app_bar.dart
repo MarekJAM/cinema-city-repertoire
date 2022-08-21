@@ -81,9 +81,7 @@ class _RepertoireAppBarState extends State<RepertoireAppBar> {
                         await Future.delayed(const Duration(microseconds: 3));
                         if (!mounted) return;
                         Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (BuildContext context) => const FiltersScreen(),
-                          ),
+                          FiltersPage.route(),
                         );
                       },
                     ),
