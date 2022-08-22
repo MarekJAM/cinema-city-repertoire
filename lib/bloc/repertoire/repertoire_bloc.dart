@@ -10,7 +10,6 @@ import '../blocs.dart';
 
 class RepertoireBloc extends Bloc<RepertoireEvent, RepertoireState> {
   final RepertoireRepository repertoireRepository;
-  final FiltersCubit filtersCubit;
   final FiltersRepository filtersRepository;
   final FilmScoresRepository filmScoresRepository;
 
@@ -25,18 +24,11 @@ class RepertoireBloc extends Bloc<RepertoireEvent, RepertoireState> {
 
   RepertoireBloc({
     required this.repertoireRepository,
-    required this.filtersCubit,
     required this.filtersRepository,
     required this.filmScoresRepository,
   }) : super(RepertoireInitial()) {
     on<GetRepertoire>(_onGetRepertoire);
     on<FiltersChanged>((event, emit) => _onFiltersChanged(event.filters, emit));
-
-    filtersSubscription = filtersCubit.stream.listen((state) {
-      if (state is FiltersLoaded) {
-        add(FiltersChanged(state.filters));
-      }
-    });
 
     filmScoresSubscription = filmScoresRepository.watchScores.listen((data) {
       add(FiltersChanged(filters!));
@@ -64,9 +56,9 @@ class RepertoireBloc extends Bloc<RepertoireEvent, RepertoireState> {
       );
 
       filters ??= filtersRepository.loadFilters();
-      var filteredRepertoire = repertoireRepository.filterRepertoire(filters!, _loadedRepertoire)!;
+      final filteredRepertoire = repertoireRepository.filterRepertoire(filters!, _loadedRepertoire)!;
 
-      var hasFilteringLimitedResults =
+      final hasFilteringLimitedResults =
           _loadedRepertoire.filmItems.isNotEmpty && filteredRepertoire.filmItems.isEmpty;
 
       if (!kDebugMode) {
@@ -102,8 +94,8 @@ class RepertoireBloc extends Bloc<RepertoireEvent, RepertoireState> {
     filters = changedFilters;
 
     if (state is RepertoireLoaded) {
-      var filteredRepertoire = repertoireRepository.filterRepertoire(filters!, _loadedRepertoire)!;
-      var hasFilteringLimitedResults =
+      final filteredRepertoire = repertoireRepository.filterRepertoire(filters!, _loadedRepertoire)!;
+      final hasFilteringLimitedResults =
           _loadedRepertoire.filmItems.isNotEmpty && filteredRepertoire.filmItems.isEmpty;
 
       emit(

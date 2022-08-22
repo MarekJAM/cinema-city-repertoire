@@ -16,7 +16,14 @@ class FiltersPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const FiltersView();
+    return BlocListener<FiltersCubit, FiltersState>(
+      listener: (context, state) {
+        if (state is FiltersLoaded) {
+          context.read<RepertoireBloc>().add(FiltersChanged(state.filters));
+        }
+      },
+      child: const FiltersView(),
+    );
   }
 }
 

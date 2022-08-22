@@ -29,8 +29,12 @@ class CinemasCubit extends Cubit<CinemasState> {
       );
     } catch (e) {
       log('$e');
-      emit(state.copyWith(
-          status: CinemasStatus.failure, errorMessage: 'Nie udało się pobrać listy kin.'));
+      emit(
+        state.copyWith(
+          status: CinemasStatus.failure,
+          errorMessage: 'Nie udało się pobrać listy kin.',
+        ),
+      );
     }
   }
 

@@ -69,7 +69,6 @@ void main() async {
 
   final repertoireBloc = RepertoireBloc(
     repertoireRepository: repertoireRepository,
-    filtersCubit: filtersCubit,
     filtersRepository: filtersRepository,
     filmScoresRepository: filmScoresRepository,
   );
