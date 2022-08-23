@@ -4,7 +4,7 @@ class Cinema {
   final String? link;
   final String? address;
 
-  Cinema({
+  const Cinema({
     required this.id,
     required this.displayName,
     required this.link,
