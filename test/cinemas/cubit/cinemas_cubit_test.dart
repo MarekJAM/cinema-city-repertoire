@@ -54,10 +54,9 @@ void main() {
           CinemasState(status: CinemasStatus.loading),
           isA<CinemasState>()
               .having((c) => c.status, 'status', CinemasStatus.success)
-              .having((c) => c.cinemas, 'cinemas', [loadedCinema]).having(
-                  (c) => c.pickedCinemaIds, 'pickedCinemaIds', [
-            favoriteCinemaId
-          ]).having((c) => c.favoriteCinemaIds, 'favoriteCinemaIds', [favoriteCinemaId])
+              .having((c) => c.cinemas, 'cinemas', [loadedCinema])
+              .having((c) => c.pickedCinemaIds, 'pickedCinemaIds', [favoriteCinemaId])
+              .having((c) => c.favoriteCinemaIds, 'favoriteCinemaIds', [favoriteCinemaId])
         ],
       );
     });
