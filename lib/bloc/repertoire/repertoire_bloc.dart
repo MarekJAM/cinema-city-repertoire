@@ -14,7 +14,6 @@ class RepertoireBloc extends Bloc<RepertoireEvent, RepertoireState> {
   final FilmScoresRepository filmScoresRepository;
 
   late StreamSubscription filmScoresSubscription;
-  late StreamSubscription filtersSubscription;
 
   List<RepertoireFilter>? filters;
   late Repertoire _loadedRepertoire;
@@ -37,7 +36,6 @@ class RepertoireBloc extends Bloc<RepertoireEvent, RepertoireState> {
 
   @override
   Future<void> close() {
-    filtersSubscription.cancel();
     filmScoresSubscription.cancel();
     return super.close();
   }
