@@ -15,20 +15,12 @@ class FilmDetailsCubit extends Cubit<FilmDetailsState> {
 
   void getFilmDetails(Film film) async {
     emit(FilmDetailsLoading());
-
     try {
-      await repertoireRepository.getFilmDetails(film);
-
+      film.details = await repertoireRepository.getFilmDetails(film.link);
       emit(FilmDetailsLoaded(film: film));
-    } on ClientException catch (e) {
-      log(e.message!);
-      emit(const FilmDetailsError(message: 'Błąd połączenia.'));
-    } on ServerException catch (e) {
-      log(e.message!);
-      emit(const FilmDetailsError(message: 'Błąd wewnętrzny serwera.'));
     } catch (e) {
       log('$e');
-      emit(const FilmDetailsError(message: 'Wystąpił nieznany błąd.'));
+      emit(const FilmDetailsError(message: 'Nie udało się pobrać informacji o filmie.'));
     }
   }
 }

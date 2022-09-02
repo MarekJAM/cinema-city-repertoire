@@ -33,8 +33,8 @@ class RepertoireRepository {
     return stringDates.map((date) => DateTime.parse(date)).toList();
   }
 
-  Future<Film> getFilmDetails(Film film) async {
-    return await filmApiClient.getFilmDetails(film);
+  Future<FilmDetails> getFilmDetails(String url) async {
+    return await filmApiClient.getFilmDetails(url);
   }
 
   Repertoire? filterRepertoire(List<RepertoireFilter> filters, Repertoire? repertoire) {

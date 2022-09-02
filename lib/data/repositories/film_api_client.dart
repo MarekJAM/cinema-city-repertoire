@@ -9,10 +9,10 @@ class FilmApiClient extends ApiClient {
 
   FilmApiClient({required this.httpClient});
 
-  Future<Film> getFilmDetails(Film film) async {
+  Future<FilmDetails> getFilmDetails(String url) async {
     var response = await http.get(
       Uri.parse(
-        film.link,
+        url,
       ),
     );
 
@@ -20,8 +20,6 @@ class FilmApiClient extends ApiClient {
       throwException(response.statusCode, 'Error getting film details.');
     }
 
-    film.details = WebScrapingHelper.scrapFilmDetails(response.body);
-
-    return film;
+    return WebScrapingHelper.scrapFilmDetails(response.body);
   }
 }

@@ -3,8 +3,10 @@ import 'dart:developer';
 import '../data/models/models.dart';
 import 'package:html/parser.dart' as parser;
 
+class WebScrapperException implements Exception {}
+
 class WebScrapingHelper {
-  static FilmDetails? scrapFilmDetails(String responseBody) {
+  static FilmDetails scrapFilmDetails(String responseBody) {
     var document = parser.parse(responseBody);
 
     try {
@@ -28,7 +30,7 @@ class WebScrapingHelper {
       );
     } catch (e) {
       log('$e');
-      return null;
+      throw WebScrapperException();
     }
   }
 
