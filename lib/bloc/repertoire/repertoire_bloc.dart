@@ -15,6 +15,7 @@ class RepertoireBloc extends Bloc<RepertoireEvent, RepertoireState> {
 
   late StreamSubscription filmScoresSubscription;
 
+  @visibleForTesting
   List<RepertoireFilter>? filters;
   late Repertoire _loadedRepertoire;
   late List<Cinema> _allCinemas;
@@ -30,7 +31,7 @@ class RepertoireBloc extends Bloc<RepertoireEvent, RepertoireState> {
     on<FiltersChanged>((event, emit) => _onFiltersChanged(event.filters, emit));
 
     filmScoresSubscription = filmScoresRepository.watchScores.listen((data) {
-      add(FiltersChanged(filters!));
+      add(FiltersChanged(filters ?? []));
     });
   }
 
