@@ -29,7 +29,7 @@ void main() {
 
     test('initial state is correct', () {
       final cinemasCubit = CinemasCubit(cinemasRepository: cinemasRepository);
-      expect(cinemasCubit.state, CinemasState());
+      expect(cinemasCubit.state, isA<CinemasState>().having((state) => state.status, 'initial status', CinemasStatus.initial));
     });
 
     group("getCinemas", () {
