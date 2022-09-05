@@ -87,8 +87,10 @@ class _RepertoireViewState extends State<RepertoireView> {
                                               'Brak filmów do wyświetlenia. Wybierz inną datę lub dostosuj filtry.',
                                           buttons: [
                                             ElevatedButton(
-                                              onPressed: () {
-                                                DateSelector.selectDate(context);
+                                              onPressed: () async {
+                                                final date = await DateSelector.selectDate(context);
+                                                if (!mounted || date == null) return;
+                                                context.read<DatesCubit>().selectedDateChanged(date);
                                               },
                                               child: const Text(
                                                 "Wybierz inną datę",
@@ -109,8 +111,10 @@ class _RepertoireViewState extends State<RepertoireView> {
                                       : ErrorColumn(
                                           errorMessage: 'Brak filmów do wyświetlenia.',
                                           buttonMessage: 'Wybierz inną datę',
-                                          buttonOnPressed: () {
-                                            DateSelector.selectDate(context);
+                                          buttonOnPressed: () async {
+                                            final date = await DateSelector.selectDate(context);
+                                            if (!mounted || date == null) return;
+                                            context.read<DatesCubit>().selectedDateChanged(date);
                                           },
                                         )
                                   : ErrorColumn(
