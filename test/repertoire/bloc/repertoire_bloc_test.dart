@@ -3,7 +3,6 @@
 import 'dart:async';
 
 import 'package:bloc_test/bloc_test.dart';
-import 'package:cinema_city/bloc/filters/filters_cubit.dart';
 import 'package:cinema_city/bloc/repertoire/repertoire_bloc.dart';
 import 'package:cinema_city/bloc/repertoire/repertoire_event.dart';
 import 'package:cinema_city/bloc/repertoire/repertoire_state.dart';
@@ -13,7 +12,6 @@ import 'package:cinema_city/data/models/repertoire.dart';
 import 'package:cinema_city/data/repositories/film_scores_repository.dart';
 import 'package:cinema_city/data/repositories/filters_repository.dart';
 import 'package:cinema_city/data/repositories/repertoire_repository.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
@@ -72,7 +70,7 @@ void main() {
       final Repertoire repertoire = Repertoire()..filmItems = [];
 
       blocTest<RepertoireBloc, RepertoireState>(
-        "emits [RepertoireLoading, RepertoireLoaded] when loadFilters returns empty list ",
+        "emits [RepertoireLoading, RepertoireLoaded] when loadFilters returns empty list",
         build: () => repertoireBloc,
         setUp: () {
           when(() => filtersRepository.loadFilters()).thenReturn([]);
@@ -83,11 +81,52 @@ void main() {
               )).thenAnswer((_) async => repertoire);
           when(() => repertoireRepository.filterRepertoire(any(), any())).thenReturn(repertoire);
         },
-        act: (bloc) => bloc.add(GetRepertoire(date: DateTime.now(), pickedCinemaIds: const [], allCinemas: const [])),
+        act: (bloc) => bloc.add(
+            GetRepertoire(date: DateTime.now(), pickedCinemaIds: const [], allCinemas: const [])),
         expect: () => <dynamic>[
           isA<RepertoireLoading>(),
           isA<RepertoireLoaded>().having((state) => state.data.filmItems, 'filmItems', []),
-          ],
+        ],
+      );
+
+      blocTest<RepertoireBloc, RepertoireState>(
+        "emits [RepertoireLoading, RepertoireError] when getRepertoire throws",
+        build: () => repertoireBloc,
+        setUp: () {
+          when(() => filtersRepository.loadFilters()).thenReturn([]);
+          when(() => repertoireRepository.getRepertoire(
+                date: any(named: "date"),
+                allCinemas: any(named: "allCinemas"),
+                pickedCinemaIds: any(named: "pickedCinemaIds"),
+              )).thenThrow(Exception());
+          when(() => repertoireRepository.filterRepertoire(any(), any())).thenReturn(repertoire);
+        },
+        act: (bloc) => bloc.add(
+          GetRepertoire(date: DateTime.now(), pickedCinemaIds: const [], allCinemas: const []),
+        ),
+        expect: () => <dynamic>[
+          isA<RepertoireLoading>(),
+          isA<RepertoireError>(),
+        ],
+      );
+    });
+
+    group("FiltersChanged", () {
+      final Repertoire repertoire = Repertoire()..filmItems = [];
+      final List<RepertoireFilter> filters = [];
+
+      blocTest<RepertoireBloc, RepertoireState>(
+        "emits [RepertoireLoaded] when state is RepertoireLoaded",
+        build: () => repertoireBloc..loadedRepertoire = Repertoire(),
+        setUp: () {
+          when(() => filtersRepository.loadFilters()).thenReturn([]);
+          when(() => repertoireRepository.filterRepertoire(any(), any())).thenReturn(repertoire);
+        },
+        seed: () => RepertoireLoaded(data: repertoire, hasFilteringLimitedResults: false),
+        act: (bloc) => bloc.add(FiltersChanged(filters)),
+        expect: () => <dynamic>[
+          isA<RepertoireLoaded>().having((state) => state.data.filmItems, 'filmItems', []),
+        ],
       );
     });
   });

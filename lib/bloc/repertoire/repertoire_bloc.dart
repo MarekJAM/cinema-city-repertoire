@@ -17,7 +17,9 @@ class RepertoireBloc extends Bloc<RepertoireEvent, RepertoireState> {
 
   @visibleForTesting
   List<RepertoireFilter>? filters;
-  late Repertoire _loadedRepertoire;
+
+  @visibleForTesting
+  late Repertoire loadedRepertoire;
   late List<Cinema> _allCinemas;
   late List<String> _pickedCinemaIds;
   late DateTime _pickedDate;
@@ -48,17 +50,17 @@ class RepertoireBloc extends Bloc<RepertoireEvent, RepertoireState> {
       if (event.allCinemas != null) _allCinemas = [...event.allCinemas!];
       if (event.pickedCinemaIds != null) _pickedCinemaIds = [...event.pickedCinemaIds!];
 
-      _loadedRepertoire = await repertoireRepository.getRepertoire(
+      loadedRepertoire = await repertoireRepository.getRepertoire(
         date: _pickedDate,
         allCinemas: _allCinemas,
         pickedCinemaIds: _pickedCinemaIds,
       );
 
       filters ??= filtersRepository.loadFilters();
-      final filteredRepertoire = repertoireRepository.filterRepertoire(filters!, _loadedRepertoire)!;
+      final filteredRepertoire = repertoireRepository.filterRepertoire(filters!, loadedRepertoire)!;
 
       final hasFilteringLimitedResults =
-          _loadedRepertoire.filmItems.isNotEmpty && filteredRepertoire.filmItems.isEmpty;
+          loadedRepertoire.filmItems.isNotEmpty && filteredRepertoire.filmItems.isEmpty;
 
       if (!kDebugMode) {
         for (var filmItem in filteredRepertoire.filmItems) {
@@ -93,9 +95,9 @@ class RepertoireBloc extends Bloc<RepertoireEvent, RepertoireState> {
     filters = changedFilters;
 
     if (state is RepertoireLoaded) {
-      final filteredRepertoire = repertoireRepository.filterRepertoire(filters!, _loadedRepertoire)!;
+      final filteredRepertoire = repertoireRepository.filterRepertoire(filters!, loadedRepertoire)!;
       final hasFilteringLimitedResults =
-          _loadedRepertoire.filmItems.isNotEmpty && filteredRepertoire.filmItems.isEmpty;
+          loadedRepertoire.filmItems.isNotEmpty && filteredRepertoire.filmItems.isEmpty;
 
       emit(
         RepertoireLoaded(
