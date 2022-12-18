@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class SimpleBlocObserver extends BlocObserver {
+class AppBlocObserver extends BlocObserver {
   @override
   void onEvent(Bloc bloc, Object? event) {
     log('bloc: ${bloc.runtimeType}, event: $event');

@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:timezone/data/latest.dart' as tz;
 
-import './bloc/simple_bloc_delegate.dart';
+import 'bloc/bloc_observer.dart';
 import './bloc/blocs.dart';
 import './data/repositories/repositories.dart';
 import './data/models/filters/filters.dart';
@@ -14,7 +14,7 @@ import 'app.dart';
 import 'data/repositories/cinemas_local_storage_api.dart';
 
 void main() async {
-  if (kDebugMode) Bloc.observer = SimpleBlocObserver();
+  if (kDebugMode) Bloc.observer = AppBlocObserver();
 
   await Hive.initFlutter();
 
