@@ -5,12 +5,10 @@ import './repositories.dart';
 class RepertoireRepository {
   final RepertoireApiClient repertoireApiClient;
   final FilmApiClient filmApiClient;
-  final FilmScoresApiClient filmScoresApiClient;
 
   RepertoireRepository({
     required this.repertoireApiClient,
     required this.filmApiClient,
-    required this.filmScoresApiClient,
   });
 
   Future<Repertoire> getRepertoire({required DateTime date, required List<Cinema>? allCinemas, required List<String> pickedCinemaIds}) async {

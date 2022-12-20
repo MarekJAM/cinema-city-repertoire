@@ -1,46 +1,29 @@
-import 'dart:convert';
-import 'dart:developer';
-
-import 'package:http/http.dart' as http;
+import 'package:dio/dio.dart';
 
 import './api_client.dart';
 import '../../data/models/models.dart';
-import '../../utils/web_scraping_helper.dart';
 
 class FilmScoresApiClient extends ApiClient {
-  final http.Client httpClient;
+  final Dio dio;
 
-  FilmScoresApiClient({required this.httpClient});
+  FilmScoresApiClient({required this.dio});
 
-  static const String _filmWebBaseUrl = 'https://www.filmweb.pl/films/search?q=';
+  static const String filmWebBaseUrl = 'https://www.filmweb.pl/api/v1';
 
-  Future<String> _getFilmId(Film film) async {
-    var response = await http.get(
-      Uri.parse(
-        _filmWebBaseUrl + film.name,
-      ),
+  Future<int> _getFilmId(Film film) async {
+    var response = await dio.get(
+      "$filmWebBaseUrl/live/search?query=${Uri.encodeComponent(film.name.toLowerCase())}",
     );
 
-    if (response.statusCode != 200) {
-      log('Could not get film id - : ${film.name}');
-    }
-
-    return WebScrapingHelper.scrapFilmId(film, response.body);
+    return response.data['searchHits'][0]['id'];
   }
 
-  Future<String> _getFilmScore(String filmId) async {
-    var response = await http.get(
-          Uri.parse('https://www.filmweb.pl/api/v1/film/$filmId/rating'),
-        );
+  Future<String> _getFilmScore(int filmId) async {
+    var response = await dio.get(
+      '$filmWebBaseUrl/film/$filmId/rating',
+    );
 
-    if (response.statusCode != 200) {
-      log('Error getting filmWeb score: ${response.body}');
-      return '-';
-    }
-
-    var body = json.decode(response.body);
-
-    return body['rate'].toString().substring(0, 3);
+    return response.data['rate'].toString().substring(0, 3);
   }
 
   Future<String> getFilmWebScore(Film film) async {

@@ -5,6 +5,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:timezone/data/latest.dart' as tz;
+import 'package:dio/dio.dart';
 
 import 'bloc/bloc_observer.dart';
 import './bloc/blocs.dart';
@@ -26,6 +27,8 @@ void main() async {
 
   tz.initializeTimeZones();
 
+  final dio = Dio();
+
   final cinemasRepository = CinemasRepository(
     cinemasApiClient: CinemasApiClient(
       httpClient: http.Client(),
@@ -42,14 +45,12 @@ void main() async {
     filmApiClient: FilmApiClient(
       httpClient: http.Client(),
     ),
-    filmScoresApiClient: FilmScoresApiClient(
-      httpClient: http.Client(),
-    ),
+
   );
 
   final filmScoresRepository = FilmScoresRepository(
     filmScoresApiClient: FilmScoresApiClient(
-      httpClient: http.Client(),
+      dio: dio,
     ),
   );
 

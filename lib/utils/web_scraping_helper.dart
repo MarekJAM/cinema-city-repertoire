@@ -33,18 +33,4 @@ class WebScrapingHelper {
       throw WebScrapperException();
     }
   }
-
-  static String scrapFilmId(Film film, String responseBody) {
-    var filmIdRegex = RegExp(r'data-film-id="[0-9]*"');
-
-    var searchedFilmIdsStrings = filmIdRegex.allMatches(responseBody).map((e) => e.group(0)).toList();
-
-    String filmId = '';
-
-    if (searchedFilmIdsStrings.isNotEmpty) {
-      filmId = RegExp(r'[0-9]+').stringMatch(searchedFilmIdsStrings[0]!)?.toString() ?? '';
-    }
-
-    return filmId;
-  }
 }

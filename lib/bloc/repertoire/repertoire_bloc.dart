@@ -62,11 +62,9 @@ class RepertoireBloc extends Bloc<RepertoireEvent, RepertoireState> {
       final hasFilteringLimitedResults =
           loadedRepertoire.filmItems.isNotEmpty && filteredRepertoire.filmItems.isEmpty;
 
-      if (!kDebugMode) {
-        for (var filmItem in filteredRepertoire.filmItems) {
-          if (filmItem.film.filmWebScore == null) {
-            filmScoresRepository.getFilmWebScore(filmItem.film);
-          }
+      for (var filmItem in filteredRepertoire.filmItems) {
+        if (filmItem.film.filmWebScore == null) {
+          filmScoresRepository.getFilmWebScore(filmItem.film);
         }
       }
 
