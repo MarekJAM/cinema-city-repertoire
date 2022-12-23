@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:developer';
 
-import 'package:flutter/foundation.dart';
 import 'package:rxdart/rxdart.dart';
 
 import 'repositories.dart';
@@ -16,15 +15,13 @@ class FilmScoresRepository {
   Stream<Film> get watchScores => _scoresSubject.stream;
 
   void getFilmWebScore(Film film) async {
-    String score = '-';
     try {
-      score = await compute(filmScoresApiClient.getFilmWebScore, film).then((score) {
-        return score;
-      });
+      final id = await filmScoresApiClient.getFilmId(film.name);
+      film.filmWebScore = await filmScoresApiClient.getFilmScore(id);
     } catch (e) {
       log("$e");
+      film.filmWebScore = '-';
     }
-    film.filmWebScore = score;
     _scoresSubject.add(film);
   }
 }

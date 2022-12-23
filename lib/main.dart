@@ -2,7 +2,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:dio/dio.dart';
@@ -31,7 +30,7 @@ void main() async {
 
   final cinemasRepository = CinemasRepository(
     cinemasApiClient: CinemasApiClient(
-      httpClient: http.Client(),
+      client: dio,
     ),
     cinemasLocalStorageApi: CinemasLocalStorageApi(
       plugin: await SharedPreferences.getInstance(),
@@ -40,17 +39,17 @@ void main() async {
 
   final repertoireRepository = RepertoireRepository(
     repertoireApiClient: RepertoireApiClient(
-      httpClient: http.Client(),
+      client: dio,
     ),
     filmApiClient: FilmApiClient(
-      httpClient: http.Client(),
+      client: dio,
     ),
 
   );
 
   final filmScoresRepository = FilmScoresRepository(
     filmScoresApiClient: FilmScoresApiClient(
-      dio: dio,
+      client: dio,
     ),
   );
 

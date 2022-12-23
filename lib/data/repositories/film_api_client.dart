@@ -1,25 +1,17 @@
-import 'package:http/http.dart' as http;
+import 'package:dio/dio.dart';
 
 import './api_client.dart';
 import '../../data/models/models.dart';
 import '../../utils/web_scraping_helper.dart';
 
 class FilmApiClient extends ApiClient {
-  final http.Client httpClient;
+  final Dio client;
 
-  FilmApiClient({required this.httpClient});
+  FilmApiClient({required this.client});
 
   Future<FilmDetails> getFilmDetails(String url) async {
-    var response = await http.get(
-      Uri.parse(
-        url,
-      ),
-    );
+    var response = await client.get(url);
 
-    if (response.statusCode != 200) {
-      throwException(response.statusCode, 'Error getting film details.');
-    }
-
-    return WebScrapingHelper.scrapFilmDetails(response.body);
+    return WebScrapingHelper.scrapFilmDetails(response.data);
   }
 }
