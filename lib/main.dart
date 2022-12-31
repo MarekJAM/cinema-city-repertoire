@@ -2,16 +2,14 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:timezone/data/latest.dart' as tz;
-import 'package:dio/dio.dart';
 
 import 'bloc/bloc_observer.dart';
 import './bloc/blocs.dart';
 import './data/repositories/repositories.dart';
 import './data/models/filters/filters.dart';
 import 'app.dart';
-import 'data/repositories/cinemas_local_storage_api.dart';
+import 'injection.dart';
 
 void main() async {
   if (kDebugMode) Bloc.observer = AppBlocObserver();
@@ -26,77 +24,37 @@ void main() async {
 
   tz.initializeTimeZones();
 
-  final dio = Dio();
+  WidgetsFlutterBinding.ensureInitialized();
 
-  final cinemasRepository = CinemasRepository(
-    cinemasApiClient: CinemasApiClient(
-      client: dio,
-    ),
-    cinemasLocalStorageApi: CinemasLocalStorageApi(
-      plugin: await SharedPreferences.getInstance(),
-    ),
-  );
-
-  final repertoireRepository = RepertoireRepository(
-    repertoireApiClient: RepertoireApiClient(
-      client: dio,
-    ),
-    filmApiClient: FilmApiClient(
-      client: dio,
-    ),
-
-  );
-
-  final filmScoresRepository = FilmScoresRepository(
-    filmScoresApiClient: FilmScoresApiClient(
-      client: dio,
-    ),
-  );
+  await configureDependencies();
 
   final filtersRepository = FiltersRepository(FiltersStorageHive(filtersBox));
 
-  WidgetsFlutterBinding.ensureInitialized();
-
   final filtersCubit = FiltersCubit(filtersRepository)..loadFiltersOnAppStarted();
 
-  final cinemasCubit = CinemasCubit(
-    cinemasRepository: cinemasRepository,
-  )..getCinemas();
-
-  final filmScoresCubit = FilmScoresCubit(
-    filmScoresRepository: filmScoresRepository,
-  );
-
   final repertoireBloc = RepertoireBloc(
-    repertoireRepository: repertoireRepository,
+    repertoireRepository: di(),
     filtersRepository: filtersRepository,
-    filmScoresRepository: filmScoresRepository,
+    filmScoresRepository: di(),
   );
 
   runApp(
     MultiBlocProvider(
       providers: [
         BlocProvider<CinemasCubit>(
-          create: (context) => cinemasCubit,
+          create: (context) => di()..getCinemas(),
         ),
         BlocProvider<RepertoireBloc>(
           create: (context) => repertoireBloc,
         ),
         BlocProvider<DatesCubit>(
-          create: (context) => DatesCubit(
-            repertoireRepository,
-          ),
-        ),
-        BlocProvider<CinemasCubit>(
-          create: (context) => cinemasCubit,
+          create: (context) => di(),
         ),
         BlocProvider<FilmDetailsCubit>(
-          create: (context) => FilmDetailsCubit(
-            repertoireRepository: repertoireRepository,
-          ),
+          create: (context) => di(),
         ),
         BlocProvider<FilmScoresCubit>(
-          create: (context) => filmScoresCubit,
+          create: (context) => di(),
         ),
         BlocProvider<FiltersCubit>(
           create: (context) => filtersCubit,

@@ -1,11 +1,13 @@
 import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:injectable/injectable.dart';
 
 import '../../data/repositories/repositories.dart';
 
 part 'film_scores_state.dart';
 
+@injectable
 class FilmScoresCubit extends Cubit<FilmScoresState> {
   final FilmScoresRepository filmScoresRepository;
 

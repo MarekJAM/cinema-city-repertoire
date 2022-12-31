@@ -1,8 +1,11 @@
+import 'package:injectable/injectable.dart';
+
 import '../../utils/date_helper.dart';
 import '../../data/models/models.dart';
 import './repositories.dart';
 import 'cinemas_local_storage_api.dart';
 
+@lazySingleton
 class CinemasRepository {
   final CinemasApiClient cinemasApiClient;
   final CinemasLocalStorageApi cinemasLocalStorageApi;

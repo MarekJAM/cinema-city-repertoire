@@ -1,7 +1,10 @@
+import 'package:injectable/injectable.dart';
+
 import '../../utils/date_helper.dart';
 import '../../data/models/models.dart';
 import './repositories.dart';
 
+@lazySingleton
 class RepertoireRepository {
   final RepertoireApiClient repertoireApiClient;
   final FilmApiClient filmApiClient;

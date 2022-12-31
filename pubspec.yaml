@@ -31,6 +31,8 @@ dependencies:
   html: ^0.15.0
   timezone: ^0.8.0
   dio: ^4.0.6
+  injectable: ^2.1.0
+  get_it: ^7.2.0
 
   
   # The following adds the Cupertino Icons font to your application.
@@ -41,6 +43,7 @@ dependencies:
   hive: ^2.1.0
   hive_generator: ^1.1.2
   build_runner: ^2.1.11
+  injectable_generator: ^2.1.3
   hive_flutter: ^1.1.0
   collection: ^1.15.0-nullsafety.4
   rxdart: ^0.27.4

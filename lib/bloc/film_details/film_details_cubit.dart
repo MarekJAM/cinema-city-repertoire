@@ -2,12 +2,14 @@ import 'dart:developer';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:injectable/injectable.dart';
 
 import '../../data/repositories/repositories.dart';
 import '../../data/models/models.dart';
 
 part 'film_details_state.dart';
 
+@injectable
 class FilmDetailsCubit extends Cubit<FilmDetailsState> {
   final RepertoireRepository repertoireRepository;
 

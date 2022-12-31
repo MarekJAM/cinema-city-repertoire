@@ -1,9 +1,11 @@
 import 'package:dio/dio.dart';
+import 'package:injectable/injectable.dart';
 
 import './api_client.dart';
 import '../../data/models/models.dart';
 import '../../utils/web_scraping_helper.dart';
 
+@lazySingleton
 class FilmApiClient extends ApiClient {
   final Dio client;
 

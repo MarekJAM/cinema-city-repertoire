@@ -1,8 +1,10 @@
 import 'package:dio/dio.dart';
+import 'package:injectable/injectable.dart';
 
 import '../../data/models/models.dart';
 import './api_client.dart';
 
+@lazySingleton
 class CinemasApiClient extends ApiClient {
   final _cinemasEndpoint = '/cinemas/with-event/until/';
 

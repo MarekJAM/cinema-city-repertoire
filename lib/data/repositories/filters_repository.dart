@@ -1,6 +1,9 @@
+import 'package:injectable/injectable.dart';
+
 import 'repositories.dart';
 import '../models/filters/filters.dart';
 
+@lazySingleton
 class FiltersRepository {
   final FiltersStorage storage;
 
