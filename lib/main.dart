@@ -6,7 +6,6 @@ import 'package:timezone/data/latest.dart' as tz;
 
 import 'bloc/bloc_observer.dart';
 import './bloc/blocs.dart';
-import './data/repositories/repositories.dart';
 import './data/models/filters/filters.dart';
 import 'app.dart';
 import 'injection.dart';
@@ -20,23 +19,11 @@ void main() async {
   Hive.registerAdapter(EventTypeFilterAdapter());
   Hive.registerAdapter(ScoreFilterAdapter());
 
-  final filtersBox = await Hive.openBox<dynamic>('filtersBox');
-
   tz.initializeTimeZones();
 
   WidgetsFlutterBinding.ensureInitialized();
 
   await configureDependencies();
-
-  final filtersRepository = FiltersRepository(FiltersStorageHive(filtersBox));
-
-  final filtersCubit = FiltersCubit(filtersRepository)..loadFiltersOnAppStarted();
-
-  final repertoireBloc = RepertoireBloc(
-    repertoireRepository: di(),
-    filtersRepository: filtersRepository,
-    filmScoresRepository: di(),
-  );
 
   runApp(
     MultiBlocProvider(
@@ -45,7 +32,7 @@ void main() async {
           create: (context) => di()..getCinemas(),
         ),
         BlocProvider<RepertoireBloc>(
-          create: (context) => repertoireBloc,
+          create: (context) => di(),
         ),
         BlocProvider<DatesCubit>(
           create: (context) => di(),
@@ -57,7 +44,7 @@ void main() async {
           create: (context) => di(),
         ),
         BlocProvider<FiltersCubit>(
-          create: (context) => filtersCubit,
+          create: (context) => di()..loadFiltersOnAppStarted(),
         ),
       ],
       child: const App(),

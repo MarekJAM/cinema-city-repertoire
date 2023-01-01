@@ -4,11 +4,11 @@ import 'package:injectable/injectable.dart';
 import '../models/filters/repertoire_filter.dart';
 import 'filters_storage.dart';
 
-@LazySingleton(as: FiltersStorage)
+@Injectable(as: FiltersStorage)
 class FiltersStorageHive implements FiltersStorage {
   final Box<dynamic> box;
 
-  FiltersStorageHive(this.box);
+  FiltersStorageHive(@Named('filtersBox') this.box);
   
   @override
   List<RepertoireFilter> loadFilters() {

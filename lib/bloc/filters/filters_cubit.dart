@@ -1,11 +1,13 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:injectable/injectable.dart';
 
 import '../../data/repositories/repositories.dart';
 import '../../data/models/filters/filters.dart';
 
 part 'filters_state.dart';
 
+@injectable
 class FiltersCubit extends Cubit<FiltersState> {
   final FiltersRepository filtersRepository;
 
