@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
+import 'package:injectable/injectable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+@lazySingleton
 class CinemasLocalStorageApi {
   final SharedPreferences _plugin;
 

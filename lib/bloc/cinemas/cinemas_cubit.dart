@@ -2,12 +2,14 @@ import 'dart:developer';
 
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:injectable/injectable.dart';
 
 import '../../data/models/models.dart';
 import '../../data/repositories/repositories.dart';
 
 part 'cinemas_state.dart';
 
+@injectable
 class CinemasCubit extends Cubit<CinemasState> {
   final CinemasRepository cinemasRepository;
 

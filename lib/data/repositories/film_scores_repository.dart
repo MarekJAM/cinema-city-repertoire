@@ -1,11 +1,13 @@
 import 'dart:async';
 import 'dart:developer';
 
+import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';
 
 import 'repositories.dart';
 import '../../data/models/models.dart';
 
+@lazySingleton
 class FilmScoresRepository {
   final FilmScoresApiClient filmScoresApiClient;
 

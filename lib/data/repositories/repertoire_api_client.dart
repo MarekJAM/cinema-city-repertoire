@@ -1,9 +1,11 @@
 import 'package:collection/collection.dart' show IterableExtension;
 import 'package:dio/dio.dart';
+import 'package:injectable/injectable.dart';
 
 import './api_client.dart';
 import '../../data/models/models.dart';
 
+@lazySingleton
 class RepertoireApiClient extends ApiClient {
   final _repertoireEndpoint = '/film-events/in-cinema/';
   final _datesEndpoint = '/dates/in-cinema/';
@@ -14,9 +16,8 @@ class RepertoireApiClient extends ApiClient {
 
   final _repertoire = Repertoire();
 
-  Future<Repertoire> getRepertoire(
-    {
-    required String date, 
+  Future<Repertoire> getRepertoire({
+    required String date,
     required List<Cinema>? allCinemas,
     required List<String> cinemaIds,
   }) async {
@@ -41,9 +42,7 @@ class RepertoireApiClient extends ApiClient {
 
     for (var film in extFilms) {
       if ((films.firstWhereOrNull((el) => el.id == film['id'])) == null) {
-        films.add(
-          Film.fromJson(film)
-        );
+        films.add(Film.fromJson(film));
       }
     }
 

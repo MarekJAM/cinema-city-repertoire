@@ -3,11 +3,13 @@ import 'dart:developer';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:injectable/injectable.dart';
 
 import '../../data/models/models.dart';
 import '../../data/repositories/repositories.dart';
 import '../blocs.dart';
 
+@injectable
 class RepertoireBloc extends Bloc<RepertoireEvent, RepertoireState> {
   final RepertoireRepository repertoireRepository;
   final FiltersRepository filtersRepository;

@@ -1,7 +1,9 @@
 import 'package:dio/dio.dart';
+import 'package:injectable/injectable.dart';
 
 import './api_client.dart';
 
+@lazySingleton
 class FilmScoresApiClient extends ApiClient {
   final Dio client;
 

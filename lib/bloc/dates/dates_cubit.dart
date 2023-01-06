@@ -2,11 +2,13 @@ import 'dart:developer';
 
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:injectable/injectable.dart';
 
 import '../../data/repositories/repertoire_repository.dart';
 
 part 'dates_state.dart';
 
+@injectable
 class DatesCubit extends Cubit<DatesState> {
   final RepertoireRepository repertoireRepository;
 
