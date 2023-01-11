@@ -16,7 +16,7 @@ class CinemasCubit extends Cubit<CinemasState> {
   CinemasCubit({required this.cinemasRepository}) : super(const CinemasState());
 
   Future<void> getCinemas() async {
-    emit(state.copyWith(status: CinemasStatus.loading));
+    emit(state.copyWith(status: CinemasStatus.inProgress));
     try {
       final List<Cinema> cinemas = await cinemasRepository.getAllCinemas();
       final List<String> favoriteCinemaIds = cinemasRepository.getFavoriteCinemas();
@@ -45,7 +45,13 @@ class CinemasCubit extends Cubit<CinemasState> {
   }
 
   Future<void> saveFavoriteCinemas(List<String> cinemaIds) async {
+    emit(
+      state.copyWith(saveFavoritesStatus: CinemasStatus.inProgress),
+    );
     await cinemasRepository.setFavoriteCinemas(cinemaIds);
-    emit(state.copyWith(favoriteCinemaIds: cinemaIds));
+    emit(state.copyWith(
+      saveFavoritesStatus: CinemasStatus.success,
+      favoriteCinemaIds: cinemaIds,
+    ));
   }
 }

@@ -41,7 +41,7 @@ void main() {
         build: () => cinemasCubit,
         act: (cubit) => cubit.getCinemas(),
         expect: () => <dynamic>[
-          CinemasState(status: CinemasStatus.loading),
+          CinemasState(status: CinemasStatus.inProgress),
           isA<CinemasState>().having((c) => c.status, 'status', CinemasStatus.failure)
         ],
       );
@@ -51,7 +51,7 @@ void main() {
         build: () => cinemasCubit,
         act: (cubit) => cubit.getCinemas(),
         expect: () => <dynamic>[
-          CinemasState(status: CinemasStatus.loading),
+          CinemasState(status: CinemasStatus.inProgress),
           isA<CinemasState>()
               .having((c) => c.status, 'status', CinemasStatus.success)
               .having((c) => c.cinemas, 'cinemas', [loadedCinema])

@@ -298,6 +298,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.0"
+  flutter_styled_toast:
+    dependency: "direct main"
+    description:
+      name: flutter_styled_toast
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.1.3"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -308,13 +315,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  fluttertoast:
-    dependency: "direct main"
-    description:
-      name: fluttertoast
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "8.0.9"
   frontend_server_client:
     dependency: transitive
     description:

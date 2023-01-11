@@ -1,15 +1,13 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:timezone/timezone.dart' as tz;
 import 'package:url_launcher/url_launcher_string.dart';
 
 import '../../data/models/models.dart';
 import '../../utils/date_helper.dart';
 import '../../utils/time_zone.dart';
+import '../../utils/toast_helper.dart';
 
 class FilmEventDialog extends StatefulWidget {
   const FilmEventDialog({
@@ -54,30 +52,8 @@ class _FilmEventDialogState extends State<FilmEventDialog> {
       androidAllowWhileIdle: true,
       uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
     );
-
-    if (Platform.isAndroid || Platform.isIOS) {
-      Fluttertoast.showToast(
-        msg: "Zaplanowano przypomnienie.",
-        gravity: ToastGravity.CENTER,
-        toastLength: Toast.LENGTH_LONG,
-        backgroundColor: Colors.green,
-        textColor: Colors.white,
-        fontSize: 16.0,
-      );
-    } else {
-      if(!mounted) return;
-      ScaffoldMessenger.of(context).hideCurrentSnackBar();
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          backgroundColor: Colors.green,
-          content: Text(
-            "Zaplanowano przypomnienie.",
-            textAlign: TextAlign.center,
-            style: TextStyle(color: Colors.white),
-          ),
-        ),
-      );
-    }
+    if (!mounted) return;
+    ToastHelper.show(context, "Zaplanowano przypomnienie.", Colors.green);
   }
 
   @override
@@ -190,14 +166,8 @@ class _FilmEventDialogState extends State<FilmEventDialog> {
                               pickedTzDateTime,
                             );
                           } else {
-                            Fluttertoast.showToast(
-                              msg: "Nie można wybrać godziny wcześniejszej niż aktualna.",
-                              gravity: ToastGravity.CENTER,
-                              toastLength: Toast.LENGTH_LONG,
-                              backgroundColor: Colors.red,
-                              textColor: Colors.white,
-                              fontSize: 16.0,
-                            );
+                            if (!mounted) return;
+                            ToastHelper.show(context, 'Ustawiono przypomnienie', Colors.green);
                           }
                         }
                       },

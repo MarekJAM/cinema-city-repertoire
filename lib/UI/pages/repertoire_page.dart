@@ -137,7 +137,7 @@ class _RepertoireViewState extends State<RepertoireView> {
                       }
                     },
                   );
-                case CinemasStatus.loading:
+                case CinemasStatus.inProgress:
                   return const Center(child: CircularProgressIndicator());
                 case CinemasStatus.failure:
                   return ErrorColumn(
