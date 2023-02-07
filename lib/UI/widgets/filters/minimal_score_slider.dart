@@ -29,7 +29,7 @@ class _MinimalScoreSliderState extends State<MinimalScoreSlider> {
                 child: Text(
                   'Minimalna ocena: ${widget.scoreFilter!.score!.toStringAsFixed(1)}',
                   style: TextStyle(
-                    color: Theme.of(context).textTheme.bodyText1!.color,
+                    color: Theme.of(context).textTheme.bodyLarge!.color,
                     fontSize: 16,
                   ),
                 ),
@@ -40,7 +40,7 @@ class _MinimalScoreSliderState extends State<MinimalScoreSlider> {
                   Text(
                     'Bez oceny',
                     style: TextStyle(
-                      color: Theme.of(context).textTheme.bodyText1!.color,
+                      color: Theme.of(context).textTheme.bodyLarge!.color,
                       fontSize: 16,
                     ),
                   ),

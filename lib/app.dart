@@ -16,10 +16,13 @@ class App extends StatelessWidget {
 
     final ThemeData theme = ThemeData(
       primaryColor: Colors.black,
-      backgroundColor: Colors.grey[900],
-      primarySwatch: Colors.orange,
-      brightness: Brightness.dark,
       indicatorColor: Colors.orange,
+      colorScheme: ColorScheme.fromSwatch(
+        primarySwatch: Colors.orange,
+        brightness: Brightness.dark,
+      ).copyWith(
+        background: Colors.grey[900],
+      ),
     );
 
     return MaterialApp(
