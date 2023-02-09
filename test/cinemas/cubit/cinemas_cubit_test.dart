@@ -82,6 +82,7 @@ void main() {
         build: () => cinemasCubit,
         act: (cubit) => cubit.saveFavoriteCinemas(favoriteCinemaIds),
         expect: () => <dynamic>[
+          CinemasState(saveFavoritesStatus: CinemasStatus.inProgress),
           isA<CinemasState>().having((c) => c.favoriteCinemaIds, 'favoriteCinemaIds', favoriteCinemaIds)
         ],
       );
