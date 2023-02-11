@@ -41,7 +41,6 @@ void main() {
     late RepertoireRepository repertoireRepository;
     late FilmScoresRepository filmScoresRepository;
     late FiltersRepository filtersRepository;
-    late StreamSubscription filmScoresSubscription;
 
     setUp(() {
       repertoireRepository = MockRepertoireRepository();
