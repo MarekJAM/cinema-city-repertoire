@@ -16,6 +16,12 @@ class FilmScoresApiClient extends ApiClient {
       "$filmWebBaseUrl/live/search?query=${Uri.encodeComponent(filmName.toLowerCase())}",
     );
 
+    final firstResult = response.data['searchHits'][0];
+
+    if (filmName.toLowerCase() != firstResult['matchedTitle'].toString().toLowerCase()) {
+      throw Exception("Failed to get filmweb score for movie: $filmName - mismatched movie title");
+    }
+
     return response.data['searchHits'][0]['id'];
   }
 
