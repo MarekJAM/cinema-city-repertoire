@@ -24,7 +24,7 @@ class Event {
     if (json['attributeIds'] != null) {
       String? language;
       json['attributeIds'].forEach((attr) {
-        for (var type in eventTypes) {
+        for (var type in allEventTypes) {
           if (attr == type) {
             attributes.update(
               'type',

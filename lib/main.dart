@@ -57,7 +57,7 @@ void main() async {
           create: (context) => di(),
         ),
         BlocProvider<FiltersCubit>(
-          create: (context) => di()..loadFiltersOnAppStarted(),
+          create: (context) => di(),
         ),
       ],
       child: const App(),

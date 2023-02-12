@@ -84,7 +84,7 @@ class _FiltersViewState extends State<FiltersView> {
                   ),
                   FilterMultiSelectDialog(
                     title: "Rodzaj seansu",
-                    values: eventTypes,
+                    values: allEventTypes,
                     pickedValues: _pickedEventTypes,
                   ),
                   const SizedBox(

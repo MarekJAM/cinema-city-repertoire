@@ -13,6 +13,7 @@ class FiltersCubit extends Cubit<FiltersState> {
 
   FiltersCubit(this.filtersRepository) : super(FiltersInitial());
 
+  @PostConstruct()  
   void loadFiltersOnAppStarted() {
     final filters = filtersRepository.loadFilters();
     emit(FiltersLoaded(filters));

@@ -4,6 +4,7 @@
 // InjectableConfigGenerator
 // **************************************************************************
 
+// ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:cinema_city/app_module.dart' as _i24;
 import 'package:cinema_city/bloc/cinemas/cinemas_cubit.dart' as _i22;
 import 'package:cinema_city/bloc/dates/dates_cubit.dart' as _i17;
@@ -39,12 +40,21 @@ import 'package:shared_preferences/shared_preferences.dart' as _i13;
 /// ignore_for_file: lines_longer_than_80_chars
 extension GetItInjectableX on _i1.GetIt {
   /// initializes the registration of main-scope dependencies inside of [GetIt]
-  Future<_i1.GetIt> init(
-      {String? environment, _i2.EnvironmentFilter? environmentFilter}) async {
-    final gh = _i2.GetItHelper(this, environment, environmentFilter);
+  Future<_i1.GetIt> init({
+    String? environment,
+    _i2.EnvironmentFilter? environmentFilter,
+  }) async {
+    final gh = _i2.GetItHelper(
+      this,
+      environment,
+      environmentFilter,
+    );
     final registerModule = _$RegisterModule();
-    await gh.factoryAsync<_i3.Box<dynamic>>(() => registerModule.filtersBox,
-        instanceName: 'filtersBox', preResolve: true);
+    await gh.factoryAsync<_i3.Box<dynamic>>(
+      () => registerModule.filtersBox,
+      instanceName: 'filtersBox',
+      preResolve: true,
+    );
     gh.factory<_i4.Dio>(() => registerModule.dio);
     gh.lazySingleton<_i5.FilmApiClient>(
         () => _i5.FilmApiClient(client: gh<_i4.Dio>()));
@@ -57,17 +67,21 @@ extension GetItInjectableX on _i1.GetIt {
     gh.lazySingleton<_i11.RepertoireApiClient>(
         () => _i11.RepertoireApiClient(client: gh<_i4.Dio>()));
     gh.lazySingleton<_i12.RepertoireRepository>(() => _i12.RepertoireRepository(
-        repertoireApiClient: gh<_i8.RepertoireApiClient>(),
-        filmApiClient: gh<_i8.FilmApiClient>()));
-    await gh.factoryAsync<_i13.SharedPreferences>(() => registerModule.prefs,
-        preResolve: true);
+          repertoireApiClient: gh<_i8.RepertoireApiClient>(),
+          filmApiClient: gh<_i8.FilmApiClient>(),
+        ));
+    await gh.factoryAsync<_i13.SharedPreferences>(
+      () => registerModule.prefs,
+      preResolve: true,
+    );
     gh.lazySingleton<_i14.CinemasApiClient>(
         () => _i14.CinemasApiClient(client: gh<_i4.Dio>()));
     gh.lazySingleton<_i15.CinemasLocalStorageApi>(() =>
         _i15.CinemasLocalStorageApi(plugin: gh<_i13.SharedPreferences>()));
     gh.lazySingleton<_i16.CinemasRepository>(() => _i16.CinemasRepository(
-        cinemasApiClient: gh<_i8.CinemasApiClient>(),
-        cinemasLocalStorageApi: gh<_i15.CinemasLocalStorageApi>()));
+          cinemasApiClient: gh<_i8.CinemasApiClient>(),
+          cinemasLocalStorageApi: gh<_i15.CinemasLocalStorageApi>(),
+        ));
     gh.factory<_i17.DatesCubit>(
         () => _i17.DatesCubit(gh<_i12.RepertoireRepository>()));
     gh.factory<_i18.FilmDetailsCubit>(() => _i18.FilmDetailsCubit(
@@ -77,13 +91,15 @@ extension GetItInjectableX on _i1.GetIt {
     gh.lazySingleton<_i20.FiltersRepository>(
         () => _i20.FiltersRepository(gh<_i8.FiltersStorage>()));
     gh.factory<_i21.RepertoireBloc>(() => _i21.RepertoireBloc(
-        repertoireRepository: gh<_i8.RepertoireRepository>(),
-        filtersRepository: gh<_i8.FiltersRepository>(),
-        filmScoresRepository: gh<_i8.FilmScoresRepository>()));
+          repertoireRepository: gh<_i8.RepertoireRepository>(),
+          filtersRepository: gh<_i8.FiltersRepository>(),
+          filmScoresRepository: gh<_i8.FilmScoresRepository>(),
+        ));
     gh.factory<_i22.CinemasCubit>(() =>
         _i22.CinemasCubit(cinemasRepository: gh<_i8.CinemasRepository>()));
-    gh.factory<_i23.FiltersCubit>(
-        () => _i23.FiltersCubit(gh<_i8.FiltersRepository>()));
+    gh.factory<_i23.FiltersCubit>(() =>
+        _i23.FiltersCubit(gh<_i8.FiltersRepository>())
+          ..loadFiltersOnAppStarted());
     return this;
   }
 }

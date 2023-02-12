@@ -1,4 +1,4 @@
-const List<String> eventTypes = [
+const List<String> allEventTypes = [
   '2d',
   '3d',
   'dolby-atmos',
