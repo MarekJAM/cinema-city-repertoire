@@ -39,7 +39,10 @@ class Film {
         }
       });
       if (attr.toString().contains('plus')) {
-        tempAgeRestriction = attr.toString().substring(0, attr.toString().indexOf('-'));
+        final extractedValue = attr.toString().substring(0, attr.toString().indexOf('-'));
+        if (extractedValue.length <= 2) {
+          tempAgeRestriction = extractedValue;
+        }
       }
     });
 

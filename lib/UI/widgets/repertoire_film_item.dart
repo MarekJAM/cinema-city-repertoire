@@ -12,18 +12,15 @@ class RepertoireFilmItemWidget extends StatelessWidget {
 
   const RepertoireFilmItemWidget(this.data, {Key? key}) : super(key: key);
 
-  Color? _getAgeRestrictionColor(String value) {
-    Color? color;
-    if (value == 'NA') {
-      color = Colors.green;
-    } else if (value == '18') {
-      color = Colors.red;
-    } else if (int.parse(value) >= 12) {
-      color = Colors.yellow[700];
+  Color _getAgeRestrictionColor(String value) {
+    final ageLimit = int.tryParse(value) ?? 0;
+    if (ageLimit >= 18) {
+      return Colors.red;
+    } else if (ageLimit >= 12) {
+      return Colors.yellow[700]!;
     } else {
-      color = Colors.green;
+      return Colors.green;
     }
-    return color;
   }
 
   @override
@@ -90,16 +87,19 @@ class RepertoireFilmItemWidget extends StatelessWidget {
                       crossAxisAlignment: WrapCrossAlignment.center,
                       children: <Widget>[
                         Container(
-                          padding: const EdgeInsets.all(3),
+                          height: 20,
+                          width: 20,
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             color: _getAgeRestrictionColor(
                               data.film.ageRestriction,
                             ),
                           ),
-                          child: Text(
-                            data.film.ageRestriction,
-                            style: const TextStyle(fontSize: 10),
+                          child: Center(
+                            child: Text(
+                              data.film.ageRestriction,
+                              style: const TextStyle(fontSize: 10),
+                            ),
                           ),
                         ),
                         Padding(
