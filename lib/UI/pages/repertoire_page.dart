@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../bloc/blocs.dart';
+import '../../i18n/strings.g.dart';
 import '../widgets/date_selector.dart';
 import '../widgets/widgets.dart';
 import 'filters_page.dart';
@@ -25,6 +26,8 @@ class RepertoireView extends StatefulWidget {
 class _RepertoireViewState extends State<RepertoireView> {
   @override
   Widget build(BuildContext context) {
+      print(TranslationProvider.of(context).flutterLocale);
+
     final selectedDate = context.select<DatesCubit, DateTime>((cubit) => cubit.state.selectedDate);
 
     return BlocConsumer<CinemasCubit, CinemasState>(
@@ -86,7 +89,7 @@ class _RepertoireViewState extends State<RepertoireView> {
                                     ? state.hasFilteringLimitedResults
                                         ? ErrorColumn(
                                             errorMessage:
-                                                'Brak filmów do wyświetlenia. Wybierz inną datę lub dostosuj filtry.',
+                                                t.repertoire.noFilmsToDisplayPickAnotherDate,
                                             buttons: [
                                               ElevatedButton(
                                                 onPressed: () async {
@@ -94,8 +97,8 @@ class _RepertoireViewState extends State<RepertoireView> {
                                                   if (!mounted || date == null) return;
                                                   context.read<DatesCubit>().selectedDateChanged(date);
                                                 },
-                                                child: const Text(
-                                                  "Wybierz inną datę",
+                                                child: Text(
+                                                  t.repertoire.pickDifferentDate,
                                                 ),
                                               ),
                                               ElevatedButton(
@@ -104,15 +107,15 @@ class _RepertoireViewState extends State<RepertoireView> {
                                                     FiltersPage.route(),
                                                   );
                                                 },
-                                                child: const Text(
-                                                  "Dostosuj filtry",
+                                                child: Text(
+                                                  t.repertoire.adjustFilters,
                                                 ),
                                               ),
                                             ],
                                           )
                                         : ErrorColumn(
-                                            errorMessage: 'Brak filmów do wyświetlenia.',
-                                            buttonMessage: 'Wybierz inną datę',
+                                            errorMessage: t.repertoire.noFilmsToDisplay,
+                                            buttonMessage: t.repertoire.pickDifferentDate,
                                             buttonOnPressed: () async {
                                               final date = await DateSelector.selectDate(context);
                                               if (!mounted || date == null) return;
@@ -120,8 +123,8 @@ class _RepertoireViewState extends State<RepertoireView> {
                                             },
                                           )
                                     : ErrorColumn(
-                                        errorMessage: 'Brak filmów do wyświetlenia.',
-                                        buttonMessage: 'Wybierz kina',
+                                        errorMessage: t.repertoire.noFilmsToDisplay,
+                                        buttonMessage: t.repertoire.pickCinemas,
                                         buttonOnPressed: () {
                                           Scaffold.of(context).openEndDrawer();
                                         },
@@ -130,7 +133,7 @@ class _RepertoireViewState extends State<RepertoireView> {
                         } else if (state is RepertoireError) {
                           return ErrorColumn(
                             errorMessage: state.message,
-                            buttonMessage: 'Odśwież',
+                            buttonMessage: t.refresh,
                             buttonOnPressed: () =>
                                 context.read<RepertoireBloc>().add(const GetRepertoire()),
                           );
@@ -144,7 +147,7 @@ class _RepertoireViewState extends State<RepertoireView> {
                   case CinemasStatus.failure:
                     return ErrorColumn(
                       errorMessage: cinemasState.errorMessage,
-                      buttonMessage: 'Odśwież',
+                      buttonMessage: t.refresh,
                       buttonOnPressed: () => context.read<CinemasCubit>().getCinemas(),
                     );
                   default:

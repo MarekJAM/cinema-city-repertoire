@@ -1,0 +1,11 @@
+{
+    "appName": "Cinema City Repertuar",
+    "refresh": "Odswież",
+    "repertoire": {
+        "noFilmsToDisplayPickAnotherDate": "Brak filmów do wyświetlenia. Wybierz inną datę lub dostosuj filtry.",
+        "pickDifferentDate": "Wybierz inną datę",
+        "adjustFilters": "Dostosuj filtry",
+        "noFilmsToDisplay": "Brak filmów do wyświetlenia",
+        "pickCinemas": "Wybierz kina"
+    }
+  }

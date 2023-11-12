@@ -1,3 +1,4 @@
+import 'package:cinema_city/i18n/strings.g.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -26,15 +27,17 @@ class App extends StatelessWidget {
     );
 
     return MaterialApp(
+      locale: TranslationProvider.of(context).flutterLocale,
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
       supportedLocales: const [
+        Locale('en'),
         Locale('pl'),
       ],
-      title: 'Cinema City Repertuar',
+      title: t.appName,
       theme: theme.copyWith(
         colorScheme: theme.colorScheme.copyWith(secondary: Colors.orange),
       ),

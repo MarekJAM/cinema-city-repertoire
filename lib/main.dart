@@ -1,3 +1,4 @@
+import 'package:cinema_city/i18n/strings.g.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -23,6 +24,8 @@ void main() async {
 
   WidgetsFlutterBinding.ensureInitialized();
 
+  LocaleSettings.useDeviceLocale();
+
   await configureDependencies();
 
   runApp(
@@ -47,7 +50,7 @@ void main() async {
           create: (context) => di(),
         ),
       ],
-      child: const App(),
+      child: TranslationProvider(child: const App()),
     ),
   );
 }
