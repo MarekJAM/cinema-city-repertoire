@@ -49,106 +49,109 @@ class _RepertoireViewState extends State<RepertoireView> {
           backgroundColor: Colors.black,
           endDrawerEnableOpenDragGesture: cinemasState.status.isSuccess,
           appBar: const RepertoireAppBar(),
-          body: Builder(
-            builder: (context) {
-              switch (cinemasState.status) {
-                case CinemasStatus.success:
-                  return BlocBuilder<RepertoireBloc, RepertoireState>(
-                    builder: (context, state) {
-                      if (state is RepertoireLoaded) {
-                        return RefreshIndicator(
-                          onRefresh: () => Future.sync(
-                            () => context.read<RepertoireBloc>().add(const GetRepertoire()),
-                          ),
-                          backgroundColor: Theme.of(context).primaryColor,
-                          child: state.data.filmItems.isNotEmpty
-                              ? Padding(
-                                  padding: const EdgeInsets.only(top: 8),
-                                  child: ListView.builder(
-                                    itemCount: state.data.filmItems.length,
-                                    itemBuilder: (ctx, index) {
-                                      return index != state.data.filmItems.length - 1
-                                          ? RepertoireFilmItemWidget(
-                                              state.data.filmItems[index],
-                                            )
-                                          : Padding(
-                                              padding: const EdgeInsets.only(bottom: 8),
-                                              child: RepertoireFilmItemWidget(
+          body: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            child: Builder(
+              builder: (context) {
+                switch (cinemasState.status) {
+                  case CinemasStatus.success:
+                    return BlocBuilder<RepertoireBloc, RepertoireState>(
+                      builder: (context, state) {
+                        if (state is RepertoireLoaded) {
+                          return RefreshIndicator(
+                            onRefresh: () => Future.sync(
+                              () => context.read<RepertoireBloc>().add(const GetRepertoire()),
+                            ),
+                            backgroundColor: Theme.of(context).primaryColor,
+                            child: state.data.filmItems.isNotEmpty
+                                ? Padding(
+                                    padding: const EdgeInsets.only(top: 8),
+                                    child: ListView.builder(
+                                      itemCount: state.data.filmItems.length,
+                                      itemBuilder: (ctx, index) {
+                                        return index != state.data.filmItems.length - 1
+                                            ? RepertoireFilmItemWidget(
                                                 state.data.filmItems[index],
-                                              ),
-                                            );
-                                    },
-                                  ),
-                                )
-                              : cinemasState.pickedCinemaIds.isNotEmpty
-                                  ? state.hasFilteringLimitedResults
-                                      ? ErrorColumn(
-                                          errorMessage:
-                                              'Brak filmów do wyświetlenia. Wybierz inną datę lub dostosuj filtry.',
-                                          buttons: [
-                                            ElevatedButton(
-                                              onPressed: () async {
-                                                final date = await DateSelector.selectDate(context);
-                                                if (!mounted || date == null) return;
-                                                context.read<DatesCubit>().selectedDateChanged(date);
-                                              },
-                                              child: const Text(
-                                                "Wybierz inną datę",
-                                              ),
-                                            ),
-                                            ElevatedButton(
-                                              onPressed: () {
-                                                Navigator.of(context).push(
-                                                  FiltersPage.route(),
-                                                );
-                                              },
-                                              child: const Text(
-                                                "Dostosuj filtry",
-                                              ),
-                                            ),
-                                          ],
-                                        )
-                                      : ErrorColumn(
-                                          errorMessage: 'Brak filmów do wyświetlenia.',
-                                          buttonMessage: 'Wybierz inną datę',
-                                          buttonOnPressed: () async {
-                                            final date = await DateSelector.selectDate(context);
-                                            if (!mounted || date == null) return;
-                                            context.read<DatesCubit>().selectedDateChanged(date);
-                                          },
-                                        )
-                                  : ErrorColumn(
-                                      errorMessage: 'Brak filmów do wyświetlenia.',
-                                      buttonMessage: 'Wybierz kina',
-                                      buttonOnPressed: () {
-                                        Scaffold.of(context).openEndDrawer();
+                                              )
+                                            : Padding(
+                                                padding: const EdgeInsets.only(bottom: 8),
+                                                child: RepertoireFilmItemWidget(
+                                                  state.data.filmItems[index],
+                                                ),
+                                              );
                                       },
                                     ),
-                        );
-                      } else if (state is RepertoireError) {
-                        return ErrorColumn(
-                          errorMessage: state.message,
-                          buttonMessage: 'Odśwież',
-                          buttonOnPressed: () =>
-                              context.read<RepertoireBloc>().add(const GetRepertoire()),
-                        );
-                      } else {
-                        return const Center(child: CircularProgressIndicator());
-                      }
-                    },
-                  );
-                case CinemasStatus.inProgress:
-                  return const Center(child: CircularProgressIndicator());
-                case CinemasStatus.failure:
-                  return ErrorColumn(
-                    errorMessage: cinemasState.errorMessage,
-                    buttonMessage: 'Odśwież',
-                    buttonOnPressed: () => context.read<CinemasCubit>().getCinemas(),
-                  );
-                default:
-                  return Container();
-              }
-            },
+                                  )
+                                : cinemasState.pickedCinemaIds.isNotEmpty
+                                    ? state.hasFilteringLimitedResults
+                                        ? ErrorColumn(
+                                            errorMessage:
+                                                'Brak filmów do wyświetlenia. Wybierz inną datę lub dostosuj filtry.',
+                                            buttons: [
+                                              ElevatedButton(
+                                                onPressed: () async {
+                                                  final date = await DateSelector.selectDate(context);
+                                                  if (!mounted || date == null) return;
+                                                  context.read<DatesCubit>().selectedDateChanged(date);
+                                                },
+                                                child: const Text(
+                                                  "Wybierz inną datę",
+                                                ),
+                                              ),
+                                              ElevatedButton(
+                                                onPressed: () {
+                                                  Navigator.of(context).push(
+                                                    FiltersPage.route(),
+                                                  );
+                                                },
+                                                child: const Text(
+                                                  "Dostosuj filtry",
+                                                ),
+                                              ),
+                                            ],
+                                          )
+                                        : ErrorColumn(
+                                            errorMessage: 'Brak filmów do wyświetlenia.',
+                                            buttonMessage: 'Wybierz inną datę',
+                                            buttonOnPressed: () async {
+                                              final date = await DateSelector.selectDate(context);
+                                              if (!mounted || date == null) return;
+                                              context.read<DatesCubit>().selectedDateChanged(date);
+                                            },
+                                          )
+                                    : ErrorColumn(
+                                        errorMessage: 'Brak filmów do wyświetlenia.',
+                                        buttonMessage: 'Wybierz kina',
+                                        buttonOnPressed: () {
+                                          Scaffold.of(context).openEndDrawer();
+                                        },
+                                      ),
+                          );
+                        } else if (state is RepertoireError) {
+                          return ErrorColumn(
+                            errorMessage: state.message,
+                            buttonMessage: 'Odśwież',
+                            buttonOnPressed: () =>
+                                context.read<RepertoireBloc>().add(const GetRepertoire()),
+                          );
+                        } else {
+                          return const Center(child: CircularProgressIndicator());
+                        }
+                      },
+                    );
+                  case CinemasStatus.inProgress:
+                    return const Center(child: CircularProgressIndicator());
+                  case CinemasStatus.failure:
+                    return ErrorColumn(
+                      errorMessage: cinemasState.errorMessage,
+                      buttonMessage: 'Odśwież',
+                      buttonOnPressed: () => context.read<CinemasCubit>().getCinemas(),
+                    );
+                  default:
+                    return Container();
+                }
+              },
+            ),
           ),
         );
       },
