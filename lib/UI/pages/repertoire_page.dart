@@ -26,8 +26,6 @@ class RepertoireView extends StatefulWidget {
 class _RepertoireViewState extends State<RepertoireView> {
   @override
   Widget build(BuildContext context) {
-      print(TranslationProvider.of(context).flutterLocale);
-
     final selectedDate = context.select<DatesCubit, DateTime>((cubit) => cubit.state.selectedDate);
 
     return BlocConsumer<CinemasCubit, CinemasState>(
