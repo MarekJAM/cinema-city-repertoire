@@ -5,6 +5,7 @@ import 'package:timezone/timezone.dart' as tz;
 import 'package:url_launcher/url_launcher_string.dart';
 
 import '../../data/models/models.dart';
+import '../../injection.dart';
 import '../../utils/date_helper.dart';
 import '../../utils/time_zone.dart';
 import '../../utils/toast_helper.dart';
@@ -26,7 +27,6 @@ class FilmEventDialog extends StatefulWidget {
 }
 
 class _FilmEventDialogState extends State<FilmEventDialog> {
-  late FlutterLocalNotificationsPlugin localNotification;
 
   _launchURL(url) async {
     if (await canLaunchUrlString(url)) {
@@ -37,7 +37,7 @@ class _FilmEventDialogState extends State<FilmEventDialog> {
   }
 
   _scheduleNotification(String? title, Event event, tz.TZDateTime tzDateTime) async {
-    await localNotification.zonedSchedule(
+    await di<FlutterLocalNotificationsPlugin>().zonedSchedule(
       int.tryParse(event.id!) ?? 0,
       title,
       'Przypomnienie o seansie - ${event.dateTime.hour}:${event.dateTime.minute == 0 ? "00" : event.dateTime.minute}',
@@ -49,21 +49,11 @@ class _FilmEventDialogState extends State<FilmEventDialog> {
           channelDescription: 'Cinema City Repertuar Powiadomienie',
         ),
       ),
-      androidAllowWhileIdle: true,
+      androidScheduleMode: AndroidScheduleMode.exact,
       uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
     );
     if (!mounted) return;
     ToastHelper.show(context, "Zaplanowano przypomnienie.", Colors.green);
-  }
-
-  @override
-  void initState() {
-    super.initState();
-
-    var initializationAndroid = const AndroidInitializationSettings('@mipmap/ic_launcher');
-    var initializationSettings = InitializationSettings(android: initializationAndroid);
-    localNotification = FlutterLocalNotificationsPlugin();
-    localNotification.initialize(initializationSettings);
   }
 
   @override
