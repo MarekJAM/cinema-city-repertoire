@@ -7,5 +7,17 @@
         "adjustFilters": "Dostosuj filtry",
         "noFilmsToDisplay": "Brak filmów do wyświetlenia",
         "pickCinemas": "Wybierz kina"
+    },
+    "filmDetails": {
+        "premiere": "Premiera",
+        "filmLength": "Czas trwania",
+        "filmLengthValue": "$val min",
+        "filmTitle": "Tytuł",
+        "filmGenre": "Gatunek",
+        "cast": "Obsada",
+        "director": "Reżyser",
+        "production": "Produkcja",
+        "score": "Ocena",
+        "scoreNoData": "Brak danych"
     }
   }

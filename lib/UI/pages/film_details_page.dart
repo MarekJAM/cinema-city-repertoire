@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../bloc/blocs.dart';
 import '../../data/models/film.dart';
+import '../../i18n/strings.g.dart';
 
 class FilmDetailsPage extends StatelessWidget {
   final Film film;
@@ -65,13 +66,13 @@ class FilmDetailsView extends StatelessWidget {
                                   children: [
                                     DetailsHeaderRow(
                                       icon: Icons.calendar_today,
-                                      title: "Premiera",
+                                      title: t.filmDetails.premiere,
                                       content: film.details!.premiereDate,
                                     ),
                                     DetailsHeaderRow(
                                       icon: Icons.timer,
-                                      title: "Czas trwania",
-                                      content: "${film.length} min",
+                                      title: t.filmDetails.filmLength,
+                                      content: t.filmDetails.filmLengthValue(val: "${film.length}"),
                                     ),
                                   ],
                                 ),
@@ -79,11 +80,11 @@ class FilmDetailsView extends StatelessWidget {
                                   color: Theme.of(context).colorScheme.secondary,
                                   thickness: 2,
                                 ),
-                                DetailsDataRow(title: "Tytuł:", content: film.name),
+                                DetailsDataRow(title: "${t.filmDetails.filmTitle}:", content: film.name),
                                 if (film.genres.isNotEmpty) const Divider(),
                                 if (film.genres.isNotEmpty)
                                   DetailsDataRow(
-                                    title: "Gatunek:",
+                                    title: "${t.filmDetails.filmGenre}:",
                                     widget: Wrap(
                                       children: [
                                         for (int i = 0; i < film.genres.length; i++)
@@ -94,18 +95,18 @@ class FilmDetailsView extends StatelessWidget {
                                   ),
                                 if (film.details!.cast.isNotEmpty) const Divider(),
                                 if (film.details!.cast.isNotEmpty)
-                                  DetailsDataRow(title: "Obsada:", content: film.details!.cast),
+                                  DetailsDataRow(title: "${t.filmDetails.cast}:", content: film.details!.cast),
                                 if (film.details!.director.isNotEmpty) const Divider(),
                                 if (film.details!.director.isNotEmpty)
                                   DetailsDataRow(
-                                      title: "Reżyser:", content: film.details!.director),
+                                      title: "${t.filmDetails.director}:", content: film.details!.director),
                                 if (film.details!.production.isNotEmpty) const Divider(),
                                 if (film.details!.production.isNotEmpty)
                                   DetailsDataRow(
-                                      title: "Produkcja:", content: film.details!.production),
+                                      title: "${t.filmDetails.production}:", content: film.details!.production),
                                 const Divider(),
                                 DetailsDataRow(
-                                  title: "Ocena:",
+                                  title: "${t.filmDetails.score}:",
                                   widget: BlocBuilder<FilmScoresCubit, FilmScoresState>(
                                     builder: (context, state) {
                                       return Wrap(
@@ -119,7 +120,7 @@ class FilmDetailsView extends StatelessWidget {
                                           ),
                                           film.filmWebScore != null
                                               ? Text(
-                                                  film.filmWebScore ?? 'Brak danych',
+                                                  film.filmWebScore ?? t.filmDetails.scoreNoData,
                                                 )
                                               : const Padding(
                                                   padding: EdgeInsets.symmetric(
@@ -161,7 +162,7 @@ class FilmDetailsView extends StatelessWidget {
               } else if (state is FilmDetailsError) {
                 return ErrorColumn(
                   errorMessage: state.message,
-                  buttonMessage: 'Odśwież',
+                  buttonMessage: t.refresh,
                   buttonOnPressed: () {
                     BlocProvider.of<FilmDetailsCubit>(context).getFilmDetails(film);
                   },

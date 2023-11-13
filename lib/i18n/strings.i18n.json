@@ -7,5 +7,17 @@
         "adjustFilters": "Adjust filters",
         "noFilmsToDisplay": "No films to display",
         "pickCinemas": "Pick cinemas"
+    },
+    "filmDetails": {
+        "premiere": "Premiere",
+        "filmLength": "Film length",
+        "filmLengthValue": "$val min",
+        "filmTitle": "Title",
+        "filmGenre": "Genre",
+        "cast": "Cast",
+        "director": "Director",
+        "production": "Production",
+        "score": "Score",
+        "scoreNoData": "No data"
     }
   }

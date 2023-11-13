@@ -4,9 +4,9 @@
 /// To regenerate, run: `dart run slang`
 ///
 /// Locales: 2
-/// Strings: 14 (7 per locale)
+/// Strings: 34 (17 per locale)
 ///
-/// Built on 2023-11-13 at 20:54 UTC
+/// Built on 2023-11-13 at 23:36 UTC
 
 // coverage:ignore-file
 // ignore_for_file: type=lint
@@ -153,6 +153,7 @@ class _StringsEn implements BaseTranslations<AppLocale, _StringsEn> {
 	String get appName => 'Cinema City Repertoire';
 	String get refresh => 'Refresh';
 	late final _StringsRepertoireEn repertoire = _StringsRepertoireEn._(_root);
+	late final _StringsFilmDetailsEn filmDetails = _StringsFilmDetailsEn._(_root);
 }
 
 // Path: repertoire
@@ -167,6 +168,25 @@ class _StringsRepertoireEn {
 	String get adjustFilters => 'Adjust filters';
 	String get noFilmsToDisplay => 'No films to display';
 	String get pickCinemas => 'Pick cinemas';
+}
+
+// Path: filmDetails
+class _StringsFilmDetailsEn {
+	_StringsFilmDetailsEn._(this._root);
+
+	final _StringsEn _root; // ignore: unused_field
+
+	// Translations
+	String get premiere => 'Premiere';
+	String get filmLength => 'Film length';
+	String filmLengthValue({required Object val}) => '${val} min';
+	String get filmTitle => 'Title';
+	String get filmGenre => 'Genre';
+	String get cast => 'Cast';
+	String get director => 'Director';
+	String get production => 'Production';
+	String get score => 'Score';
+	String get scoreNoData => 'No data';
 }
 
 // Path: <root>
@@ -197,6 +217,7 @@ class _StringsPl implements _StringsEn {
 	@override String get appName => 'Cinema City Repertuar';
 	@override String get refresh => 'Odswież';
 	@override late final _StringsRepertoirePl repertoire = _StringsRepertoirePl._(_root);
+	@override late final _StringsFilmDetailsPl filmDetails = _StringsFilmDetailsPl._(_root);
 }
 
 // Path: repertoire
@@ -213,6 +234,25 @@ class _StringsRepertoirePl implements _StringsRepertoireEn {
 	@override String get pickCinemas => 'Wybierz kina';
 }
 
+// Path: filmDetails
+class _StringsFilmDetailsPl implements _StringsFilmDetailsEn {
+	_StringsFilmDetailsPl._(this._root);
+
+	@override final _StringsPl _root; // ignore: unused_field
+
+	// Translations
+	@override String get premiere => 'Premiera';
+	@override String get filmLength => 'Czas trwania';
+	@override String filmLengthValue({required Object val}) => '${val} min';
+	@override String get filmTitle => 'Tytuł';
+	@override String get filmGenre => 'Gatunek';
+	@override String get cast => 'Obsada';
+	@override String get director => 'Reżyser';
+	@override String get production => 'Produkcja';
+	@override String get score => 'Ocena';
+	@override String get scoreNoData => 'Brak danych';
+}
+
 /// Flat map(s) containing all translations.
 /// Only for edge cases! For simple maps, use the map function of this library.
 
@@ -226,6 +266,16 @@ extension on _StringsEn {
 			case 'repertoire.adjustFilters': return 'Adjust filters';
 			case 'repertoire.noFilmsToDisplay': return 'No films to display';
 			case 'repertoire.pickCinemas': return 'Pick cinemas';
+			case 'filmDetails.premiere': return 'Premiere';
+			case 'filmDetails.filmLength': return 'Film length';
+			case 'filmDetails.filmLengthValue': return ({required Object val}) => '${val} min';
+			case 'filmDetails.filmTitle': return 'Title';
+			case 'filmDetails.filmGenre': return 'Genre';
+			case 'filmDetails.cast': return 'Cast';
+			case 'filmDetails.director': return 'Director';
+			case 'filmDetails.production': return 'Production';
+			case 'filmDetails.score': return 'Score';
+			case 'filmDetails.scoreNoData': return 'No data';
 			default: return null;
 		}
 	}
@@ -241,6 +291,16 @@ extension on _StringsPl {
 			case 'repertoire.adjustFilters': return 'Dostosuj filtry';
 			case 'repertoire.noFilmsToDisplay': return 'Brak filmów do wyświetlenia';
 			case 'repertoire.pickCinemas': return 'Wybierz kina';
+			case 'filmDetails.premiere': return 'Premiera';
+			case 'filmDetails.filmLength': return 'Czas trwania';
+			case 'filmDetails.filmLengthValue': return ({required Object val}) => '${val} min';
+			case 'filmDetails.filmTitle': return 'Tytuł';
+			case 'filmDetails.filmGenre': return 'Gatunek';
+			case 'filmDetails.cast': return 'Obsada';
+			case 'filmDetails.director': return 'Reżyser';
+			case 'filmDetails.production': return 'Produkcja';
+			case 'filmDetails.score': return 'Ocena';
+			case 'filmDetails.scoreNoData': return 'Brak danych';
 			default: return null;
 		}
 	}
