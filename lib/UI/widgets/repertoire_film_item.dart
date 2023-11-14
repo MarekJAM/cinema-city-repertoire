@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../data/models/models.dart';
 import '../../bloc/blocs.dart';
+import '../../i18n/strings.g.dart';
 import '../../utils/date_helper.dart';
 import '../pages/film_details_page.dart';
 import 'widgets.dart';
@@ -107,7 +108,7 @@ class RepertoireFilmItemWidget extends StatelessWidget {
                             left: 3,
                           ),
                           child: Text(
-                            '${data.film.length} min',
+                            t.filmDetails.filmLengthValue(val: '${data.film.length}'),
                             style: const TextStyle(fontSize: 10),
                           ),
                         ),

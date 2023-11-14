@@ -1,6 +1,14 @@
 {
     "appName": "Cinema City Repertuar",
     "refresh": "Odswież",
+    "back": "Powrót",
+    "apply": "Zastosuj",
+    "reset": "Reset",
+    "confirm": "Zatwiedź",
+    "save": "Zapisz",
+    "display": "Wyświetl",
+    "buyTicket": "Kup bilet przez stronę",
+    "scheduleReminder": "Ustaw przypomnienie",
     "repertoire": {
         "noFilmsToDisplayPickAnotherDate": "Brak filmów do wyświetlenia. Wybierz inną datę lub dostosuj filtry.",
         "pickDifferentDate": "Wybierz inną datę",
@@ -18,6 +26,23 @@
         "director": "Reżyser",
         "production": "Produkcja",
         "score": "Ocena",
-        "scoreNoData": "Brak danych"
+        "scoreNoData": "Brak danych",
+        "seeTrailer": "Zobacz zwiastun"
+    },
+    "filters": {
+        "name": "Filtry",
+        "genre": "Gatunek",
+        "typeOfShow": "Rodzaj seansu",
+        "noScore": "Bez oceny",
+        "minimalScore": "Minimalna ocena"
+    },
+    "cinemas": {
+        "name": "Kina",
+        "savedAsFavorite": "Zapisano kina jako ulubione"
+    },
+    "reminders": {
+        "filmReminder": "Przypomnienie o seansie - $time",
+        "reminderScheduled": "Zaplanowano przypomnienie",
+        "selectReminderTime": "Wybierz czas przypomnienia"
     }
   }

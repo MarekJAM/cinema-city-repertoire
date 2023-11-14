@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../data/models/filters/score_filter.dart';
+import '../../../i18n/strings.g.dart';
 
 class MinimalScoreSlider extends StatefulWidget {
   final ScoreFilter? scoreFilter;
@@ -27,7 +28,7 @@ class _MinimalScoreSliderState extends State<MinimalScoreSlider> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10),
                 child: Text(
-                  'Minimalna ocena: ${widget.scoreFilter!.score!.toStringAsFixed(1)}',
+                  '${t.filters.minimalScore}: ${widget.scoreFilter!.score!.toStringAsFixed(1)}',
                   style: TextStyle(
                     color: Theme.of(context).textTheme.bodyLarge!.color,
                     fontSize: 16,
@@ -38,7 +39,7 @@ class _MinimalScoreSliderState extends State<MinimalScoreSlider> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    'Bez oceny',
+                    t.filters.noScore,
                     style: TextStyle(
                       color: Theme.of(context).textTheme.bodyLarge!.color,
                       fontSize: 16,

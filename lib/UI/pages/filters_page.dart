@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../data/models/models.dart';
 import '../../bloc/blocs.dart';
+import '../../i18n/strings.g.dart';
 import '../widgets/filters/filter_widgets.dart';
 
 class FiltersPage extends StatelessWidget {
@@ -75,7 +76,7 @@ class _FiltersViewState extends State<FiltersView> {
                     height: 10,
                   ),
                   FilterMultiSelectDialog(
-                    title: "Gatunek",
+                    title: t.filters.genre,
                     values: _allGenres,
                     pickedValues: _pickedGenres,
                   ),
@@ -83,7 +84,7 @@ class _FiltersViewState extends State<FiltersView> {
                     height: 10,
                   ),
                   FilterMultiSelectDialog(
-                    title: "Rodzaj seansu",
+                    title: t.filters.typeOfShow,
                     values: allEventTypes,
                     pickedValues: _pickedEventTypes,
                   ),
@@ -95,7 +96,7 @@ class _FiltersViewState extends State<FiltersView> {
                     children: [
                       TextButton(
                         onPressed: () => Navigator.of(context).pop(),
-                        child: const Text('Powrót'),
+                        child: Text(t.back),
                       ),
                       ElevatedButton(
                         onPressed: () {
@@ -112,7 +113,7 @@ class _FiltersViewState extends State<FiltersView> {
                           );
                           Navigator.of(context).pop();
                         },
-                        child: const Text('Zastosuj'),
+                        child: Text(t.apply),
                       ),
                     ],
                   )

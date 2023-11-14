@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../bloc/blocs.dart';
+import '../../i18n/strings.g.dart';
 import '../../utils/date_helper.dart';
 import '../pages/filters_page.dart';
 import 'date_selector.dart';
@@ -73,10 +74,10 @@ class _RepertoireAppBarState extends State<RepertoireAppBar> {
                     PopupMenuItem<String>(
                       enabled: state.status.isSuccess,
                       onTap: () => Scaffold.of(context).openEndDrawer(),
-                      child: const Text("Kina"),
+                      child: Text(t.cinemas.name),
                     ),
                     PopupMenuItem<String>(
-                      child: const Text("Filtry"),
+                      child: Text(t.filters.name),
                       onTap: () async {
                         await Future.delayed(const Duration(microseconds: 3));
                         if (!mounted) return;

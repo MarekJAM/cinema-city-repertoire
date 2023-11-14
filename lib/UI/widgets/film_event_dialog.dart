@@ -5,6 +5,7 @@ import 'package:timezone/timezone.dart' as tz;
 import 'package:url_launcher/url_launcher_string.dart';
 
 import '../../data/models/models.dart';
+import '../../i18n/strings.g.dart';
 import '../../injection.dart';
 import '../../utils/date_helper.dart';
 import '../../utils/time_zone.dart';
@@ -40,20 +41,20 @@ class _FilmEventDialogState extends State<FilmEventDialog> {
     await di<FlutterLocalNotificationsPlugin>().zonedSchedule(
       int.tryParse(event.id!) ?? 0,
       title,
-      'Przypomnienie o seansie - ${event.dateTime.hour}:${event.dateTime.minute == 0 ? "00" : event.dateTime.minute}',
+      t.reminders.filmReminder(time: '${event.dateTime.hour}:${event.dateTime.minute == 0 ? "00" : event.dateTime.minute}'),
       tzDateTime,
-      const NotificationDetails(
+      NotificationDetails(
         android: AndroidNotificationDetails(
           'channelId',
-          'Cinema City Repertuar',
-          channelDescription: 'Cinema City Repertuar Powiadomienie',
+          t.appName,
+          channelDescription: 'Cinema City Repertuar Reminder',
         ),
       ),
       androidScheduleMode: AndroidScheduleMode.exact,
       uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
     );
     if (!mounted) return;
-    ToastHelper.show(context, "Zaplanowano przypomnienie.", Colors.green);
+    ToastHelper.show(context, t.reminders.reminderScheduled, Colors.green);
   }
 
   @override
@@ -104,8 +105,8 @@ class _FilmEventDialogState extends State<FilmEventDialog> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 ElevatedButton(
-                  child: const Text(
-                    "Kup bilet przez stronę",
+                  child: Text(
+                    t.buyTicket,
                   ),
                   onPressed: () {
                     _launchURL(widget.item.bookingLink);
@@ -117,8 +118,8 @@ class _FilmEventDialogState extends State<FilmEventDialog> {
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all(Colors.grey),
                       ),
-                      child: const Text(
-                        "Ustaw przypomnienie",
+                      child: Text(
+                        t.scheduleReminder,
                       ),
                       onPressed: () async {
                         final eventDateTime = widget.item.dateTime;
@@ -126,7 +127,7 @@ class _FilmEventDialogState extends State<FilmEventDialog> {
                         final pickedTime = await showTimePicker(
                           context: context,
                           initialEntryMode: TimePickerEntryMode.input,
-                          helpText: "Wybierz godzinę przypomnienia",
+                          helpText: t.reminders.selectReminderTime,
                           initialTime: TimeOfDay.fromDateTime(
                             widget.item.dateTime.subtract(
                               const Duration(minutes: 30),
@@ -157,7 +158,7 @@ class _FilmEventDialogState extends State<FilmEventDialog> {
                             );
                           } else {
                             if (!mounted) return;
-                            ToastHelper.show(context, 'Ustawiono przypomnienie', Colors.green);
+                            ToastHelper.show(context, t.reminders.reminderScheduled, Colors.green);
                           }
                         }
                       },

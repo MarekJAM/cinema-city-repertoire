@@ -1,6 +1,14 @@
 {
     "appName": "Cinema City Repertoire",
     "refresh": "Refresh",
+    "back": "Back",
+    "apply": "Apply",
+    "reset": "Reset",
+    "confirm": "Confirm",
+    "save": "Save",
+    "display": "Display",
+    "buyTicket": "Buy ticket on website",
+    "scheduleReminder": "Schedule reminder",
     "repertoire": {
         "noFilmsToDisplayPickAnotherDate": "No films to display. Pick another date or adjust filters.",
         "pickDifferentDate": "Pick a different date",
@@ -18,6 +26,23 @@
         "director": "Director",
         "production": "Production",
         "score": "Score",
-        "scoreNoData": "No data"
+        "scoreNoData": "No data",
+        "seeTrailer": "Watch trailer"
+    },
+    "filters": {
+        "name": "Filters",
+        "genre": "Genre",
+        "typeOfShow": "Type of session",
+        "noScore": "No score",
+        "minimalScore": "Minimal score"
+    },
+    "cinemas": {
+        "name": "Cinemas",
+        "savedAsFavorite": "Saved as favorite"
+    },
+    "reminders": {
+        "filmReminder": "Reminder - $time",
+        "reminderScheduled": "Reminder scheduled",
+        "selectReminderTime": "Select reminder time"
     }
   }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../i18n/strings.g.dart';
 import 'widgets.dart';
 
 class CinemasDrawer extends StatelessWidget {
@@ -24,9 +25,9 @@ class CinemasDrawer extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: Theme.of(context).colorScheme.secondary,
                 ),
-                child: const Text(
-                  'Kina',
-                  style: TextStyle(
+                child: Text(
+                  t.cinemas.name,
+                  style: const TextStyle(
                     fontSize: 20,
                   ),
                 ),

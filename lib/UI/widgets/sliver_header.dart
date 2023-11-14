@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
+import '../../i18n/strings.g.dart';
+
 class SliverHeader extends SliverPersistentHeaderDelegate {
   final String imageUrl;
   final String? videoUrl;
@@ -89,7 +91,7 @@ class SliverHeader extends SliverPersistentHeaderDelegate {
               style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all(Theme.of(context).colorScheme.secondary),
               ),
-              child: const Text('Zobacz zwiastun'),
+              child: Text(t.filmDetails.seeTrailer),
             ),
           )
       ],

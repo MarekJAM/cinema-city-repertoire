@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../i18n/strings.g.dart';
 import 'filter_widgets.dart';
 
 class FilterDialogColumn extends StatefulWidget {
@@ -85,7 +86,7 @@ class _FilterDialogColumnState extends State<FilterDialogColumn> {
                     },
                   );
                 },
-                child: const Text('Reset'),
+                child: Text(t.reset),
               ),
               const SizedBox(
                 width: 5,
@@ -97,7 +98,7 @@ class _FilterDialogColumnState extends State<FilterDialogColumn> {
                     ..addAll(tempPickedValues);
                   Navigator.of(context).pop();
                 },
-                child: const Text('Zatwierdź'),
+                child: Text(t.confirm),
               ),
             ],
           )

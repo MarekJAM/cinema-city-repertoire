@@ -4,9 +4,9 @@
 /// To regenerate, run: `dart run slang`
 ///
 /// Locales: 2
-/// Strings: 34 (17 per locale)
+/// Strings: 72 (36 per locale)
 ///
-/// Built on 2023-11-13 at 23:36 UTC
+/// Built on 2023-11-14 at 22:13 UTC
 
 // coverage:ignore-file
 // ignore_for_file: type=lint
@@ -152,8 +152,19 @@ class _StringsEn implements BaseTranslations<AppLocale, _StringsEn> {
 	// Translations
 	String get appName => 'Cinema City Repertoire';
 	String get refresh => 'Refresh';
+	String get back => 'Back';
+	String get apply => 'Apply';
+	String get reset => 'Reset';
+	String get confirm => 'Confirm';
+	String get save => 'Save';
+	String get display => 'Display';
+	String get buyTicket => 'Buy ticket on website';
+	String get scheduleReminder => 'Schedule reminder';
 	late final _StringsRepertoireEn repertoire = _StringsRepertoireEn._(_root);
 	late final _StringsFilmDetailsEn filmDetails = _StringsFilmDetailsEn._(_root);
+	late final _StringsFiltersEn filters = _StringsFiltersEn._(_root);
+	late final _StringsCinemasEn cinemas = _StringsCinemasEn._(_root);
+	late final _StringsRemindersEn reminders = _StringsRemindersEn._(_root);
 }
 
 // Path: repertoire
@@ -187,6 +198,44 @@ class _StringsFilmDetailsEn {
 	String get production => 'Production';
 	String get score => 'Score';
 	String get scoreNoData => 'No data';
+	String get seeTrailer => 'Watch trailer';
+}
+
+// Path: filters
+class _StringsFiltersEn {
+	_StringsFiltersEn._(this._root);
+
+	final _StringsEn _root; // ignore: unused_field
+
+	// Translations
+	String get name => 'Filters';
+	String get genre => 'Genre';
+	String get typeOfShow => 'Type of session';
+	String get noScore => 'No score';
+	String get minimalScore => 'Minimal score';
+}
+
+// Path: cinemas
+class _StringsCinemasEn {
+	_StringsCinemasEn._(this._root);
+
+	final _StringsEn _root; // ignore: unused_field
+
+	// Translations
+	String get name => 'Cinemas';
+	String get savedAsFavorite => 'Saved as favorite';
+}
+
+// Path: reminders
+class _StringsRemindersEn {
+	_StringsRemindersEn._(this._root);
+
+	final _StringsEn _root; // ignore: unused_field
+
+	// Translations
+	String filmReminder({required Object time}) => 'Reminder - ${time}';
+	String get reminderScheduled => 'Reminder scheduled';
+	String get selectReminderTime => 'Select reminder time';
 }
 
 // Path: <root>
@@ -216,8 +265,19 @@ class _StringsPl implements _StringsEn {
 	// Translations
 	@override String get appName => 'Cinema City Repertuar';
 	@override String get refresh => 'Odswież';
+	@override String get back => 'Powrót';
+	@override String get apply => 'Zastosuj';
+	@override String get reset => 'Reset';
+	@override String get confirm => 'Zatwiedź';
+	@override String get save => 'Zapisz';
+	@override String get display => 'Wyświetl';
+	@override String get buyTicket => 'Kup bilet przez stronę';
+	@override String get scheduleReminder => 'Ustaw przypomnienie';
 	@override late final _StringsRepertoirePl repertoire = _StringsRepertoirePl._(_root);
 	@override late final _StringsFilmDetailsPl filmDetails = _StringsFilmDetailsPl._(_root);
+	@override late final _StringsFiltersPl filters = _StringsFiltersPl._(_root);
+	@override late final _StringsCinemasPl cinemas = _StringsCinemasPl._(_root);
+	@override late final _StringsRemindersPl reminders = _StringsRemindersPl._(_root);
 }
 
 // Path: repertoire
@@ -251,6 +311,44 @@ class _StringsFilmDetailsPl implements _StringsFilmDetailsEn {
 	@override String get production => 'Produkcja';
 	@override String get score => 'Ocena';
 	@override String get scoreNoData => 'Brak danych';
+	@override String get seeTrailer => 'Zobacz zwiastun';
+}
+
+// Path: filters
+class _StringsFiltersPl implements _StringsFiltersEn {
+	_StringsFiltersPl._(this._root);
+
+	@override final _StringsPl _root; // ignore: unused_field
+
+	// Translations
+	@override String get name => 'Filtry';
+	@override String get genre => 'Gatunek';
+	@override String get typeOfShow => 'Rodzaj seansu';
+	@override String get noScore => 'Bez oceny';
+	@override String get minimalScore => 'Minimalna ocena';
+}
+
+// Path: cinemas
+class _StringsCinemasPl implements _StringsCinemasEn {
+	_StringsCinemasPl._(this._root);
+
+	@override final _StringsPl _root; // ignore: unused_field
+
+	// Translations
+	@override String get name => 'Kina';
+	@override String get savedAsFavorite => 'Zapisano kina jako ulubione';
+}
+
+// Path: reminders
+class _StringsRemindersPl implements _StringsRemindersEn {
+	_StringsRemindersPl._(this._root);
+
+	@override final _StringsPl _root; // ignore: unused_field
+
+	// Translations
+	@override String filmReminder({required Object time}) => 'Przypomnienie o seansie - ${time}';
+	@override String get reminderScheduled => 'Zaplanowano przypomnienie';
+	@override String get selectReminderTime => 'Wybierz czas przypomnienia';
 }
 
 /// Flat map(s) containing all translations.
@@ -261,6 +359,14 @@ extension on _StringsEn {
 		switch (path) {
 			case 'appName': return 'Cinema City Repertoire';
 			case 'refresh': return 'Refresh';
+			case 'back': return 'Back';
+			case 'apply': return 'Apply';
+			case 'reset': return 'Reset';
+			case 'confirm': return 'Confirm';
+			case 'save': return 'Save';
+			case 'display': return 'Display';
+			case 'buyTicket': return 'Buy ticket on website';
+			case 'scheduleReminder': return 'Schedule reminder';
 			case 'repertoire.noFilmsToDisplayPickAnotherDate': return 'No films to display. Pick another date or adjust filters.';
 			case 'repertoire.pickDifferentDate': return 'Pick a different date';
 			case 'repertoire.adjustFilters': return 'Adjust filters';
@@ -276,6 +382,17 @@ extension on _StringsEn {
 			case 'filmDetails.production': return 'Production';
 			case 'filmDetails.score': return 'Score';
 			case 'filmDetails.scoreNoData': return 'No data';
+			case 'filmDetails.seeTrailer': return 'Watch trailer';
+			case 'filters.name': return 'Filters';
+			case 'filters.genre': return 'Genre';
+			case 'filters.typeOfShow': return 'Type of session';
+			case 'filters.noScore': return 'No score';
+			case 'filters.minimalScore': return 'Minimal score';
+			case 'cinemas.name': return 'Cinemas';
+			case 'cinemas.savedAsFavorite': return 'Saved as favorite';
+			case 'reminders.filmReminder': return ({required Object time}) => 'Reminder - ${time}';
+			case 'reminders.reminderScheduled': return 'Reminder scheduled';
+			case 'reminders.selectReminderTime': return 'Select reminder time';
 			default: return null;
 		}
 	}
@@ -286,6 +403,14 @@ extension on _StringsPl {
 		switch (path) {
 			case 'appName': return 'Cinema City Repertuar';
 			case 'refresh': return 'Odswież';
+			case 'back': return 'Powrót';
+			case 'apply': return 'Zastosuj';
+			case 'reset': return 'Reset';
+			case 'confirm': return 'Zatwiedź';
+			case 'save': return 'Zapisz';
+			case 'display': return 'Wyświetl';
+			case 'buyTicket': return 'Kup bilet przez stronę';
+			case 'scheduleReminder': return 'Ustaw przypomnienie';
 			case 'repertoire.noFilmsToDisplayPickAnotherDate': return 'Brak filmów do wyświetlenia. Wybierz inną datę lub dostosuj filtry.';
 			case 'repertoire.pickDifferentDate': return 'Wybierz inną datę';
 			case 'repertoire.adjustFilters': return 'Dostosuj filtry';
@@ -301,6 +426,17 @@ extension on _StringsPl {
 			case 'filmDetails.production': return 'Produkcja';
 			case 'filmDetails.score': return 'Ocena';
 			case 'filmDetails.scoreNoData': return 'Brak danych';
+			case 'filmDetails.seeTrailer': return 'Zobacz zwiastun';
+			case 'filters.name': return 'Filtry';
+			case 'filters.genre': return 'Gatunek';
+			case 'filters.typeOfShow': return 'Rodzaj seansu';
+			case 'filters.noScore': return 'Bez oceny';
+			case 'filters.minimalScore': return 'Minimalna ocena';
+			case 'cinemas.name': return 'Kina';
+			case 'cinemas.savedAsFavorite': return 'Zapisano kina jako ulubione';
+			case 'reminders.filmReminder': return ({required Object time}) => 'Przypomnienie o seansie - ${time}';
+			case 'reminders.reminderScheduled': return 'Zaplanowano przypomnienie';
+			case 'reminders.selectReminderTime': return 'Wybierz czas przypomnienia';
 			default: return null;
 		}
 	}

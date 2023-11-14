@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../data/models/models.dart';
 import '../../bloc/blocs.dart';
+import '../../i18n/strings.g.dart';
 import '../../utils/toast_helper.dart';
 
 class CinemasList extends StatefulWidget {
@@ -23,7 +24,7 @@ class _CinemasListState extends State<CinemasList> {
       listener: (context, state) {
         ToastHelper.show(
           context,
-          'Zapisano kina jako ulubione.',
+          t.cinemas.savedAsFavorite,
           Colors.green,
         );
       },
@@ -68,13 +69,13 @@ class _CinemasListState extends State<CinemasList> {
                               );
                           Navigator.of(context).pop();
                         },
-                        child: const Text('Wyświetl'),
+                        child: Text(t.display),
                       ),
                       ElevatedButton(
                         onPressed: () async {
                           context.read<CinemasCubit>().saveFavoriteCinemas(pickedCinemaIds);
                         },
-                        child: const Text('Zapisz'),
+                        child: Text(t.save),
                       ),
                     ],
                   ),
