@@ -53,8 +53,8 @@ class _RepertoireAppBarState extends State<RepertoireAppBar> {
               ),
               onPressed: () async {
                 final date = await DateSelector.selectDate(context);
-                if (!mounted || date == null) return;
-                context.read<DatesCubit>().selectedDateChanged(date);
+                if (date == null) return;
+                if (mounted) context.read<DatesCubit>().selectedDateChanged(date);
               },
             ),
           ),

@@ -92,8 +92,8 @@ class _RepertoireViewState extends State<RepertoireView> {
                                               ElevatedButton(
                                                 onPressed: () async {
                                                   final date = await DateSelector.selectDate(context);
-                                                  if (!mounted || date == null) return;
-                                                  context.read<DatesCubit>().selectedDateChanged(date);
+                                                  if (date == null) return;
+                                                  if (mounted) context.read<DatesCubit>().selectedDateChanged(date);
                                                 },
                                                 child: Text(
                                                   t.repertoire.pickDifferentDate,
@@ -116,8 +116,8 @@ class _RepertoireViewState extends State<RepertoireView> {
                                             buttonMessage: t.repertoire.pickDifferentDate,
                                             buttonOnPressed: () async {
                                               final date = await DateSelector.selectDate(context);
-                                              if (!mounted || date == null) return;
-                                              context.read<DatesCubit>().selectedDateChanged(date);
+                                              if (date == null) return;
+                                              if (mounted) context.read<DatesCubit>().selectedDateChanged(date);
                                             },
                                           )
                                     : ErrorColumn(
