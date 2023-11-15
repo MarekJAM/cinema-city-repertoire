@@ -29,7 +29,7 @@ class RepertoireFilmItemWidget extends StatelessWidget {
     return Card(
       color: Theme.of(context).colorScheme.background,
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
@@ -61,16 +61,15 @@ class RepertoireFilmItemWidget extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(
-                    height: 2,
+                    height: 4,
                   ),
                   FilmWebScoreWrap(data: data),
                 ],
               ),
             ),
             Expanded(
-              flex: 8,
               child: Padding(
-                padding: const EdgeInsets.only(left: 5),
+                padding: const EdgeInsets.only(left: 8),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
@@ -81,8 +80,8 @@ class RepertoireFilmItemWidget extends StatelessWidget {
                       ),
                       softWrap: true,
                     ),
-                    const Padding(
-                      padding: EdgeInsets.symmetric(vertical: 1),
+                    const SizedBox(
+                      height: 2,
                     ),
                     Wrap(
                       crossAxisAlignment: WrapCrossAlignment.center,
@@ -105,7 +104,7 @@ class RepertoireFilmItemWidget extends StatelessWidget {
                         ),
                         Padding(
                           padding: const EdgeInsets.only(
-                            left: 3,
+                            left: 4,
                           ),
                           child: Text(
                             t.filmDetails.filmLengthValue(val: '${data.film.length}'),
@@ -115,7 +114,7 @@ class RepertoireFilmItemWidget extends StatelessWidget {
                         for (var item in data.film.genres)
                           Padding(
                             padding: const EdgeInsets.symmetric(
-                              horizontal: 3,
+                              horizontal: 4,
                             ),
                             child: Container(
                               padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 1),
@@ -135,11 +134,8 @@ class RepertoireFilmItemWidget extends StatelessWidget {
                           ),
                       ],
                     ),
-                    const Padding(
-                      padding: EdgeInsets.symmetric(vertical: 2),
-                    ),
-                    const Padding(
-                      padding: EdgeInsets.symmetric(vertical: 2),
+                    const SizedBox(
+                      height: 4,
                     ),
                     for (var cinemaItem in data.repertoireFilmCinemaItems)
                       RepertoireFilmItemRow(
@@ -228,8 +224,8 @@ class RepertoireFilmItemRow extends StatelessWidget {
               Wrap(
                 direction: Axis.horizontal,
                 alignment: WrapAlignment.start,
-                spacing: 3,
-                runSpacing: 3,
+                spacing: 4,
+                runSpacing: 4,
                 children: <Widget>[
                   for (var item in events)
                     GestureDetector(
@@ -273,7 +269,7 @@ class RepertoireFilmItemRow extends StatelessWidget {
                 ],
               ),
               const Padding(
-                padding: EdgeInsets.only(bottom: 2),
+                padding: EdgeInsets.only(bottom: 4),
               ),
             ],
           )
