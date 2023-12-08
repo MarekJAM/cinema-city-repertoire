@@ -88,9 +88,6 @@ class SliverHeader extends SliverPersistentHeaderDelegate {
                   throw 'Could not launch $videoUrl';
                 }
               },
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(Theme.of(context).colorScheme.secondary),
-              ),
               child: Text(t.filmDetails.seeTrailer),
             ),
           )
