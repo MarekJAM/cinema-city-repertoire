@@ -44,5 +44,29 @@
         "filmReminder": "Przypomnienie o seansie - $time",
         "reminderScheduled": "Zaplanowano przypomnienie",
         "selectReminderTime": "Wybierz czas przypomnienia"
+    },
+    "genres": {
+        "action": "Akcja",
+        "adventure": "Przygodowy",
+        "animation": "Animacja",
+        "bollywood": "Bollywoood",
+        "comedy": "Komedia",
+        "crime": "Kryminalny",
+        "documentary": "Dokument",
+        "drama": "Dramat",
+        "family": "Familijny",
+        "fantasy": "Fantasy",
+        "history": "Historczny",
+        "horror": "Horror",
+        "kidsClub": "Dla dzieci",
+        "live": "Na żywo",
+        "musical": "Musical",
+        "romance": "Romantyczny",
+        "sciFi": "Sci-fi",
+        "sport": "Sport",
+        "thriller": "Thriller",
+        "war": "Wojenny",
+        "western": "Western",
+        "unspecified": "Nieokreślony"
     }
   }

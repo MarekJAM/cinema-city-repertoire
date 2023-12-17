@@ -44,5 +44,29 @@
         "filmReminder": "Reminder - $time",
         "reminderScheduled": "Reminder scheduled",
         "selectReminderTime": "Select reminder time"
+    },
+    "genres": {
+        "action": "Action",
+        "adventure": "Adventure",
+        "animation": "Animation",
+        "bollywood": "Bollywoood",
+        "comedy": "Comedy",
+        "crime": "Crime",
+        "documentary": "Documentary",
+        "drama": "Drama",
+        "family": "Family",
+        "fantasy": "Fantasy",
+        "history": "History",
+        "horror": "Horror",
+        "kidsClub": "Kids club",
+        "live": "Love",
+        "musical": "Musical",
+        "romance": "Romance",
+        "sciFi": "Sci-fi",
+        "sport": "Sport",
+        "thriller": "Thriller",
+        "war": "War",
+        "western": "Western",
+        "unspecified": "Unspecified"
     }
   }

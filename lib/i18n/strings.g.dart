@@ -4,9 +4,9 @@
 /// To regenerate, run: `dart run slang`
 ///
 /// Locales: 2
-/// Strings: 72 (36 per locale)
+/// Strings: 116 (58 per locale)
 ///
-/// Built on 2023-11-14 at 22:13 UTC
+/// Built on 2023-12-17 at 22:06 UTC
 
 // coverage:ignore-file
 // ignore_for_file: type=lint
@@ -165,6 +165,7 @@ class _StringsEn implements BaseTranslations<AppLocale, _StringsEn> {
 	late final _StringsFiltersEn filters = _StringsFiltersEn._(_root);
 	late final _StringsCinemasEn cinemas = _StringsCinemasEn._(_root);
 	late final _StringsRemindersEn reminders = _StringsRemindersEn._(_root);
+	late final _StringsGenresEn genres = _StringsGenresEn._(_root);
 }
 
 // Path: repertoire
@@ -238,6 +239,37 @@ class _StringsRemindersEn {
 	String get selectReminderTime => 'Select reminder time';
 }
 
+// Path: genres
+class _StringsGenresEn {
+	_StringsGenresEn._(this._root);
+
+	final _StringsEn _root; // ignore: unused_field
+
+	// Translations
+	String get action => 'Action';
+	String get adventure => 'Adventure';
+	String get animation => 'Animation';
+	String get bollywood => 'Bollywoood';
+	String get comedy => 'Comedy';
+	String get crime => 'Crime';
+	String get documentary => 'Documentary';
+	String get drama => 'Drama';
+	String get family => 'Family';
+	String get fantasy => 'Fantasy';
+	String get history => 'History';
+	String get horror => 'Horror';
+	String get kidsClub => 'Kids club';
+	String get live => 'Love';
+	String get musical => 'Musical';
+	String get romance => 'Romance';
+	String get sciFi => 'Sci-fi';
+	String get sport => 'Sport';
+	String get thriller => 'Thriller';
+	String get war => 'War';
+	String get western => 'Western';
+	String get unspecified => 'Unspecified';
+}
+
 // Path: <root>
 class _StringsPl implements _StringsEn {
 
@@ -278,6 +310,7 @@ class _StringsPl implements _StringsEn {
 	@override late final _StringsFiltersPl filters = _StringsFiltersPl._(_root);
 	@override late final _StringsCinemasPl cinemas = _StringsCinemasPl._(_root);
 	@override late final _StringsRemindersPl reminders = _StringsRemindersPl._(_root);
+	@override late final _StringsGenresPl genres = _StringsGenresPl._(_root);
 }
 
 // Path: repertoire
@@ -351,6 +384,37 @@ class _StringsRemindersPl implements _StringsRemindersEn {
 	@override String get selectReminderTime => 'Wybierz czas przypomnienia';
 }
 
+// Path: genres
+class _StringsGenresPl implements _StringsGenresEn {
+	_StringsGenresPl._(this._root);
+
+	@override final _StringsPl _root; // ignore: unused_field
+
+	// Translations
+	@override String get action => 'Akcja';
+	@override String get adventure => 'Przygodowy';
+	@override String get animation => 'Animacja';
+	@override String get bollywood => 'Bollywoood';
+	@override String get comedy => 'Komedia';
+	@override String get crime => 'Kryminalny';
+	@override String get documentary => 'Dokument';
+	@override String get drama => 'Dramat';
+	@override String get family => 'Familijny';
+	@override String get fantasy => 'Fantasy';
+	@override String get history => 'Historczny';
+	@override String get horror => 'Horror';
+	@override String get kidsClub => 'Dla dzieci';
+	@override String get live => 'Na żywo';
+	@override String get musical => 'Musical';
+	@override String get romance => 'Romantyczny';
+	@override String get sciFi => 'Sci-fi';
+	@override String get sport => 'Sport';
+	@override String get thriller => 'Thriller';
+	@override String get war => 'Wojenny';
+	@override String get western => 'Western';
+	@override String get unspecified => 'Nieokreślony';
+}
+
 /// Flat map(s) containing all translations.
 /// Only for edge cases! For simple maps, use the map function of this library.
 
@@ -393,6 +457,28 @@ extension on _StringsEn {
 			case 'reminders.filmReminder': return ({required Object time}) => 'Reminder - ${time}';
 			case 'reminders.reminderScheduled': return 'Reminder scheduled';
 			case 'reminders.selectReminderTime': return 'Select reminder time';
+			case 'genres.action': return 'Action';
+			case 'genres.adventure': return 'Adventure';
+			case 'genres.animation': return 'Animation';
+			case 'genres.bollywood': return 'Bollywoood';
+			case 'genres.comedy': return 'Comedy';
+			case 'genres.crime': return 'Crime';
+			case 'genres.documentary': return 'Documentary';
+			case 'genres.drama': return 'Drama';
+			case 'genres.family': return 'Family';
+			case 'genres.fantasy': return 'Fantasy';
+			case 'genres.history': return 'History';
+			case 'genres.horror': return 'Horror';
+			case 'genres.kidsClub': return 'Kids club';
+			case 'genres.live': return 'Love';
+			case 'genres.musical': return 'Musical';
+			case 'genres.romance': return 'Romance';
+			case 'genres.sciFi': return 'Sci-fi';
+			case 'genres.sport': return 'Sport';
+			case 'genres.thriller': return 'Thriller';
+			case 'genres.war': return 'War';
+			case 'genres.western': return 'Western';
+			case 'genres.unspecified': return 'Unspecified';
 			default: return null;
 		}
 	}
@@ -437,6 +523,28 @@ extension on _StringsPl {
 			case 'reminders.filmReminder': return ({required Object time}) => 'Przypomnienie o seansie - ${time}';
 			case 'reminders.reminderScheduled': return 'Zaplanowano przypomnienie';
 			case 'reminders.selectReminderTime': return 'Wybierz czas przypomnienia';
+			case 'genres.action': return 'Akcja';
+			case 'genres.adventure': return 'Przygodowy';
+			case 'genres.animation': return 'Animacja';
+			case 'genres.bollywood': return 'Bollywoood';
+			case 'genres.comedy': return 'Komedia';
+			case 'genres.crime': return 'Kryminalny';
+			case 'genres.documentary': return 'Dokument';
+			case 'genres.drama': return 'Dramat';
+			case 'genres.family': return 'Familijny';
+			case 'genres.fantasy': return 'Fantasy';
+			case 'genres.history': return 'Historczny';
+			case 'genres.horror': return 'Horror';
+			case 'genres.kidsClub': return 'Dla dzieci';
+			case 'genres.live': return 'Na żywo';
+			case 'genres.musical': return 'Musical';
+			case 'genres.romance': return 'Romantyczny';
+			case 'genres.sciFi': return 'Sci-fi';
+			case 'genres.sport': return 'Sport';
+			case 'genres.thriller': return 'Thriller';
+			case 'genres.war': return 'Wojenny';
+			case 'genres.western': return 'Western';
+			case 'genres.unspecified': return 'Nieokreślony';
 			default: return null;
 		}
 	}
