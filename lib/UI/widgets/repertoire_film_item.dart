@@ -83,8 +83,8 @@ class RepertoireFilmItemWidget extends StatelessWidget {
                     const SizedBox(
                       height: 2,
                     ),
-                    Wrap(
-                      crossAxisAlignment: WrapCrossAlignment.center,
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Container(
                           height: 20,
@@ -111,27 +111,34 @@ class RepertoireFilmItemWidget extends StatelessWidget {
                             style: const TextStyle(fontSize: 10),
                           ),
                         ),
-                        for (var item in data.film.genres)
-                          Padding(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 4,
-                            ),
-                            child: Container(
-                              padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 1),
-                              decoration: BoxDecoration(
-                                borderRadius: const BorderRadius.all(
-                                  Radius.circular(5),
+                        Expanded(
+                          child: Wrap(
+                            runSpacing: 4,
+                            children: [
+                              for (var item in data.film.genres)
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 4,
+                                  ),
+                                  child: Container(
+                                    padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 1),
+                                    decoration: BoxDecoration(
+                                      borderRadius: const BorderRadius.all(
+                                        Radius.circular(5),
+                                      ),
+                                      color: Colors.grey[700],
+                                    ),
+                                    child: Text(
+                                      item,
+                                      style: const TextStyle(
+                                        fontSize: 10,
+                                      ),
+                                    ),
+                                  ),
                                 ),
-                                color: Colors.grey[700],
-                              ),
-                              child: Text(
-                                item,
-                                style: const TextStyle(
-                                  fontSize: 10,
-                                ),
-                              ),
-                            ),
+                            ],
                           ),
+                        ),
                       ],
                     ),
                     const SizedBox(
@@ -246,9 +253,7 @@ class RepertoireFilmItemRow extends StatelessWidget {
                                 Radius.circular(5),
                               ),
                             ),
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 2
-                            ),
+                            padding: const EdgeInsets.symmetric(horizontal: 2),
                             child: Column(
                               children: [
                                 Text(DateHelper.convertDateToHHMM(item.dateTime)),
