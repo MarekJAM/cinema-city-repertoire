@@ -241,10 +241,13 @@ class RepertoireFilmItemRow extends StatelessWidget {
                         children: [
                           Container(
                             decoration: BoxDecoration(
-                              border: Border.all(color: Theme.of(context).colorScheme.secondary),
+                              border: Border.all(color: Theme.of(context).colorScheme.primary),
                               borderRadius: const BorderRadius.all(
                                 Radius.circular(5),
                               ),
+                            ),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 2
                             ),
                             child: Column(
                               children: [
