@@ -70,6 +70,9 @@ class _FilterValueButtonState extends State<FilterValueButton> with TickerProvid
         },
         child: Text(
           widget.value,
+          style: TextStyle(
+            color: Theme.of(context).colorScheme.onBackground,
+          ),
         ),
       ),
     );

@@ -8,6 +8,15 @@ import 'UI/pages/repertoire_page.dart';
 class App extends StatelessWidget {
   const App({Key? key}) : super(key: key);
 
+  final buttonBorderRadius = 10.0;
+  ButtonStyle get commonButtonStyle => ButtonStyle(
+        shape: MaterialStateProperty.all(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(buttonBorderRadius),
+          ),
+        ),
+      );
+
   @override
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations([
@@ -21,9 +30,11 @@ class App extends StatelessWidget {
       colorScheme: ColorScheme.fromSwatch(
         primarySwatch: Colors.orange,
         brightness: Brightness.dark,
-      ).copyWith(
-        background: Colors.grey[900],
+        backgroundColor: Colors.grey[900],
       ),
+      elevatedButtonTheme: ElevatedButtonThemeData(style: commonButtonStyle),
+      outlinedButtonTheme: OutlinedButtonThemeData(style: commonButtonStyle),
+      textButtonTheme: TextButtonThemeData(style: commonButtonStyle),
     );
 
     return MaterialApp(
