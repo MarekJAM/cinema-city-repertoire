@@ -34,9 +34,9 @@ class SliverHeader extends SliverPersistentHeaderDelegate {
             width: 300,
             errorBuilder: (context, exception, stackTrace) {
               return const Center(
-                child: Text(
-                  'Brak plakatu',
-                  textAlign: TextAlign.center,
+                child: Icon(
+                  Icons.image_not_supported_rounded,
+                  size: 50,
                 ),
               );
             },
