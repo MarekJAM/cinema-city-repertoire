@@ -111,7 +111,7 @@ class RepertoireFilmItemWidget extends StatelessWidget {
                             style: const TextStyle(fontSize: 10),
                           ),
                         ),
-                        for (var item in data.film.genres)
+                        for (final item in data.film.genres)
                           Padding(
                             padding: const EdgeInsets.only(right: 4),
                             child: Container(
@@ -135,7 +135,7 @@ class RepertoireFilmItemWidget extends StatelessWidget {
                     const SizedBox(
                       height: 4,
                     ),
-                    for (var cinemaItem in data.repertoireFilmCinemaItems)
+                    for (final cinemaItem in data.repertoireFilmCinemaItems)
                       RepertoireFilmItemRow(
                         film: data.film,
                         cinema: cinemaItem.cinema.displayName,

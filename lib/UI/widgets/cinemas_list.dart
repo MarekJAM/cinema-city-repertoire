@@ -7,9 +7,7 @@ import '../../i18n/strings.g.dart';
 import '../../utils/toast_helper.dart';
 
 class CinemasList extends StatefulWidget {
-  final double height;
-
-  const CinemasList(this.height, {Key? key}) : super(key: key);
+  const CinemasList({Key? key}) : super(key: key);
 
   @override
   State<CinemasList> createState() => _CinemasListState();
@@ -31,17 +29,11 @@ class _CinemasListState extends State<CinemasList> {
       buildWhen: (prev, cur) => prev.status != cur.status,
       builder: (context, state) {
         final pickedCinemaIds = [...state.pickedCinemaIds];
-        return SizedBox(
-          height: widget.height,
+        return SafeArea(
           child: Column(
+            mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              Container(
-                decoration: const BoxDecoration(
-                  border: Border(
-                    bottom: BorderSide(color: Colors.black),
-                  ),
-                ),
-                height: widget.height * 0.9,
+              Expanded(
                 child: ListView.builder(
                   padding: EdgeInsets.zero,
                   itemBuilder: (context, index) => Row(
@@ -52,33 +44,33 @@ class _CinemasListState extends State<CinemasList> {
                   itemCount: state.cinemas.length,
                 ),
               ),
-              Expanded(
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).cardColor,
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: <Widget>[
-                      ElevatedButton(
-                        onPressed: () {
-                          context.read<CinemasCubit>().pickCinemas(pickedCinemaIds);
-                          context.read<DatesCubit>().getDates(
-                                DateTime.now().add(const Duration(days: 365)),
-                                pickedCinemaIds,
-                              );
-                          Navigator.of(context).pop();
-                        },
-                        child: Text(t.display),
-                      ),
-                      ElevatedButton(
-                        onPressed: () async {
-                          context.read<CinemasCubit>().saveFavoriteCinemas(pickedCinemaIds);
-                        },
-                        child: Text(t.save),
-                      ),
-                    ],
-                  ),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 8.0),
+                child: Divider(),
+              ),
+              SizedBox(
+                height: 50,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    TextButton(
+                      onPressed: () {
+                        context.read<CinemasCubit>().pickCinemas(pickedCinemaIds);
+                        context.read<DatesCubit>().getDates(
+                              DateTime.now().add(const Duration(days: 365)),
+                              pickedCinemaIds,
+                            );
+                        Navigator.of(context).pop();
+                      },
+                      child: Text(t.display),
+                    ),
+                    ElevatedButton(
+                      onPressed: () async {
+                        context.read<CinemasCubit>().saveFavoriteCinemas(pickedCinemaIds);
+                      },
+                      child: Text(t.save),
+                    ),
+                  ],
                 ),
               )
             ],
