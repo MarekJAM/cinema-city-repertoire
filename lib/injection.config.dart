@@ -57,19 +57,26 @@ extension GetItInjectableX on _i1.GetIt {
       instanceName: 'filtersBox',
       preResolve: true,
     );
-    gh.factory<_i4.Dio>(() => registerModule.dio);
-    gh.lazySingleton<_i5.FilmApiClient>(
-        () => _i5.FilmApiClient(client: gh<_i4.Dio>()));
-    gh.lazySingleton<_i6.FilmScoresApiClient>(
-        () => _i6.FilmScoresApiClient(client: gh<_i4.Dio>()));
+    gh.factory<_i4.Dio>(
+      () => registerModule.dio,
+      instanceName: 'dioCinemaCity',
+    );
+    gh.factory<_i4.Dio>(
+      () => registerModule.dio2,
+      instanceName: 'dioFilmweb',
+    );
+    gh.lazySingleton<_i5.FilmApiClient>(() =>
+        _i5.FilmApiClient(client: gh<_i4.Dio>(instanceName: 'dioCinemaCity')));
+    gh.lazySingleton<_i6.FilmScoresApiClient>(() => _i6.FilmScoresApiClient(
+        client: gh<_i4.Dio>(instanceName: 'dioFilmweb')));
     gh.lazySingleton<_i7.FilmScoresRepository>(() => _i7.FilmScoresRepository(
         filmScoresApiClient: gh<_i8.FilmScoresApiClient>()));
     gh.factory<_i9.FiltersStorage>(() => _i10.FiltersStorageHive(
         gh<_i3.Box<dynamic>>(instanceName: 'filtersBox')));
     gh.factory<_i11.FlutterLocalNotificationsPlugin>(
         () => registerModule.localNotifications);
-    gh.lazySingleton<_i12.RepertoireApiClient>(
-        () => _i12.RepertoireApiClient(client: gh<_i4.Dio>()));
+    gh.lazySingleton<_i12.RepertoireApiClient>(() => _i12.RepertoireApiClient(
+        client: gh<_i4.Dio>(instanceName: 'dioCinemaCity')));
     gh.lazySingleton<_i13.RepertoireRepository>(() => _i13.RepertoireRepository(
           repertoireApiClient: gh<_i8.RepertoireApiClient>(),
           filmApiClient: gh<_i8.FilmApiClient>(),
@@ -78,8 +85,8 @@ extension GetItInjectableX on _i1.GetIt {
       () => registerModule.prefs,
       preResolve: true,
     );
-    gh.lazySingleton<_i15.CinemasApiClient>(
-        () => _i15.CinemasApiClient(client: gh<_i4.Dio>()));
+    gh.lazySingleton<_i15.CinemasApiClient>(() => _i15.CinemasApiClient(
+        client: gh<_i4.Dio>(instanceName: 'dioCinemaCity')));
     gh.lazySingleton<_i16.CinemasLocalStorageApi>(() =>
         _i16.CinemasLocalStorageApi(plugin: gh<_i14.SharedPreferences>()));
     gh.lazySingleton<_i17.CinemasRepository>(() => _i17.CinemasRepository(

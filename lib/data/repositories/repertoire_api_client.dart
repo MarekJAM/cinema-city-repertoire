@@ -2,17 +2,16 @@ import 'package:collection/collection.dart' show IterableExtension;
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 
-import './api_client.dart';
 import '../../data/models/models.dart';
 
 @lazySingleton
-class RepertoireApiClient extends ApiClient {
+class RepertoireApiClient {
   final _repertoireEndpoint = '/film-events/in-cinema/';
   final _datesEndpoint = '/dates/in-cinema/';
 
   final Dio client;
 
-  RepertoireApiClient({required this.client});
+  RepertoireApiClient({@Named('dioCinemaCity') required this.client});
 
   final _repertoire = Repertoire();
 
@@ -24,7 +23,7 @@ class RepertoireApiClient extends ApiClient {
     List<Response> responseList = await Future.wait(
       cinemaIds.map(
         (cinemaId) => client.get(
-          '${ApiClient.baseUrl}$_repertoireEndpoint$cinemaId/at-date/$date?attr=&lang=pl_PL',
+          '$_repertoireEndpoint$cinemaId/at-date/$date',
         ),
       ),
     );
@@ -59,7 +58,7 @@ class RepertoireApiClient extends ApiClient {
     List<Response> responseList = await Future.wait(
       cinemaIds.map(
         (cinemaId) => client.get(
-          '${ApiClient.baseUrl}$_datesEndpoint$cinemaId/until/$date?attr=&lang=pl_PL',
+          '$_datesEndpoint$cinemaId/until/$date',
         ),
       ),
     );

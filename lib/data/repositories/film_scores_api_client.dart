@@ -1,19 +1,15 @@
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 
-import './api_client.dart';
-
 @lazySingleton
-class FilmScoresApiClient extends ApiClient {
+class FilmScoresApiClient {
   final Dio client;
 
-  FilmScoresApiClient({required this.client});
-
-  static const String filmWebBaseUrl = 'https://www.filmweb.pl/api/v1';
+  FilmScoresApiClient({@Named('dioFilmweb') required this.client});
 
   Future<int> getFilmId(String filmName) async {
     var response = await client.get(
-      "$filmWebBaseUrl/live/search?query=${Uri.encodeComponent(filmName.toLowerCase())}",
+      "/live/search?query=${Uri.encodeComponent(filmName.toLowerCase())}",
     );
 
     final firstResult = response.data['searchHits'][0];
@@ -27,7 +23,7 @@ class FilmScoresApiClient extends ApiClient {
 
   Future<String> getFilmScore(int filmId) async {
     var response = await client.get(
-      '$filmWebBaseUrl/film/$filmId/rating',
+      '/film/$filmId/rating',
     );
 
     return response.data['rate'].toString().substring(0, 3);

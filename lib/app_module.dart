@@ -4,12 +4,20 @@ import 'package:hive/hive.dart';
 import 'package:injectable/injectable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-@module  
-abstract class RegisterModule {  
+@module
+abstract class RegisterModule {
   @preResolve
-  Future<SharedPreferences> get prefs async => await SharedPreferences.getInstance();  
+  Future<SharedPreferences> get prefs async => await SharedPreferences.getInstance();
 
-  Dio get dio => Dio();
+  @Named('dioCinemaCity')
+  Dio get dio => Dio(
+        BaseOptions(
+          baseUrl: 'https://www.cinema-city.pl/pl/data-api-service/v1/quickbook/10103',
+        ),
+      );
+
+  @Named('dioFilmweb')
+  Dio get dio2 => Dio(BaseOptions(baseUrl: 'https://www.filmweb.pl/api/v1'));
 
   @preResolve
   @Named('filtersBox')
