@@ -30,6 +30,7 @@ class _RepertoireAppBarState extends State<RepertoireAppBar> {
       },
       child: AppBar(
         automaticallyImplyLeading: false,
+        surfaceTintColor: Colors.transparent,
         title: RichText(
           text: TextSpan(
             children: const [
@@ -69,6 +70,7 @@ class _RepertoireAppBarState extends State<RepertoireAppBar> {
             },
             builder: (ctx, state) {
               return PopupMenuButton(
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
                 itemBuilder: (BuildContext context) {
                   return [
                     PopupMenuItem<String>(

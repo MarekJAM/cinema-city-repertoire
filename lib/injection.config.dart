@@ -57,11 +57,11 @@ extension GetItInjectableX on _i1.GetIt {
       instanceName: 'filtersBox',
       preResolve: true,
     );
-    gh.factory<_i4.Dio>(
+    gh.lazySingleton<_i4.Dio>(
       () => registerModule.dio,
       instanceName: 'dioCinemaCity',
     );
-    gh.factory<_i4.Dio>(
+    gh.lazySingleton<_i4.Dio>(
       () => registerModule.dio2,
       instanceName: 'dioFilmweb',
     );
