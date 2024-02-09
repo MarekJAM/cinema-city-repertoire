@@ -36,7 +36,7 @@ void main() {
     test('initial state is correct', () {
       final filmDetailsCubit = FilmDetailsCubit(repertoireRepository: repertoireRepository);
 
-      expect(filmDetailsCubit.state, isA<FilmDetailsInitial>());
+      expect(filmDetailsCubit.state, isA<FilmDetailsLoading>());
     });
 
     group("getFilmDetails", () {

@@ -58,4 +58,18 @@ class Film {
       videoLink: json['videoLink']
     );
   }
+
+  static Film get mock => Film(
+    id: '1',
+    name: 'Film name',
+    ageRestriction: '18',
+    genres: ['genre1', 'genre2'],
+    length: 120,
+    posterLink: 'posterLink',
+    releaseYear: '1999',
+    link: 'link',
+    filmWebScore: '8.8',
+    videoLink: 'videolinke',
+    details: FilmDetails.mock,
+  );
 }

@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../bloc/blocs.dart';
 import '../../data/models/film.dart';
 import '../../i18n/strings.g.dart';
+import '../widgets/film_details_column.dart';
 
 class FilmDetailsPage extends StatelessWidget {
   final Film film;
@@ -38,138 +39,44 @@ class FilmDetailsView extends StatelessWidget {
         child: Container(
           height: mediaQuery.size.height,
           color: Theme.of(context).primaryColor,
-          child: BlocBuilder<FilmDetailsCubit, FilmDetailsState>(
-            builder: (context, state) {
-              if (state is FilmDetailsLoaded) {
-                return CustomScrollView(
-                  slivers: [
-                    SliverPersistentHeader(
-                      delegate: SliverHeader(
-                        imageUrl: film.posterLink ?? "",
-                        videoUrl: film.videoLink,
-                        maxExtent: 450,
-                        minExtent: 0,
+          child: CustomScrollView(
+            slivers: [
+              SliverPersistentHeader(
+                delegate: SliverHeader(
+                  imageUrl: film.posterLink ?? "",
+                  videoUrl: film.videoLink,
+                  maxExtent: 450,
+                  minExtent: 0,
+                ),
+              ),
+              SliverToBoxAdapter(
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(15),
+                  child: Container(
+                    color: Colors.grey[900],
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 8, right: 8, top: 8),
+                      child: BlocBuilder<FilmDetailsCubit, FilmDetailsState>(
+                        builder: (context, state) {
+                          return switch (state) {
+                            FilmDetailsLoading() =>
+                              FilmDetailsColumn(film: Film.mock, isLoading: true),
+                            FilmDetailsLoaded() => FilmDetailsColumn(film: state.film),
+                            FilmDetailsError() => ErrorColumn(
+                                errorMessage: state.message,
+                                buttonMessage: t.refresh,
+                                buttonOnPressed: () {
+                                  BlocProvider.of<FilmDetailsCubit>(context).getFilmDetails(film);
+                                },
+                              ),
+                          };
+                        },
                       ),
                     ),
-                    SliverToBoxAdapter(
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(15),
-                        child: Container(
-                          color: Colors.grey[900],
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 8, right: 8, top: 8),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                  children: [
-                                    DetailsHeaderRow(
-                                      icon: Icons.calendar_today,
-                                      title: t.filmDetails.premiere,
-                                      content: film.details!.premiereDate,
-                                    ),
-                                    DetailsHeaderRow(
-                                      icon: Icons.timer,
-                                      title: t.filmDetails.filmLength,
-                                      content: t.filmDetails.filmLengthValue(val: "${film.length}"),
-                                    ),
-                                  ],
-                                ),
-                                Divider(
-                                  color: Theme.of(context).colorScheme.secondary,
-                                  thickness: 2,
-                                ),
-                                DetailsDataRow(title: "${t.filmDetails.filmTitle}:", content: film.name),
-                                if (film.genres.isNotEmpty) const Divider(),
-                                if (film.genres.isNotEmpty)
-                                  DetailsDataRow(
-                                    title: "${t.filmDetails.filmGenre}:",
-                                    widget: Wrap(
-                                      children: [
-                                        for (int i = 0; i < film.genres.length; i++)
-                                          Text(film.genres[i] +
-                                              (i < film.genres.length - 1 ? ", " : "")),
-                                      ],
-                                    ),
-                                  ),
-                                if (film.details!.cast.isNotEmpty) const Divider(),
-                                if (film.details!.cast.isNotEmpty)
-                                  DetailsDataRow(title: "${t.filmDetails.cast}:", content: film.details!.cast),
-                                if (film.details!.director.isNotEmpty) const Divider(),
-                                if (film.details!.director.isNotEmpty)
-                                  DetailsDataRow(
-                                      title: "${t.filmDetails.director}:", content: film.details!.director),
-                                if (film.details!.production.isNotEmpty) const Divider(),
-                                if (film.details!.production.isNotEmpty)
-                                  DetailsDataRow(
-                                      title: "${t.filmDetails.production}:", content: film.details!.production),
-                                const Divider(),
-                                DetailsDataRow(
-                                  title: "${t.filmDetails.score}:",
-                                  widget: BlocBuilder<FilmScoresCubit, FilmScoresState>(
-                                    builder: (context, state) {
-                                      return Wrap(
-                                        children: [
-                                          Image.asset(
-                                            'assets/filmweb-logo.png',
-                                            width: 60,
-                                          ),
-                                          const SizedBox(
-                                            width: 5,
-                                          ),
-                                          film.filmWebScore != null
-                                              ? Text(
-                                                  film.filmWebScore ?? t.filmDetails.scoreNoData,
-                                                )
-                                              : const Padding(
-                                                  padding: EdgeInsets.symmetric(
-                                                    horizontal: 3.5,
-                                                    vertical: 2,
-                                                  ),
-                                                  child: SizedBox(
-                                                    height: 10,
-                                                    width: 10,
-                                                    child: CircularProgressIndicator(
-                                                      strokeWidth: 2,
-                                                    ),
-                                                  ),
-                                                ),
-                                        ],
-                                      );
-                                    },
-                                  ),
-                                ),
-                                Divider(
-                                  color: Theme.of(context).colorScheme.secondary,
-                                ),
-                                Text(film.details!.description!),
-                                const SizedBox(
-                                  height: 10,
-                                )
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    )
-                  ],
-                );
-              } else if (state is FilmDetailsLoading) {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              } else if (state is FilmDetailsError) {
-                return ErrorColumn(
-                  errorMessage: state.message,
-                  buttonMessage: t.refresh,
-                  buttonOnPressed: () {
-                    BlocProvider.of<FilmDetailsCubit>(context).getFilmDetails(film);
-                  },
-                );
-              }
-              return Container();
-            },
+                  ),
+                ),
+              )
+            ],
           ),
         ),
       ),

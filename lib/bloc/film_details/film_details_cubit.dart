@@ -13,7 +13,7 @@ part 'film_details_state.dart';
 class FilmDetailsCubit extends Cubit<FilmDetailsState> {
   final RepertoireRepository repertoireRepository;
 
-  FilmDetailsCubit({required this.repertoireRepository}) : super(FilmDetailsInitial());
+  FilmDetailsCubit({required this.repertoireRepository}) : super(FilmDetailsLoading());
 
   void getFilmDetails(Film film) async {
     emit(FilmDetailsLoading());
