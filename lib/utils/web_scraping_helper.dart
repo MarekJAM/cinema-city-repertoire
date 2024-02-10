@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import '../data/models/models.dart';
 import 'package:html/parser.dart' as parser;
+import '../utils/string_extensions.dart';
 
 class WebScrapperException implements Exception {}
 
@@ -15,11 +16,11 @@ class WebScrapingHelper {
       var premiereDateRegExp = RegExp(r'(?<=<span>)(.*)(?=</span>)');
       var pRegExp = RegExp(r'(?<=<p>)(.*)(?=</p>)');
 
-      var premiereDate = premiereDateRegExp.firstMatch(mainTag)!.group(0);
+      var premiereDate = premiereDateRegExp.firstMatch(mainTag)?.group(0);
       var description = pRegExp.allMatches(mainTag).elementAt(2).group(0);
-      var cast = pRegExp.allMatches(mainTag).elementAt(4).group(0)!.substring(8);
-      var director = pRegExp.allMatches(mainTag).elementAt(5).group(0)!.substring(9);
-      var production = pRegExp.allMatches(mainTag).elementAt(6).group(0)!.substring(11);
+      var cast = pRegExp.allMatches(mainTag).elementAt(4).group(0)?.removeFirstWord() ?? '';
+      var director = pRegExp.allMatches(mainTag).elementAt(5).group(0)?.removeFirstWord() ?? '';
+      var production = pRegExp.allMatches(mainTag).elementAt(6).group(0)?.removeFirstWord() ?? '';
 
       return FilmDetails(
         premiereDate: premiereDate,
