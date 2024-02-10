@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'page_transition_builder.dart';
+
 const _buttonBorderRadius = 10.0;
 
 final _buttonsBorder = RoundedRectangleBorder(
@@ -30,4 +32,10 @@ final theme = ThemeData(
   ),
   outlinedButtonTheme: OutlinedButtonThemeData(style: _commonButtonStyle),
   textButtonTheme: TextButtonThemeData(style: _commonButtonStyle),
+  pageTransitionsTheme: const PageTransitionsTheme(
+    builders: {
+      TargetPlatform.android: CustomPageTransitionBuilder(),
+      TargetPlatform.iOS: CustomPageTransitionBuilder(),
+    }
+  ),
 );
