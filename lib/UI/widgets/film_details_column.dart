@@ -68,6 +68,7 @@ class FilmDetailsColumn extends StatelessWidget {
             widget: BlocBuilder<FilmScoresCubit, FilmScoresState>(
               builder: (context, state) {
                 return Wrap(
+                  crossAxisAlignment: WrapCrossAlignment.center,
                   children: [
                     Image.asset(
                       'assets/filmweb-logo.png',
