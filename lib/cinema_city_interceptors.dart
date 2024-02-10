@@ -1,7 +1,9 @@
 import 'package:cinema_city/i18n/strings.g.dart';
 import 'package:dio/dio.dart';
 
-class LanguageInterceptor extends Interceptor {
+final cinemaCityInterceptors = [_LocaleInterceptor()];
+
+class _LocaleInterceptor extends Interceptor {
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
     AppLocale appLocale = t.$meta.locale;
@@ -10,3 +12,4 @@ class LanguageInterceptor extends Interceptor {
     super.onRequest(options, handler);
   }
 }
+
