@@ -68,5 +68,10 @@
         "war": "War",
         "western": "Western",
         "unspecified": "Unspecified"
+    },
+    "languageType": {
+        "original": "PL",
+        "subtitles": "Subtitles",
+        "dubbing": "Dubbing"
     }
   }

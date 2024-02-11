@@ -4,7 +4,6 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/timezone.dart' as tz;
 import 'package:url_launcher/url_launcher_string.dart';
 
-import '../../../local_notifications_setup.dart';
 import '../../data/models/models.dart';
 import '../../i18n/strings.g.dart';
 import '../../injection.dart';
@@ -59,6 +58,11 @@ class _FilmEventDialogState extends State<FilmEventDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final language = switch (widget.item.language) {
+      (LanguageType.dubbing) => t.languageType.dubbing,
+      (LanguageType.original) => t.languageType.original,
+      (LanguageType.subtitles) => t.languageType.subtitles,
+    };
     return Dialog(
       shape: RoundedRectangleBorder(
         side: BorderSide(
@@ -96,7 +100,7 @@ class _FilmEventDialogState extends State<FilmEventDialog> {
             Padding(
               padding: const EdgeInsets.all(2.0),
               child: Text(
-                "${widget.item.language}, ${widget.item.type}",
+                "$language, ${widget.item.type}",
                 textAlign: TextAlign.center,
                 style: const TextStyle(fontSize: 12),
               ),

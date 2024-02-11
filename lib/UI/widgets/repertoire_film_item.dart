@@ -254,7 +254,11 @@ class RepertoireFilmItemRow extends StatelessWidget {
                                   style: const TextStyle(fontSize: 7),
                                 ),
                                 Text(
-                                  item.language!,
+                                  switch(item.language) {
+                                    (LanguageType.dubbing) => t.languageType.dubbing,
+                                    (LanguageType.original) => t.languageType.original,
+                                    (LanguageType.subtitles) => t.languageType.subtitles,
+                                  },
                                   style: const TextStyle(fontSize: 7),
                                 ),
                                 const Padding(

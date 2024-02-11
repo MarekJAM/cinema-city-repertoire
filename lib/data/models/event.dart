@@ -1,12 +1,14 @@
 import 'event_types.dart';
 
+enum LanguageType { original, dubbing, subtitles }
+
 class Event {
   final String? id;
   final String? filmId;
   final String? cinemaId;
   final DateTime dateTime;
   final String? type;
-  final String? language;
+  final LanguageType language;
   final String? bookingLink;
 
   Event({
@@ -22,7 +24,7 @@ class Event {
   factory Event.fromJson(Map<String, dynamic> json) {
     Map<String, dynamic> attributes = {};
     if (json['attributeIds'] != null) {
-      String? language;
+      LanguageType? language;
       json['attributeIds'].forEach((attr) {
         for (var type in allEventTypes) {
           if (attr == type) {
@@ -34,14 +36,14 @@ class Event {
           }
         }
         if (attr.contains('dubbed')) {
-          language = 'DUBBING';
-        } else if ((attr.contains('original') && (!attr.contains('pl')) ||
+          language = LanguageType.dubbing;
+        } else if ((attr.contains('original-') && (!attr.contains('pl')) ||
                 attr == 'first-subbed-lang-pl') &&
             language == null) {
-          language = 'NAPISY';
+          language = LanguageType.subtitles;
         }
       });
-      language ??= 'PL';
+      language ??= LanguageType.original;
 
       attributes.putIfAbsent('language', () => language);
     }

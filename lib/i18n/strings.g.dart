@@ -4,9 +4,9 @@
 /// To regenerate, run: `dart run slang`
 ///
 /// Locales: 2
-/// Strings: 116 (58 per locale)
+/// Strings: 122 (61 per locale)
 ///
-/// Built on 2024-02-01 at 22:49 UTC
+/// Built on 2024-02-11 at 17:25 UTC
 
 // coverage:ignore-file
 // ignore_for_file: type=lint
@@ -166,6 +166,7 @@ class _StringsEn implements BaseTranslations<AppLocale, _StringsEn> {
 	late final _StringsCinemasEn cinemas = _StringsCinemasEn._(_root);
 	late final _StringsRemindersEn reminders = _StringsRemindersEn._(_root);
 	late final _StringsGenresEn genres = _StringsGenresEn._(_root);
+	late final _StringsLanguageTypeEn languageType = _StringsLanguageTypeEn._(_root);
 }
 
 // Path: repertoire
@@ -270,6 +271,18 @@ class _StringsGenresEn {
 	String get unspecified => 'Unspecified';
 }
 
+// Path: languageType
+class _StringsLanguageTypeEn {
+	_StringsLanguageTypeEn._(this._root);
+
+	final _StringsEn _root; // ignore: unused_field
+
+	// Translations
+	String get original => 'PL';
+	String get subtitles => 'Subtitles';
+	String get dubbing => 'Dubbing';
+}
+
 // Path: <root>
 class _StringsPl implements _StringsEn {
 
@@ -311,6 +324,7 @@ class _StringsPl implements _StringsEn {
 	@override late final _StringsCinemasPl cinemas = _StringsCinemasPl._(_root);
 	@override late final _StringsRemindersPl reminders = _StringsRemindersPl._(_root);
 	@override late final _StringsGenresPl genres = _StringsGenresPl._(_root);
+	@override late final _StringsLanguageTypePl languageType = _StringsLanguageTypePl._(_root);
 }
 
 // Path: repertoire
@@ -394,14 +408,14 @@ class _StringsGenresPl implements _StringsGenresEn {
 	@override String get action => 'Akcja';
 	@override String get adventure => 'Przygodowy';
 	@override String get animation => 'Animacja';
-	@override String get bollywood => 'Bollywoood';
+	@override String get bollywood => 'Bollywood';
 	@override String get comedy => 'Komedia';
 	@override String get crime => 'Kryminalny';
 	@override String get documentary => 'Dokument';
 	@override String get drama => 'Dramat';
 	@override String get family => 'Familijny';
 	@override String get fantasy => 'Fantasy';
-	@override String get history => 'Historczny';
+	@override String get history => 'Historyczny';
 	@override String get horror => 'Horror';
 	@override String get kidsClub => 'Dla dzieci';
 	@override String get live => 'Na żywo';
@@ -413,6 +427,18 @@ class _StringsGenresPl implements _StringsGenresEn {
 	@override String get war => 'Wojenny';
 	@override String get western => 'Western';
 	@override String get unspecified => 'Nieokreślony';
+}
+
+// Path: languageType
+class _StringsLanguageTypePl implements _StringsLanguageTypeEn {
+	_StringsLanguageTypePl._(this._root);
+
+	@override final _StringsPl _root; // ignore: unused_field
+
+	// Translations
+	@override String get original => 'PL';
+	@override String get subtitles => 'Napisy';
+	@override String get dubbing => 'Dubbing';
 }
 
 /// Flat map(s) containing all translations.
@@ -479,6 +505,9 @@ extension on _StringsEn {
 			case 'genres.war': return 'War';
 			case 'genres.western': return 'Western';
 			case 'genres.unspecified': return 'Unspecified';
+			case 'languageType.original': return 'PL';
+			case 'languageType.subtitles': return 'Subtitles';
+			case 'languageType.dubbing': return 'Dubbing';
 			default: return null;
 		}
 	}
@@ -526,14 +555,14 @@ extension on _StringsPl {
 			case 'genres.action': return 'Akcja';
 			case 'genres.adventure': return 'Przygodowy';
 			case 'genres.animation': return 'Animacja';
-			case 'genres.bollywood': return 'Bollywoood';
+			case 'genres.bollywood': return 'Bollywood';
 			case 'genres.comedy': return 'Komedia';
 			case 'genres.crime': return 'Kryminalny';
 			case 'genres.documentary': return 'Dokument';
 			case 'genres.drama': return 'Dramat';
 			case 'genres.family': return 'Familijny';
 			case 'genres.fantasy': return 'Fantasy';
-			case 'genres.history': return 'Historczny';
+			case 'genres.history': return 'Historyczny';
 			case 'genres.horror': return 'Horror';
 			case 'genres.kidsClub': return 'Dla dzieci';
 			case 'genres.live': return 'Na żywo';
@@ -545,6 +574,9 @@ extension on _StringsPl {
 			case 'genres.war': return 'Wojenny';
 			case 'genres.western': return 'Western';
 			case 'genres.unspecified': return 'Nieokreślony';
+			case 'languageType.original': return 'PL';
+			case 'languageType.subtitles': return 'Napisy';
+			case 'languageType.dubbing': return 'Dubbing';
 			default: return null;
 		}
 	}
