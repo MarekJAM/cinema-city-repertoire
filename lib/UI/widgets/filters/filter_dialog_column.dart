@@ -20,89 +20,57 @@ class FilterDialogColumn extends StatefulWidget {
 }
 
 class _FilterDialogColumnState extends State<FilterDialogColumn> {
-  List<String> tempPickedValues = [];
-
-  @override
-  void initState() {
-    tempPickedValues.addAll(widget.pickedValues);
-    super.initState();
-  }
-
-  bool _isInitiallySelected(String val) => tempPickedValues.contains(val);
-
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                widget.title,
-                style: const TextStyle(
-                  fontSize: 22,
-                ),
-              ),
-              IconButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                icon: const Icon(
-                  Icons.cancel,
-                ),
-              )
-            ],
-          ),
-          const Divider(),
-          Wrap(
-            children: [
-              for (int i = 0; i < widget.values.length; i++)
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 2),
-                  child: FilterValueButton(
-                    value: widget.values[i],
-                    pickedValues: tempPickedValues,
-                    isInitiallySelected: _isInitiallySelected(
-                      widget.values[i],
-                    ),
+    bool isInitiallySelected(String val) => widget.pickedValues.contains(val);
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.only(left: 8, right: 8, bottom: 8),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  widget.title,
+                  style: const TextStyle(
+                    fontSize: 16,
                   ),
                 ),
-            ],
-          ),
-          const Divider(),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              OutlinedButton(
-                onPressed: () {
-                  setState(
-                    () {
-                      tempPickedValues
-                        ..clear()
-                        ..addAll(widget.values);
-                    },
-                  );
-                },
-                child: Text(t.reset),
-              ),
-              const SizedBox(
-                width: 5,
-              ),
-              OutlinedButton(
-                onPressed: () {
-                  widget.pickedValues
-                    ..clear()
-                    ..addAll(tempPickedValues);
-                  Navigator.of(context).pop();
-                },
-                child: Text(t.confirm),
-              ),
-            ],
-          )
-        ],
+                TextButton(
+                  onPressed: () {
+                    setState(
+                      () {
+                        widget.pickedValues
+                          ..clear()
+                          ..addAll(widget.values);
+                      },
+                    );
+                  },
+                  child: Text(t.reset),
+                ),
+              ],
+            ),
+            // const Divider(),
+            Wrap(
+              children: [
+                for (int i = 0; i < widget.values.length; i++)
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 2),
+                    child: FilterValueButton(
+                      value: widget.values[i],
+                      pickedValues: widget.pickedValues,
+                      isInitiallySelected: isInitiallySelected(
+                        widget.values[i],
+                      ),
+                    ),
+                  ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

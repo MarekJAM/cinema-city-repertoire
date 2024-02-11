@@ -47,7 +47,6 @@ class _RepertoireViewState extends State<RepertoireView> {
       builder: (context, cinemasState) {
         return Scaffold(
           endDrawer: cinemasState.status.isSuccess ? const CinemasDrawer() : null,
-          backgroundColor: Colors.black,
           endDrawerEnableOpenDragGesture: cinemasState.status.isSuccess,
           appBar: const RepertoireAppBar(),
           body: Padding(

@@ -1,3 +1,4 @@
+import 'package:cinema_city/utils/theme_context_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -37,7 +38,7 @@ class _RepertoireAppBarState extends State<RepertoireAppBar> {
               TextSpan(text: 'Cinema City\n'),
               TextSpan(text: 'Repertuar', style: TextStyle(fontSize: 16)),
             ],
-            style: TextStyle(color: Theme.of(context).colorScheme.secondary, fontSize: 22),
+            style: TextStyle(color: context.colorScheme.primary, fontSize: 22),
           ),
         ),
         actions: <Widget>[
@@ -94,7 +95,7 @@ class _RepertoireAppBarState extends State<RepertoireAppBar> {
             },
           ),
         ],
-        backgroundColor: Colors.black,
+        backgroundColor: context.colorScheme.background,
       ),
     );
   }

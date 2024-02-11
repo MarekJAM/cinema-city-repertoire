@@ -16,65 +16,19 @@ class FilterValueButton extends StatefulWidget {
   State<FilterValueButton> createState() => _FilterValueButtonState();
 }
 
-class _FilterValueButtonState extends State<FilterValueButton> with TickerProviderStateMixin {
-  late AnimationController _animationController;
-  late Animation _colorTween;
-
-  @override
-  void initState() {
-    _animationController = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 300),
-      value: widget.isInitiallySelected ? 0 : 1,
-    );
-    _colorTween = ColorTween(
-      begin: Colors.orange,
-      end: Colors.grey,
-    ).animate(_animationController);
-
-    super.initState();
-  }
-
-  @override
-  void didUpdateWidget(covariant FilterValueButton oldWidget) {
-    if (widget.isInitiallySelected) {
-      _animationController.animateBack(0, duration: const Duration(milliseconds: 0));
-    }
-
-    super.didUpdateWidget(oldWidget);
-  }
-
+class _FilterValueButtonState extends State<FilterValueButton> {
   @override
   Widget build(BuildContext context) {
-    return AnimatedBuilder(
-      animation: _animationController,
-      builder: (context, child) => ElevatedButton(
-        style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all(
-            _colorTween.value,
-          ),
-        ),
-        onPressed: () {
-          if (_animationController.status == AnimationStatus.completed) {
-            _animationController.reverse();
-            toggleValue();
-          } else {
-            _animationController.animateTo(
-              1,
-              duration: const Duration(
-                milliseconds: 0,
-              ),
-            );
-            toggleValue();
-          }
-        },
-        child: Text(
-          widget.value,
-          style: TextStyle(
-            color: Theme.of(context).colorScheme.onBackground,
-          ),
-        ),
+    return ChoiceChip(
+      label: Text(
+        widget.value,
       ),
+      selected: widget.pickedValues.contains(widget.value),
+      onSelected: (value) {
+        setState(() {
+          toggleValue();
+        });
+      },
     );
   }
 

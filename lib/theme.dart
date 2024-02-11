@@ -12,11 +12,11 @@ ButtonStyle get _commonButtonStyle => ButtonStyle(
       shape: MaterialStateProperty.all(_buttonsBorder),
     );
 
-final _colorScheme = ColorScheme.fromSwatch(
-  primarySwatch: Colors.orange,
-  accentColor: Colors.orange,
+final _colorScheme = ColorScheme.fromSeed(
+  seedColor: Colors.orange,
+  primary: Colors.orange,
   brightness: Brightness.dark,
-  backgroundColor: Colors.grey[900],
+  background: Colors.black,
 );
 
 final theme = ThemeData(

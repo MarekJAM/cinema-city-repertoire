@@ -9,7 +9,7 @@ import '../../i18n/strings.g.dart';
 import '../../injection.dart';
 import '../../utils/date_helper.dart';
 import '../../utils/time_zone.dart';
-import '../../utils/toast_helper.dart';
+import '../widgets/snackbar.dart';
 
 class FilmEventDialog extends StatefulWidget {
   const FilmEventDialog({
@@ -28,7 +28,6 @@ class FilmEventDialog extends StatefulWidget {
 }
 
 class _FilmEventDialogState extends State<FilmEventDialog> {
-
   _launchURL(url) async {
     if (await canLaunchUrlString(url)) {
       await launchUrlString(url);
@@ -41,7 +40,9 @@ class _FilmEventDialogState extends State<FilmEventDialog> {
     await di<FlutterLocalNotificationsPlugin>().zonedSchedule(
       int.tryParse(event.id!) ?? 0,
       title,
-      t.reminders.filmReminder(time: '${event.dateTime.hour}:${event.dateTime.minute == 0 ? "00" : event.dateTime.minute}'),
+      t.reminders.filmReminder(
+        time: '${event.dateTime.hour}:${event.dateTime.minute == 0 ? "00" : event.dateTime.minute}',
+      ),
       tzDateTime,
       NotificationDetails(
         android: AndroidNotificationDetails(
@@ -53,8 +54,7 @@ class _FilmEventDialogState extends State<FilmEventDialog> {
       androidScheduleMode: AndroidScheduleMode.exact,
       uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
     );
-    if (!mounted) return;
-    ToastHelper.show(context, t.reminders.reminderScheduled, Colors.green);
+    if (mounted) context.showSnackbar(t.reminders.reminderScheduled);
   }
 
   @override
@@ -114,10 +114,7 @@ class _FilmEventDialogState extends State<FilmEventDialog> {
                 ),
                 Builder(
                   builder: (context) {
-                    return ElevatedButton(
-                      style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all(Colors.grey),
-                      ),
+                    return OutlinedButton(
                       child: Text(
                         t.scheduleReminder,
                       ),
@@ -157,8 +154,7 @@ class _FilmEventDialogState extends State<FilmEventDialog> {
                               pickedTzDateTime,
                             );
                           } else {
-                            if (!mounted) return;
-                            ToastHelper.show(context, t.reminders.reminderScheduled, Colors.green);
+                            if (mounted) context.showSnackbar(t.reminders.reminderScheduled);
                           }
                         }
                       },

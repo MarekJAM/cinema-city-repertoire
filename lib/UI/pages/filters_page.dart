@@ -1,3 +1,4 @@
+import 'package:cinema_city/utils/theme_context_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -46,81 +47,70 @@ class _FiltersViewState extends State<FiltersView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: context.colorScheme.background,
+        title: Text(t.filters.name),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 8.0),
+            child: ElevatedButton(
+              onPressed: () {
+                BlocProvider.of<FiltersCubit>(context).saveFilters(
+                  [
+                    GenreFilter(
+                      [..._pickedGenres],
+                    ),
+                    EventTypeFilter(
+                      [..._pickedEventTypes],
+                    ),
+                    _scoreFilter,
+                  ],
+                );
+                Navigator.of(context).pop();
+              },
+              child: Text(t.apply),
+            ),
+          ),
+        ],
+      ),
       body: SafeArea(
-        child: Center(
-          child: Padding(
-            padding: const EdgeInsets.all(5),
-            child: BlocBuilder<FiltersCubit, FiltersState>(builder: (context, state) {
-              if (state is FiltersLoaded) {
-                for (var filter in state.filters) {
-                  if (filter is GenreFilter) {
-                    _pickedGenres
-                      ..clear()
-                      ..addAll(filter.genres!);
-                  } else if (filter is EventTypeFilter) {
-                    _pickedEventTypes
-                      ..clear()
-                      ..addAll(filter.eventTypes!);
-                  } else if (filter is ScoreFilter) {
-                    _scoreFilter = filter;
-                  }
+        child: Padding(
+          padding: const EdgeInsets.all(5),
+          child: BlocBuilder<FiltersCubit, FiltersState>(builder: (context, state) {
+            if (state is FiltersLoaded) {
+              for (var filter in state.filters) {
+                if (filter is GenreFilter) {
+                  _pickedGenres
+                    ..clear()
+                    ..addAll(filter.genres!);
+                } else if (filter is EventTypeFilter) {
+                  _pickedEventTypes
+                    ..clear()
+                    ..addAll(filter.eventTypes!);
+                } else if (filter is ScoreFilter) {
+                  _scoreFilter = filter;
                 }
               }
-              return ListView(
-                shrinkWrap: true,
-                children: [
-                  MinimalScoreSlider(
-                    scoreFilter: _scoreFilter,
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  FilterMultiSelectDialog(
-                    title: t.filters.genre,
-                    values: _allGenres,
-                    pickedValues: _pickedGenres,
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  FilterMultiSelectDialog(
-                    title: t.filters.typeOfShow,
-                    values: allEventTypes,
-                    pickedValues: _pickedEventTypes,
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      TextButton(
-                        onPressed: () => Navigator.of(context).pop(),
-                        child: Text(t.back),
-                      ),
-                      ElevatedButton(
-                        onPressed: () {
-                          BlocProvider.of<FiltersCubit>(context).saveFilters(
-                            [
-                              GenreFilter(
-                                [..._pickedGenres],
-                              ),
-                              EventTypeFilter(
-                                [..._pickedEventTypes],
-                              ),
-                              _scoreFilter,
-                            ],
-                          );
-                          Navigator.of(context).pop();
-                        },
-                        child: Text(t.apply),
-                      ),
-                    ],
-                  )
-                ],
-              );
-            }),
-          ),
+            }
+            return ListView(
+              shrinkWrap: true,
+              children: [
+                MinimalScoreSlider(
+                  scoreFilter: _scoreFilter,
+                ),
+                FilterDialogColumn(
+                  title: t.filters.typeOfShow,
+                  values: allEventTypes,
+                  pickedValues: _pickedEventTypes,
+                ),
+                FilterDialogColumn(
+                  title: t.filters.genre,
+                  values: _allGenres,
+                  pickedValues: _pickedGenres,
+                ),
+              ],
+            );
+          }),
         ),
       ),
     );

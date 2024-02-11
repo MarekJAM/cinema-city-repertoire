@@ -1,4 +1,5 @@
 import 'package:cinema_city/UI/widgets/widgets.dart';
+import 'package:cinema_city/utils/theme_context_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -53,7 +54,7 @@ class FilmDetailsView extends StatelessWidget {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(15),
                   child: Container(
-                    color: Colors.grey[900],
+                    color: context.colorScheme.surface,
                     child: Padding(
                       padding: const EdgeInsets.only(left: 8, right: 8, top: 8),
                       child: BlocBuilder<FilmDetailsCubit, FilmDetailsState>(

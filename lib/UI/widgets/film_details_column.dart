@@ -1,3 +1,4 @@
+import 'package:cinema_city/utils/theme_context_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:skeletonizer/skeletonizer.dart';
@@ -27,7 +28,7 @@ class FilmDetailsColumn extends StatelessWidget {
               DetailsHeaderRow(
                 icon: Icons.calendar_today,
                 title: t.filmDetails.premiere,
-                content: film.details!.premiereDate,
+                content: film.details?.premiereDate,
               ),
               DetailsHeaderRow(
                 icon: Icons.timer,
@@ -37,7 +38,7 @@ class FilmDetailsColumn extends StatelessWidget {
             ],
           ),
           Divider(
-            color: Theme.of(context).colorScheme.secondary,
+            color: context.colorScheme.primary,
             thickness: 2,
           ),
           DetailsDataRow(title: "${t.filmDetails.filmTitle}:", content: film.name),
@@ -100,7 +101,7 @@ class FilmDetailsColumn extends StatelessWidget {
             ),
           ),
           Divider(
-            color: Theme.of(context).colorScheme.secondary,
+            color: context.colorScheme.primary,
           ),
           if (film.details?.description?.isNotEmpty ?? false) Text(film.details!.description!),
           const SizedBox(

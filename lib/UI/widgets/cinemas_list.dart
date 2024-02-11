@@ -1,3 +1,4 @@
+import 'package:cinema_city/utils/theme_context_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -90,7 +91,7 @@ class _CinemaItemRowState extends State<CinemaItemRow> {
       child: Row(
         children: <Widget>[
           Checkbox(
-            activeColor: Theme.of(context).colorScheme.secondary,
+            activeColor: context.colorScheme.primary,
             value: widget.pickedCinemas.contains(widget.cinemaData.id),
             onChanged: (val) {
               setState(
@@ -107,7 +108,7 @@ class _CinemaItemRowState extends State<CinemaItemRow> {
           ),
           Expanded(
             child: Text(
-              widget.cinemaData.displayName!,
+              widget.cinemaData.displayName ?? '',
               softWrap: true,
             ),
           ),
