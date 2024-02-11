@@ -27,7 +27,7 @@ void main() async {
 
   LocaleSettings.useDeviceLocale();
 
-  await LocalNotifications.initialize();
+  await LocalNotifications.init();
 
   await configureDependencies();
 

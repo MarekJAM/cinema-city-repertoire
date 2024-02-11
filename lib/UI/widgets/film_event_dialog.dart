@@ -4,6 +4,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/timezone.dart' as tz;
 import 'package:url_launcher/url_launcher_string.dart';
 
+import '../../../local_notifications_setup.dart';
 import '../../data/models/models.dart';
 import '../../i18n/strings.g.dart';
 import '../../injection.dart';
@@ -36,8 +37,8 @@ class _FilmEventDialogState extends State<FilmEventDialog> {
     }
   }
 
-  _scheduleNotification(String? title, Event event, tz.TZDateTime tzDateTime) async {
-    await di<FlutterLocalNotificationsPlugin>().zonedSchedule(
+  Future<void> _scheduleNotification(String? title, Event event, tz.TZDateTime tzDateTime) async {
+    return await di<FlutterLocalNotificationsPlugin>().zonedSchedule(
       int.tryParse(event.id!) ?? 0,
       title,
       t.reminders.filmReminder(
@@ -48,13 +49,12 @@ class _FilmEventDialogState extends State<FilmEventDialog> {
         android: AndroidNotificationDetails(
           'channelId',
           t.appName,
-          channelDescription: 'Cinema City Repertuar Reminder',
+          channelDescription: 'Cinema City Repertoire Reminder',
         ),
       ),
       androidScheduleMode: AndroidScheduleMode.exact,
       uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
     );
-    if (mounted) context.showSnackbar(t.reminders.reminderScheduled);
   }
 
   @override
@@ -148,13 +148,15 @@ class _FilmEventDialogState extends State<FilmEventDialog> {
                           );
 
                           if (pickedTzDateTime.isAfter(tz.TZDateTime.now(location))) {
-                            _scheduleNotification(
-                              widget.film.name,
-                              widget.item,
-                              pickedTzDateTime,
-                            );
-                          } else {
-                            if (mounted) context.showSnackbar(t.reminders.reminderScheduled);
+                            try {
+                              await _scheduleNotification(
+                                widget.film.name,
+                                widget.item,
+                                pickedTzDateTime,
+                              );
+                              if (mounted) context.showSnackbar(t.reminders.reminderScheduled);
+                              if (mounted) Navigator.of(context).pop();
+                            } catch (_) {}
                           }
                         }
                       },
