@@ -3,9 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../bloc/blocs.dart';
 import '../../i18n/strings.g.dart';
-import '../widgets/date_selector.dart';
 import '../widgets/widgets.dart';
-import 'filters_page.dart';
 
 class RepertoirePage extends StatelessWidget {
   const RepertoirePage({Key? key}) : super(key: key);
@@ -57,85 +55,33 @@ class _RepertoireViewState extends State<RepertoireView> {
                   case CinemasStatus.success:
                     return BlocBuilder<RepertoireBloc, RepertoireState>(
                       builder: (context, state) {
-                        if (state is RepertoireLoaded) {
-                          return RefreshIndicator(
-                            onRefresh: () => Future.sync(
-                              () => context.read<RepertoireBloc>().add(const GetRepertoire()),
-                            ),
-                            backgroundColor: Theme.of(context).primaryColor,
-                            child: state.data.filmItems.isNotEmpty
-                                ? Padding(
-                                    padding: const EdgeInsets.only(top: 8),
-                                    child: ListView.builder(
-                                      itemCount: state.data.filmItems.length,
-                                      itemBuilder: (ctx, index) {
-                                        return index != state.data.filmItems.length - 1
-                                            ? RepertoireFilmItemWidget(
-                                                state.data.filmItems[index],
-                                              )
-                                            : Padding(
-                                                padding: const EdgeInsets.only(bottom: 8),
-                                                child: RepertoireFilmItemWidget(
-                                                  state.data.filmItems[index],
-                                                ),
-                                              );
-                                      },
-                                    ),
-                                  )
-                                : cinemasState.pickedCinemaIds.isNotEmpty
-                                    ? state.hasFilteringLimitedResults
-                                        ? ErrorColumn(
-                                            errorMessage:
-                                                t.repertoire.noFilmsToDisplayPickAnotherDate,
-                                            buttons: [
-                                              ElevatedButton(
-                                                onPressed: () async {
-                                                  final date = await DateSelector.selectDate(context);
-                                                  if (date == null) return;
-                                                  if (mounted) context.read<DatesCubit>().selectedDateChanged(date);
-                                                },
-                                                child: Text(
-                                                  t.repertoire.pickDifferentDate,
-                                                ),
-                                              ),
-                                              ElevatedButton(
-                                                onPressed: () {
-                                                  Navigator.of(context).push(
-                                                    FiltersPage.route(),
-                                                  );
-                                                },
-                                                child: Text(
-                                                  t.repertoire.adjustFilters,
-                                                ),
-                                              ),
-                                            ],
-                                          )
-                                        : ErrorColumn(
-                                            errorMessage: t.repertoire.noFilmsToDisplay,
-                                            buttonMessage: t.repertoire.pickDifferentDate,
-                                            buttonOnPressed: () async {
-                                              final date = await DateSelector.selectDate(context);
-                                              if (date == null) return;
-                                              if (mounted) context.read<DatesCubit>().selectedDateChanged(date);
-                                            },
-                                          )
-                                    : ErrorColumn(
-                                        errorMessage: t.repertoire.noFilmsToDisplay,
-                                        buttonMessage: t.repertoire.pickCinemas,
-                                        buttonOnPressed: () {
-                                          Scaffold.of(context).openEndDrawer();
-                                        },
-                                      ),
-                          );
-                        } else if (state is RepertoireError) {
-                          return ErrorColumn(
-                            errorMessage: state.message,
-                            buttonMessage: t.refresh,
-                            buttonOnPressed: () =>
-                                context.read<RepertoireBloc>().add(const GetRepertoire()),
-                          );
-                        } else {
-                          return const Center(child: CircularProgressIndicator());
+                        switch (state) {
+                          case RepertoireLoaded(
+                              data: final data,
+                              hasFilteringLimitedResults: final hasFilteringLimitedResults
+                            ):
+                            return RefreshIndicator(
+                              onRefresh: () => Future.sync(
+                                () => context.read<RepertoireBloc>().add(const GetRepertoire()),
+                              ),
+                              backgroundColor: Theme.of(context).primaryColor,
+                              child: data.filmItems.isNotEmpty
+                                  ? RepertoireListPopulated(data: data)
+                                  : cinemasState.pickedCinemaIds.isNotEmpty
+                                      ? hasFilteringLimitedResults
+                                          ? const RepertoireEmptyListFiltersOn()
+                                          : const RepertoireEmptyListFiltersOff()
+                                      : const RepertoireErrorPickCinemas(),
+                            );
+                          case RepertoireLoading():
+                            return const Center(child: CircularProgressIndicator());
+                          case RepertoireError(message: final message):
+                            return ErrorColumn(
+                              errorMessage: message,
+                              buttonMessage: t.refresh,
+                              buttonOnPressed: () =>
+                                  context.read<RepertoireBloc>().add(const GetRepertoire()),
+                            );
                         }
                       },
                     );

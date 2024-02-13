@@ -62,7 +62,7 @@ void main() {
         filtersRepository: filtersRepository,
         filmScoresRepository: filmScoresRepository,
       );
-      expect(repertoireBloc.state, isA<RepertoireInitial>());
+      expect(repertoireBloc.state, isA<RepertoireLoading>());
     });
 
     group("GetRepertoire", () {

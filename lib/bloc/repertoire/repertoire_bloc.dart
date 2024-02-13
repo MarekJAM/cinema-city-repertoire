@@ -30,7 +30,7 @@ class RepertoireBloc extends Bloc<RepertoireEvent, RepertoireState> {
     required this.repertoireRepository,
     required this.filtersRepository,
     required this.filmScoresRepository,
-  }) : super(RepertoireInitial()) {
+  }) : super(RepertoireLoading()) {
     on<GetRepertoire>(_onGetRepertoire);
     on<FiltersChanged>((event, emit) => _onFiltersChanged(event.filters, emit));
 
