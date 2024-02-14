@@ -1,3 +1,5 @@
+import '../../utils/random_number_generator.dart';
+
 class Cinema {
   final String? id;
   final String? displayName;
@@ -25,4 +27,11 @@ class Cinema {
     data['address'] = address;
     return data;
   }
+
+  static Cinema get mock => Cinema(
+    id: '1',
+    displayName: 'C' *  RandomNumberGenerator.randomInRange(min: 10, max: 20),
+    link: 'link',
+    address: 'address',
+  );
 }

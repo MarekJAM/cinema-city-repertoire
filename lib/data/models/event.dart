@@ -58,5 +58,14 @@ class Event {
       bookingLink: json['bookingLink'],
     );
   }
-}
 
+  static Event get mock => Event(
+    id: '1',
+    filmId: '1',
+    cinemaId: '1',
+    dateTime: DateTime.fromMicrosecondsSinceEpoch(0),
+    language: LanguageType.original,
+    type: '2D',
+    bookingLink: 'bookingLink',
+  );
+}

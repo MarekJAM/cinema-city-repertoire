@@ -1,3 +1,5 @@
+import 'package:cinema_city/utils/random_number_generator.dart';
+
 import 'film_details.dart';
 import 'genres.dart';
 
@@ -61,15 +63,15 @@ class Film {
 
   static Film get mock => Film(
     id: '1',
-    name: 'Film name',
+    name: 'F' * RandomNumberGenerator.randomInRange(min: 6, max: 20),
     ageRestriction: '18',
-    genres: ['genre1', 'genre2'],
+    genres: List.generate(RandomNumberGenerator.randomInRange(min: 1, max: 4), (index) => 'Genre'),
     length: 120,
     posterLink: 'posterLink',
     releaseYear: '1999',
     link: 'link',
     filmWebScore: '8.8',
-    videoLink: 'videolinke',
+    videoLink: 'videolink',
     details: FilmDetails.mock,
   );
 }

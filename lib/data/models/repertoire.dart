@@ -26,7 +26,7 @@ class Repertoire {
         var cinema = CinemaHelper.getCinemaById(cinemas!, event.cinemaId);
         var item = filmItem.repertoireFilmCinemaItems
             .firstWhereOrNull((item) => item.cinema.id == cinema.id);
-            
+
         item == null
             ? filmItem.repertoireFilmCinemaItems.add(
                 RepertoireFilmCinemaItem(
@@ -50,4 +50,8 @@ class Repertoire {
   Repertoire.fromFilmItems(List<RepertoireFilmItem> filmItems) {
     this.filmItems = [...filmItems];
   }
+
+  static final Repertoire mock = Repertoire.fromFilmItems(
+    List.generate(6, (index) => RepertoireFilmItem.mock),
+  );
 }

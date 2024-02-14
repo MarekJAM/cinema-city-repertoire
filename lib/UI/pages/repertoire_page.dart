@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 import '../../bloc/blocs.dart';
+import '../../data/models/models.dart';
 import '../../i18n/strings.g.dart';
 import '../widgets/widgets.dart';
 
@@ -51,6 +53,7 @@ class _RepertoireViewState extends State<RepertoireView> {
             padding: const EdgeInsets.symmetric(horizontal: 8.0),
             child: Builder(
               builder: (context) {
+                final repertoireMock = Repertoire.mock;
                 switch (cinemasState.status) {
                   case CinemasStatus.success:
                     return BlocBuilder<RepertoireBloc, RepertoireState>(
@@ -74,7 +77,11 @@ class _RepertoireViewState extends State<RepertoireView> {
                                       : const RepertoireErrorPickCinemas(),
                             );
                           case RepertoireLoading():
-                            return const Center(child: CircularProgressIndicator());
+                            return Skeletonizer(
+                              child: RepertoireListPopulated(
+                                data: repertoireMock,
+                              ),
+                            );
                           case RepertoireError(message: final message):
                             return ErrorColumn(
                               errorMessage: message,
@@ -86,15 +93,18 @@ class _RepertoireViewState extends State<RepertoireView> {
                       },
                     );
                   case CinemasStatus.inProgress:
-                    return const Center(child: CircularProgressIndicator());
+                  case CinemasStatus.initial:
+                    return Skeletonizer(
+                      child: RepertoireListPopulated(
+                        data: repertoireMock,
+                      ),
+                    );
                   case CinemasStatus.failure:
                     return ErrorColumn(
                       errorMessage: cinemasState.errorMessage,
                       buttonMessage: t.refresh,
                       buttonOnPressed: () => context.read<CinemasCubit>().getCinemas(),
                     );
-                  default:
-                    return Container();
                 }
               },
             ),

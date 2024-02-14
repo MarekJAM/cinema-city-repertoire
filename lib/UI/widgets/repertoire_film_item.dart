@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 import '../../data/models/models.dart';
 import '../../bloc/blocs.dart';
@@ -46,16 +47,18 @@ class RepertoireFilmItemWidget extends StatelessWidget {
                     width: 80,
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(5),
-                      child: Image.network(
-                        data.film.posterLink!,
-                        errorBuilder: (context, exception, stackTrace) {
-                          return const Center(
-                            child: Text(
-                              'Brak plakatu',
-                              textAlign: TextAlign.center,
-                            ),
-                          );
-                        },
+                      child: Skeleton.replace(
+                        child: Image.network(
+                          data.film.posterLink!,
+                          errorBuilder: (context, exception, stackTrace) {
+                            return const Center(
+                              child: Text(
+                                'Brak plakatu',
+                                textAlign: TextAlign.center,
+                              ),
+                            );
+                          },
+                        ),
                       ),
                     ),
                   ),
@@ -85,19 +88,21 @@ class RepertoireFilmItemWidget extends StatelessWidget {
                     Wrap(
                       crossAxisAlignment: WrapCrossAlignment.center,
                       children: <Widget>[
-                        Container(
-                          height: 20,
-                          width: 20,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: _getAgeRestrictionColor(
-                              data.film.ageRestriction,
+                        Skeleton.leaf(
+                          child: Container(
+                            height: 20,
+                            width: 20,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: _getAgeRestrictionColor(
+                                data.film.ageRestriction,
+                              ),
                             ),
-                          ),
-                          child: Center(
-                            child: Text(
-                              data.film.ageRestriction,
-                              style: const TextStyle(fontSize: 10),
+                            child: Center(
+                              child: Text(
+                                data.film.ageRestriction,
+                                style: const TextStyle(fontSize: 10),
+                              ),
                             ),
                           ),
                         ),
@@ -111,20 +116,22 @@ class RepertoireFilmItemWidget extends StatelessWidget {
                           ),
                         ),
                         for (final item in data.film.genres)
-                          Padding(
-                            padding: const EdgeInsets.only(right: 4),
-                            child: Container(
-                              padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 1),
-                              decoration: BoxDecoration(
-                                borderRadius: const BorderRadius.all(
-                                  Radius.circular(5),
+                          Skeleton.leaf(
+                            child: Padding(
+                              padding: const EdgeInsets.only(right: 4),
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 1),
+                                decoration: BoxDecoration(
+                                  borderRadius: const BorderRadius.all(
+                                    Radius.circular(5),
+                                  ),
+                                  color: Colors.grey[700],
                                 ),
-                                color: Colors.grey[700],
-                              ),
-                              child: Text(
-                                item,
-                                style: const TextStyle(
-                                  fontSize: 10,
+                                child: Text(
+                                  item,
+                                  style: const TextStyle(
+                                    fontSize: 10,
+                                  ),
                                 ),
                               ),
                             ),
