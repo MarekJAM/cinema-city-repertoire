@@ -171,16 +171,13 @@ class FilmWebScoreWrap extends StatelessWidget {
     return Wrap(
       crossAxisAlignment: WrapCrossAlignment.center,
       children: [
-        Image.asset(
-          'assets/filmweb-logo.png',
-          width: 50,
-        ),
-        const SizedBox(
-          width: 5,
+        Text(
+          "${t.filmDetails.score}: ",
+          style: const TextStyle(fontSize: 12),
         ),
         data.film.filmWebScore != null
             ? Text(
-                data.film.filmWebScore ?? 'no data',
+                data.film.filmWebScore ?? '',
                 style: const TextStyle(fontSize: 12),
               )
             : const Padding(
@@ -250,9 +247,7 @@ class RepertoireFilmItemRow extends StatelessWidget {
                                 Radius.circular(5),
                               ),
                             ),
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 2
-                            ),
+                            padding: const EdgeInsets.symmetric(horizontal: 2),
                             child: Column(
                               children: [
                                 Text(DateHelper.convertDateToHHMM(item.dateTime)),
@@ -261,7 +256,7 @@ class RepertoireFilmItemRow extends StatelessWidget {
                                   style: const TextStyle(fontSize: 7),
                                 ),
                                 Text(
-                                  switch(item.language) {
+                                  switch (item.language) {
                                     (LanguageType.dubbing) => t.languageType.dubbing,
                                     (LanguageType.original) => t.languageType.original,
                                     (LanguageType.subtitles) => t.languageType.subtitles,

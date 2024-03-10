@@ -71,13 +71,6 @@ class FilmDetailsColumn extends StatelessWidget {
                 return Wrap(
                   crossAxisAlignment: WrapCrossAlignment.center,
                   children: [
-                    Image.asset(
-                      'assets/filmweb-logo.png',
-                      width: 60,
-                    ),
-                    const SizedBox(
-                      width: 5,
-                    ),
                     film.filmWebScore != null || isLoading
                         ? Text(
                             film.filmWebScore ?? t.filmDetails.scoreNoData,
