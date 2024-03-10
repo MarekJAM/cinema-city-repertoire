@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:cinema_city/i18n/strings.g.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:injectable/injectable.dart';
@@ -22,7 +23,7 @@ class FilmDetailsCubit extends Cubit<FilmDetailsState> {
       emit(FilmDetailsLoaded(film: film));
     } catch (e) {
       log('$e');
-      emit(const FilmDetailsError(message: 'Nie udało się pobrać informacji o filmie.'));
+      emit(FilmDetailsError(message: t.filmDetails.failedToLoad));
     }
   }
 }

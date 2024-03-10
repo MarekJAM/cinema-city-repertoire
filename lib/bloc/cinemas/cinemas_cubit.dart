@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:cinema_city/i18n/strings.g.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
@@ -34,7 +35,7 @@ class CinemasCubit extends Cubit<CinemasState> {
       emit(
         state.copyWith(
           status: CinemasStatus.failure,
-          errorMessage: 'Nie udało się pobrać listy kin.',
+          errorMessage: t.cinemas.failedToLoad,
         ),
       );
     }

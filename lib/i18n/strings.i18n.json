@@ -14,7 +14,8 @@
         "pickDifferentDate": "Pick a different date",
         "adjustFilters": "Adjust filters",
         "noFilmsToDisplay": "No films to display",
-        "pickCinemas": "Pick cinemas"
+        "pickCinemas": "Pick cinemas",
+        "failedToLoad": "Failed to load data"
     },
     "filmDetails": {
         "premiere": "Premiere",
@@ -27,7 +28,8 @@
         "production": "Production",
         "score": "Score",
         "scoreNoData": "No data",
-        "seeTrailer": "Watch trailer"
+        "seeTrailer": "Watch trailer",
+        "failedToLoad": "Failed to load film details"
     },
     "filters": {
         "name": "Filters",
@@ -38,7 +40,8 @@
     },
     "cinemas": {
         "name": "Cinemas",
-        "savedAsFavorite": "Saved as favorite"
+        "savedAsFavorite": "Saved as favorite",
+        "failedToLoad": "Failed to load list of cinemas"
     },
     "reminders": {
         "filmReminder": "Reminder - $time",

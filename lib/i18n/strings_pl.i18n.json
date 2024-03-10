@@ -14,7 +14,8 @@
         "pickDifferentDate": "Wybierz inną datę",
         "adjustFilters": "Dostosuj filtry",
         "noFilmsToDisplay": "Brak filmów do wyświetlenia",
-        "pickCinemas": "Wybierz kina"
+        "pickCinemas": "Wybierz kina",
+        "failedToLoad": "W trakcie pobierania danych wystąpił błąd"
     },
     "filmDetails": {
         "premiere": "Premiera",
@@ -27,7 +28,8 @@
         "production": "Produkcja",
         "score": "Ocena",
         "scoreNoData": "Brak danych",
-        "seeTrailer": "Zobacz zwiastun"
+        "seeTrailer": "Zobacz zwiastun",
+        "failedToLoad": "Nie udadło się pobrać informacji o filmie"
     },
     "filters": {
         "name": "Filtry",
@@ -38,7 +40,8 @@
     },
     "cinemas": {
         "name": "Kina",
-        "savedAsFavorite": "Zapisano kina jako ulubione"
+        "savedAsFavorite": "Zapisano kina jako ulubione",
+        "failedToLoad": "Nie udało się pobrać listy kin"
     },
     "reminders": {
         "filmReminder": "Przypomnienie o seansie - $time",

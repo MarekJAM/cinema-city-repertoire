@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:developer';
 
+import 'package:cinema_city/i18n/strings.g.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
@@ -76,15 +77,9 @@ class RepertoireBloc extends Bloc<RepertoireEvent, RepertoireState> {
           hasFilteringLimitedResults: hasFilteringLimitedResults,
         ),
       );
-    } on ClientException catch (e) {
-      log(e.message!);
-      emit(const RepertoireError(message: 'Błąd połączenia.'));
-    } on ServerException catch (e) {
-      log(e.message!);
-      emit(const RepertoireError(message: 'Błąd wewnętrzny serwera.'));
     } catch (e) {
       log('$e');
-      emit(const RepertoireError(message: 'Wystąpił nieznany błąd.'));
+      emit(RepertoireError(message: t.repertoire.failedToLoad));
     }
   }
 

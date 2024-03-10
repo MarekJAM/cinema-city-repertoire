@@ -4,9 +4,9 @@
 /// To regenerate, run: `dart run slang`
 ///
 /// Locales: 2
-/// Strings: 122 (61 per locale)
+/// Strings: 128 (64 per locale)
 ///
-/// Built on 2024-02-11 at 17:25 UTC
+/// Built on 2024-03-10 at 20:44 UTC
 
 // coverage:ignore-file
 // ignore_for_file: type=lint
@@ -181,6 +181,7 @@ class _StringsRepertoireEn {
 	String get adjustFilters => 'Adjust filters';
 	String get noFilmsToDisplay => 'No films to display';
 	String get pickCinemas => 'Pick cinemas';
+	String get failedToLoad => 'Failed to load data';
 }
 
 // Path: filmDetails
@@ -201,6 +202,7 @@ class _StringsFilmDetailsEn {
 	String get score => 'Score';
 	String get scoreNoData => 'No data';
 	String get seeTrailer => 'Watch trailer';
+	String get failedToLoad => 'Failed to load film details';
 }
 
 // Path: filters
@@ -226,6 +228,7 @@ class _StringsCinemasEn {
 	// Translations
 	String get name => 'Cinemas';
 	String get savedAsFavorite => 'Saved as favorite';
+	String get failedToLoad => 'Failed to load list of cinemas';
 }
 
 // Path: reminders
@@ -339,6 +342,7 @@ class _StringsRepertoirePl implements _StringsRepertoireEn {
 	@override String get adjustFilters => 'Dostosuj filtry';
 	@override String get noFilmsToDisplay => 'Brak filmów do wyświetlenia';
 	@override String get pickCinemas => 'Wybierz kina';
+	@override String get failedToLoad => 'W trakcie pobierania danych wystąpił błąd';
 }
 
 // Path: filmDetails
@@ -359,6 +363,7 @@ class _StringsFilmDetailsPl implements _StringsFilmDetailsEn {
 	@override String get score => 'Ocena';
 	@override String get scoreNoData => 'Brak danych';
 	@override String get seeTrailer => 'Zobacz zwiastun';
+	@override String get failedToLoad => 'Nie udadło się pobrać informacji o filmie';
 }
 
 // Path: filters
@@ -384,6 +389,7 @@ class _StringsCinemasPl implements _StringsCinemasEn {
 	// Translations
 	@override String get name => 'Kina';
 	@override String get savedAsFavorite => 'Zapisano kina jako ulubione';
+	@override String get failedToLoad => 'Nie udało się pobrać listy kin';
 }
 
 // Path: reminders
@@ -462,6 +468,7 @@ extension on _StringsEn {
 			case 'repertoire.adjustFilters': return 'Adjust filters';
 			case 'repertoire.noFilmsToDisplay': return 'No films to display';
 			case 'repertoire.pickCinemas': return 'Pick cinemas';
+			case 'repertoire.failedToLoad': return 'Failed to load data';
 			case 'filmDetails.premiere': return 'Premiere';
 			case 'filmDetails.filmLength': return 'Film length';
 			case 'filmDetails.filmLengthValue': return ({required Object val}) => '${val} min';
@@ -473,6 +480,7 @@ extension on _StringsEn {
 			case 'filmDetails.score': return 'Score';
 			case 'filmDetails.scoreNoData': return 'No data';
 			case 'filmDetails.seeTrailer': return 'Watch trailer';
+			case 'filmDetails.failedToLoad': return 'Failed to load film details';
 			case 'filters.name': return 'Filters';
 			case 'filters.genre': return 'Genre';
 			case 'filters.typeOfShow': return 'Type of session';
@@ -480,6 +488,7 @@ extension on _StringsEn {
 			case 'filters.minimalScore': return 'Minimal score';
 			case 'cinemas.name': return 'Cinemas';
 			case 'cinemas.savedAsFavorite': return 'Saved as favorite';
+			case 'cinemas.failedToLoad': return 'Failed to load list of cinemas';
 			case 'reminders.filmReminder': return ({required Object time}) => 'Reminder - ${time}';
 			case 'reminders.reminderScheduled': return 'Reminder scheduled';
 			case 'reminders.selectReminderTime': return 'Select reminder time';
@@ -531,6 +540,7 @@ extension on _StringsPl {
 			case 'repertoire.adjustFilters': return 'Dostosuj filtry';
 			case 'repertoire.noFilmsToDisplay': return 'Brak filmów do wyświetlenia';
 			case 'repertoire.pickCinemas': return 'Wybierz kina';
+			case 'repertoire.failedToLoad': return 'W trakcie pobierania danych wystąpił błąd';
 			case 'filmDetails.premiere': return 'Premiera';
 			case 'filmDetails.filmLength': return 'Czas trwania';
 			case 'filmDetails.filmLengthValue': return ({required Object val}) => '${val} min';
@@ -542,6 +552,7 @@ extension on _StringsPl {
 			case 'filmDetails.score': return 'Ocena';
 			case 'filmDetails.scoreNoData': return 'Brak danych';
 			case 'filmDetails.seeTrailer': return 'Zobacz zwiastun';
+			case 'filmDetails.failedToLoad': return 'Nie udadło się pobrać informacji o filmie';
 			case 'filters.name': return 'Filtry';
 			case 'filters.genre': return 'Gatunek';
 			case 'filters.typeOfShow': return 'Rodzaj seansu';
@@ -549,6 +560,7 @@ extension on _StringsPl {
 			case 'filters.minimalScore': return 'Minimalna ocena';
 			case 'cinemas.name': return 'Kina';
 			case 'cinemas.savedAsFavorite': return 'Zapisano kina jako ulubione';
+			case 'cinemas.failedToLoad': return 'Nie udało się pobrać listy kin';
 			case 'reminders.filmReminder': return ({required Object time}) => 'Przypomnienie o seansie - ${time}';
 			case 'reminders.reminderScheduled': return 'Zaplanowano przypomnienie';
 			case 'reminders.selectReminderTime': return 'Wybierz czas przypomnienia';
