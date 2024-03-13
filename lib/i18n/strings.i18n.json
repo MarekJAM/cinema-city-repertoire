@@ -36,7 +36,9 @@
         "genre": "Genre",
         "typeOfShow": "Type of session",
         "noScore": "No score",
-        "minimalScore": "Minimal score"
+        "minimalScore": "Minimal score",
+        "selectAll": "Select all",
+        "unselectAll": "Unselect all"
     },
     "cinemas": {
         "name": "Cinemas",

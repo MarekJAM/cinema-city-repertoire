@@ -23,6 +23,8 @@ class _FilterDialogColumnState extends State<FilterDialogColumn> {
   @override
   Widget build(BuildContext context) {
     bool isInitiallySelected(String val) => widget.pickedValues.contains(val);
+    bool allSelected = widget.pickedValues.length == widget.values.length;
+
     return Card(
       child: Padding(
         padding: const EdgeInsets.only(left: 8, right: 8, bottom: 8),
@@ -41,15 +43,18 @@ class _FilterDialogColumnState extends State<FilterDialogColumn> {
                 ),
                 TextButton(
                   onPressed: () {
-                    setState(
-                      () {
-                        widget.pickedValues
-                          ..clear()
-                          ..addAll(widget.values);
-                      },
-                    );
+                    setState(() {
+                      if (allSelected) {
+                        widget.pickedValues.clear();
+                      } else {
+                        widget.pickedValues.clear();
+                        widget.pickedValues.addAll(widget.values);
+                      }
+                    });
                   },
-                  child: Text(t.reset),
+                  child: Text(
+                    allSelected ? t.filters.unselectAll : t.filters.selectAll,
+                  ),
                 ),
               ],
             ),
