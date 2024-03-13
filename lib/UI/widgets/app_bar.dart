@@ -57,7 +57,7 @@ class _RepertoireAppBarState extends State<RepertoireAppBar> {
               onPressed: () async {
                 final date = await DateSelector.selectDate(context);
                 if (date == null) return;
-                if (mounted) context.read<DatesCubit>().selectedDateChanged(date);
+                if (context.mounted) context.read<DatesCubit>().selectedDateChanged(date);
               },
             ),
           ),
@@ -83,7 +83,7 @@ class _RepertoireAppBarState extends State<RepertoireAppBar> {
                       child: Text(t.filters.name),
                       onTap: () async {
                         await Future.delayed(const Duration(microseconds: 3));
-                        if (!mounted) return;
+                        if (!context.mounted) return;
                         Navigator.of(context).push(
                           FiltersPage.route(),
                         );

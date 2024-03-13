@@ -158,8 +158,8 @@ class _FilmEventDialogState extends State<FilmEventDialog> {
                                 widget.item,
                                 pickedTzDateTime,
                               );
-                              if (mounted) context.showSnackbar(t.reminders.reminderScheduled);
-                              if (mounted) Navigator.of(context).pop();
+                              if (context.mounted) context.showSnackbar(t.reminders.reminderScheduled);
+                              if (context.mounted) Navigator.of(context).pop();
                             } catch (_) {}
                           }
                         }
