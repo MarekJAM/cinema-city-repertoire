@@ -4,9 +4,9 @@
 /// To regenerate, run: `dart run slang`
 ///
 /// Locales: 2
-/// Strings: 128 (64 per locale)
+/// Strings: 132 (66 per locale)
 ///
-/// Built on 2024-03-10 at 20:44 UTC
+/// Built on 2024-03-12 at 15:19 UTC
 
 // coverage:ignore-file
 // ignore_for_file: type=lint
@@ -217,6 +217,8 @@ class _StringsFiltersEn {
 	String get typeOfShow => 'Type of session';
 	String get noScore => 'No score';
 	String get minimalScore => 'Minimal score';
+	String get selectAll => 'Select all';
+	String get unselectAll => 'Unselect all';
 }
 
 // Path: cinemas
@@ -378,6 +380,8 @@ class _StringsFiltersPl implements _StringsFiltersEn {
 	@override String get typeOfShow => 'Rodzaj seansu';
 	@override String get noScore => 'Bez oceny';
 	@override String get minimalScore => 'Minimalna ocena';
+	@override String get selectAll => 'Zaznacz wszystko';
+	@override String get unselectAll => 'Odznacz wszystko';
 }
 
 // Path: cinemas
@@ -486,6 +490,8 @@ extension on _StringsEn {
 			case 'filters.typeOfShow': return 'Type of session';
 			case 'filters.noScore': return 'No score';
 			case 'filters.minimalScore': return 'Minimal score';
+			case 'filters.selectAll': return 'Select all';
+			case 'filters.unselectAll': return 'Unselect all';
 			case 'cinemas.name': return 'Cinemas';
 			case 'cinemas.savedAsFavorite': return 'Saved as favorite';
 			case 'cinemas.failedToLoad': return 'Failed to load list of cinemas';
@@ -558,6 +564,8 @@ extension on _StringsPl {
 			case 'filters.typeOfShow': return 'Rodzaj seansu';
 			case 'filters.noScore': return 'Bez oceny';
 			case 'filters.minimalScore': return 'Minimalna ocena';
+			case 'filters.selectAll': return 'Zaznacz wszystko';
+			case 'filters.unselectAll': return 'Odznacz wszystko';
 			case 'cinemas.name': return 'Kina';
 			case 'cinemas.savedAsFavorite': return 'Zapisano kina jako ulubione';
 			case 'cinemas.failedToLoad': return 'Nie udało się pobrać listy kin';

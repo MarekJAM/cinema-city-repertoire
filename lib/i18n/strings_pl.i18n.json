@@ -36,7 +36,9 @@
         "genre": "Gatunek",
         "typeOfShow": "Rodzaj seansu",
         "noScore": "Bez oceny",
-        "minimalScore": "Minimalna ocena"
+        "minimalScore": "Minimalna ocena",
+        "selectAll": "Zaznacz wszystko",
+        "unselectAll": "Odznacz wszystko"
     },
     "cinemas": {
         "name": "Kina",
