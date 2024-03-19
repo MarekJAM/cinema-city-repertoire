@@ -1,42 +1,27 @@
 import 'package:flutter/material.dart';
 
-class FilterValueButton extends StatefulWidget {
+class FilterValueButton extends StatelessWidget {
   const FilterValueButton({
     Key? key,
-    required this.value,
-    required this.pickedValues,
-    required this.isInitiallySelected,
+    required this.label,
+    required this.isSelected,
+    required this.onValueChanged,
   }) : super(key: key);
 
-  final String value;
-  final List<String> pickedValues;
-  final bool isInitiallySelected;
+  final String label;
+  final bool isSelected;
+  final Function(bool, String) onValueChanged;
 
-  @override
-  State<FilterValueButton> createState() => _FilterValueButtonState();
-}
-
-class _FilterValueButtonState extends State<FilterValueButton> {
   @override
   Widget build(BuildContext context) {
     return ChoiceChip(
       label: Text(
-        widget.value,
+        label,
       ),
-      selected: widget.pickedValues.contains(widget.value),
-      onSelected: (value) {
-        setState(() {
-          toggleValue();
-        });
+      selected: isSelected,
+      onSelected: (newVal) {
+          onValueChanged(newVal, label);
       },
     );
-  }
-
-  void toggleValue() {
-    if (widget.pickedValues.contains(widget.value)) {
-      widget.pickedValues.remove(widget.value);
-    } else {
-      widget.pickedValues.add(widget.value);
-    }
   }
 }

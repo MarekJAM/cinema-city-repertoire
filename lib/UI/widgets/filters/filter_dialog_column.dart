@@ -20,9 +20,20 @@ class FilterDialogColumn extends StatefulWidget {
 }
 
 class _FilterDialogColumnState extends State<FilterDialogColumn> {
+  bool isSelected(String val) => widget.pickedValues.contains(val);
+  
+  void onFilterToggled(bool isSelected, String value) {
+    setState(() {
+      if (isSelected) {
+        widget.pickedValues.add(value);
+      } else {
+        widget.pickedValues.remove(value);
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    bool isInitiallySelected(String val) => widget.pickedValues.contains(val);
     bool allSelected = widget.pickedValues.length == widget.values.length;
 
     return Card(
@@ -65,11 +76,11 @@ class _FilterDialogColumnState extends State<FilterDialogColumn> {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 2),
                     child: FilterValueButton(
-                      value: widget.values[i],
-                      pickedValues: widget.pickedValues,
-                      isInitiallySelected: isInitiallySelected(
+                      label: widget.values[i],
+                      isSelected: isSelected(
                         widget.values[i],
                       ),
+                      onValueChanged: onFilterToggled,
                     ),
                   ),
               ],
