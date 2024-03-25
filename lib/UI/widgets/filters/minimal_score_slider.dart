@@ -28,7 +28,7 @@ class _MinimalScoreSliderState extends State<MinimalScoreSlider> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  '${t.filters.minimalScore}: ${widget.scoreFilter!.score!.toStringAsFixed(1)}',
+                  '${t.filters.minimalRating}: ${widget.scoreFilter!.score!.toStringAsFixed(1)}',
                   style: const TextStyle(
                     fontSize: 16,
                   ),
@@ -37,7 +37,7 @@ class _MinimalScoreSliderState extends State<MinimalScoreSlider> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      t.filters.noScore,
+                      t.filters.noRating,
                       style: const TextStyle(
                         fontSize: 16,
                       ),

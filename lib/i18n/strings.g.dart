@@ -6,7 +6,7 @@
 /// Locales: 2
 /// Strings: 132 (66 per locale)
 ///
-/// Built on 2024-03-12 at 15:19 UTC
+/// Built on 2024-03-25 at 22:28 UTC
 
 // coverage:ignore-file
 // ignore_for_file: type=lint
@@ -199,8 +199,8 @@ class _StringsFilmDetailsEn {
 	String get cast => 'Cast';
 	String get director => 'Director';
 	String get production => 'Production';
-	String get score => 'Score';
-	String get scoreNoData => 'No data';
+	String get rating => 'Rating';
+	String get ratingNoData => 'No data';
 	String get seeTrailer => 'Watch trailer';
 	String get failedToLoad => 'Failed to load film details';
 }
@@ -215,8 +215,8 @@ class _StringsFiltersEn {
 	String get name => 'Filters';
 	String get genre => 'Genre';
 	String get typeOfShow => 'Type of session';
-	String get noScore => 'No score';
-	String get minimalScore => 'Minimal score';
+	String get noRating => 'No rating';
+	String get minimalRating => 'Minimal rating';
 	String get selectAll => 'Select all';
 	String get unselectAll => 'Unselect all';
 }
@@ -362,8 +362,8 @@ class _StringsFilmDetailsPl implements _StringsFilmDetailsEn {
 	@override String get cast => 'Obsada';
 	@override String get director => 'Reżyser';
 	@override String get production => 'Produkcja';
-	@override String get score => 'Ocena';
-	@override String get scoreNoData => 'Brak danych';
+	@override String get rating => 'Ocena';
+	@override String get ratingNoData => 'Brak danych';
 	@override String get seeTrailer => 'Zobacz zwiastun';
 	@override String get failedToLoad => 'Nie udadło się pobrać informacji o filmie';
 }
@@ -378,8 +378,8 @@ class _StringsFiltersPl implements _StringsFiltersEn {
 	@override String get name => 'Filtry';
 	@override String get genre => 'Gatunek';
 	@override String get typeOfShow => 'Rodzaj seansu';
-	@override String get noScore => 'Bez oceny';
-	@override String get minimalScore => 'Minimalna ocena';
+	@override String get noRating => 'Bez oceny';
+	@override String get minimalRating => 'Minimalna ocena';
 	@override String get selectAll => 'Zaznacz wszystko';
 	@override String get unselectAll => 'Odznacz wszystko';
 }
@@ -481,15 +481,15 @@ extension on _StringsEn {
 			case 'filmDetails.cast': return 'Cast';
 			case 'filmDetails.director': return 'Director';
 			case 'filmDetails.production': return 'Production';
-			case 'filmDetails.score': return 'Score';
-			case 'filmDetails.scoreNoData': return 'No data';
+			case 'filmDetails.rating': return 'Rating';
+			case 'filmDetails.ratingNoData': return 'No data';
 			case 'filmDetails.seeTrailer': return 'Watch trailer';
 			case 'filmDetails.failedToLoad': return 'Failed to load film details';
 			case 'filters.name': return 'Filters';
 			case 'filters.genre': return 'Genre';
 			case 'filters.typeOfShow': return 'Type of session';
-			case 'filters.noScore': return 'No score';
-			case 'filters.minimalScore': return 'Minimal score';
+			case 'filters.noRating': return 'No rating';
+			case 'filters.minimalRating': return 'Minimal rating';
 			case 'filters.selectAll': return 'Select all';
 			case 'filters.unselectAll': return 'Unselect all';
 			case 'cinemas.name': return 'Cinemas';
@@ -555,15 +555,15 @@ extension on _StringsPl {
 			case 'filmDetails.cast': return 'Obsada';
 			case 'filmDetails.director': return 'Reżyser';
 			case 'filmDetails.production': return 'Produkcja';
-			case 'filmDetails.score': return 'Ocena';
-			case 'filmDetails.scoreNoData': return 'Brak danych';
+			case 'filmDetails.rating': return 'Ocena';
+			case 'filmDetails.ratingNoData': return 'Brak danych';
 			case 'filmDetails.seeTrailer': return 'Zobacz zwiastun';
 			case 'filmDetails.failedToLoad': return 'Nie udadło się pobrać informacji o filmie';
 			case 'filters.name': return 'Filtry';
 			case 'filters.genre': return 'Gatunek';
 			case 'filters.typeOfShow': return 'Rodzaj seansu';
-			case 'filters.noScore': return 'Bez oceny';
-			case 'filters.minimalScore': return 'Minimalna ocena';
+			case 'filters.noRating': return 'Bez oceny';
+			case 'filters.minimalRating': return 'Minimalna ocena';
 			case 'filters.selectAll': return 'Zaznacz wszystko';
 			case 'filters.unselectAll': return 'Odznacz wszystko';
 			case 'cinemas.name': return 'Kina';

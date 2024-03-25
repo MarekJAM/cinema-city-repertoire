@@ -26,8 +26,8 @@
         "cast": "Obsada",
         "director": "Reżyser",
         "production": "Produkcja",
-        "score": "Ocena",
-        "scoreNoData": "Brak danych",
+        "rating": "Ocena",
+        "ratingNoData": "Brak danych",
         "seeTrailer": "Zobacz zwiastun",
         "failedToLoad": "Nie udadło się pobrać informacji o filmie"
     },
@@ -35,8 +35,8 @@
         "name": "Filtry",
         "genre": "Gatunek",
         "typeOfShow": "Rodzaj seansu",
-        "noScore": "Bez oceny",
-        "minimalScore": "Minimalna ocena",
+        "noRating": "Bez oceny",
+        "minimalRating": "Minimalna ocena",
         "selectAll": "Zaznacz wszystko",
         "unselectAll": "Odznacz wszystko"
     },

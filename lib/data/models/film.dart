@@ -70,7 +70,7 @@ class Film {
     posterLink: 'posterLink',
     releaseYear: '1999',
     link: 'link',
-    filmWebScore: '8.8',
+    filmWebScore: '8.8 / 10',
     videoLink: 'videolink',
     details: FilmDetails.mock,
   );

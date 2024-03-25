@@ -65,7 +65,7 @@ class FilmDetailsColumn extends StatelessWidget {
                 title: "${t.filmDetails.production}:", content: film.details!.production),
           const Divider(),
           DetailsDataRow(
-            title: "${t.filmDetails.score}:",
+            title: "${t.filmDetails.rating}:",
             widget: BlocBuilder<FilmScoresCubit, FilmScoresState>(
               builder: (context, state) {
                 return Wrap(
@@ -73,7 +73,7 @@ class FilmDetailsColumn extends StatelessWidget {
                   children: [
                     film.filmWebScore != null || isLoading
                         ? Text(
-                            film.filmWebScore ?? t.filmDetails.scoreNoData,
+                            film.filmWebScore ?? t.filmDetails.ratingNoData,
                           )
                         : const Padding(
                             padding: EdgeInsets.symmetric(

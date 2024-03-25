@@ -25,6 +25,13 @@ class RepertoireFilmItemWidget extends StatelessWidget {
     }
   }
 
+  void _goToFilmDetails(BuildContext context, Film film) {
+    BlocProvider.of<FilmDetailsCubit>(context).getFilmDetails(film);
+    Navigator.of(context).push(
+      FilmDetailsPage.route(film),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -35,10 +42,7 @@ class RepertoireFilmItemWidget extends StatelessWidget {
           children: <Widget>[
             GestureDetector(
               onTap: () {
-                BlocProvider.of<FilmDetailsCubit>(context).getFilmDetails(data.film);
-                Navigator.of(context).push(
-                  FilmDetailsPage.route(data.film),
-                );
+                _goToFilmDetails(context, data.film);
               },
               child: Column(
                 children: [
@@ -75,12 +79,17 @@ class RepertoireFilmItemWidget extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Text(
-                      data.film.name,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
+                    GestureDetector(
+                      onTap: () {
+                        _goToFilmDetails(context, data.film);
+                      },
+                      child: Text(
+                        data.film.name,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
+                        softWrap: true,
                       ),
-                      softWrap: true,
                     ),
                     const SizedBox(
                       height: 2,
@@ -150,7 +159,7 @@ class RepertoireFilmItemWidget extends StatelessWidget {
                   ],
                 ),
               ),
-            )
+            ),
           ],
         ),
       ),
@@ -168,29 +177,26 @@ class FilmWebScoreWrap extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Wrap(
-      crossAxisAlignment: WrapCrossAlignment.center,
-      children: [
-        Text(
-          "${t.filmDetails.score}: ",
-          style: const TextStyle(fontSize: 12),
+    return Skeletonizer(
+      enabled: data.film.filmWebScore == null,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 1),
+        decoration: BoxDecoration(
+          borderRadius: const BorderRadius.all(
+            Radius.circular(5),
+          ),
+          color: Colors.grey[800],
         ),
-        data.film.filmWebScore != null
-            ? Text(
-                data.film.filmWebScore ?? '',
-                style: const TextStyle(fontSize: 12),
-              )
-            : const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 3.5, vertical: 2),
-                child: SizedBox(
-                  height: 10,
-                  width: 10,
-                  child: CircularProgressIndicator(
-                    strokeWidth: 2,
-                  ),
-                ),
-              ),
-      ],
+        child: Wrap(
+          crossAxisAlignment: WrapCrossAlignment.center,
+          children: [
+            Text(
+              data.film.filmWebScore ?? '7.7 / 10',
+              style: const TextStyle(fontSize: 12),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
@@ -229,7 +235,10 @@ class RepertoireFilmItemRow extends StatelessWidget {
                 runSpacing: 4,
                 children: <Widget>[
                   for (var item in events)
-                    GestureDetector(
+                    InkWell(
+                      customBorder: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5),
+                      ),
                       onTap: () {
                         showDialog(
                           context: context,

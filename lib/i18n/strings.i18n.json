@@ -26,8 +26,8 @@
         "cast": "Cast",
         "director": "Director",
         "production": "Production",
-        "score": "Score",
-        "scoreNoData": "No data",
+        "rating": "Rating",
+        "ratingNoData": "No data",
         "seeTrailer": "Watch trailer",
         "failedToLoad": "Failed to load film details"
     },
@@ -35,8 +35,8 @@
         "name": "Filters",
         "genre": "Genre",
         "typeOfShow": "Type of session",
-        "noScore": "No score",
-        "minimalScore": "Minimal score",
+        "noRating": "No rating",
+        "minimalRating": "Minimal rating",
         "selectAll": "Select all",
         "unselectAll": "Unselect all"
     },

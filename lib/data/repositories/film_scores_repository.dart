@@ -19,10 +19,11 @@ class FilmScoresRepository {
   void getFilmWebScore(Film film) async {
     try {
       final id = await filmScoresApiClient.getFilmId(film.name);
-      film.filmWebScore = await filmScoresApiClient.getFilmScore(id);
+      final score = await filmScoresApiClient.getFilmScore(id);
+      film.filmWebScore = '$score / 10';
     } catch (e) {
       log("$e");
-      film.filmWebScore = '-';
+      film.filmWebScore = 'N/A';
     }
     _scoresSubject.add(film);
   }
