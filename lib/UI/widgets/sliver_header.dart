@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cinema_city/utils/theme_context_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher_string.dart';
@@ -27,45 +28,21 @@ class SliverHeader extends SliverPersistentHeaderDelegate {
   ) {
     return Stack(
       children: [
-        SizedBox(
-          width: double.infinity,
-          child: Image.network(
-            imageUrl,
-            fit: BoxFit.fitWidth,
+        Center(
+          child: SizedBox(
             width: 300,
-            errorBuilder: (context, exception, stackTrace) {
-              return const Center(
-                child: Icon(
-                  Icons.image_not_supported_rounded,
-                  size: 50,
-                ),
-              );
-            },
-            frameBuilder: (
-              BuildContext context,
-              Widget child,
-              int? frame,
-              bool wasSynchronouslyLoaded,
-            ) {
-              return AnimatedCrossFade(
-                firstChild: SizedBox(
-                  height: maxExtent,
-                  child: const Center(
-                    child: CircularProgressIndicator(),
+            child: CachedNetworkImage(
+              imageUrl: imageUrl,
+              fit: BoxFit.fitWidth,
+              errorWidget: (context, url, error) {
+                return const Center(
+                  child: Icon(
+                    Icons.image_not_supported_rounded,
+                    size: 50,
                   ),
-                ),
-                secondChild: Container(
-                  width: double.infinity,
-                  color: context.colorScheme.background,
-                  child: Center(
-                    child: child,
-                  ),
-                ),
-                duration: const Duration(milliseconds: 500),
-                crossFadeState:
-                    frame == null ? CrossFadeState.showFirst : CrossFadeState.showSecond,
-              );
-            },
+                );
+              },
+            ),
           ),
         ),
         Padding(

@@ -29,7 +29,8 @@
         "rating": "Rating",
         "ratingNoData": "No data",
         "seeTrailer": "Watch trailer",
-        "failedToLoad": "Failed to load film details"
+        "failedToLoad": "Failed to load film details",
+        "posterError": "Failed to load poster"
     },
     "filters": {
         "name": "Filters",

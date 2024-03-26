@@ -29,7 +29,8 @@
         "rating": "Ocena",
         "ratingNoData": "Brak danych",
         "seeTrailer": "Zobacz zwiastun",
-        "failedToLoad": "Nie udadło się pobrać informacji o filmie"
+        "failedToLoad": "Nie udadło się pobrać informacji o filmie",
+        "posterError": "Nie udało się pobrać plakatu"
     },
     "filters": {
         "name": "Filtry",

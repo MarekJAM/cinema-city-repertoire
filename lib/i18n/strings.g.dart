@@ -4,9 +4,9 @@
 /// To regenerate, run: `dart run slang`
 ///
 /// Locales: 2
-/// Strings: 132 (66 per locale)
+/// Strings: 134 (67 per locale)
 ///
-/// Built on 2024-03-25 at 22:28 UTC
+/// Built on 2024-03-26 at 20:35 UTC
 
 // coverage:ignore-file
 // ignore_for_file: type=lint
@@ -203,6 +203,7 @@ class _StringsFilmDetailsEn {
 	String get ratingNoData => 'No data';
 	String get seeTrailer => 'Watch trailer';
 	String get failedToLoad => 'Failed to load film details';
+	String get posterError => 'Failed to load poster';
 }
 
 // Path: filters
@@ -366,6 +367,7 @@ class _StringsFilmDetailsPl implements _StringsFilmDetailsEn {
 	@override String get ratingNoData => 'Brak danych';
 	@override String get seeTrailer => 'Zobacz zwiastun';
 	@override String get failedToLoad => 'Nie udadło się pobrać informacji o filmie';
+	@override String get posterError => 'Nie udało się pobrać plakatu';
 }
 
 // Path: filters
@@ -485,6 +487,7 @@ extension on _StringsEn {
 			case 'filmDetails.ratingNoData': return 'No data';
 			case 'filmDetails.seeTrailer': return 'Watch trailer';
 			case 'filmDetails.failedToLoad': return 'Failed to load film details';
+			case 'filmDetails.posterError': return 'Failed to load poster';
 			case 'filters.name': return 'Filters';
 			case 'filters.genre': return 'Genre';
 			case 'filters.typeOfShow': return 'Type of session';
@@ -559,6 +562,7 @@ extension on _StringsPl {
 			case 'filmDetails.ratingNoData': return 'Brak danych';
 			case 'filmDetails.seeTrailer': return 'Zobacz zwiastun';
 			case 'filmDetails.failedToLoad': return 'Nie udadło się pobrać informacji o filmie';
+			case 'filmDetails.posterError': return 'Nie udało się pobrać plakatu';
 			case 'filters.name': return 'Filtry';
 			case 'filters.genre': return 'Gatunek';
 			case 'filters.typeOfShow': return 'Rodzaj seansu';

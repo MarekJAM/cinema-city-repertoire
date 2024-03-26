@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:skeletonizer/skeletonizer.dart';
@@ -52,13 +53,19 @@ class RepertoireFilmItemWidget extends StatelessWidget {
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(5),
                       child: Skeleton.replace(
-                        child: Image.network(
-                          data.film.posterLink!,
-                          errorBuilder: (context, exception, stackTrace) {
-                            return const Center(
-                              child: Text(
-                                'Brak plakatu',
-                                textAlign: TextAlign.center,
+                        child: CachedNetworkImage(
+                          imageUrl: data.film.posterLink!,
+                          errorWidget: (context, url, error) {
+                            return Center(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  const Icon(Icons.image_not_supported_rounded),
+                                  Text(
+                                    t.filmDetails.posterError,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ],
                               ),
                             );
                           },
