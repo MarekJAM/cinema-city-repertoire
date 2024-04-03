@@ -22,6 +22,9 @@ class FilmScoresRepository {
       final id = await filmScoresApiClient.getFilmId(film.name);
       final ratingString = await filmScoresApiClient.getFilmRating(id);
       final rating = double.parse(ratingString);
+      if (rating < 0.1) {
+        throw Exception("Failed to get filmweb score for movie: ${film.name}. Decoded value < 0.1");
+      }
       film.rating = FilmRatingLoaded(rating: rating);
     } catch (e) {
       log("$e");
