@@ -16,14 +16,16 @@ class FilmScoresRepository {
   final _scoresSubject = BehaviorSubject<Film>();
   Stream<Film> get watchScores => _scoresSubject.stream;
 
-  void getFilmWebScore(Film film) async {
+  void getFilmWebRating(Film film) async {
+    film.rating = const FilmRatingLoading();
     try {
       final id = await filmScoresApiClient.getFilmId(film.name);
-      final score = await filmScoresApiClient.getFilmScore(id);
-      film.filmWebScore = '$score / 10';
+      final ratingString = await filmScoresApiClient.getFilmRating(id);
+      final rating = double.parse(ratingString);
+      film.rating = FilmRatingLoaded(rating: rating);
     } catch (e) {
       log("$e");
-      film.filmWebScore = 'N/A';
+      film.rating = const FilmRatingError();
     }
     _scoresSubject.add(film);
   }

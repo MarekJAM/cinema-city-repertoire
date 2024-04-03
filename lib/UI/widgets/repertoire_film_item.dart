@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cinema_city/UI/widgets/rating_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:skeletonizer/skeletonizer.dart';
@@ -74,7 +75,7 @@ class RepertoireFilmItemWidget extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(
-                    height: 4,
+                    height: 2,
                   ),
                   FilmWebScoreWrap(data: data),
                 ],
@@ -184,27 +185,11 @@ class FilmWebScoreWrap extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Skeletonizer(
-      enabled: data.film.filmWebScore == null,
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 1),
-        decoration: BoxDecoration(
-          borderRadius: const BorderRadius.all(
-            Radius.circular(5),
-          ),
-          color: Colors.grey[800],
-        ),
-        child: Wrap(
-          crossAxisAlignment: WrapCrossAlignment.center,
-          children: [
-            Text(
-              data.film.filmWebScore ?? '7.7 / 10',
-              style: const TextStyle(fontSize: 12),
-            ),
-          ],
-        ),
-      ),
-    );
+    return switch (data.film.rating) {
+      FilmRatingError() => const SizedBox.shrink(),
+      FilmRatingLoaded(rating: final rating) => RatingBar(rating: rating, maxRating: 10),
+      FilmRatingLoading() || FilmRatingInitial() => const RatingBarSkeleton(),
+    };
   }
 }
 

@@ -21,7 +21,7 @@ class FilmScoresApiClient {
     return response.data['searchHits'][0]['id'];
   }
 
-  Future<String> getFilmScore(int filmId) async {
+  Future<String> getFilmRating(int filmId) async {
     var response = await client.get(
       '/film/$filmId/rating',
     );

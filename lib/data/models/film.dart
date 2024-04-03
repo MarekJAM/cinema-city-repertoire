@@ -3,7 +3,7 @@ import 'package:cinema_city/utils/random_number_generator.dart';
 import 'film_details.dart';
 import 'genres.dart';
 
-class Film {
+final class Film {
   final String id;
   final String name;
   final int? length;
@@ -14,7 +14,7 @@ class Film {
   final String link;
   final String? videoLink;
   FilmDetails? details;
-  String? filmWebScore;
+  FilmRating rating;
 
   Film({
     required this.id,
@@ -27,7 +27,7 @@ class Film {
     required this.link,
     this.videoLink,
     this.details,
-    this.filmWebScore,
+    this.rating = const FilmRatingInitial(),
   });
 
   factory Film.fromJson(Map<String, dynamic> json) {
@@ -70,8 +70,30 @@ class Film {
     posterLink: 'posterLink',
     releaseYear: '1999',
     link: 'link',
-    filmWebScore: '8.8 / 10',
+    rating: const FilmRatingLoading(),
     videoLink: 'videolink',
     details: FilmDetails.mock,
   );
+}
+
+sealed class FilmRating {
+  const FilmRating();
+}
+
+class FilmRatingInitial extends FilmRating {
+  const FilmRatingInitial();
+}
+
+class FilmRatingLoading extends FilmRating {
+  const FilmRatingLoading();
+}
+
+class FilmRatingLoaded extends FilmRating {
+  final double rating;
+
+  const FilmRatingLoaded({required this.rating});
+}
+
+class FilmRatingError extends FilmRating {
+  const FilmRatingError();
 }

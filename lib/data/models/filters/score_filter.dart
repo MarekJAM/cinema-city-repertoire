@@ -19,11 +19,10 @@ class ScoreFilter implements RepertoireFilter {
     var toRemove = [];
 
     for (var el in items) {
-      var itemScoreString = el.film.filmWebScore;
-      var itemScoreDouble = itemScoreString != null ? double.tryParse(itemScoreString) : null;
+      final filmRating = el.film.rating;
 
-      if ((itemScoreDouble != null && itemScoreDouble < score!) ||
-          (itemScoreDouble == null && itemScoreString != null && !showFilmsWithNoScore!)) {
+      if ((filmRating is FilmRatingLoaded && filmRating.rating < score!) ||
+          (filmRating is FilmRatingError && !showFilmsWithNoScore!)) {
         toRemove.add(el);
       }
     }

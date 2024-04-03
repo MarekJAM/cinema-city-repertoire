@@ -71,23 +71,13 @@ class FilmDetailsColumn extends StatelessWidget {
                 return Wrap(
                   crossAxisAlignment: WrapCrossAlignment.center,
                   children: [
-                    film.filmWebScore != null || isLoading
-                        ? Text(
-                            film.filmWebScore ?? t.filmDetails.ratingNoData,
-                          )
-                        : const Padding(
-                            padding: EdgeInsets.symmetric(
-                              horizontal: 3.5,
-                              vertical: 2,
-                            ),
-                            child: SizedBox(
-                              height: 10,
-                              width: 10,
-                              child: CircularProgressIndicator(
-                                strokeWidth: 2,
-                              ),
-                            ),
-                          ),
+                    Text(
+                      switch (film.rating) {
+                        FilmRatingError() => t.filmDetails.ratingNoData,
+                        FilmRatingLoaded(rating: final rating) => rating.toStringAsFixed(1),
+                        FilmRatingLoading() || FilmRatingInitial() => t.filmDetails.ratingNoData,
+                      }
+                    )
                   ],
                 );
               },

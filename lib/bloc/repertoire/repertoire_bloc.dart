@@ -66,8 +66,8 @@ class RepertoireBloc extends Bloc<RepertoireEvent, RepertoireState> {
           loadedRepertoire.filmItems.isNotEmpty && filteredRepertoire.filmItems.isEmpty;
 
       for (var filmItem in filteredRepertoire.filmItems) {
-        if (filmItem.film.filmWebScore == null) {
-          filmScoresRepository.getFilmWebScore(filmItem.film);
+        if (filmItem.film.rating is FilmRatingInitial) {
+          filmScoresRepository.getFilmWebRating(filmItem.film);
         }
       }
 
