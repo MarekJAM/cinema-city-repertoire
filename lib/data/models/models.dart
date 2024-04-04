@@ -8,3 +8,4 @@ export 'repertoire_film_cinema_item.dart';
 export 'repertoire_film_item.dart';
 export 'genres.dart';
 export 'event_types.dart';
+export 'film_rating.dart';

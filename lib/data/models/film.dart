@@ -1,6 +1,7 @@
 import 'package:cinema_city/utils/random_number_generator.dart';
 
 import 'film_details.dart';
+import 'film_rating.dart';
 import 'genres.dart';
 
 final class Film {
@@ -74,26 +75,4 @@ final class Film {
     videoLink: 'videolink',
     details: FilmDetails.mock,
   );
-}
-
-sealed class FilmRating {
-  const FilmRating();
-}
-
-class FilmRatingInitial extends FilmRating {
-  const FilmRatingInitial();
-}
-
-class FilmRatingLoading extends FilmRating {
-  const FilmRatingLoading();
-}
-
-class FilmRatingLoaded extends FilmRating {
-  final double rating;
-
-  const FilmRatingLoaded({required this.rating});
-}
-
-class FilmRatingError extends FilmRating {
-  const FilmRatingError();
 }
