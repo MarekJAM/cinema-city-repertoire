@@ -10,7 +10,7 @@ final class Film {
   final int? length;
   final String? posterLink;
   final List<String> genres;
-  final String ageRestriction;
+  final int? ageRestriction;
   final String? releaseYear;
   final String link;
   final String? videoLink;
@@ -23,16 +23,16 @@ final class Film {
     required this.length,
     required this.posterLink,
     required this.genres,
-    required this.ageRestriction,
     required this.releaseYear,
     required this.link,
+    this.ageRestriction,
     this.videoLink,
     this.details,
     this.rating = const FilmRatingInitial(),
   });
 
   factory Film.fromJson(Map<String, dynamic> json) {
-    var tempAgeRestriction = 'NA';
+    int? tempAgeRestriction;
     List<String> loadedGenres = [];
 
     json['attributeIds'].forEach((attr) {
@@ -44,7 +44,7 @@ final class Film {
       if (attr.toString().contains('plus')) {
         final extractedValue = attr.toString().substring(0, attr.toString().indexOf('-'));
         if (extractedValue.length <= 2) {
-          tempAgeRestriction = extractedValue;
+          tempAgeRestriction = int.tryParse(extractedValue);
         }
       }
     });
@@ -65,7 +65,7 @@ final class Film {
   static Film get mock => Film(
     id: '1',
     name: 'F' * RandomNumberGenerator.randomInRange(min: 6, max: 20),
-    ageRestriction: '18',
+    ageRestriction: 18,
     genres: List.generate(RandomNumberGenerator.randomInRange(min: 1, max: 4), (index) => 'Genre'),
     length: 120,
     posterLink: 'posterLink',

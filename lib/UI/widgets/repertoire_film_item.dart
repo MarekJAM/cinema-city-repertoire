@@ -16,17 +16,6 @@ class RepertoireFilmItemWidget extends StatelessWidget {
 
   const RepertoireFilmItemWidget(this.data, {Key? key}) : super(key: key);
 
-  Color _getAgeRestrictionColor(String value) {
-    final ageLimit = int.tryParse(value) ?? 0;
-    if (ageLimit >= 18) {
-      return Colors.red;
-    } else if (ageLimit >= 12) {
-      return Colors.yellow[700]!;
-    } else {
-      return Colors.green;
-    }
-  }
-
   void _goToFilmDetails(BuildContext context, Film film) {
     BlocProvider.of<FilmDetailsCubit>(context).getFilmDetails(film);
     Navigator.of(context).push(
@@ -104,32 +93,31 @@ class RepertoireFilmItemWidget extends StatelessWidget {
                     ),
                     Wrap(
                       crossAxisAlignment: WrapCrossAlignment.center,
+                      runSpacing: 3,
                       children: <Widget>[
-                        Skeleton.leaf(
-                          child: Container(
-                            height: 20,
-                            width: 20,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: _getAgeRestrictionColor(
-                                data.film.ageRestriction,
-                              ),
-                            ),
-                            child: Center(
-                              child: Text(
-                                data.film.ageRestriction,
-                                style: const TextStyle(fontSize: 10),
-                              ),
+                        if (data.film.ageRestriction != null)
+                          Padding(
+                            padding: const EdgeInsets.only(right: 4),
+                            child: Skeleton.leaf(
+                              child: FilmAgeRestrictionIndicator(data.film.ageRestriction!),
                             ),
                           ),
-                        ),
                         Padding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 4,
+                          padding: const EdgeInsets.only(
+                            right: 4,
                           ),
-                          child: Text(
-                            t.filmDetails.filmLengthValue(val: '${data.film.length}'),
-                            style: const TextStyle(fontSize: 10),
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 1),
+                            decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey[700] ?? Colors.grey),
+                              borderRadius: const BorderRadius.all(
+                                Radius.circular(5),
+                              ),
+                            ),
+                            child: Text(
+                              t.filmDetails.filmLengthValue(val: '${data.film.length}'),
+                              style: const TextStyle(fontSize: 10),
+                            ),
                           ),
                         ),
                         for (final item in data.film.genres)

@@ -9,3 +9,4 @@ export 'repertoire/repertoire_error_pick_cinemas.dart';
 export 'repertoire/repertoire_list_populated.dart';
 export 'repertoire/repertoire_empty_list_filters_on.dart';
 export 'repertoire/repertoire_empty_list_filters_off.dart';
+export 'film_age_restriction_indicator.dart';

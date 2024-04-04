@@ -18,7 +18,7 @@ final Film film = Film(
   length: 120,
   posterLink: 'posterLink',
   genres: ['genre'],
-  ageRestriction: 'ageRestriction',
+  ageRestriction: 18,
   releaseYear: 'releaseYear',
   link: 'link',
 );
