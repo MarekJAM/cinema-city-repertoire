@@ -49,6 +49,7 @@ class _RepertoireViewState extends State<RepertoireView> {
           endDrawer: cinemasState.status.isSuccess ? const CinemasDrawer() : null,
           endDrawerEnableOpenDragGesture: cinemasState.status.isSuccess,
           appBar: const RepertoireAppBar(),
+          backgroundColor: Theme.of(context).colorScheme.surface,
           body: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8.0),
             child: Builder(
