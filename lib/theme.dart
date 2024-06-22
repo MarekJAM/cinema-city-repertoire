@@ -17,7 +17,6 @@ final _colorScheme = ColorScheme.fromSeed(
   primary: Colors.orange,
   brightness: Brightness.dark,
   surface: Colors.black,
-  surfaceContainer: Colors.grey[900]
 );
 
 final theme = ThemeData(

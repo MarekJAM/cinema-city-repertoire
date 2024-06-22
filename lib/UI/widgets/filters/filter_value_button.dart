@@ -14,13 +14,13 @@ class FilterValueButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChoiceChip(
+    return FilterChip(
       label: Text(
         label,
       ),
       selected: isSelected,
       onSelected: (newVal) {
-          onValueChanged(newVal, label);
+        onValueChanged(newVal, label);
       },
     );
   }

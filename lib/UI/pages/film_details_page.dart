@@ -54,7 +54,7 @@ class FilmDetailsView extends StatelessWidget {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(15),
                   child: Container(
-                    color: context.colorScheme.surfaceContainer,
+                    color: context.colorScheme.surfaceContainerLow,
                     child: Padding(
                       padding: const EdgeInsets.only(left: 8, right: 8, top: 8),
                       child: BlocBuilder<FilmDetailsCubit, FilmDetailsState>(
