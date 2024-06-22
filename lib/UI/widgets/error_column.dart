@@ -7,12 +7,12 @@ class ErrorColumn extends StatelessWidget {
   final List<Widget>? buttons;
 
   const ErrorColumn({
-    Key? key,
+    super.key,
     required this.errorMessage,
     this.buttonMessage,
     this.buttonOnPressed,
     this.buttons,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

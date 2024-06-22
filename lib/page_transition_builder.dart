@@ -20,10 +20,9 @@ class CustomPageTransitionBuilder extends PageTransitionsBuilder {
 
 class _CustomPageTransitionBuilder extends StatelessWidget {
   _CustomPageTransitionBuilder({
-    Key? key,
     required this.routeAnimation,
     required this.child,
-  }) : super(key: key);
+  });
 
   final Animation<double> routeAnimation;
 

@@ -8,7 +8,7 @@ import '../../i18n/strings.g.dart';
 import '../widgets/filters/filter_widgets.dart';
 
 class FiltersPage extends StatelessWidget {
-  const FiltersPage({Key? key}) : super(key: key);
+  const FiltersPage({super.key});
 
   static Route<void> route() {
     return MaterialPageRoute(
@@ -30,7 +30,7 @@ class FiltersPage extends StatelessWidget {
 }
 
 class FiltersView extends StatefulWidget {
-  const FiltersView({Key? key}) : super(key: key);
+  const FiltersView({super.key});
 
   @override
   State<FiltersView> createState() => _FiltersViewState();
@@ -48,7 +48,7 @@ class _FiltersViewState extends State<FiltersView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: context.colorScheme.background,
+        backgroundColor: context.colorScheme.surface,
         title: Text(t.filters.name),
         actions: [
           Padding(

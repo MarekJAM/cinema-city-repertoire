@@ -8,7 +8,7 @@ import '../../i18n/strings.g.dart';
 import '../widgets/widgets.dart';
 
 class RepertoirePage extends StatelessWidget {
-  const RepertoirePage({Key? key}) : super(key: key);
+  const RepertoirePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +17,7 @@ class RepertoirePage extends StatelessWidget {
 }
 
 class RepertoireView extends StatefulWidget {
-  const RepertoireView({Key? key}) : super(key: key);
+  const RepertoireView({super.key});
 
   @override
   State<RepertoireView> createState() => _RepertoireViewState();

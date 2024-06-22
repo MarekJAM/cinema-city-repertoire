@@ -7,7 +7,7 @@ import '../../bloc/blocs.dart';
 import '../../i18n/strings.g.dart';
 
 class CinemasList extends StatefulWidget {
-  const CinemasList({Key? key}) : super(key: key);
+  const CinemasList({super.key});
 
   @override
   State<CinemasList> createState() => _CinemasListState();
@@ -76,7 +76,7 @@ class CinemaItemRow extends StatefulWidget {
   final Cinema cinemaData;
   final List<String?> pickedCinemas;
 
-  const CinemaItemRow(this.cinemaData, this.pickedCinemas, {Key? key}) : super(key: key);
+  const CinemaItemRow(this.cinemaData, this.pickedCinemas, {super.key});
 
   @override
   State<CinemaItemRow> createState() => _CinemaItemRowState();

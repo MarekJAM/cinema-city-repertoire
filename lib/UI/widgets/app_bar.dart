@@ -9,7 +9,7 @@ import '../pages/filters_page.dart';
 import 'date_selector.dart';
 
 class RepertoireAppBar extends StatefulWidget implements PreferredSizeWidget {
-  const RepertoireAppBar({Key? key}) : super(key: key);
+  const RepertoireAppBar({super.key});
 
   @override
   State<RepertoireAppBar> createState() => _RepertoireAppBarState();
@@ -46,7 +46,7 @@ class _RepertoireAppBarState extends State<RepertoireAppBar> {
             padding: const EdgeInsets.all(8.0),
             child: TextButton(
               style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(
+                backgroundColor: WidgetStateProperty.all(
                   Theme.of(context).indicatorColor,
                 ),
               ),
@@ -95,7 +95,7 @@ class _RepertoireAppBarState extends State<RepertoireAppBar> {
             },
           ),
         ],
-        backgroundColor: context.colorScheme.background,
+        backgroundColor: context.colorScheme.surface,
       ),
     );
   }

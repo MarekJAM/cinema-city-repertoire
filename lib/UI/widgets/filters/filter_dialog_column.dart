@@ -5,11 +5,11 @@ import 'filter_widgets.dart';
 
 class FilterDialogColumn extends StatefulWidget {
   const FilterDialogColumn({
-    Key? key,
+    super.key,
     required this.title,
     required this.values,
     required this.pickedValues,
-  }) : super(key: key);
+  });
 
   final String title;
   final List<String> values;

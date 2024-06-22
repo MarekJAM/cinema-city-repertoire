@@ -9,18 +9,18 @@ final _buttonsBorder = RoundedRectangleBorder(
 );
 
 ButtonStyle get _commonButtonStyle => ButtonStyle(
-      shape: MaterialStateProperty.all(_buttonsBorder),
+      shape: WidgetStateProperty.all(_buttonsBorder),
     );
 
 final _colorScheme = ColorScheme.fromSeed(
   seedColor: Colors.orange,
   primary: Colors.orange,
   brightness: Brightness.dark,
-  background: Colors.black,
+  surface: Colors.black,
+  surfaceContainer: Colors.grey[900]
 );
 
 final theme = ThemeData(
-  primaryColor: Colors.black,
   indicatorColor: Colors.orange,
   colorScheme: _colorScheme,
   elevatedButtonTheme: ElevatedButtonThemeData(

@@ -14,7 +14,7 @@ import 'widgets.dart';
 class RepertoireFilmItemWidget extends StatelessWidget {
   final RepertoireFilmItem data;
 
-  const RepertoireFilmItemWidget(this.data, {Key? key}) : super(key: key);
+  const RepertoireFilmItemWidget(this.data, {super.key});
 
   void _goToFilmDetails(BuildContext context, Film film) {
     BlocProvider.of<FilmDetailsCubit>(context).getFilmDetails(film);
@@ -26,6 +26,7 @@ class RepertoireFilmItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      color: Theme.of(context).colorScheme.surfaceContainer,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
         child: Row(
@@ -165,9 +166,9 @@ class RepertoireFilmItemWidget extends StatelessWidget {
 
 class FilmWebScoreWrap extends StatelessWidget {
   const FilmWebScoreWrap({
-    Key? key,
+    super.key,
     required this.data,
-  }) : super(key: key);
+  });
 
   final RepertoireFilmItem data;
 
@@ -183,11 +184,11 @@ class FilmWebScoreWrap extends StatelessWidget {
 
 class RepertoireFilmItemRow extends StatelessWidget {
   const RepertoireFilmItemRow({
-    Key? key,
+    super.key,
     required this.film,
     required this.events,
     required this.cinema,
-  }) : super(key: key);
+  });
 
   final Film film;
   final List<Event> events;

@@ -8,9 +8,9 @@ class MinimalScoreSlider extends StatefulWidget {
   final ScoreFilter? scoreFilter;
 
   const MinimalScoreSlider({
-    Key? key,
+    super.key,
     this.scoreFilter,
-  }) : super(key: key);
+  });
 
   @override
   State<MinimalScoreSlider> createState() => _MinimalScoreSliderState();
@@ -44,8 +44,8 @@ class _MinimalScoreSliderState extends State<MinimalScoreSlider> {
                     ),
                     Checkbox(
                       value: widget.scoreFilter?.showFilmsWithNoScore,
-                      fillColor: MaterialStateProperty.all(context.colorScheme.primary),
-                      checkColor: context.colorScheme.background,
+                      fillColor: WidgetStateProperty.all(context.colorScheme.primary),
+                      checkColor: context.colorScheme.surface,
                       onChanged: (val) {
                         setState(() {
                           widget.scoreFilter?.showFilmsWithNoScore = val;

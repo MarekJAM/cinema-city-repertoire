@@ -13,11 +13,11 @@ import '../widgets/snackbar.dart';
 
 class FilmEventDialog extends StatefulWidget {
   const FilmEventDialog({
-    Key? key,
+    super.key,
     required this.film,
     required this.cinema,
     required this.item,
-  }) : super(key: key);
+  });
 
   final Film film;
   final String? cinema;

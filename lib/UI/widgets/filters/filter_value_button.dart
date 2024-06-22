@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 
 class FilterValueButton extends StatelessWidget {
   const FilterValueButton({
-    Key? key,
+    super.key,
     required this.label,
     required this.isSelected,
     required this.onValueChanged,
-  }) : super(key: key);
+  });
 
   final String label;
   final bool isSelected;

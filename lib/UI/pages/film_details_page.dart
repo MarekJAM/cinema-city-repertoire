@@ -11,7 +11,7 @@ import '../widgets/film_details_column.dart';
 class FilmDetailsPage extends StatelessWidget {
   final Film film;
 
-  const FilmDetailsPage({Key? key, required this.film}) : super(key: key);
+  const FilmDetailsPage({super.key, required this.film});
 
   static Route<void> route(Film film) {
     return MaterialPageRoute(
@@ -30,7 +30,7 @@ class FilmDetailsPage extends StatelessWidget {
 class FilmDetailsView extends StatelessWidget {
   final Film film;
 
-  const FilmDetailsView({Key? key, required this.film}) : super(key: key);
+  const FilmDetailsView({super.key, required this.film});
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +39,7 @@ class FilmDetailsView extends StatelessWidget {
       body: SafeArea(
         child: Container(
           height: mediaQuery.size.height,
-          color: Theme.of(context).primaryColor,
+          color: Theme.of(context).colorScheme.surface,
           child: CustomScrollView(
             slivers: [
               SliverPersistentHeader(
@@ -54,7 +54,7 @@ class FilmDetailsView extends StatelessWidget {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(15),
                   child: Container(
-                    color: context.colorScheme.surface,
+                    color: context.colorScheme.surfaceContainer,
                     child: Padding(
                       padding: const EdgeInsets.only(left: 8, right: 8, top: 8),
                       child: BlocBuilder<FilmDetailsCubit, FilmDetailsState>(
@@ -91,11 +91,11 @@ class DetailsHeaderRow extends StatelessWidget {
   final String? content;
 
   const DetailsHeaderRow({
-    Key? key,
+    super.key,
     required this.icon,
     required this.title,
     required this.content,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -136,8 +136,7 @@ class DetailsDataRow extends StatelessWidget {
   final String? content;
   final Widget? widget;
 
-  const DetailsDataRow({Key? key, required this.title, this.content, this.widget})
-      : super(key: key);
+  const DetailsDataRow({super.key, required this.title, this.content, this.widget});
 
   @override
   Widget build(BuildContext context) {
