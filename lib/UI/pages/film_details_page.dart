@@ -39,7 +39,7 @@ class FilmDetailsView extends StatelessWidget {
       body: SafeArea(
         child: Container(
           height: mediaQuery.size.height,
-          color: Theme.of(context).colorScheme.surface,
+          color: context.colorScheme.surface,
           child: CustomScrollView(
             slivers: [
               SliverPersistentHeader(

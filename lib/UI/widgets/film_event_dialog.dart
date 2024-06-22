@@ -1,3 +1,4 @@
+import 'package:cinema_city/utils/theme_context_extensions.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -66,7 +67,7 @@ class _FilmEventDialogState extends State<FilmEventDialog> {
     return Dialog(
       shape: RoundedRectangleBorder(
         side: BorderSide(
-          color: Theme.of(context).colorScheme.secondary,
+          color: context.colorScheme.secondary,
         ),
         borderRadius: BorderRadius.circular(20),
       ),

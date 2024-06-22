@@ -73,6 +73,7 @@ class _FiltersViewState extends State<FiltersView> {
           ),
         ],
       ),
+      backgroundColor: context.colorScheme.surface,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(5),

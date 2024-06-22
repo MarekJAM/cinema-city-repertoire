@@ -1,3 +1,4 @@
+import 'package:cinema_city/utils/theme_context_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:skeletonizer/skeletonizer.dart';
@@ -49,7 +50,7 @@ class _RepertoireViewState extends State<RepertoireView> {
           endDrawer: cinemasState.status.isSuccess ? const CinemasDrawer() : null,
           endDrawerEnableOpenDragGesture: cinemasState.status.isSuccess,
           appBar: const RepertoireAppBar(),
-          backgroundColor: Theme.of(context).colorScheme.surface,
+          backgroundColor: context.colorScheme.surface,
           body: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8.0),
             child: Builder(
@@ -68,7 +69,7 @@ class _RepertoireViewState extends State<RepertoireView> {
                               onRefresh: () => Future.sync(
                                 () => context.read<RepertoireBloc>().add(const GetRepertoire()),
                               ),
-                              backgroundColor: Theme.of(context).primaryColor,
+                              backgroundColor: context.colorScheme.surface,
                               child: data.filmItems.isNotEmpty
                                   ? RepertoireListPopulated(data: data)
                                   : cinemasState.pickedCinemaIds.isNotEmpty

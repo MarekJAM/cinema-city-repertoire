@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cinema_city/UI/widgets/rating_bar.dart';
+import 'package:cinema_city/utils/theme_context_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:skeletonizer/skeletonizer.dart';
@@ -26,7 +27,7 @@ class RepertoireFilmItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: Theme.of(context).colorScheme.surfaceContainer,
+      color: context.colorScheme.surfaceContainer,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
         child: Row(
@@ -232,7 +233,7 @@ class RepertoireFilmItemRow extends StatelessWidget {
                         children: [
                           Container(
                             decoration: BoxDecoration(
-                              border: Border.all(color: Theme.of(context).colorScheme.primary),
+                              border: Border.all(color: context.colorScheme.primary),
                               borderRadius: const BorderRadius.all(
                                 Radius.circular(5),
                               ),

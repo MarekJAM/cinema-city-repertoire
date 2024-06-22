@@ -47,7 +47,7 @@ class _RepertoireAppBarState extends State<RepertoireAppBar> {
             child: TextButton(
               style: ButtonStyle(
                 backgroundColor: WidgetStateProperty.all(
-                  Theme.of(context).indicatorColor,
+                  context.colorScheme.primary,
                 ),
               ),
               child: Text(
