@@ -9,3 +9,5 @@ export 'repertoire_film_item.dart';
 export 'genres.dart';
 export 'event_types.dart';
 export 'film_rating.dart';
+export 'event_ticketing_status.dart';
+export 'seatplan.dart';

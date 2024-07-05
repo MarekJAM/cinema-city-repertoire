@@ -16,15 +16,23 @@ abstract class RegisterModule {
 
   @Named('dioCinemaCity')
   @lazySingleton
-  Dio get dio => Dio(
+  Dio get dioCinemaCity => Dio(
         BaseOptions(
           baseUrl: 'https://www.cinema-city.pl/pl/data-api-service/v1/quickbook/10103',
         ),
       )..interceptors.addAll(cinemaCityInterceptors);
 
+  @Named('dioCinemaCityTickets')
+  @lazySingleton
+  Dio get dioCinemaCityTickets => Dio(
+        BaseOptions(
+          baseUrl: 'https://tickets.cinema-city.pl/api/',
+        ),
+      );
+
   @Named('dioFilmweb')
   @lazySingleton
-  Dio get dio2 => Dio(
+  Dio get dioFilmweb => Dio(
         BaseOptions(
           baseUrl: 'https://www.filmweb.pl/api/v1',
         ),

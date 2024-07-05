@@ -1,7 +1,10 @@
+import 'package:cinema_city/bloc/seatplan/seatplan_cubit.dart';
 import 'package:cinema_city/utils/theme_context_extensions.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 import 'package:timezone/timezone.dart' as tz;
 import 'package:url_launcher/url_launcher_string.dart';
 
@@ -64,113 +67,137 @@ class _FilmEventDialogState extends State<FilmEventDialog> {
       (LanguageType.original) => t.languageType.original,
       (LanguageType.subtitles) => t.languageType.subtitles,
     };
-    return Dialog(
-      shape: RoundedRectangleBorder(
-        side: BorderSide(
-          color: context.colorScheme.secondary,
+    return BlocProvider(
+      create: (context) =>
+          SeatplanCubit(seatplanRepository: di())..getSeatsTaken(eventId: widget.item.id!),
+      child: Dialog(
+        shape: RoundedRectangleBorder(
+          side: BorderSide(
+            color: context.colorScheme.secondary,
+          ),
+          borderRadius: BorderRadius.circular(20),
         ),
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(8),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            Text(
-              widget.film.name,
-              textAlign: TextAlign.center,
-              style: const TextStyle(fontSize: 20),
-            ),
-            const Divider(),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 3.0),
-              child: Text(
-                widget.cinema!,
+        child: Padding(
+          padding: const EdgeInsets.all(8),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Text(
+                widget.film.name,
                 textAlign: TextAlign.center,
-                style: const TextStyle(fontSize: 14),
+                style: const TextStyle(fontSize: 20),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(2.0),
-              child: Text(
-                DateHelper.convertDateToHHMM(widget.item.dateTime),
-                textAlign: TextAlign.center,
-                style: const TextStyle(fontSize: 14),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(2.0),
-              child: Text(
-                "$language, ${widget.item.type}",
-                textAlign: TextAlign.center,
-                style: const TextStyle(fontSize: 12),
-              ),
-            ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                ElevatedButton(
-                  child: Text(
-                    t.buyTicket,
-                  ),
-                  onPressed: () {
-                    _launchURL(widget.item.bookingLink);
-                  },
+              const Divider(),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 3.0),
+                child: Text(
+                  widget.cinema!,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(fontSize: 14),
                 ),
-                Builder(
-                  builder: (context) {
-                    return OutlinedButton(
-                      child: Text(
-                        t.scheduleReminder,
-                      ),
-                      onPressed: () async {
-                        final eventDateTime = widget.item.dateTime;
-
-                        final pickedTime = await showTimePicker(
-                          context: context,
-                          initialEntryMode: TimePickerEntryMode.input,
-                          helpText: t.reminders.selectReminderTime,
-                          initialTime: TimeOfDay.fromDateTime(
-                            widget.item.dateTime.subtract(
-                              const Duration(minutes: 30),
-                            ),
-                          ),
-                        );
-
-                        if (pickedTime != null) {
-                          final timeZone = TimeZone();
-                          final timeZoneName = await timeZone.getTimeZoneName();
-
-                          final location = await timeZone.getLocation(timeZoneName);
-
-                          final pickedTzDateTime = tz.TZDateTime(
-                            location,
-                            eventDateTime.year,
-                            eventDateTime.month,
-                            eventDateTime.day,
-                            pickedTime.hour,
-                            pickedTime.minute,
-                          );
-
-                          if (pickedTzDateTime.isAfter(tz.TZDateTime.now(location))) {
-                            try {
-                              await _scheduleNotification(
-                                widget.film.name,
-                                widget.item,
-                                pickedTzDateTime,
-                              );
-                              if (context.mounted) context.showSnackbar(t.reminders.reminderScheduled);
-                              if (context.mounted) Navigator.of(context).pop();
-                            } catch (_) {}
-                          }
-                        }
+              ),
+              Padding(
+                padding: const EdgeInsets.all(2.0),
+                child: Text(
+                  DateHelper.convertDateToHHMM(widget.item.dateTime),
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(fontSize: 14),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(2.0),
+                child: Text(
+                  "$language, ${widget.item.type}",
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(fontSize: 12),
+                ),
+              ),
+              BlocBuilder<SeatplanCubit, SeatplanState>(
+                builder: (context, state) {
+                  return Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      switch (state) {
+                        SeatplanError() => Text(t.seatplan.failedToLoad),
+                        SeatplanLoading() => const Skeletonizer(child: Text('Seats free: x/y')),
+                        SeatplanLoaded(
+                          seatsFree: final seatsFree,
+                          seatsTotal: final seatsTotal,
+                          isTicketingFinished: final isTicketingFinished
+                        ) =>
+                          isTicketingFinished
+                              ? Text(t.seatplan.ticketingFinished)
+                              : Text('${t.seatplan.availableSeats}: $seatsFree/$seatsTotal'),
                       },
-                    );
-                  },
-                ),
-              ],
-            ),
-          ],
+                      ElevatedButton(
+                        onPressed: (state is SeatplanLoaded && state.isTicketingFinished)
+                            ? null
+                            : () {
+                                _launchURL(widget.item.bookingLink);
+                              },
+                        child: Text(
+                          t.buyTicket,
+                        ),
+                      ),
+                      Builder(
+                        builder: (context) {
+                          return OutlinedButton(
+                            child: Text(
+                              t.scheduleReminder,
+                            ),
+                            onPressed: () async {
+                              final eventDateTime = widget.item.dateTime;
+
+                              final pickedTime = await showTimePicker(
+                                context: context,
+                                initialEntryMode: TimePickerEntryMode.input,
+                                helpText: t.reminders.selectReminderTime,
+                                initialTime: TimeOfDay.fromDateTime(
+                                  widget.item.dateTime.subtract(
+                                    const Duration(minutes: 30),
+                                  ),
+                                ),
+                              );
+
+                              if (pickedTime != null) {
+                                final timeZone = TimeZone();
+                                final timeZoneName = await timeZone.getTimeZoneName();
+
+                                final location = await timeZone.getLocation(timeZoneName);
+
+                                final pickedTzDateTime = tz.TZDateTime(
+                                  location,
+                                  eventDateTime.year,
+                                  eventDateTime.month,
+                                  eventDateTime.day,
+                                  pickedTime.hour,
+                                  pickedTime.minute,
+                                );
+
+                                if (pickedTzDateTime.isAfter(tz.TZDateTime.now(location))) {
+                                  try {
+                                    await _scheduleNotification(
+                                      widget.film.name,
+                                      widget.item,
+                                      pickedTzDateTime,
+                                    );
+                                    if (context.mounted) {
+                                      context.showSnackbar(t.reminders.reminderScheduled);
+                                    }
+                                    if (context.mounted) Navigator.of(context).pop();
+                                  } catch (_) {}
+                                }
+                              }
+                            },
+                          );
+                        },
+                      ),
+                    ],
+                  );
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );

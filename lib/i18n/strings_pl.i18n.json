@@ -79,5 +79,10 @@
         "original": "PL",
         "subtitles": "Napisy",
         "dubbing": "Dubbing"
+    },
+    "seatplan": {
+        "availableSeats": "Dostępne miejsca",
+        "ticketingFinished": "Sprzedaż biletów zakończona",
+        "failedToLoad": "Brak danych o dostępnych miejscach"
     }
   }

@@ -4,9 +4,9 @@
 /// To regenerate, run: `dart run slang`
 ///
 /// Locales: 2
-/// Strings: 134 (67 per locale)
+/// Strings: 140 (70 per locale)
 ///
-/// Built on 2024-03-26 at 20:35 UTC
+/// Built on 2024-07-05 at 22:09 UTC
 
 // coverage:ignore-file
 // ignore_for_file: type=lint
@@ -24,8 +24,8 @@ const AppLocale _baseLocale = AppLocale.en;
 /// - LocaleSettings.setLocale(AppLocale.en) // set locale
 /// - Locale locale = AppLocale.en.flutterLocale // get flutter locale from enum
 /// - if (LocaleSettings.currentLocale == AppLocale.en) // locale check
-enum AppLocale with BaseAppLocale<AppLocale, _StringsEn> {
-	en(languageCode: 'en', build: _StringsEn.build),
+enum AppLocale with BaseAppLocale<AppLocale, Translations> {
+	en(languageCode: 'en', build: Translations.build),
 	pl(languageCode: 'pl', build: _StringsPl.build);
 
 	const AppLocale({required this.languageCode, this.scriptCode, this.countryCode, required this.build}); // ignore: unused_element
@@ -33,10 +33,10 @@ enum AppLocale with BaseAppLocale<AppLocale, _StringsEn> {
 	@override final String languageCode;
 	@override final String? scriptCode;
 	@override final String? countryCode;
-	@override final TranslationBuilder<AppLocale, _StringsEn> build;
+	@override final TranslationBuilder<AppLocale, Translations> build;
 
 	/// Gets current instance managed by [LocaleSettings].
-	_StringsEn get translations => LocaleSettings.instance.translationMap[this]!;
+	Translations get translations => LocaleSettings.instance.translationMap[this]!;
 }
 
 /// Method A: Simple
@@ -48,7 +48,7 @@ enum AppLocale with BaseAppLocale<AppLocale, _StringsEn> {
 /// Usage:
 /// String a = t.someKey.anotherKey;
 /// String b = t['someKey.anotherKey']; // Only for edge cases!
-_StringsEn get t => LocaleSettings.instance.currentTranslations;
+Translations get t => LocaleSettings.instance.currentTranslations;
 
 /// Method B: Advanced
 ///
@@ -65,17 +65,10 @@ _StringsEn get t => LocaleSettings.instance.currentTranslations;
 /// final t = Translations.of(context); // Get t variable.
 /// String a = t.someKey.anotherKey; // Use t variable.
 /// String b = t['someKey.anotherKey']; // Only for edge cases!
-class Translations {
-	Translations._(); // no constructor
-
-	static _StringsEn of(BuildContext context) => InheritedLocaleData.of<AppLocale, _StringsEn>(context).translations;
-}
-
-/// The provider for method B
-class TranslationProvider extends BaseTranslationProvider<AppLocale, _StringsEn> {
+class TranslationProvider extends BaseTranslationProvider<AppLocale, Translations> {
 	TranslationProvider({required super.child}) : super(settings: LocaleSettings.instance);
 
-	static InheritedLocaleData<AppLocale, _StringsEn> of(BuildContext context) => InheritedLocaleData.of<AppLocale, _StringsEn>(context);
+	static InheritedLocaleData<AppLocale, Translations> of(BuildContext context) => InheritedLocaleData.of<AppLocale, Translations>(context);
 }
 
 /// Method B shorthand via [BuildContext] extension method.
@@ -84,11 +77,11 @@ class TranslationProvider extends BaseTranslationProvider<AppLocale, _StringsEn>
 /// Usage (e.g. in a widget's build method):
 /// context.t.someKey.anotherKey
 extension BuildContextTranslationsExtension on BuildContext {
-	_StringsEn get t => TranslationProvider.of(this).translations;
+	Translations get t => TranslationProvider.of(this).translations;
 }
 
 /// Manages all translation instances and the current locale
-class LocaleSettings extends BaseFlutterLocaleSettings<AppLocale, _StringsEn> {
+class LocaleSettings extends BaseFlutterLocaleSettings<AppLocale, Translations> {
 	LocaleSettings._() : super(utils: AppLocaleUtils.instance);
 
 	static final instance = LocaleSettings._();
@@ -110,7 +103,7 @@ class LocaleSettings extends BaseFlutterLocaleSettings<AppLocale, _StringsEn> {
 }
 
 /// Provides utility functions without any side effects.
-class AppLocaleUtils extends BaseAppLocaleUtils<AppLocale, _StringsEn> {
+class AppLocaleUtils extends BaseAppLocaleUtils<AppLocale, Translations> {
 	AppLocaleUtils._() : super(baseLocale: _baseLocale, locales: AppLocale.values);
 
 	static final instance = AppLocaleUtils._();
@@ -126,11 +119,16 @@ class AppLocaleUtils extends BaseAppLocaleUtils<AppLocale, _StringsEn> {
 // translations
 
 // Path: <root>
-class _StringsEn implements BaseTranslations<AppLocale, _StringsEn> {
+class Translations implements BaseTranslations<AppLocale, Translations> {
+	/// Returns the current translations of the given [context].
+	///
+	/// Usage:
+	/// final t = Translations.of(context);
+	static Translations of(BuildContext context) => InheritedLocaleData.of<AppLocale, Translations>(context).translations;
 
 	/// You can call this constructor and build your own translation instance of this locale.
 	/// Constructing via the enum [AppLocale.build] is preferred.
-	_StringsEn.build({Map<String, Node>? overrides, PluralResolver? cardinalResolver, PluralResolver? ordinalResolver})
+	Translations.build({Map<String, Node>? overrides, PluralResolver? cardinalResolver, PluralResolver? ordinalResolver})
 		: assert(overrides == null, 'Set "translation_overrides: true" in order to enable this feature.'),
 		  $meta = TranslationMetadata(
 		    locale: AppLocale.en,
@@ -142,12 +140,12 @@ class _StringsEn implements BaseTranslations<AppLocale, _StringsEn> {
 	}
 
 	/// Metadata for the translations of <en>.
-	@override final TranslationMetadata<AppLocale, _StringsEn> $meta;
+	@override final TranslationMetadata<AppLocale, Translations> $meta;
 
 	/// Access flat map
 	dynamic operator[](String key) => $meta.getTranslation(key);
 
-	late final _StringsEn _root = this; // ignore: unused_field
+	late final Translations _root = this; // ignore: unused_field
 
 	// Translations
 	String get appName => 'Cinema City Repertoire';
@@ -167,13 +165,14 @@ class _StringsEn implements BaseTranslations<AppLocale, _StringsEn> {
 	late final _StringsRemindersEn reminders = _StringsRemindersEn._(_root);
 	late final _StringsGenresEn genres = _StringsGenresEn._(_root);
 	late final _StringsLanguageTypeEn languageType = _StringsLanguageTypeEn._(_root);
+	late final _StringsSeatplanEn seatplan = _StringsSeatplanEn._(_root);
 }
 
 // Path: repertoire
 class _StringsRepertoireEn {
 	_StringsRepertoireEn._(this._root);
 
-	final _StringsEn _root; // ignore: unused_field
+	final Translations _root; // ignore: unused_field
 
 	// Translations
 	String get noFilmsToDisplayPickAnotherDate => 'No films to display. Pick another date or adjust filters.';
@@ -188,7 +187,7 @@ class _StringsRepertoireEn {
 class _StringsFilmDetailsEn {
 	_StringsFilmDetailsEn._(this._root);
 
-	final _StringsEn _root; // ignore: unused_field
+	final Translations _root; // ignore: unused_field
 
 	// Translations
 	String get premiere => 'Premiere';
@@ -210,7 +209,7 @@ class _StringsFilmDetailsEn {
 class _StringsFiltersEn {
 	_StringsFiltersEn._(this._root);
 
-	final _StringsEn _root; // ignore: unused_field
+	final Translations _root; // ignore: unused_field
 
 	// Translations
 	String get name => 'Filters';
@@ -226,7 +225,7 @@ class _StringsFiltersEn {
 class _StringsCinemasEn {
 	_StringsCinemasEn._(this._root);
 
-	final _StringsEn _root; // ignore: unused_field
+	final Translations _root; // ignore: unused_field
 
 	// Translations
 	String get name => 'Cinemas';
@@ -238,7 +237,7 @@ class _StringsCinemasEn {
 class _StringsRemindersEn {
 	_StringsRemindersEn._(this._root);
 
-	final _StringsEn _root; // ignore: unused_field
+	final Translations _root; // ignore: unused_field
 
 	// Translations
 	String filmReminder({required Object time}) => 'Reminder - ${time}';
@@ -250,7 +249,7 @@ class _StringsRemindersEn {
 class _StringsGenresEn {
 	_StringsGenresEn._(this._root);
 
-	final _StringsEn _root; // ignore: unused_field
+	final Translations _root; // ignore: unused_field
 
 	// Translations
 	String get action => 'Action';
@@ -281,7 +280,7 @@ class _StringsGenresEn {
 class _StringsLanguageTypeEn {
 	_StringsLanguageTypeEn._(this._root);
 
-	final _StringsEn _root; // ignore: unused_field
+	final Translations _root; // ignore: unused_field
 
 	// Translations
 	String get original => 'PL';
@@ -289,9 +288,20 @@ class _StringsLanguageTypeEn {
 	String get dubbing => 'Dubbing';
 }
 
-// Path: <root>
-class _StringsPl implements _StringsEn {
+// Path: seatplan
+class _StringsSeatplanEn {
+	_StringsSeatplanEn._(this._root);
 
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get availableSeats => 'Available seats';
+	String get ticketingFinished => 'Ticketing finished';
+	String get failedToLoad => 'No info about available seats';
+}
+
+// Path: <root>
+class _StringsPl implements Translations {
 	/// You can call this constructor and build your own translation instance of this locale.
 	/// Constructing via the enum [AppLocale.build] is preferred.
 	_StringsPl.build({Map<String, Node>? overrides, PluralResolver? cardinalResolver, PluralResolver? ordinalResolver})
@@ -306,7 +316,7 @@ class _StringsPl implements _StringsEn {
 	}
 
 	/// Metadata for the translations of <pl>.
-	@override final TranslationMetadata<AppLocale, _StringsEn> $meta;
+	@override final TranslationMetadata<AppLocale, Translations> $meta;
 
 	/// Access flat map
 	@override dynamic operator[](String key) => $meta.getTranslation(key);
@@ -331,6 +341,7 @@ class _StringsPl implements _StringsEn {
 	@override late final _StringsRemindersPl reminders = _StringsRemindersPl._(_root);
 	@override late final _StringsGenresPl genres = _StringsGenresPl._(_root);
 	@override late final _StringsLanguageTypePl languageType = _StringsLanguageTypePl._(_root);
+	@override late final _StringsSeatplanPl seatplan = _StringsSeatplanPl._(_root);
 }
 
 // Path: repertoire
@@ -453,10 +464,22 @@ class _StringsLanguageTypePl implements _StringsLanguageTypeEn {
 	@override String get dubbing => 'Dubbing';
 }
 
+// Path: seatplan
+class _StringsSeatplanPl implements _StringsSeatplanEn {
+	_StringsSeatplanPl._(this._root);
+
+	@override final _StringsPl _root; // ignore: unused_field
+
+	// Translations
+	@override String get availableSeats => 'Dostępne miejsca';
+	@override String get ticketingFinished => 'Sprzedaż biletów zakończona';
+	@override String get failedToLoad => 'Brak danych o dostępnych miejscach';
+}
+
 /// Flat map(s) containing all translations.
 /// Only for edge cases! For simple maps, use the map function of this library.
 
-extension on _StringsEn {
+extension on Translations {
 	dynamic _flatMapFunction(String path) {
 		switch (path) {
 			case 'appName': return 'Cinema City Repertoire';
@@ -526,6 +549,9 @@ extension on _StringsEn {
 			case 'languageType.original': return 'PL';
 			case 'languageType.subtitles': return 'Subtitles';
 			case 'languageType.dubbing': return 'Dubbing';
+			case 'seatplan.availableSeats': return 'Available seats';
+			case 'seatplan.ticketingFinished': return 'Ticketing finished';
+			case 'seatplan.failedToLoad': return 'No info about available seats';
 			default: return null;
 		}
 	}
@@ -601,6 +627,9 @@ extension on _StringsPl {
 			case 'languageType.original': return 'PL';
 			case 'languageType.subtitles': return 'Napisy';
 			case 'languageType.dubbing': return 'Dubbing';
+			case 'seatplan.availableSeats': return 'Dostępne miejsca';
+			case 'seatplan.ticketingFinished': return 'Sprzedaż biletów zakończona';
+			case 'seatplan.failedToLoad': return 'Brak danych o dostępnych miejscach';
 			default: return null;
 		}
 	}
