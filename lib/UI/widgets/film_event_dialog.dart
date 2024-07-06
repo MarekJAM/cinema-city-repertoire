@@ -112,89 +112,96 @@ class _FilmEventDialogState extends State<FilmEventDialog> {
                   style: const TextStyle(fontSize: 12),
                 ),
               ),
-              BlocBuilder<SeatplanCubit, SeatplanState>(
-                builder: (context, state) {
-                  return Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      switch (state) {
-                        SeatplanError() => Text(t.seatplan.failedToLoad),
-                        SeatplanLoading() => const Skeletonizer(child: Text('Seats free: x/y')),
-                        SeatplanLoaded(
-                          seatsFree: final seatsFree,
-                          seatsTotal: final seatsTotal,
-                          isTicketingFinished: final isTicketingFinished
-                        ) =>
-                          isTicketingFinished
-                              ? Text(t.seatplan.ticketingFinished)
-                              : Text('${t.seatplan.availableSeats}: $seatsFree/$seatsTotal'),
-                      },
-                      ElevatedButton(
-                        onPressed: (state is SeatplanLoaded && state.isTicketingFinished)
-                            ? null
-                            : () {
-                                _launchURL(widget.item.bookingLink);
-                              },
-                        child: Text(
-                          t.buyTicket,
-                        ),
-                      ),
-                      Builder(
-                        builder: (context) {
-                          return OutlinedButton(
+              Column(
+                children: [
+                  BlocBuilder<SeatplanCubit, SeatplanState>(
+                    builder: (context, state) {
+                      return Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          switch (state) {
+                            SeatplanError() => Text(t.seatplan.failedToLoad),
+                            SeatplanLoading() => const Skeletonizer(child: Text('Seats free: x/y')),
+                            SeatplanLoaded(
+                              seatsFree: final seatsFree,
+                              seatsTotal: final seatsTotal,
+                              isTicketingFinished: final isTicketingFinished
+                            ) =>
+                              isTicketingFinished
+                                  ? Text(t.seatplan.ticketingFinished)
+                                  : Text('${t.seatplan.availableSeats}: $seatsFree/$seatsTotal'),
+                          },
+                          ElevatedButton(
+                            onPressed: (state is SeatplanLoaded && state.isTicketingFinished)
+                                ? null
+                                : () {
+                                    _launchURL(widget.item.bookingLink);
+                                  },
                             child: Text(
-                              t.scheduleReminder,
+                              t.buyTicket,
                             ),
-                            onPressed: () async {
-                              final eventDateTime = widget.item.dateTime;
+                          ),
+                        ],
+                      );
+                    },
+                  ),
+                  Builder(
+                    builder: (context) {
+                      final timeZone = TimeZone();
+                      return OutlinedButton(
+                        onPressed:
+                            timeZone.diffWithCurrentPolishTime(widget.item.dateTime).inMinutes > -30
+                                ? null
+                                : () async {
+                                    final eventDateTime = widget.item.dateTime;
 
-                              final pickedTime = await showTimePicker(
-                                context: context,
-                                initialEntryMode: TimePickerEntryMode.input,
-                                helpText: t.reminders.selectReminderTime,
-                                initialTime: TimeOfDay.fromDateTime(
-                                  widget.item.dateTime.subtract(
-                                    const Duration(minutes: 30),
-                                  ),
-                                ),
-                              );
-
-                              if (pickedTime != null) {
-                                final timeZone = TimeZone();
-                                final timeZoneName = await timeZone.getTimeZoneName();
-
-                                final location = await timeZone.getLocation(timeZoneName);
-
-                                final pickedTzDateTime = tz.TZDateTime(
-                                  location,
-                                  eventDateTime.year,
-                                  eventDateTime.month,
-                                  eventDateTime.day,
-                                  pickedTime.hour,
-                                  pickedTime.minute,
-                                );
-
-                                if (pickedTzDateTime.isAfter(tz.TZDateTime.now(location))) {
-                                  try {
-                                    await _scheduleNotification(
-                                      widget.film.name,
-                                      widget.item,
-                                      pickedTzDateTime,
+                                    final pickedTime = await showTimePicker(
+                                      context: context,
+                                      initialEntryMode: TimePickerEntryMode.input,
+                                      helpText: t.reminders.selectReminderTime,
+                                      initialTime: TimeOfDay.fromDateTime(
+                                        widget.item.dateTime.subtract(
+                                          const Duration(minutes: 30),
+                                        ),
+                                      ),
                                     );
-                                    if (context.mounted) {
-                                      context.showSnackbar(t.reminders.reminderScheduled);
+
+                                    if (pickedTime != null) {
+                                      final timeZoneName = await timeZone.getTimeZoneName();
+
+                                      final location = await timeZone.getLocation(timeZoneName);
+
+                                      final pickedTzDateTime = tz.TZDateTime(
+                                        location,
+                                        eventDateTime.year,
+                                        eventDateTime.month,
+                                        eventDateTime.day,
+                                        pickedTime.hour,
+                                        pickedTime.minute,
+                                      );
+
+                                      if (pickedTzDateTime.isAfter(tz.TZDateTime.now(location))) {
+                                        try {
+                                          await _scheduleNotification(
+                                            widget.film.name,
+                                            widget.item,
+                                            pickedTzDateTime,
+                                          );
+                                          if (context.mounted) {
+                                            context.showSnackbar(t.reminders.reminderScheduled);
+                                          }
+                                          if (context.mounted) Navigator.of(context).pop();
+                                        } catch (_) {}
+                                      }
                                     }
-                                    if (context.mounted) Navigator.of(context).pop();
-                                  } catch (_) {}
-                                }
-                              }
-                            },
-                          );
-                        },
-                      ),
-                    ],
-                  );
-                },
+                                  },
+                        child: Text(
+                          t.scheduleReminder,
+                        ),
+                      );
+                    },
+                  ),
+                ],
               ),
             ],
           ),

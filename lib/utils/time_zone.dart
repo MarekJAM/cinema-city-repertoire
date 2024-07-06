@@ -18,4 +18,8 @@ class TimeZone {
     }
     return t.getLocation(timeZoneName);
   }
+
+  Duration diffWithCurrentPolishTime(DateTime dateTime) {
+    return t.TZDateTime.now(t.getLocation('Europe/Warsaw')).difference(dateTime);
+  }
 }
