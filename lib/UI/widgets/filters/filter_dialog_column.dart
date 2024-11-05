@@ -38,7 +38,7 @@ class _FilterDialogColumnState extends State<FilterDialogColumn> {
 
     return Card(
       child: Padding(
-        padding: const EdgeInsets.only(left: 8, right: 8, bottom: 8),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,

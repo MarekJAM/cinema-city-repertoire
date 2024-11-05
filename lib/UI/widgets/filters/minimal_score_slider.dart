@@ -21,7 +21,7 @@ class _MinimalScoreSliderState extends State<MinimalScoreSlider> {
   Widget build(BuildContext context) {
     return Card(
       child: Padding(
-        padding: const EdgeInsets.only(left: 8, right: 8),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         child: Column(
           children: [
             Row(
