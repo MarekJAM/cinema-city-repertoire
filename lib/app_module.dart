@@ -22,14 +22,6 @@ abstract class RegisterModule {
         ),
       )..interceptors.addAll(cinemaCityInterceptors);
 
-  @Named('dioCinemaCityTickets')
-  @lazySingleton
-  Dio get dioCinemaCityTickets => Dio(
-        BaseOptions(
-          baseUrl: 'https://tickets.cinema-city.pl/api/',
-        ),
-      );
-
   @Named('dioFilmweb')
   @lazySingleton
   Dio get dioFilmweb => Dio(
