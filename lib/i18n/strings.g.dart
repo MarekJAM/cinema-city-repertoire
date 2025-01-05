@@ -1,42 +1,92 @@
 /// Generated file. Do not edit.
 ///
-/// Original: lib/i18n
+/// Source: lib/i18n
 /// To regenerate, run: `dart run slang`
 ///
 /// Locales: 2
 /// Strings: 140 (70 per locale)
 ///
-/// Built on 2024-11-05 at 16:27 UTC
+/// Built on 2025-01-05 at 14:54 UTC
 
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, unused_import
 
 import 'package:flutter/widgets.dart';
-import 'package:slang/builder/model/node.dart';
+import 'package:intl/intl.dart';
+import 'package:slang/generated.dart';
 import 'package:slang_flutter/slang_flutter.dart';
 export 'package:slang_flutter/slang_flutter.dart';
 
-const AppLocale _baseLocale = AppLocale.en;
+import 'strings_pl.g.dart' deferred as l_pl;
+part 'strings_en.g.dart';
 
-/// Supported locales, see extension methods below.
+/// Supported locales.
 ///
 /// Usage:
 /// - LocaleSettings.setLocale(AppLocale.en) // set locale
 /// - Locale locale = AppLocale.en.flutterLocale // get flutter locale from enum
 /// - if (LocaleSettings.currentLocale == AppLocale.en) // locale check
 enum AppLocale with BaseAppLocale<AppLocale, Translations> {
-	en(languageCode: 'en', build: Translations.build),
-	pl(languageCode: 'pl', build: _StringsPl.build);
+	en(languageCode: 'en'),
+	pl(languageCode: 'pl');
 
-	const AppLocale({required this.languageCode, this.scriptCode, this.countryCode, required this.build}); // ignore: unused_element
+	const AppLocale({
+		required this.languageCode,
+		this.scriptCode, // ignore: unused_element
+		this.countryCode, // ignore: unused_element
+	});
 
 	@override final String languageCode;
 	@override final String? scriptCode;
 	@override final String? countryCode;
-	@override final TranslationBuilder<AppLocale, Translations> build;
+
+	@override
+	Future<Translations> build({
+		Map<String, Node>? overrides,
+		PluralResolver? cardinalResolver,
+		PluralResolver? ordinalResolver,
+	}) async {
+		switch (this) {
+			case AppLocale.en:
+				return TranslationsEn(
+					overrides: overrides,
+					cardinalResolver: cardinalResolver,
+					ordinalResolver: ordinalResolver,
+				);
+			case AppLocale.pl:
+				await l_pl.loadLibrary();
+				return l_pl.TranslationsPl(
+					overrides: overrides,
+					cardinalResolver: cardinalResolver,
+					ordinalResolver: ordinalResolver,
+				);
+		}
+	}
+
+	@override
+	Translations buildSync({
+		Map<String, Node>? overrides,
+		PluralResolver? cardinalResolver,
+		PluralResolver? ordinalResolver,
+	}) {
+		switch (this) {
+			case AppLocale.en:
+				return TranslationsEn(
+					overrides: overrides,
+					cardinalResolver: cardinalResolver,
+					ordinalResolver: ordinalResolver,
+				);
+			case AppLocale.pl:
+				return l_pl.TranslationsPl(
+					overrides: overrides,
+					cardinalResolver: cardinalResolver,
+					ordinalResolver: ordinalResolver,
+				);
+		}
+	}
 
 	/// Gets current instance managed by [LocaleSettings].
-	Translations get translations => LocaleSettings.instance.translationMap[this]!;
+	Translations get translations => LocaleSettings.instance.getTranslations(this);
 }
 
 /// Method A: Simple
@@ -82,19 +132,31 @@ extension BuildContextTranslationsExtension on BuildContext {
 
 /// Manages all translation instances and the current locale
 class LocaleSettings extends BaseFlutterLocaleSettings<AppLocale, Translations> {
-	LocaleSettings._() : super(utils: AppLocaleUtils.instance);
+	LocaleSettings._() : super(
+		utils: AppLocaleUtils.instance,
+		lazy: true,
+	);
 
 	static final instance = LocaleSettings._();
 
 	// static aliases (checkout base methods for documentation)
 	static AppLocale get currentLocale => instance.currentLocale;
 	static Stream<AppLocale> getLocaleStream() => instance.getLocaleStream();
-	static AppLocale setLocale(AppLocale locale, {bool? listenToDeviceLocale = false}) => instance.setLocale(locale, listenToDeviceLocale: listenToDeviceLocale);
-	static AppLocale setLocaleRaw(String rawLocale, {bool? listenToDeviceLocale = false}) => instance.setLocaleRaw(rawLocale, listenToDeviceLocale: listenToDeviceLocale);
-	static AppLocale useDeviceLocale() => instance.useDeviceLocale();
-	@Deprecated('Use [AppLocaleUtils.supportedLocales]') static List<Locale> get supportedLocales => instance.supportedLocales;
-	@Deprecated('Use [AppLocaleUtils.supportedLocalesRaw]') static List<String> get supportedLocalesRaw => instance.supportedLocalesRaw;
-	static void setPluralResolver({String? language, AppLocale? locale, PluralResolver? cardinalResolver, PluralResolver? ordinalResolver}) => instance.setPluralResolver(
+	static Future<AppLocale> setLocale(AppLocale locale, {bool? listenToDeviceLocale = false}) => instance.setLocale(locale, listenToDeviceLocale: listenToDeviceLocale);
+	static Future<AppLocale> setLocaleRaw(String rawLocale, {bool? listenToDeviceLocale = false}) => instance.setLocaleRaw(rawLocale, listenToDeviceLocale: listenToDeviceLocale);
+	static Future<AppLocale> useDeviceLocale() => instance.useDeviceLocale();
+	static Future<void> setPluralResolver({String? language, AppLocale? locale, PluralResolver? cardinalResolver, PluralResolver? ordinalResolver}) => instance.setPluralResolver(
+		language: language,
+		locale: locale,
+		cardinalResolver: cardinalResolver,
+		ordinalResolver: ordinalResolver,
+	);
+
+	// synchronous versions
+	static AppLocale setLocaleSync(AppLocale locale, {bool? listenToDeviceLocale = false}) => instance.setLocaleSync(locale, listenToDeviceLocale: listenToDeviceLocale);
+	static AppLocale setLocaleRawSync(String rawLocale, {bool? listenToDeviceLocale = false}) => instance.setLocaleRawSync(rawLocale, listenToDeviceLocale: listenToDeviceLocale);
+	static AppLocale useDeviceLocaleSync() => instance.useDeviceLocaleSync();
+	static void setPluralResolverSync({String? language, AppLocale? locale, PluralResolver? cardinalResolver, PluralResolver? ordinalResolver}) => instance.setPluralResolverSync(
 		language: language,
 		locale: locale,
 		cardinalResolver: cardinalResolver,
@@ -104,7 +166,10 @@ class LocaleSettings extends BaseFlutterLocaleSettings<AppLocale, Translations> 
 
 /// Provides utility functions without any side effects.
 class AppLocaleUtils extends BaseAppLocaleUtils<AppLocale, Translations> {
-	AppLocaleUtils._() : super(baseLocale: _baseLocale, locales: AppLocale.values);
+	AppLocaleUtils._() : super(
+		baseLocale: AppLocale.en,
+		locales: AppLocale.values,
+	);
 
 	static final instance = AppLocaleUtils._();
 
@@ -114,523 +179,4 @@ class AppLocaleUtils extends BaseAppLocaleUtils<AppLocale, Translations> {
 	static AppLocale findDeviceLocale() => instance.findDeviceLocale();
 	static List<Locale> get supportedLocales => instance.supportedLocales;
 	static List<String> get supportedLocalesRaw => instance.supportedLocalesRaw;
-}
-
-// translations
-
-// Path: <root>
-class Translations implements BaseTranslations<AppLocale, Translations> {
-	/// Returns the current translations of the given [context].
-	///
-	/// Usage:
-	/// final t = Translations.of(context);
-	static Translations of(BuildContext context) => InheritedLocaleData.of<AppLocale, Translations>(context).translations;
-
-	/// You can call this constructor and build your own translation instance of this locale.
-	/// Constructing via the enum [AppLocale.build] is preferred.
-	Translations.build({Map<String, Node>? overrides, PluralResolver? cardinalResolver, PluralResolver? ordinalResolver})
-		: assert(overrides == null, 'Set "translation_overrides: true" in order to enable this feature.'),
-		  $meta = TranslationMetadata(
-		    locale: AppLocale.en,
-		    overrides: overrides ?? {},
-		    cardinalResolver: cardinalResolver,
-		    ordinalResolver: ordinalResolver,
-		  ) {
-		$meta.setFlatMapFunction(_flatMapFunction);
-	}
-
-	/// Metadata for the translations of <en>.
-	@override final TranslationMetadata<AppLocale, Translations> $meta;
-
-	/// Access flat map
-	dynamic operator[](String key) => $meta.getTranslation(key);
-
-	late final Translations _root = this; // ignore: unused_field
-
-	// Translations
-	String get appName => 'Cinema City Repertoire';
-	String get refresh => 'Refresh';
-	String get back => 'Back';
-	String get apply => 'Apply';
-	String get reset => 'Reset';
-	String get confirm => 'Confirm';
-	String get save => 'Save';
-	String get display => 'Display';
-	String get buyTicket => 'Buy ticket on website';
-	String get scheduleReminder => 'Schedule reminder';
-	late final _StringsRepertoireEn repertoire = _StringsRepertoireEn._(_root);
-	late final _StringsFilmDetailsEn filmDetails = _StringsFilmDetailsEn._(_root);
-	late final _StringsFiltersEn filters = _StringsFiltersEn._(_root);
-	late final _StringsCinemasEn cinemas = _StringsCinemasEn._(_root);
-	late final _StringsRemindersEn reminders = _StringsRemindersEn._(_root);
-	late final _StringsGenresEn genres = _StringsGenresEn._(_root);
-	late final _StringsLanguageTypeEn languageType = _StringsLanguageTypeEn._(_root);
-	late final _StringsSeatplanEn seatplan = _StringsSeatplanEn._(_root);
-}
-
-// Path: repertoire
-class _StringsRepertoireEn {
-	_StringsRepertoireEn._(this._root);
-
-	final Translations _root; // ignore: unused_field
-
-	// Translations
-	String get noFilmsToDisplayPickAnotherDate => 'No films to display. Pick another date or adjust filters.';
-	String get pickDifferentDate => 'Pick a different date';
-	String get adjustFilters => 'Adjust filters';
-	String get noFilmsToDisplay => 'No films to display';
-	String get pickCinemas => 'Pick cinemas';
-	String get failedToLoad => 'Failed to load data';
-}
-
-// Path: filmDetails
-class _StringsFilmDetailsEn {
-	_StringsFilmDetailsEn._(this._root);
-
-	final Translations _root; // ignore: unused_field
-
-	// Translations
-	String get premiere => 'Premiere';
-	String get filmLength => 'Film length';
-	String filmLengthValue({required Object val}) => '${val} min';
-	String get filmTitle => 'Title';
-	String get filmGenre => 'Genre';
-	String get cast => 'Cast';
-	String get director => 'Director';
-	String get production => 'Production';
-	String get rating => 'Rating';
-	String get ratingNoData => 'No data';
-	String get seeTrailer => 'Watch trailer';
-	String get failedToLoad => 'Failed to load film details';
-	String get posterError => 'Failed to load poster';
-}
-
-// Path: filters
-class _StringsFiltersEn {
-	_StringsFiltersEn._(this._root);
-
-	final Translations _root; // ignore: unused_field
-
-	// Translations
-	String get name => 'Filters';
-	String get genre => 'Genre';
-	String get typeOfShow => 'Type of session';
-	String get noRating => 'No rating';
-	String get minimalRating => 'Minimal rating';
-	String get selectAll => 'Select all';
-	String get unselectAll => 'Unselect all';
-}
-
-// Path: cinemas
-class _StringsCinemasEn {
-	_StringsCinemasEn._(this._root);
-
-	final Translations _root; // ignore: unused_field
-
-	// Translations
-	String get name => 'Cinemas';
-	String get savedAsFavorite => 'Saved as favorite';
-	String get failedToLoad => 'Failed to load list of cinemas';
-}
-
-// Path: reminders
-class _StringsRemindersEn {
-	_StringsRemindersEn._(this._root);
-
-	final Translations _root; // ignore: unused_field
-
-	// Translations
-	String filmReminder({required Object time}) => 'Reminder - ${time}';
-	String get reminderScheduled => 'Reminder scheduled';
-	String get selectReminderTime => 'Select reminder time';
-}
-
-// Path: genres
-class _StringsGenresEn {
-	_StringsGenresEn._(this._root);
-
-	final Translations _root; // ignore: unused_field
-
-	// Translations
-	String get action => 'Action';
-	String get adventure => 'Adventure';
-	String get animation => 'Animation';
-	String get bollywood => 'Bollywoood';
-	String get comedy => 'Comedy';
-	String get crime => 'Crime';
-	String get documentary => 'Documentary';
-	String get drama => 'Drama';
-	String get family => 'Family';
-	String get fantasy => 'Fantasy';
-	String get history => 'History';
-	String get horror => 'Horror';
-	String get kidsClub => 'Kids club';
-	String get live => 'Love';
-	String get musical => 'Musical';
-	String get romance => 'Romance';
-	String get sciFi => 'Sci-fi';
-	String get sport => 'Sport';
-	String get thriller => 'Thriller';
-	String get war => 'War';
-	String get western => 'Western';
-	String get unspecified => 'Unspecified';
-}
-
-// Path: languageType
-class _StringsLanguageTypeEn {
-	_StringsLanguageTypeEn._(this._root);
-
-	final Translations _root; // ignore: unused_field
-
-	// Translations
-	String get original => 'PL';
-	String get subtitles => 'Subtitles';
-	String get dubbing => 'Dubbing';
-}
-
-// Path: seatplan
-class _StringsSeatplanEn {
-	_StringsSeatplanEn._(this._root);
-
-	final Translations _root; // ignore: unused_field
-
-	// Translations
-	String get availableSeats => 'Available seats';
-	String get ticketingFinished => 'Ticketing finished';
-	String get failedToLoad => 'No info about available seats';
-}
-
-// Path: <root>
-class _StringsPl implements Translations {
-	/// You can call this constructor and build your own translation instance of this locale.
-	/// Constructing via the enum [AppLocale.build] is preferred.
-	_StringsPl.build({Map<String, Node>? overrides, PluralResolver? cardinalResolver, PluralResolver? ordinalResolver})
-		: assert(overrides == null, 'Set "translation_overrides: true" in order to enable this feature.'),
-		  $meta = TranslationMetadata(
-		    locale: AppLocale.pl,
-		    overrides: overrides ?? {},
-		    cardinalResolver: cardinalResolver,
-		    ordinalResolver: ordinalResolver,
-		  ) {
-		$meta.setFlatMapFunction(_flatMapFunction);
-	}
-
-	/// Metadata for the translations of <pl>.
-	@override final TranslationMetadata<AppLocale, Translations> $meta;
-
-	/// Access flat map
-	@override dynamic operator[](String key) => $meta.getTranslation(key);
-
-	@override late final _StringsPl _root = this; // ignore: unused_field
-
-	// Translations
-	@override String get appName => 'Cinema City Repertuar';
-	@override String get refresh => 'Odswież';
-	@override String get back => 'Powrót';
-	@override String get apply => 'Zastosuj';
-	@override String get reset => 'Reset';
-	@override String get confirm => 'Zatwiedź';
-	@override String get save => 'Zapisz';
-	@override String get display => 'Wyświetl';
-	@override String get buyTicket => 'Kup bilet przez stronę';
-	@override String get scheduleReminder => 'Ustaw przypomnienie';
-	@override late final _StringsRepertoirePl repertoire = _StringsRepertoirePl._(_root);
-	@override late final _StringsFilmDetailsPl filmDetails = _StringsFilmDetailsPl._(_root);
-	@override late final _StringsFiltersPl filters = _StringsFiltersPl._(_root);
-	@override late final _StringsCinemasPl cinemas = _StringsCinemasPl._(_root);
-	@override late final _StringsRemindersPl reminders = _StringsRemindersPl._(_root);
-	@override late final _StringsGenresPl genres = _StringsGenresPl._(_root);
-	@override late final _StringsLanguageTypePl languageType = _StringsLanguageTypePl._(_root);
-	@override late final _StringsSeatplanPl seatplan = _StringsSeatplanPl._(_root);
-}
-
-// Path: repertoire
-class _StringsRepertoirePl implements _StringsRepertoireEn {
-	_StringsRepertoirePl._(this._root);
-
-	@override final _StringsPl _root; // ignore: unused_field
-
-	// Translations
-	@override String get noFilmsToDisplayPickAnotherDate => 'Brak filmów do wyświetlenia. Wybierz inną datę lub dostosuj filtry.';
-	@override String get pickDifferentDate => 'Wybierz inną datę';
-	@override String get adjustFilters => 'Dostosuj filtry';
-	@override String get noFilmsToDisplay => 'Brak filmów do wyświetlenia';
-	@override String get pickCinemas => 'Wybierz kina';
-	@override String get failedToLoad => 'W trakcie pobierania danych wystąpił błąd';
-}
-
-// Path: filmDetails
-class _StringsFilmDetailsPl implements _StringsFilmDetailsEn {
-	_StringsFilmDetailsPl._(this._root);
-
-	@override final _StringsPl _root; // ignore: unused_field
-
-	// Translations
-	@override String get premiere => 'Premiera';
-	@override String get filmLength => 'Czas trwania';
-	@override String filmLengthValue({required Object val}) => '${val} min';
-	@override String get filmTitle => 'Tytuł';
-	@override String get filmGenre => 'Gatunek';
-	@override String get cast => 'Obsada';
-	@override String get director => 'Reżyser';
-	@override String get production => 'Produkcja';
-	@override String get rating => 'Ocena';
-	@override String get ratingNoData => 'Brak danych';
-	@override String get seeTrailer => 'Zobacz zwiastun';
-	@override String get failedToLoad => 'Nie udadło się pobrać informacji o filmie';
-	@override String get posterError => 'Nie udało się pobrać plakatu';
-}
-
-// Path: filters
-class _StringsFiltersPl implements _StringsFiltersEn {
-	_StringsFiltersPl._(this._root);
-
-	@override final _StringsPl _root; // ignore: unused_field
-
-	// Translations
-	@override String get name => 'Filtry';
-	@override String get genre => 'Gatunek';
-	@override String get typeOfShow => 'Rodzaj seansu';
-	@override String get noRating => 'Bez oceny';
-	@override String get minimalRating => 'Minimalna ocena';
-	@override String get selectAll => 'Zaznacz wszystko';
-	@override String get unselectAll => 'Odznacz wszystko';
-}
-
-// Path: cinemas
-class _StringsCinemasPl implements _StringsCinemasEn {
-	_StringsCinemasPl._(this._root);
-
-	@override final _StringsPl _root; // ignore: unused_field
-
-	// Translations
-	@override String get name => 'Kina';
-	@override String get savedAsFavorite => 'Zapisano kina jako ulubione';
-	@override String get failedToLoad => 'Nie udało się pobrać listy kin';
-}
-
-// Path: reminders
-class _StringsRemindersPl implements _StringsRemindersEn {
-	_StringsRemindersPl._(this._root);
-
-	@override final _StringsPl _root; // ignore: unused_field
-
-	// Translations
-	@override String filmReminder({required Object time}) => 'Przypomnienie o seansie - ${time}';
-	@override String get reminderScheduled => 'Zaplanowano przypomnienie';
-	@override String get selectReminderTime => 'Wybierz czas przypomnienia';
-}
-
-// Path: genres
-class _StringsGenresPl implements _StringsGenresEn {
-	_StringsGenresPl._(this._root);
-
-	@override final _StringsPl _root; // ignore: unused_field
-
-	// Translations
-	@override String get action => 'Akcja';
-	@override String get adventure => 'Przygodowy';
-	@override String get animation => 'Animacja';
-	@override String get bollywood => 'Bollywood';
-	@override String get comedy => 'Komedia';
-	@override String get crime => 'Kryminalny';
-	@override String get documentary => 'Dokument';
-	@override String get drama => 'Dramat';
-	@override String get family => 'Familijny';
-	@override String get fantasy => 'Fantasy';
-	@override String get history => 'Historyczny';
-	@override String get horror => 'Horror';
-	@override String get kidsClub => 'Dla dzieci';
-	@override String get live => 'Na żywo';
-	@override String get musical => 'Musical';
-	@override String get romance => 'Romantyczny';
-	@override String get sciFi => 'Sci-fi';
-	@override String get sport => 'Sport';
-	@override String get thriller => 'Thriller';
-	@override String get war => 'Wojenny';
-	@override String get western => 'Western';
-	@override String get unspecified => 'Nieokreślony';
-}
-
-// Path: languageType
-class _StringsLanguageTypePl implements _StringsLanguageTypeEn {
-	_StringsLanguageTypePl._(this._root);
-
-	@override final _StringsPl _root; // ignore: unused_field
-
-	// Translations
-	@override String get original => 'PL';
-	@override String get subtitles => 'Napisy';
-	@override String get dubbing => 'Dubbing';
-}
-
-// Path: seatplan
-class _StringsSeatplanPl implements _StringsSeatplanEn {
-	_StringsSeatplanPl._(this._root);
-
-	@override final _StringsPl _root; // ignore: unused_field
-
-	// Translations
-	@override String get availableSeats => 'Dostępne miejsca';
-	@override String get ticketingFinished => 'Sprzedaż biletów zakończona';
-	@override String get failedToLoad => 'Brak danych o dostępnych miejscach';
-}
-
-/// Flat map(s) containing all translations.
-/// Only for edge cases! For simple maps, use the map function of this library.
-
-extension on Translations {
-	dynamic _flatMapFunction(String path) {
-		switch (path) {
-			case 'appName': return 'Cinema City Repertoire';
-			case 'refresh': return 'Refresh';
-			case 'back': return 'Back';
-			case 'apply': return 'Apply';
-			case 'reset': return 'Reset';
-			case 'confirm': return 'Confirm';
-			case 'save': return 'Save';
-			case 'display': return 'Display';
-			case 'buyTicket': return 'Buy ticket on website';
-			case 'scheduleReminder': return 'Schedule reminder';
-			case 'repertoire.noFilmsToDisplayPickAnotherDate': return 'No films to display. Pick another date or adjust filters.';
-			case 'repertoire.pickDifferentDate': return 'Pick a different date';
-			case 'repertoire.adjustFilters': return 'Adjust filters';
-			case 'repertoire.noFilmsToDisplay': return 'No films to display';
-			case 'repertoire.pickCinemas': return 'Pick cinemas';
-			case 'repertoire.failedToLoad': return 'Failed to load data';
-			case 'filmDetails.premiere': return 'Premiere';
-			case 'filmDetails.filmLength': return 'Film length';
-			case 'filmDetails.filmLengthValue': return ({required Object val}) => '${val} min';
-			case 'filmDetails.filmTitle': return 'Title';
-			case 'filmDetails.filmGenre': return 'Genre';
-			case 'filmDetails.cast': return 'Cast';
-			case 'filmDetails.director': return 'Director';
-			case 'filmDetails.production': return 'Production';
-			case 'filmDetails.rating': return 'Rating';
-			case 'filmDetails.ratingNoData': return 'No data';
-			case 'filmDetails.seeTrailer': return 'Watch trailer';
-			case 'filmDetails.failedToLoad': return 'Failed to load film details';
-			case 'filmDetails.posterError': return 'Failed to load poster';
-			case 'filters.name': return 'Filters';
-			case 'filters.genre': return 'Genre';
-			case 'filters.typeOfShow': return 'Type of session';
-			case 'filters.noRating': return 'No rating';
-			case 'filters.minimalRating': return 'Minimal rating';
-			case 'filters.selectAll': return 'Select all';
-			case 'filters.unselectAll': return 'Unselect all';
-			case 'cinemas.name': return 'Cinemas';
-			case 'cinemas.savedAsFavorite': return 'Saved as favorite';
-			case 'cinemas.failedToLoad': return 'Failed to load list of cinemas';
-			case 'reminders.filmReminder': return ({required Object time}) => 'Reminder - ${time}';
-			case 'reminders.reminderScheduled': return 'Reminder scheduled';
-			case 'reminders.selectReminderTime': return 'Select reminder time';
-			case 'genres.action': return 'Action';
-			case 'genres.adventure': return 'Adventure';
-			case 'genres.animation': return 'Animation';
-			case 'genres.bollywood': return 'Bollywoood';
-			case 'genres.comedy': return 'Comedy';
-			case 'genres.crime': return 'Crime';
-			case 'genres.documentary': return 'Documentary';
-			case 'genres.drama': return 'Drama';
-			case 'genres.family': return 'Family';
-			case 'genres.fantasy': return 'Fantasy';
-			case 'genres.history': return 'History';
-			case 'genres.horror': return 'Horror';
-			case 'genres.kidsClub': return 'Kids club';
-			case 'genres.live': return 'Love';
-			case 'genres.musical': return 'Musical';
-			case 'genres.romance': return 'Romance';
-			case 'genres.sciFi': return 'Sci-fi';
-			case 'genres.sport': return 'Sport';
-			case 'genres.thriller': return 'Thriller';
-			case 'genres.war': return 'War';
-			case 'genres.western': return 'Western';
-			case 'genres.unspecified': return 'Unspecified';
-			case 'languageType.original': return 'PL';
-			case 'languageType.subtitles': return 'Subtitles';
-			case 'languageType.dubbing': return 'Dubbing';
-			case 'seatplan.availableSeats': return 'Available seats';
-			case 'seatplan.ticketingFinished': return 'Ticketing finished';
-			case 'seatplan.failedToLoad': return 'No info about available seats';
-			default: return null;
-		}
-	}
-}
-
-extension on _StringsPl {
-	dynamic _flatMapFunction(String path) {
-		switch (path) {
-			case 'appName': return 'Cinema City Repertuar';
-			case 'refresh': return 'Odswież';
-			case 'back': return 'Powrót';
-			case 'apply': return 'Zastosuj';
-			case 'reset': return 'Reset';
-			case 'confirm': return 'Zatwiedź';
-			case 'save': return 'Zapisz';
-			case 'display': return 'Wyświetl';
-			case 'buyTicket': return 'Kup bilet przez stronę';
-			case 'scheduleReminder': return 'Ustaw przypomnienie';
-			case 'repertoire.noFilmsToDisplayPickAnotherDate': return 'Brak filmów do wyświetlenia. Wybierz inną datę lub dostosuj filtry.';
-			case 'repertoire.pickDifferentDate': return 'Wybierz inną datę';
-			case 'repertoire.adjustFilters': return 'Dostosuj filtry';
-			case 'repertoire.noFilmsToDisplay': return 'Brak filmów do wyświetlenia';
-			case 'repertoire.pickCinemas': return 'Wybierz kina';
-			case 'repertoire.failedToLoad': return 'W trakcie pobierania danych wystąpił błąd';
-			case 'filmDetails.premiere': return 'Premiera';
-			case 'filmDetails.filmLength': return 'Czas trwania';
-			case 'filmDetails.filmLengthValue': return ({required Object val}) => '${val} min';
-			case 'filmDetails.filmTitle': return 'Tytuł';
-			case 'filmDetails.filmGenre': return 'Gatunek';
-			case 'filmDetails.cast': return 'Obsada';
-			case 'filmDetails.director': return 'Reżyser';
-			case 'filmDetails.production': return 'Produkcja';
-			case 'filmDetails.rating': return 'Ocena';
-			case 'filmDetails.ratingNoData': return 'Brak danych';
-			case 'filmDetails.seeTrailer': return 'Zobacz zwiastun';
-			case 'filmDetails.failedToLoad': return 'Nie udadło się pobrać informacji o filmie';
-			case 'filmDetails.posterError': return 'Nie udało się pobrać plakatu';
-			case 'filters.name': return 'Filtry';
-			case 'filters.genre': return 'Gatunek';
-			case 'filters.typeOfShow': return 'Rodzaj seansu';
-			case 'filters.noRating': return 'Bez oceny';
-			case 'filters.minimalRating': return 'Minimalna ocena';
-			case 'filters.selectAll': return 'Zaznacz wszystko';
-			case 'filters.unselectAll': return 'Odznacz wszystko';
-			case 'cinemas.name': return 'Kina';
-			case 'cinemas.savedAsFavorite': return 'Zapisano kina jako ulubione';
-			case 'cinemas.failedToLoad': return 'Nie udało się pobrać listy kin';
-			case 'reminders.filmReminder': return ({required Object time}) => 'Przypomnienie o seansie - ${time}';
-			case 'reminders.reminderScheduled': return 'Zaplanowano przypomnienie';
-			case 'reminders.selectReminderTime': return 'Wybierz czas przypomnienia';
-			case 'genres.action': return 'Akcja';
-			case 'genres.adventure': return 'Przygodowy';
-			case 'genres.animation': return 'Animacja';
-			case 'genres.bollywood': return 'Bollywood';
-			case 'genres.comedy': return 'Komedia';
-			case 'genres.crime': return 'Kryminalny';
-			case 'genres.documentary': return 'Dokument';
-			case 'genres.drama': return 'Dramat';
-			case 'genres.family': return 'Familijny';
-			case 'genres.fantasy': return 'Fantasy';
-			case 'genres.history': return 'Historyczny';
-			case 'genres.horror': return 'Horror';
-			case 'genres.kidsClub': return 'Dla dzieci';
-			case 'genres.live': return 'Na żywo';
-			case 'genres.musical': return 'Musical';
-			case 'genres.romance': return 'Romantyczny';
-			case 'genres.sciFi': return 'Sci-fi';
-			case 'genres.sport': return 'Sport';
-			case 'genres.thriller': return 'Thriller';
-			case 'genres.war': return 'Wojenny';
-			case 'genres.western': return 'Western';
-			case 'genres.unspecified': return 'Nieokreślony';
-			case 'languageType.original': return 'PL';
-			case 'languageType.subtitles': return 'Napisy';
-			case 'languageType.dubbing': return 'Dubbing';
-			case 'seatplan.availableSeats': return 'Dostępne miejsca';
-			case 'seatplan.ticketingFinished': return 'Sprzedaż biletów zakończona';
-			case 'seatplan.failedToLoad': return 'Brak danych o dostępnych miejscach';
-			default: return null;
-		}
-	}
 }

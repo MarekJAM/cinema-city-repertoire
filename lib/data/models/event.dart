@@ -30,7 +30,7 @@ class Event {
           if (attr == type) {
             attributes.update(
               'type',
-              (value) => value + ' ' + type.toString(),
+              (value) => value + ' $type',
               ifAbsent: () => type.toString(),
             );
           }
