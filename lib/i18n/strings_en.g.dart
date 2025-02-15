@@ -38,6 +38,8 @@ class Translations implements BaseTranslations<AppLocale, Translations> {
 
 	// Translations
 	String get appName => 'Cinema City Repertoire';
+	String get appBarTitlePart1 => 'Cinema City';
+	String get appBarTitlePart2 => 'Repertoire';
 	String get refresh => 'Refresh';
 	String get back => 'Back';
 	String get apply => 'Apply';
@@ -195,6 +197,8 @@ extension on Translations {
 	dynamic _flatMapFunction(String path) {
 		switch (path) {
 			case 'appName': return 'Cinema City Repertoire';
+			case 'appBarTitlePart1': return 'Cinema City';
+			case 'appBarTitlePart2': return 'Repertoire';
 			case 'refresh': return 'Refresh';
 			case 'back': return 'Back';
 			case 'apply': return 'Apply';

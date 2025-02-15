@@ -1,5 +1,7 @@
 {
     "appName": "Cinema City Repertoire",
+    "appBarTitlePart1": "Cinema City",
+    "appBarTitlePart2": "Repertoire",
     "refresh": "Refresh",
     "back": "Back",
     "apply": "Apply",

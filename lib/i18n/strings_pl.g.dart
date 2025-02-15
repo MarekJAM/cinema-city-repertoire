@@ -34,6 +34,8 @@ class TranslationsPl implements Translations {
 
 	// Translations
 	@override String get appName => 'Cinema City Repertuar';
+	@override String get appBarTitlePart1 => 'Cinema City';
+	@override String get appBarTitlePart2 => 'Repertuar';
 	@override String get refresh => 'Odswież';
 	@override String get back => 'Powrót';
 	@override String get apply => 'Zastosuj';
@@ -191,6 +193,8 @@ extension on TranslationsPl {
 	dynamic _flatMapFunction(String path) {
 		switch (path) {
 			case 'appName': return 'Cinema City Repertuar';
+			case 'appBarTitlePart1': return 'Cinema City';
+			case 'appBarTitlePart2': return 'Repertuar';
 			case 'refresh': return 'Odswież';
 			case 'back': return 'Powrót';
 			case 'apply': return 'Zastosuj';

@@ -34,9 +34,9 @@ class _RepertoireAppBarState extends State<RepertoireAppBar> {
         surfaceTintColor: Colors.transparent,
         title: RichText(
           text: TextSpan(
-            children: const [
-              TextSpan(text: 'Cinema City\n'),
-              TextSpan(text: 'Repertuar', style: TextStyle(fontSize: 16)),
+            children: [
+              TextSpan(text: '${t.appBarTitlePart1}\n'),
+              TextSpan(text: t.appBarTitlePart2, style: TextStyle(fontSize: 16)),
             ],
             style: TextStyle(color: context.colorScheme.primary, fontSize: 22),
           ),
