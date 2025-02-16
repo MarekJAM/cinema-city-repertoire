@@ -23,6 +23,7 @@ class App extends StatelessWidget {
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
+      debugShowCheckedModeBanner: false,
       supportedLocales: const [
         Locale('en'),
         Locale('pl'),

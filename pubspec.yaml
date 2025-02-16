@@ -56,13 +56,14 @@ flutter_launcher_icons:
   ios: true
   image_path: "assets/icon.png"
   min_sdk_android: 21 
+  remove_alpha_ios: true
   windows:
     generate: true
     image_path: "assets/icon.png"
     icon_size: 48 
   macos:
     generate: true
-    image_path: "assets/icon.png"
+    image_path: "assets/icon_macos.png"
 
   # To add custom fonts to your application, add a fonts section here,
   # in this "flutter" section. Each entry in this list should have a
