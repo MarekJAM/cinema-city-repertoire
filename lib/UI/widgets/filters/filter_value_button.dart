@@ -19,6 +19,7 @@ class FilterValueButton extends StatelessWidget {
         label,
       ),
       selected: isSelected,
+      showCheckmark: false,
       onSelected: (newVal) {
         onValueChanged(newVal, label);
       },

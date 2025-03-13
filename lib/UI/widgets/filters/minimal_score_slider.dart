@@ -21,7 +21,7 @@ class _MinimalScoreSliderState extends State<MinimalScoreSlider> {
   Widget build(BuildContext context) {
     return Card(
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        padding: const EdgeInsets.only(left: 16, right: 16, top: 8, bottom: 16),
         child: Column(
           children: [
             Row(
@@ -31,6 +31,7 @@ class _MinimalScoreSliderState extends State<MinimalScoreSlider> {
                   '${t.filters.minimalRating}: ${widget.scoreFilter!.score!.toStringAsFixed(1)}',
                   style: const TextStyle(
                     fontSize: 16,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
                 Row(
