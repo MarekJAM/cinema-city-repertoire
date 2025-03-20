@@ -30,6 +30,9 @@
 .pub/
 /build/
 
+# Android related
+**/android/app/.cxx/**
+
 # Web related
 lib/generated_plugin_registrant.dart
 
