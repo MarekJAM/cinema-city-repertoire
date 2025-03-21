@@ -1,0 +1,26 @@
+name: tests
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  tests:
+    name: tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: 3.29.0
+          channel: stable
+          architecture: x64
+      - name: Generate code
+        run: dart run build_runner build --delete-conflicting-outputs
+      - name: Run tests
+        run: flutter test
