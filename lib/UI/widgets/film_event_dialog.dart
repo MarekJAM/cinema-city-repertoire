@@ -29,8 +29,8 @@ class FilmEventDialog extends StatefulWidget {
 }
 
 class _FilmEventDialogState extends State<FilmEventDialog> {
-  _launchURL(url) async {
-    if (await canLaunchUrlString(url)) {
+  Future<void> _launchURL(String? url) async {
+    if (url != null && await canLaunchUrlString(url)) {
       await launchUrlString(url);
     } else {
       throw 'Could not launch $url';
