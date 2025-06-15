@@ -222,7 +222,7 @@ class RepertoireFilmItemRow extends StatelessWidget {
                         borderRadius: BorderRadius.circular(5),
                       ),
                       onTap: () {
-                        showDialog(
+                        showModalBottomSheet<void>(
                           context: context,
                           builder: (BuildContext context) {
                             return FilmEventDialog(film: film, cinema: cinema, item: item);

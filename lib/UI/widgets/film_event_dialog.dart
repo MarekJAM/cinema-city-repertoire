@@ -64,51 +64,50 @@ class _FilmEventDialogState extends State<FilmEventDialog> {
       (LanguageType.original) => t.languageType.original,
       (LanguageType.subtitles) => t.languageType.subtitles,
     };
-    return Dialog(
-      shape: RoundedRectangleBorder(
-        side: BorderSide(
-          color: context.colorScheme.secondary,
-        ),
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(8),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            Text(
-              widget.film.name,
-              textAlign: TextAlign.center,
-              style: const TextStyle(fontSize: 20),
-            ),
-            const Divider(),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 3.0),
-              child: Text(
-                widget.cinema!,
-                textAlign: TextAlign.center,
-                style: const TextStyle(fontSize: 14),
+    return Padding(
+      padding: const EdgeInsets.all(16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                child: Text(
+                  widget.film.name,
+                  style: TextStyle(fontSize: 24, color: context.colorScheme.primary),
+                ),
               ),
+              IconButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                icon: Icon(Icons.cancel),
+              )
+            ],
+          ),
+          const Divider(),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 3.0),
+            child: Text(
+              '${widget.cinema!}, ${DateHelper.convertDateToHHMM(widget.item.dateTime)}',
+              style: const TextStyle(fontSize: 18),
             ),
-            Padding(
-              padding: const EdgeInsets.all(2.0),
-              child: Text(
-                DateHelper.convertDateToHHMM(widget.item.dateTime),
-                textAlign: TextAlign.center,
-                style: const TextStyle(fontSize: 14),
-              ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(2.0),
+            child: Text(
+              "$language, ${widget.item.type}",
+              style: TextStyle(fontSize: 14, color: context.colorScheme.onSurfaceVariant),
             ),
-            Padding(
-              padding: const EdgeInsets.all(2.0),
-              child: Text(
-                "$language, ${widget.item.type}",
-                textAlign: TextAlign.center,
-                style: const TextStyle(fontSize: 12),
-              ),
-            ),
-            Column(
-              children: [
-                ElevatedButton(
+          ),
+          const SizedBox(height: 8),
+          Column(
+            children: [
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
                   onPressed: () {
                     _launchURL(widget.item.bookingLink);
                   },
@@ -116,66 +115,68 @@ class _FilmEventDialogState extends State<FilmEventDialog> {
                     t.buyTicket,
                   ),
                 ),
-                Builder(
+              ),
+              SizedBox(
+                width: double.infinity,
+                child: Builder(
                   builder: (context) {
                     final timeZone = TimeZone();
                     return OutlinedButton(
-                      onPressed:
-                          timeZone.diffWithCurrentPolishTime(widget.item.dateTime).inMinutes > -30
-                              ? null
-                              : () async {
-                                  final eventDateTime = widget.item.dateTime;
+                      onPressed: timeZone.diffWithCurrentPolishTime(widget.item.dateTime).inMinutes > -30
+                          ? null
+                          : () async {
+                              final eventDateTime = widget.item.dateTime;
 
-                                  final pickedTime = await showTimePicker(
-                                    context: context,
-                                    initialEntryMode: TimePickerEntryMode.input,
-                                    helpText: t.reminders.selectReminderTime,
-                                    initialTime: TimeOfDay.fromDateTime(
-                                      widget.item.dateTime.subtract(
-                                        const Duration(minutes: 30),
-                                      ),
-                                    ),
-                                  );
+                              final pickedTime = await showTimePicker(
+                                context: context,
+                                initialEntryMode: TimePickerEntryMode.input,
+                                helpText: t.reminders.selectReminderTime,
+                                initialTime: TimeOfDay.fromDateTime(
+                                  widget.item.dateTime.subtract(
+                                    const Duration(minutes: 30),
+                                  ),
+                                ),
+                              );
 
-                                  if (pickedTime != null) {
-                                    final timeZoneName = await timeZone.getTimeZoneName();
+                              if (pickedTime != null) {
+                                final timeZoneName = await timeZone.getTimeZoneName();
 
-                                    final location = await timeZone.getLocation(timeZoneName);
+                                final location = await timeZone.getLocation(timeZoneName);
 
-                                    final pickedTzDateTime = tz.TZDateTime(
-                                      location,
-                                      eventDateTime.year,
-                                      eventDateTime.month,
-                                      eventDateTime.day,
-                                      pickedTime.hour,
-                                      pickedTime.minute,
+                                final pickedTzDateTime = tz.TZDateTime(
+                                  location,
+                                  eventDateTime.year,
+                                  eventDateTime.month,
+                                  eventDateTime.day,
+                                  pickedTime.hour,
+                                  pickedTime.minute,
+                                );
+
+                                if (pickedTzDateTime.isAfter(tz.TZDateTime.now(location))) {
+                                  try {
+                                    await _scheduleNotification(
+                                      widget.film.name,
+                                      widget.item,
+                                      pickedTzDateTime,
                                     );
-
-                                    if (pickedTzDateTime.isAfter(tz.TZDateTime.now(location))) {
-                                      try {
-                                        await _scheduleNotification(
-                                          widget.film.name,
-                                          widget.item,
-                                          pickedTzDateTime,
-                                        );
-                                        if (context.mounted) {
-                                          context.showSnackbar(t.reminders.reminderScheduled);
-                                        }
-                                        if (context.mounted) Navigator.of(context).pop();
-                                      } catch (_) {}
+                                    if (context.mounted) {
+                                      context.showSnackbar(t.reminders.reminderScheduled);
                                     }
-                                  }
-                                },
+                                    if (context.mounted) Navigator.of(context).pop();
+                                  } catch (_) {}
+                                }
+                              }
+                            },
                       child: Text(
                         t.scheduleReminder,
                       ),
                     );
                   },
                 ),
-              ],
-            ),
-          ],
-        ),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }

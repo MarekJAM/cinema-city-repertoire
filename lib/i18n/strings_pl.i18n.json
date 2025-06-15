@@ -45,6 +45,7 @@
     },
     "cinemas": {
         "name": "Kina",
+        "pickCinemas": "Wybierz kina",
         "savedAsFavorite": "Zapisano kina jako ulubione",
         "failedToLoad": "Nie udało się pobrać listy kin"
     },

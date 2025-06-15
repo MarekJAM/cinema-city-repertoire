@@ -45,6 +45,7 @@
     },
     "cinemas": {
         "name": "Cinemas",
+        "pickCinemas": "Select cinemas",
         "savedAsFavorite": "Saved as favorite",
         "failedToLoad": "Failed to load list of cinemas"
     },

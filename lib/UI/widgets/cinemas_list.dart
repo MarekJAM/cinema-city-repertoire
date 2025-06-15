@@ -20,48 +20,53 @@ class _CinemasListState extends State<CinemasList> {
       buildWhen: (prev, cur) => prev.status != cur.status,
       builder: (context, state) {
         final pickedCinemaIds = [...state.pickedCinemaIds];
-        return SafeArea(
+        return Padding(
+          padding: const EdgeInsets.all(16.0),
           child: Column(
             mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    child: Text(
+                      t.cinemas.pickCinemas,
+                      style: TextStyle(fontSize: 24, color: context.colorScheme.primary),
+                    ),
+                  ),
+                  IconButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    icon: Icon(
+                      Icons.cancel,
+                    ),
+                  ),
+                ],
+              ),
+              Divider(),
               Expanded(
                 child: ListView.builder(
                   padding: EdgeInsets.zero,
-                  itemBuilder: (context, index) => Row(
-                    children: <Widget>[
-                      CinemaItemRow(state.cinemas[index], pickedCinemaIds),
-                    ],
-                  ),
+                  itemBuilder: (context, index) => CinemaItemRow(state.cinemas[index], pickedCinemaIds),
                   itemCount: state.cinemas.length,
                 ),
               ),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 8.0),
-                child: Divider(),
-              ),
+              Divider(),
               SizedBox(
-                height: 50,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                        child: ElevatedButton(
-                          onPressed: () async {
-                            context.read<CinemasCubit>().saveFavoriteCinemas(pickedCinemaIds);
-                            context.read<CinemasCubit>().pickCinemas(pickedCinemaIds);
-                            context.read<DatesCubit>().getDates(
-                                  DateTime.now().add(const Duration(days: 365)),
-                                  pickedCinemaIds,
-                                );
-                            Navigator.of(context).pop();
-                          },
-                          child: Text(t.apply),
-                        ),
-                      ),
-                    ),
-                  ],
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () async {
+                    context.read<CinemasCubit>().saveFavoriteCinemas(pickedCinemaIds);
+                    context.read<CinemasCubit>().pickCinemas(pickedCinemaIds);
+                    context.read<DatesCubit>().getDates(
+                          DateTime.now().add(const Duration(days: 365)),
+                          pickedCinemaIds,
+                        );
+                    Navigator.of(context).pop();
+                  },
+                  child: Text(t.apply),
                 ),
               )
             ],
@@ -87,33 +92,26 @@ class _CinemaItemRowState extends State<CinemaItemRow> {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Row(
-        children: <Widget>[
-          Checkbox(
-            activeColor: context.colorScheme.primary,
-            value: widget.pickedCinemas.contains(widget.cinemaData.id),
-            onChanged: (val) {
-              setState(
-                () {
-                  _isChecked = val;
-                  if (_isChecked!) {
-                    widget.pickedCinemas.add(widget.cinemaData.id);
-                  } else {
-                    widget.pickedCinemas.removeWhere((item) => item == widget.cinemaData.id);
-                  }
-                },
-              );
-            },
-          ),
-          Expanded(
-            child: Text(
-              widget.cinemaData.displayName ?? '',
-              softWrap: true,
-            ),
-          ),
-        ],
+    return CheckboxListTile(
+      value: widget.pickedCinemas.contains(widget.cinemaData.id),
+      controlAffinity: ListTileControlAffinity.leading,
+      contentPadding: EdgeInsets.zero,
+      title: Text(
+        widget.cinemaData.displayName ?? '',
+        softWrap: true,
       ),
+      onChanged: (val) {
+        setState(
+          () {
+            _isChecked = val;
+            if (_isChecked!) {
+              widget.pickedCinemas.add(widget.cinemaData.id);
+            } else {
+              widget.pickedCinemas.removeWhere((item) => item == widget.cinemaData.id);
+            }
+          },
+        );
+      },
     );
   }
 }

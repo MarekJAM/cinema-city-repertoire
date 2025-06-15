@@ -1,3 +1,4 @@
+import 'package:cinema_city/UI/widgets/cinemas_list.dart';
 import 'package:cinema_city/utils/theme_context_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -24,8 +25,7 @@ class _RepertoireAppBarState extends State<RepertoireAppBar> {
     final datesCubit = context.watch<DatesCubit>();
 
     return BlocListener<DatesCubit, DatesState>(
-      listenWhen: (previous, current) =>
-          previous.status.isSuccess && previous.selectedDate != current.selectedDate,
+      listenWhen: (previous, current) => previous.status.isSuccess && previous.selectedDate != current.selectedDate,
       listener: (context, state) {
         context.read<RepertoireBloc>().add(GetRepertoire(date: state.selectedDate));
       },
@@ -65,8 +65,10 @@ class _RepertoireAppBarState extends State<RepertoireAppBar> {
             listenWhen: (prev, cur) => prev.status.isLoading && cur.status.isSuccess,
             listener: (context, state) {
               if (state.status.isSuccess) {
-                BlocProvider.of<DatesCubit>(context)
-                    .getDates(DateHelper.getDateTimeInAYear, state.favoriteCinemaIds);
+                BlocProvider.of<DatesCubit>(context).getDates(
+                  DateHelper.getDateTimeInAYear,
+                  state.favoriteCinemaIds,
+                );
               }
             },
             builder: (ctx, state) {
@@ -76,14 +78,17 @@ class _RepertoireAppBarState extends State<RepertoireAppBar> {
                   return [
                     PopupMenuItem<String>(
                       enabled: state.status.isSuccess,
-                      onTap: () => Scaffold.of(context).openEndDrawer(),
+                      onTap: () => showModalBottomSheet(
+                        context: context,
+                        scrollControlDisabledMaxHeightRatio: 1,
+                        useSafeArea: true,
+                        builder: (context) => const CinemasList(),
+                      ),
                       child: Text(t.cinemas.name),
                     ),
                     PopupMenuItem<String>(
                       child: Text(t.filters.name),
-                      onTap: () async {
-                        await Future.delayed(const Duration(microseconds: 3));
-                        if (!context.mounted) return;
+                      onTap: () {
                         Navigator.of(context).push(
                           FiltersPage.route(),
                         );

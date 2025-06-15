@@ -119,6 +119,7 @@ class _TranslationsCinemasPl implements TranslationsCinemasEn {
 
 	// Translations
 	@override String get name => 'Kina';
+	@override String get pickCinemas => 'Wybierz kina';
 	@override String get savedAsFavorite => 'Zapisano kina jako ulubione';
 	@override String get failedToLoad => 'Nie udało się pobrać listy kin';
 }
@@ -234,6 +235,7 @@ extension on TranslationsPl {
 			case 'filters.selectAll': return 'Zaznacz wszystko';
 			case 'filters.unselectAll': return 'Odznacz wszystko';
 			case 'cinemas.name': return 'Kina';
+			case 'cinemas.pickCinemas': return 'Wybierz kina';
 			case 'cinemas.savedAsFavorite': return 'Zapisano kina jako ulubione';
 			case 'cinemas.failedToLoad': return 'Nie udało się pobrać listy kin';
 			case 'reminders.filmReminder': return ({required Object time}) => 'Przypomnienie o seansie - ${time}';

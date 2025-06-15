@@ -20,7 +20,6 @@ final _colorScheme = ColorScheme.fromSeed(
 );
 
 final theme = ThemeData(
-  indicatorColor: Colors.orange,
   colorScheme: _colorScheme,
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ElevatedButton.styleFrom(
@@ -35,6 +34,9 @@ final theme = ThemeData(
     builders: {
       TargetPlatform.android: CustomPageTransitionBuilder(),
       TargetPlatform.iOS: CustomPageTransitionBuilder(),
-    }
+    },
+  ),
+  tabBarTheme: TabBarThemeData(
+    indicatorColor: Colors.orange,
   ),
 );

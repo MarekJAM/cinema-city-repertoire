@@ -122,6 +122,7 @@ class TranslationsCinemasEn {
 
 	// Translations
 	String get name => 'Cinemas';
+	String get pickCinemas => 'Select cinemas';
 	String get savedAsFavorite => 'Saved as favorite';
 	String get failedToLoad => 'Failed to load list of cinemas';
 }
@@ -237,6 +238,7 @@ extension on Translations {
 			case 'filters.selectAll': return 'Select all';
 			case 'filters.unselectAll': return 'Unselect all';
 			case 'cinemas.name': return 'Cinemas';
+			case 'cinemas.pickCinemas': return 'Select cinemas';
 			case 'cinemas.savedAsFavorite': return 'Saved as favorite';
 			case 'cinemas.failedToLoad': return 'Failed to load list of cinemas';
 			case 'reminders.filmReminder': return ({required Object time}) => 'Reminder - ${time}';
