@@ -8,7 +8,7 @@ part of 'genre_filter.dart';
 
 class GenreFilterAdapter extends TypeAdapter<GenreFilter> {
   @override
-  final int typeId = 1;
+  final typeId = 1;
 
   @override
   GenreFilter read(BinaryReader reader) {

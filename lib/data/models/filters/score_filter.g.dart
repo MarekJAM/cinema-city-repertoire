@@ -8,7 +8,7 @@ part of 'score_filter.dart';
 
 class ScoreFilterAdapter extends TypeAdapter<ScoreFilter> {
   @override
-  final int typeId = 2;
+  final typeId = 2;
 
   @override
   ScoreFilter read(BinaryReader reader) {
@@ -17,7 +17,7 @@ class ScoreFilterAdapter extends TypeAdapter<ScoreFilter> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return ScoreFilter(
-      fields[0] as double?,
+      (fields[0] as num?)?.toDouble(),
       fields[1] as bool?,
     );
   }

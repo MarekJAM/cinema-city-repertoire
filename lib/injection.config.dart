@@ -1,3 +1,4 @@
+// dart format width=80
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
 // **************************************************************************
@@ -37,7 +38,7 @@ import 'package:dio/dio.dart' as _i361;
 import 'package:flutter_local_notifications/flutter_local_notifications.dart'
     as _i163;
 import 'package:get_it/get_it.dart' as _i174;
-import 'package:hive/hive.dart' as _i979;
+import 'package:hive_ce/hive.dart' as _i738;
 import 'package:injectable/injectable.dart' as _i526;
 import 'package:shared_preferences/shared_preferences.dart' as _i460;
 
@@ -63,7 +64,7 @@ extension GetItInjectableX on _i174.GetIt {
       () => registerModule.dioCinemaCity,
       instanceName: 'dioCinemaCity',
     );
-    await gh.factoryAsync<_i979.Box<dynamic>>(
+    await gh.factoryAsync<_i738.Box<dynamic>>(
       () => registerModule.filtersBox,
       instanceName: 'filtersBox',
       preResolve: true,
@@ -74,8 +75,6 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i622.FilmScoresApiClient>(() => _i622.FilmScoresApiClient(
         client: gh<_i361.Dio>(instanceName: 'dioFilmweb')));
-    gh.factory<_i833.FiltersStorage>(() => _i347.FiltersStorageHive(
-        gh<_i979.Box<dynamic>>(instanceName: 'filtersBox')));
     gh.lazySingleton<_i347.CinemasLocalStorageApi>(() =>
         _i347.CinemasLocalStorageApi(plugin: gh<_i460.SharedPreferences>()));
     gh.lazySingleton<_i461.CinemasApiClient>(() => _i461.CinemasApiClient(
@@ -84,6 +83,8 @@ extension GetItInjectableX on _i174.GetIt {
         client: gh<_i361.Dio>(instanceName: 'dioCinemaCity')));
     gh.lazySingleton<_i695.RepertoireApiClient>(() => _i695.RepertoireApiClient(
         client: gh<_i361.Dio>(instanceName: 'dioCinemaCity')));
+    gh.factory<_i833.FiltersStorage>(() => _i347.FiltersStorageHive(
+        gh<_i738.Box<dynamic>>(instanceName: 'filtersBox')));
     gh.lazySingleton<_i263.FiltersRepository>(
         () => _i263.FiltersRepository(gh<_i400.FiltersStorage>()));
     gh.lazySingleton<_i610.CinemasRepository>(() => _i610.CinemasRepository(

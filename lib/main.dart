@@ -4,25 +4,23 @@ import 'package:cinema_city/local_notifications_setup.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hive_flutter/hive_flutter.dart';
+import 'package:hive_ce_flutter/hive_flutter.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:timezone/data/latest.dart' as tz;
 
 import 'bloc/bloc_observer.dart';
 import './bloc/blocs.dart';
-import './data/models/filters/filters.dart';
 import 'app.dart';
 import 'injection.dart';
+import 'hive_registrar.g.dart';
 
 void main() async {
   if (kDebugMode) Bloc.observer = AppBlocObserver();
 
   await Hive.initFlutter();
 
-  Hive.registerAdapter(GenreFilterAdapter());
-  Hive.registerAdapter(EventTypeFilterAdapter());
-  Hive.registerAdapter(ScoreFilterAdapter());
+  Hive.registerAdapters();
 
   tz.initializeTimeZones();
 

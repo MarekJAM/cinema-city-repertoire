@@ -8,7 +8,7 @@ part of 'event_type_filter.dart';
 
 class EventTypeFilterAdapter extends TypeAdapter<EventTypeFilter> {
   @override
-  final int typeId = 0;
+  final typeId = 0;
 
   @override
   EventTypeFilter read(BinaryReader reader) {
