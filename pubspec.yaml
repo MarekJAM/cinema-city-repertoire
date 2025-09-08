@@ -18,22 +18,22 @@ dependencies:
   flutter_bloc: ^9.1.1
   html: ^0.15.6
   timezone: ^0.10.1
-  dio: ^5.8.0+1
-  injectable: ^2.5.0
-  get_it: ^8.0.3
-  slang: 4.7.3
-  slang_flutter: 4.7.0
+  dio: ^5.9.0
+  injectable: ^2.5.1
+  get_it: ^8.2.0
+  slang: 4.8.1
+  slang_flutter: 4.8.0
   cupertino_icons: ^1.0.8
   flutter_local_notifications: ^18.0.1
   flutter_timezone: ^4.1.1
   hive_ce_flutter: ^2.3.1
-  hive_ce: ^2.11.3
-  hive_ce_generator: ^1.9.2
-  injectable_generator: ^2.7.0
+  hive_ce: ^2.11.4
+  hive_ce_generator: ^1.9.3
+  injectable_generator: ^2.8.1
   rxdart: ^0.28.0
   skeletonizer: ^2.1.0
-  firebase_crashlytics: ^5.0.0
-  firebase_core: ^4.0.0
+  firebase_crashlytics: ^5.0.1
+  firebase_core: ^4.1.0
   cached_network_image: ^3.4.1
   collection: ^1.19.1
 
@@ -43,8 +43,8 @@ dev_dependencies:
   flutter_launcher_icons: ^0.14.4
   flutter_test:
     sdk: flutter
-  build_runner: ^2.4.15
-  slang_build_runner: 4.7.0
+  build_runner: ^2.7.1
+  slang_build_runner: 4.8.0
   bloc_test: ^10.0.0
   mocktail: ^1.0.4
 
