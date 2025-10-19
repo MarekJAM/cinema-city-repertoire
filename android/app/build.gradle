@@ -34,7 +34,8 @@ if (keystorePropertiesFile.exists()) {
 
 android {
     namespace "com.marekjam.cinema_city_repertoire"
-    compileSdkVersion 35
+    compileSdkVersion 36
+    ndkVersion = "29.0.14033849"
 
     compileOptions {
         coreLibraryDesugaringEnabled true
@@ -56,11 +57,15 @@ android {
 
     defaultConfig {
         applicationId "com.marekjam.cinemaCityRepertoire"
-        minSdkVersion 24
-        targetSdkVersion 35
+        minSdk 24
+        targetSdk 35
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        
+        ndk {
+            abiFilters += ["arm64-v8a", "armeabi-v7a"]
+        }
     }
 
     signingConfigs {
