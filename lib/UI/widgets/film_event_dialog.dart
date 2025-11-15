@@ -65,13 +65,13 @@ class _FilmEventDialogState extends State<FilmEventDialog> {
       (LanguageType.subtitles) => t.languageType.subtitles,
     };
     return Padding(
-      padding: const EdgeInsets.all(16),
+      padding: const .all(16),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: .start,
+        mainAxisSize: .min,
         children: [
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: .spaceBetween,
             children: [
               Expanded(
                 child: Text(
@@ -89,14 +89,14 @@ class _FilmEventDialogState extends State<FilmEventDialog> {
           ),
           const Divider(),
           Padding(
-            padding: const EdgeInsets.only(bottom: 3.0),
+            padding: const .only(bottom: 3.0),
             child: Text(
               '${widget.cinema!}, ${DateHelper.convertDateToHHMM(widget.item.dateTime)}',
               style: const TextStyle(fontSize: 18),
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(2.0),
+            padding: const .all(2.0),
             child: Text(
               "$language, ${widget.item.type}",
               style: TextStyle(fontSize: 14, color: context.colorScheme.onSurfaceVariant),

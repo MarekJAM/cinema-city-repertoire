@@ -24,7 +24,7 @@ class FilmAgeRestrictionIndicator extends StatelessWidget {
       height: 20,
       width: 20,
       decoration: BoxDecoration(
-        shape: BoxShape.circle,
+        shape: .circle,
         color: _backgroundColor(restriction),
       ),
       child: Center(

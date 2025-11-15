@@ -20,10 +20,10 @@ class FilmDetailsColumn extends StatelessWidget {
       enabled: isLoading,
       justifyMultiLineText: false,
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: .start,
         children: [
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            mainAxisAlignment: .spaceAround,
             children: [
               DetailsHeaderRow(
                 icon: Icons.calendar_today,
@@ -69,7 +69,7 @@ class FilmDetailsColumn extends StatelessWidget {
             widget: BlocBuilder<FilmScoresCubit, FilmScoresState>(
               builder: (context, state) {
                 return Wrap(
-                  crossAxisAlignment: WrapCrossAlignment.center,
+                  crossAxisAlignment: .center,
                   children: [
                     Text(
                       switch (film.rating) {

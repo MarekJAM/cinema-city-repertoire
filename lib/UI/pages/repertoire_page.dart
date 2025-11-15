@@ -50,7 +50,7 @@ class _RepertoireViewState extends State<RepertoireView> {
           appBar: const RepertoireAppBar(),
           backgroundColor: context.colorScheme.surface,
           body: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            padding: const .symmetric(horizontal: 8.0),
             child: Builder(
               builder: (context) {
                 final repertoireMock = Repertoire.mock;

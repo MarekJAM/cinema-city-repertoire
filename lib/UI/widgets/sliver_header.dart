@@ -45,7 +45,7 @@ class SliverHeader extends SliverPersistentHeaderDelegate {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.only(left: 15, top: 15),
+          padding: const .only(left: 15, top: 15),
           child: IconButton(
             onPressed: () {
               Navigator.of(context).pop();

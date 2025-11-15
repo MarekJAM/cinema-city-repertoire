@@ -23,7 +23,7 @@ class RepertoireListPopulated extends StatelessWidget {
                     data.filmItems[index],
                   )
                 : Padding(
-                    padding: const EdgeInsets.only(bottom: 8),
+                    padding: const .only(bottom: 8),
                     child: RepertoireFilmItemWidget(
                       data.filmItems[index],
                     ),

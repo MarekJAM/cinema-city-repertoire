@@ -19,9 +19,7 @@ class RepertoireFilmItemWidget extends StatelessWidget {
 
   void _goToFilmDetails(BuildContext context, Film film) {
     BlocProvider.of<FilmDetailsCubit>(context).getFilmDetails(film);
-    Navigator.of(context).push(
-      FilmDetailsPage.route(film),
-    );
+    Navigator.of(context).push(FilmDetailsPage.route(film));
   }
 
   @override
@@ -43,20 +41,17 @@ class RepertoireFilmItemWidget extends StatelessWidget {
                     height: 120,
                     width: 80,
                     child: ClipRRect(
-                      borderRadius: BorderRadius.circular(5),
+                      borderRadius: .circular(5),
                       child: Skeleton.replace(
                         child: CachedNetworkImage(
                           imageUrl: data.film.posterLink!,
                           errorWidget: (context, url, error) {
                             return Center(
                               child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
+                                mainAxisAlignment: .center,
                                 children: [
                                   const Icon(Icons.image_not_supported_rounded),
-                                  Text(
-                                    t.filmDetails.posterError,
-                                    textAlign: TextAlign.center,
-                                  ),
+                                  Text(t.filmDetails.posterError, textAlign: .center),
                                 ],
                               ),
                             );
@@ -65,18 +60,16 @@ class RepertoireFilmItemWidget extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const SizedBox(
-                    height: 2,
-                  ),
+                  const SizedBox(height: 2),
                   FilmWebScoreWrap(data: data),
                 ],
               ),
             ),
             Expanded(
               child: Padding(
-                padding: const EdgeInsets.only(left: 8),
+                padding: const .only(left: 8),
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: .start,
                   children: <Widget>[
                     GestureDetector(
                       onTap: () {
@@ -84,37 +77,29 @@ class RepertoireFilmItemWidget extends StatelessWidget {
                       },
                       child: Text(
                         data.film.name,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                        ),
+                        style: const TextStyle(fontWeight: .bold),
                         softWrap: true,
                       ),
                     ),
-                    const SizedBox(
-                      height: 2,
-                    ),
+                    const SizedBox(height: 2),
                     Wrap(
-                      crossAxisAlignment: WrapCrossAlignment.center,
+                      crossAxisAlignment: .center,
                       runSpacing: 3,
                       children: <Widget>[
                         if (data.film.ageRestriction != null)
                           Padding(
-                            padding: const EdgeInsets.only(right: 4),
+                            padding: const .only(right: 4),
                             child: Skeleton.leaf(
                               child: FilmAgeRestrictionIndicator(data.film.ageRestriction!),
                             ),
                           ),
                         Padding(
-                          padding: const EdgeInsets.only(
-                            right: 4,
-                          ),
+                          padding: const .only(right: 4),
                           child: Container(
                             padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 1),
                             decoration: BoxDecoration(
-                              border: Border.all(color: Colors.grey[700] ?? Colors.grey),
-                              borderRadius: const BorderRadius.all(
-                                Radius.circular(5),
-                              ),
+                              border: .all(color: Colors.grey[700] ?? Colors.grey),
+                              borderRadius: const BorderRadius.all(.circular(5)),
                             ),
                             child: Text(
                               t.filmDetails.filmLengthValue(val: '${data.film.length}'),
@@ -125,29 +110,20 @@ class RepertoireFilmItemWidget extends StatelessWidget {
                         for (final item in data.film.genres)
                           Skeleton.leaf(
                             child: Padding(
-                              padding: const EdgeInsets.only(right: 4),
+                              padding: const .only(right: 4),
                               child: Container(
-                                padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 1),
+                                padding: const .symmetric(horizontal: 3, vertical: 1),
                                 decoration: BoxDecoration(
-                                  borderRadius: const BorderRadius.all(
-                                    Radius.circular(5),
-                                  ),
+                                  borderRadius: const .all(.circular(5)),
                                   color: Colors.grey[700],
                                 ),
-                                child: Text(
-                                  item,
-                                  style: const TextStyle(
-                                    fontSize: 10,
-                                  ),
-                                ),
+                                child: Text(item, style: const TextStyle(fontSize: 10)),
                               ),
                             ),
                           ),
                       ],
                     ),
-                    const SizedBox(
-                      height: 4,
-                    ),
+                    const SizedBox(height: 4),
                     for (final cinemaItem in data.repertoireFilmCinemaItems)
                       RepertoireFilmItemRow(
                         film: data.film,
@@ -166,10 +142,7 @@ class RepertoireFilmItemWidget extends StatelessWidget {
 }
 
 class FilmWebScoreWrap extends StatelessWidget {
-  const FilmWebScoreWrap({
-    super.key,
-    required this.data,
-  });
+  const FilmWebScoreWrap({super.key, required this.data});
 
   final RepertoireFilmItem data;
 
@@ -201,26 +174,17 @@ class RepertoireFilmItemRow extends StatelessWidget {
         ? Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Text(
-                cinema!,
-                style: const TextStyle(
-                  fontSize: 12,
-                ),
-              ),
-              const SizedBox(
-                height: 2,
-              ),
+              Text(cinema!, style: const TextStyle(fontSize: 12)),
+              const SizedBox(height: 2),
               Wrap(
-                direction: Axis.horizontal,
-                alignment: WrapAlignment.start,
+                direction: .horizontal,
+                alignment: .start,
                 spacing: 4,
                 runSpacing: 4,
                 children: <Widget>[
                   for (var item in events)
                     InkWell(
-                      customBorder: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(5),
-                      ),
+                      customBorder: RoundedRectangleBorder(borderRadius: .circular(5)),
                       onTap: () {
                         showModalBottomSheet<void>(
                           context: context,
@@ -233,30 +197,20 @@ class RepertoireFilmItemRow extends StatelessWidget {
                         children: [
                           Container(
                             decoration: BoxDecoration(
-                              border: Border.all(color: context.colorScheme.primary),
-                              borderRadius: const BorderRadius.all(
-                                Radius.circular(5),
-                              ),
+                              border: .all(color: context.colorScheme.primary),
+                              borderRadius: const .all(.circular(5)),
                             ),
                             padding: const EdgeInsets.symmetric(horizontal: 2),
                             child: Column(
                               children: [
                                 Text(DateHelper.convertDateToHHMM(item.dateTime)),
-                                Text(
-                                  item.type!,
-                                  style: const TextStyle(fontSize: 7),
-                                ),
-                                Text(
-                                  switch (item.language) {
-                                    (LanguageType.dubbing) => t.languageType.dubbing,
-                                    (LanguageType.original) => t.languageType.original,
-                                    (LanguageType.subtitles) => t.languageType.subtitles,
-                                  },
-                                  style: const TextStyle(fontSize: 7),
-                                ),
-                                const Padding(
-                                  padding: EdgeInsets.only(bottom: 2),
-                                ),
+                                Text(item.type!, style: const TextStyle(fontSize: 7)),
+                                Text(switch (item.language) {
+                                  (LanguageType.dubbing) => t.languageType.dubbing,
+                                  (LanguageType.original) => t.languageType.original,
+                                  (LanguageType.subtitles) => t.languageType.subtitles,
+                                }, style: const TextStyle(fontSize: 7)),
+                                const Padding(padding: .only(bottom: 2)),
                               ],
                             ),
                           ),
@@ -265,9 +219,7 @@ class RepertoireFilmItemRow extends StatelessWidget {
                     ),
                 ],
               ),
-              const Padding(
-                padding: EdgeInsets.only(bottom: 4),
-              ),
+              const Padding(padding: .only(bottom: 4)),
             ],
           )
         : Container();

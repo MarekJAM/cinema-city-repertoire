@@ -52,7 +52,7 @@ class _FiltersViewState extends State<FiltersView> {
         title: Text(t.filters.name),
         actions: [
           Padding(
-            padding: const EdgeInsets.only(right: 8.0),
+            padding: const .only(right: 8.0),
             child: ElevatedButton(
               onPressed: () {
                 BlocProvider.of<FiltersCubit>(context).saveFilters(
@@ -76,7 +76,7 @@ class _FiltersViewState extends State<FiltersView> {
       backgroundColor: context.colorScheme.surface,
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(5),
+          padding: const .all(5),
           child: BlocBuilder<FiltersCubit, FiltersState>(builder: (context, state) {
             if (state is FiltersLoaded) {
               for (var filter in state.filters) {

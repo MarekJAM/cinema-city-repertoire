@@ -38,19 +38,19 @@ class _FilterDialogColumnState extends State<FilterDialogColumn> {
 
     return Card(
       child: Padding(
-        padding: const EdgeInsets.only(left: 16, right: 16, top: 8, bottom: 16),
+        padding: const .only(left: 16, right: 16, top: 8, bottom: 16),
         child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: .min,
+          crossAxisAlignment: .start,
           children: [
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: .spaceBetween,
               children: [
                 Text(
                   widget.title,
                   style: const TextStyle(
                     fontSize: 16,
-                    fontWeight: FontWeight.w600,
+                    fontWeight: .w600,
                   ),
                 ),
                 TextButton(
@@ -75,7 +75,7 @@ class _FilterDialogColumnState extends State<FilterDialogColumn> {
               children: [
                 for (int i = 0; i < widget.values.length; i++)
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 2),
+                    padding: const .symmetric(horizontal: 2),
                     child: FilterValueButton(
                       label: widget.values[i],
                       isSelected: isSelected(

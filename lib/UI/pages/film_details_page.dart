@@ -14,11 +14,7 @@ class FilmDetailsPage extends StatelessWidget {
   const FilmDetailsPage({super.key, required this.film});
 
   static Route<void> route(Film film) {
-    return MaterialPageRoute(
-      builder: (BuildContext context) => FilmDetailsPage(
-        film: film,
-      ),
-    );
+    return MaterialPageRoute(builder: (BuildContext context) => FilmDetailsPage(film: film));
   }
 
   @override
@@ -60,23 +56,25 @@ class FilmDetailsView extends StatelessWidget {
                       child: BlocBuilder<FilmDetailsCubit, FilmDetailsState>(
                         builder: (context, state) {
                           return switch (state) {
-                            FilmDetailsLoading() =>
-                              FilmDetailsColumn(film: Film.mock, isLoading: true),
+                            FilmDetailsLoading() => FilmDetailsColumn(
+                              film: Film.mock,
+                              isLoading: true,
+                            ),
                             FilmDetailsLoaded() => FilmDetailsColumn(film: state.film),
                             FilmDetailsError() => ErrorColumn(
-                                errorMessage: state.message,
-                                buttonMessage: t.refresh,
-                                buttonOnPressed: () {
-                                  BlocProvider.of<FilmDetailsCubit>(context).getFilmDetails(film);
-                                },
-                              ),
+                              errorMessage: state.message,
+                              buttonMessage: t.refresh,
+                              buttonOnPressed: () {
+                                BlocProvider.of<FilmDetailsCubit>(context).getFilmDetails(film);
+                              },
+                            ),
                           };
                         },
                       ),
                     ),
                   ),
                 ),
-              )
+              ),
             ],
           ),
         ),
@@ -100,30 +98,15 @@ class DetailsHeaderRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: .start,
       children: [
-        Icon(
-          icon,
-          size: 35,
-        ),
-        const SizedBox(
-          width: 3,
-        ),
+        Icon(icon, size: 35),
+        const SizedBox(width: 3),
         Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: .start,
           children: [
-            Text(
-              "$title: ",
-              style: const TextStyle(fontSize: 12),
-            ),
-            Wrap(
-              children: [
-                Text(
-                  content!,
-                  style: const TextStyle(fontSize: 16),
-                ),
-              ],
-            )
+            Text("$title: ", style: const TextStyle(fontSize: 12)),
+            Wrap(children: [Text(content!, style: const TextStyle(fontSize: 16))]),
           ],
         ),
       ],
@@ -142,13 +125,8 @@ class DetailsDataRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        SizedBox(
-          width: 80,
-          child: Text(title),
-        ),
-        Expanded(
-          child: content != null ? Text(content!) : widget!,
-        )
+        SizedBox(width: 80, child: Text(title)),
+        Expanded(child: content != null ? Text(content!) : widget!),
       ],
     );
   }

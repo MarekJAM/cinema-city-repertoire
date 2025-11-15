@@ -18,19 +18,19 @@ class ErrorColumn extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: .center,
         children: [
           Text(
             errorMessage,
-            textAlign: TextAlign.center,
+            textAlign: .center,
             style: const TextStyle(fontSize: 18),
           ),
           const Padding(
-            padding: EdgeInsets.only(top: 10),
+            padding: .only(top: 10),
           ),
           if (buttons != null)
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              mainAxisAlignment: .spaceEvenly,
               children: [...buttons!],
             ),
           if (buttonOnPressed != null)

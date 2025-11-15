@@ -43,7 +43,7 @@ class _RepertoireAppBarState extends State<RepertoireAppBar> {
         ),
         actions: <Widget>[
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const .all(8.0),
             child: TextButton(
               style: ButtonStyle(
                 backgroundColor: WidgetStateProperty.all(
@@ -73,7 +73,7 @@ class _RepertoireAppBarState extends State<RepertoireAppBar> {
             },
             builder: (ctx, state) {
               return PopupMenuButton(
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                shape: RoundedRectangleBorder(borderRadius: .circular(15)),
                 itemBuilder: (BuildContext context) {
                   return [
                     PopupMenuItem<String>(
