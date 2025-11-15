@@ -10,10 +10,13 @@ class TimeZone {
   }
   static TimeZone? _this;
 
-  Future<String> getTimeZoneName() async => FlutterTimezone.getLocalTimezone();
+  Future<String> getTimeZoneName() async {
+    final info = await FlutterTimezone.getLocalTimezone();
+    return info.identifier;
+  }
 
   Future<t.Location> getLocation([String? timeZoneName]) async {
-    if(timeZoneName == null || timeZoneName.isEmpty){
+    if (timeZoneName == null || timeZoneName.isEmpty) {
       timeZoneName = await getTimeZoneName();
     }
     return t.getLocation(timeZoneName);

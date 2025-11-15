@@ -3,6 +3,7 @@
 ///
 // coverage:ignore-file
 // ignore_for_file: type=lint, unused_import
+// dart format off
 
 import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
@@ -191,86 +192,93 @@ class _TranslationsSeatplanPl implements TranslationsSeatplanEn {
 	@override String get failedToLoad => 'Brak danych o dostępnych miejscach';
 }
 
-/// Flat map(s) containing all translations.
+/// The flat map containing all translations for locale <pl>.
 /// Only for edge cases! For simple maps, use the map function of this library.
+///
+/// The Dart AOT compiler has issues with very large switch statements,
+/// so the map is split into smaller functions (512 entries each).
 extension on TranslationsPl {
 	dynamic _flatMapFunction(String path) {
-		switch (path) {
-			case 'appName': return 'Cinema City Repertuar';
-			case 'appBarTitlePart1': return 'Cinema City';
-			case 'appBarTitlePart2': return 'Repertuar';
-			case 'refresh': return 'Odswież';
-			case 'back': return 'Powrót';
-			case 'apply': return 'Zastosuj';
-			case 'reset': return 'Reset';
-			case 'confirm': return 'Zatwiedź';
-			case 'save': return 'Zapisz';
-			case 'display': return 'Wyświetl';
-			case 'buyTicket': return 'Kup bilet przez stronę';
-			case 'scheduleReminder': return 'Ustaw przypomnienie';
-			case 'repertoire.noFilmsToDisplayPickAnotherDate': return 'Brak filmów do wyświetlenia. Wybierz inną datę lub dostosuj filtry.';
-			case 'repertoire.pickDifferentDate': return 'Wybierz inną datę';
-			case 'repertoire.adjustFilters': return 'Dostosuj filtry';
-			case 'repertoire.noFilmsToDisplay': return 'Brak filmów do wyświetlenia';
-			case 'repertoire.pickCinemas': return 'Wybierz kina';
-			case 'repertoire.failedToLoad': return 'W trakcie pobierania danych wystąpił błąd';
-			case 'filmDetails.premiere': return 'Premiera';
-			case 'filmDetails.filmLength': return 'Czas trwania';
-			case 'filmDetails.filmLengthValue': return ({required Object val}) => '${val} min';
-			case 'filmDetails.filmTitle': return 'Tytuł';
-			case 'filmDetails.filmGenre': return 'Gatunek';
-			case 'filmDetails.cast': return 'Obsada';
-			case 'filmDetails.director': return 'Reżyser';
-			case 'filmDetails.production': return 'Produkcja';
-			case 'filmDetails.rating': return 'Ocena';
-			case 'filmDetails.ratingNoData': return 'Brak danych';
-			case 'filmDetails.seeTrailer': return 'Zobacz zwiastun';
-			case 'filmDetails.failedToLoad': return 'Nie udadło się pobrać informacji o filmie';
-			case 'filmDetails.posterError': return 'Nie udało się pobrać plakatu';
-			case 'filters.name': return 'Filtry';
-			case 'filters.genre': return 'Gatunek';
-			case 'filters.typeOfShow': return 'Rodzaj seansu';
-			case 'filters.noRating': return 'Bez oceny';
-			case 'filters.minimalRating': return 'Minimalna ocena';
-			case 'filters.selectAll': return 'Zaznacz wszystko';
-			case 'filters.unselectAll': return 'Odznacz wszystko';
-			case 'cinemas.name': return 'Kina';
-			case 'cinemas.pickCinemas': return 'Wybierz kina';
-			case 'cinemas.savedAsFavorite': return 'Zapisano kina jako ulubione';
-			case 'cinemas.failedToLoad': return 'Nie udało się pobrać listy kin';
-			case 'reminders.filmReminder': return ({required Object time}) => 'Przypomnienie o seansie - ${time}';
-			case 'reminders.reminderScheduled': return 'Zaplanowano przypomnienie';
-			case 'reminders.selectReminderTime': return 'Wybierz czas przypomnienia';
-			case 'genres.action': return 'Akcja';
-			case 'genres.adventure': return 'Przygodowy';
-			case 'genres.animation': return 'Animacja';
-			case 'genres.bollywood': return 'Bollywood';
-			case 'genres.comedy': return 'Komedia';
-			case 'genres.crime': return 'Kryminalny';
-			case 'genres.documentary': return 'Dokument';
-			case 'genres.drama': return 'Dramat';
-			case 'genres.family': return 'Familijny';
-			case 'genres.fantasy': return 'Fantasy';
-			case 'genres.history': return 'Historyczny';
-			case 'genres.horror': return 'Horror';
-			case 'genres.kidsClub': return 'Dla dzieci';
-			case 'genres.live': return 'Na żywo';
-			case 'genres.musical': return 'Musical';
-			case 'genres.romance': return 'Romantyczny';
-			case 'genres.sciFi': return 'Sci-fi';
-			case 'genres.sport': return 'Sport';
-			case 'genres.thriller': return 'Thriller';
-			case 'genres.war': return 'Wojenny';
-			case 'genres.western': return 'Western';
-			case 'genres.unspecified': return 'Nieokreślony';
-			case 'languageType.original': return 'PL';
-			case 'languageType.subtitles': return 'Napisy';
-			case 'languageType.dubbing': return 'Dubbing';
-			case 'seatplan.availableSeats': return 'Dostępne miejsca';
-			case 'seatplan.ticketingFinished': return 'Sprzedaż biletów zakończona';
-			case 'seatplan.failedToLoad': return 'Brak danych o dostępnych miejscach';
-			default: return null;
-		}
+		return _flatMapFunction$0(path);
+	}
+
+	dynamic _flatMapFunction$0(String path) {
+		return switch (path) {
+			'appName' => 'Cinema City Repertuar',
+			'appBarTitlePart1' => 'Cinema City',
+			'appBarTitlePart2' => 'Repertuar',
+			'refresh' => 'Odswież',
+			'back' => 'Powrót',
+			'apply' => 'Zastosuj',
+			'reset' => 'Reset',
+			'confirm' => 'Zatwiedź',
+			'save' => 'Zapisz',
+			'display' => 'Wyświetl',
+			'buyTicket' => 'Kup bilet przez stronę',
+			'scheduleReminder' => 'Ustaw przypomnienie',
+			'repertoire.noFilmsToDisplayPickAnotherDate' => 'Brak filmów do wyświetlenia. Wybierz inną datę lub dostosuj filtry.',
+			'repertoire.pickDifferentDate' => 'Wybierz inną datę',
+			'repertoire.adjustFilters' => 'Dostosuj filtry',
+			'repertoire.noFilmsToDisplay' => 'Brak filmów do wyświetlenia',
+			'repertoire.pickCinemas' => 'Wybierz kina',
+			'repertoire.failedToLoad' => 'W trakcie pobierania danych wystąpił błąd',
+			'filmDetails.premiere' => 'Premiera',
+			'filmDetails.filmLength' => 'Czas trwania',
+			'filmDetails.filmLengthValue' => ({required Object val}) => '${val} min',
+			'filmDetails.filmTitle' => 'Tytuł',
+			'filmDetails.filmGenre' => 'Gatunek',
+			'filmDetails.cast' => 'Obsada',
+			'filmDetails.director' => 'Reżyser',
+			'filmDetails.production' => 'Produkcja',
+			'filmDetails.rating' => 'Ocena',
+			'filmDetails.ratingNoData' => 'Brak danych',
+			'filmDetails.seeTrailer' => 'Zobacz zwiastun',
+			'filmDetails.failedToLoad' => 'Nie udadło się pobrać informacji o filmie',
+			'filmDetails.posterError' => 'Nie udało się pobrać plakatu',
+			'filters.name' => 'Filtry',
+			'filters.genre' => 'Gatunek',
+			'filters.typeOfShow' => 'Rodzaj seansu',
+			'filters.noRating' => 'Bez oceny',
+			'filters.minimalRating' => 'Minimalna ocena',
+			'filters.selectAll' => 'Zaznacz wszystko',
+			'filters.unselectAll' => 'Odznacz wszystko',
+			'cinemas.name' => 'Kina',
+			'cinemas.pickCinemas' => 'Wybierz kina',
+			'cinemas.savedAsFavorite' => 'Zapisano kina jako ulubione',
+			'cinemas.failedToLoad' => 'Nie udało się pobrać listy kin',
+			'reminders.filmReminder' => ({required Object time}) => 'Przypomnienie o seansie - ${time}',
+			'reminders.reminderScheduled' => 'Zaplanowano przypomnienie',
+			'reminders.selectReminderTime' => 'Wybierz czas przypomnienia',
+			'genres.action' => 'Akcja',
+			'genres.adventure' => 'Przygodowy',
+			'genres.animation' => 'Animacja',
+			'genres.bollywood' => 'Bollywood',
+			'genres.comedy' => 'Komedia',
+			'genres.crime' => 'Kryminalny',
+			'genres.documentary' => 'Dokument',
+			'genres.drama' => 'Dramat',
+			'genres.family' => 'Familijny',
+			'genres.fantasy' => 'Fantasy',
+			'genres.history' => 'Historyczny',
+			'genres.horror' => 'Horror',
+			'genres.kidsClub' => 'Dla dzieci',
+			'genres.live' => 'Na żywo',
+			'genres.musical' => 'Musical',
+			'genres.romance' => 'Romantyczny',
+			'genres.sciFi' => 'Sci-fi',
+			'genres.sport' => 'Sport',
+			'genres.thriller' => 'Thriller',
+			'genres.war' => 'Wojenny',
+			'genres.western' => 'Western',
+			'genres.unspecified' => 'Nieokreślony',
+			'languageType.original' => 'PL',
+			'languageType.subtitles' => 'Napisy',
+			'languageType.dubbing' => 'Dubbing',
+			'seatplan.availableSeats' => 'Dostępne miejsca',
+			'seatplan.ticketingFinished' => 'Sprzedaż biletów zakończona',
+			'seatplan.failedToLoad' => 'Brak danych o dostępnych miejscach',
+			_ => null,
+		};
 	}
 }
 

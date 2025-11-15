@@ -3,6 +3,7 @@
 ///
 // coverage:ignore-file
 // ignore_for_file: type=lint, unused_import
+// dart format off
 
 part of 'strings.g.dart';
 
@@ -39,18 +40,43 @@ class Translations implements BaseTranslations<AppLocale, Translations> {
 	Translations $copyWith({TranslationMetadata<AppLocale, Translations>? meta}) => Translations(meta: meta ?? this.$meta);
 
 	// Translations
+
+	/// en: 'Cinema City Repertoire'
 	String get appName => 'Cinema City Repertoire';
+
+	/// en: 'Cinema City'
 	String get appBarTitlePart1 => 'Cinema City';
+
+	/// en: 'Repertoire'
 	String get appBarTitlePart2 => 'Repertoire';
+
+	/// en: 'Refresh'
 	String get refresh => 'Refresh';
+
+	/// en: 'Back'
 	String get back => 'Back';
+
+	/// en: 'Apply'
 	String get apply => 'Apply';
+
+	/// en: 'Reset'
 	String get reset => 'Reset';
+
+	/// en: 'Confirm'
 	String get confirm => 'Confirm';
+
+	/// en: 'Save'
 	String get save => 'Save';
+
+	/// en: 'Display'
 	String get display => 'Display';
+
+	/// en: 'Buy ticket on website'
 	String get buyTicket => 'Buy ticket on website';
+
+	/// en: 'Schedule reminder'
 	String get scheduleReminder => 'Schedule reminder';
+
 	late final TranslationsRepertoireEn repertoire = TranslationsRepertoireEn._(_root);
 	late final TranslationsFilmDetailsEn filmDetails = TranslationsFilmDetailsEn._(_root);
 	late final TranslationsFiltersEn filters = TranslationsFiltersEn._(_root);
@@ -68,11 +94,23 @@ class TranslationsRepertoireEn {
 	final Translations _root; // ignore: unused_field
 
 	// Translations
+
+	/// en: 'No films to display. Pick another date or adjust filters.'
 	String get noFilmsToDisplayPickAnotherDate => 'No films to display. Pick another date or adjust filters.';
+
+	/// en: 'Pick a different date'
 	String get pickDifferentDate => 'Pick a different date';
+
+	/// en: 'Adjust filters'
 	String get adjustFilters => 'Adjust filters';
+
+	/// en: 'No films to display'
 	String get noFilmsToDisplay => 'No films to display';
+
+	/// en: 'Pick cinemas'
 	String get pickCinemas => 'Pick cinemas';
+
+	/// en: 'Failed to load data'
 	String get failedToLoad => 'Failed to load data';
 }
 
@@ -83,18 +121,44 @@ class TranslationsFilmDetailsEn {
 	final Translations _root; // ignore: unused_field
 
 	// Translations
+
+	/// en: 'Premiere'
 	String get premiere => 'Premiere';
+
+	/// en: 'Film length'
 	String get filmLength => 'Film length';
+
+	/// en: '$val min'
 	String filmLengthValue({required Object val}) => '${val} min';
+
+	/// en: 'Title'
 	String get filmTitle => 'Title';
+
+	/// en: 'Genre'
 	String get filmGenre => 'Genre';
+
+	/// en: 'Cast'
 	String get cast => 'Cast';
+
+	/// en: 'Director'
 	String get director => 'Director';
+
+	/// en: 'Production'
 	String get production => 'Production';
+
+	/// en: 'Rating'
 	String get rating => 'Rating';
+
+	/// en: 'No data'
 	String get ratingNoData => 'No data';
+
+	/// en: 'Watch trailer'
 	String get seeTrailer => 'Watch trailer';
+
+	/// en: 'Failed to load film details'
 	String get failedToLoad => 'Failed to load film details';
+
+	/// en: 'Failed to load poster'
 	String get posterError => 'Failed to load poster';
 }
 
@@ -105,12 +169,26 @@ class TranslationsFiltersEn {
 	final Translations _root; // ignore: unused_field
 
 	// Translations
+
+	/// en: 'Filters'
 	String get name => 'Filters';
+
+	/// en: 'Genre'
 	String get genre => 'Genre';
+
+	/// en: 'Type of session'
 	String get typeOfShow => 'Type of session';
+
+	/// en: 'No rating'
 	String get noRating => 'No rating';
+
+	/// en: 'Minimal rating'
 	String get minimalRating => 'Minimal rating';
+
+	/// en: 'Select all'
 	String get selectAll => 'Select all';
+
+	/// en: 'Unselect all'
 	String get unselectAll => 'Unselect all';
 }
 
@@ -121,9 +199,17 @@ class TranslationsCinemasEn {
 	final Translations _root; // ignore: unused_field
 
 	// Translations
+
+	/// en: 'Cinemas'
 	String get name => 'Cinemas';
+
+	/// en: 'Select cinemas'
 	String get pickCinemas => 'Select cinemas';
+
+	/// en: 'Saved as favorite'
 	String get savedAsFavorite => 'Saved as favorite';
+
+	/// en: 'Failed to load list of cinemas'
 	String get failedToLoad => 'Failed to load list of cinemas';
 }
 
@@ -134,8 +220,14 @@ class TranslationsRemindersEn {
 	final Translations _root; // ignore: unused_field
 
 	// Translations
+
+	/// en: 'Reminder - $time'
 	String filmReminder({required Object time}) => 'Reminder - ${time}';
+
+	/// en: 'Reminder scheduled'
 	String get reminderScheduled => 'Reminder scheduled';
+
+	/// en: 'Select reminder time'
 	String get selectReminderTime => 'Select reminder time';
 }
 
@@ -146,27 +238,71 @@ class TranslationsGenresEn {
 	final Translations _root; // ignore: unused_field
 
 	// Translations
+
+	/// en: 'Action'
 	String get action => 'Action';
+
+	/// en: 'Adventure'
 	String get adventure => 'Adventure';
+
+	/// en: 'Animation'
 	String get animation => 'Animation';
+
+	/// en: 'Bollywoood'
 	String get bollywood => 'Bollywoood';
+
+	/// en: 'Comedy'
 	String get comedy => 'Comedy';
+
+	/// en: 'Crime'
 	String get crime => 'Crime';
+
+	/// en: 'Documentary'
 	String get documentary => 'Documentary';
+
+	/// en: 'Drama'
 	String get drama => 'Drama';
+
+	/// en: 'Family'
 	String get family => 'Family';
+
+	/// en: 'Fantasy'
 	String get fantasy => 'Fantasy';
+
+	/// en: 'History'
 	String get history => 'History';
+
+	/// en: 'Horror'
 	String get horror => 'Horror';
+
+	/// en: 'Kids club'
 	String get kidsClub => 'Kids club';
+
+	/// en: 'Love'
 	String get live => 'Love';
+
+	/// en: 'Musical'
 	String get musical => 'Musical';
+
+	/// en: 'Romance'
 	String get romance => 'Romance';
+
+	/// en: 'Sci-fi'
 	String get sciFi => 'Sci-fi';
+
+	/// en: 'Sport'
 	String get sport => 'Sport';
+
+	/// en: 'Thriller'
 	String get thriller => 'Thriller';
+
+	/// en: 'War'
 	String get war => 'War';
+
+	/// en: 'Western'
 	String get western => 'Western';
+
+	/// en: 'Unspecified'
 	String get unspecified => 'Unspecified';
 }
 
@@ -177,8 +313,14 @@ class TranslationsLanguageTypeEn {
 	final Translations _root; // ignore: unused_field
 
 	// Translations
+
+	/// en: 'PL'
 	String get original => 'PL';
+
+	/// en: 'Subtitles'
 	String get subtitles => 'Subtitles';
+
+	/// en: 'Dubbing'
 	String get dubbing => 'Dubbing';
 }
 
@@ -189,91 +331,104 @@ class TranslationsSeatplanEn {
 	final Translations _root; // ignore: unused_field
 
 	// Translations
+
+	/// en: 'Available seats'
 	String get availableSeats => 'Available seats';
+
+	/// en: 'Ticketing finished'
 	String get ticketingFinished => 'Ticketing finished';
+
+	/// en: 'No info about available seats'
 	String get failedToLoad => 'No info about available seats';
 }
 
-/// Flat map(s) containing all translations.
+/// The flat map containing all translations for locale <en>.
 /// Only for edge cases! For simple maps, use the map function of this library.
+///
+/// The Dart AOT compiler has issues with very large switch statements,
+/// so the map is split into smaller functions (512 entries each).
 extension on Translations {
 	dynamic _flatMapFunction(String path) {
-		switch (path) {
-			case 'appName': return 'Cinema City Repertoire';
-			case 'appBarTitlePart1': return 'Cinema City';
-			case 'appBarTitlePart2': return 'Repertoire';
-			case 'refresh': return 'Refresh';
-			case 'back': return 'Back';
-			case 'apply': return 'Apply';
-			case 'reset': return 'Reset';
-			case 'confirm': return 'Confirm';
-			case 'save': return 'Save';
-			case 'display': return 'Display';
-			case 'buyTicket': return 'Buy ticket on website';
-			case 'scheduleReminder': return 'Schedule reminder';
-			case 'repertoire.noFilmsToDisplayPickAnotherDate': return 'No films to display. Pick another date or adjust filters.';
-			case 'repertoire.pickDifferentDate': return 'Pick a different date';
-			case 'repertoire.adjustFilters': return 'Adjust filters';
-			case 'repertoire.noFilmsToDisplay': return 'No films to display';
-			case 'repertoire.pickCinemas': return 'Pick cinemas';
-			case 'repertoire.failedToLoad': return 'Failed to load data';
-			case 'filmDetails.premiere': return 'Premiere';
-			case 'filmDetails.filmLength': return 'Film length';
-			case 'filmDetails.filmLengthValue': return ({required Object val}) => '${val} min';
-			case 'filmDetails.filmTitle': return 'Title';
-			case 'filmDetails.filmGenre': return 'Genre';
-			case 'filmDetails.cast': return 'Cast';
-			case 'filmDetails.director': return 'Director';
-			case 'filmDetails.production': return 'Production';
-			case 'filmDetails.rating': return 'Rating';
-			case 'filmDetails.ratingNoData': return 'No data';
-			case 'filmDetails.seeTrailer': return 'Watch trailer';
-			case 'filmDetails.failedToLoad': return 'Failed to load film details';
-			case 'filmDetails.posterError': return 'Failed to load poster';
-			case 'filters.name': return 'Filters';
-			case 'filters.genre': return 'Genre';
-			case 'filters.typeOfShow': return 'Type of session';
-			case 'filters.noRating': return 'No rating';
-			case 'filters.minimalRating': return 'Minimal rating';
-			case 'filters.selectAll': return 'Select all';
-			case 'filters.unselectAll': return 'Unselect all';
-			case 'cinemas.name': return 'Cinemas';
-			case 'cinemas.pickCinemas': return 'Select cinemas';
-			case 'cinemas.savedAsFavorite': return 'Saved as favorite';
-			case 'cinemas.failedToLoad': return 'Failed to load list of cinemas';
-			case 'reminders.filmReminder': return ({required Object time}) => 'Reminder - ${time}';
-			case 'reminders.reminderScheduled': return 'Reminder scheduled';
-			case 'reminders.selectReminderTime': return 'Select reminder time';
-			case 'genres.action': return 'Action';
-			case 'genres.adventure': return 'Adventure';
-			case 'genres.animation': return 'Animation';
-			case 'genres.bollywood': return 'Bollywoood';
-			case 'genres.comedy': return 'Comedy';
-			case 'genres.crime': return 'Crime';
-			case 'genres.documentary': return 'Documentary';
-			case 'genres.drama': return 'Drama';
-			case 'genres.family': return 'Family';
-			case 'genres.fantasy': return 'Fantasy';
-			case 'genres.history': return 'History';
-			case 'genres.horror': return 'Horror';
-			case 'genres.kidsClub': return 'Kids club';
-			case 'genres.live': return 'Love';
-			case 'genres.musical': return 'Musical';
-			case 'genres.romance': return 'Romance';
-			case 'genres.sciFi': return 'Sci-fi';
-			case 'genres.sport': return 'Sport';
-			case 'genres.thriller': return 'Thriller';
-			case 'genres.war': return 'War';
-			case 'genres.western': return 'Western';
-			case 'genres.unspecified': return 'Unspecified';
-			case 'languageType.original': return 'PL';
-			case 'languageType.subtitles': return 'Subtitles';
-			case 'languageType.dubbing': return 'Dubbing';
-			case 'seatplan.availableSeats': return 'Available seats';
-			case 'seatplan.ticketingFinished': return 'Ticketing finished';
-			case 'seatplan.failedToLoad': return 'No info about available seats';
-			default: return null;
-		}
+		return _flatMapFunction$0(path);
+	}
+
+	dynamic _flatMapFunction$0(String path) {
+		return switch (path) {
+			'appName' => 'Cinema City Repertoire',
+			'appBarTitlePart1' => 'Cinema City',
+			'appBarTitlePart2' => 'Repertoire',
+			'refresh' => 'Refresh',
+			'back' => 'Back',
+			'apply' => 'Apply',
+			'reset' => 'Reset',
+			'confirm' => 'Confirm',
+			'save' => 'Save',
+			'display' => 'Display',
+			'buyTicket' => 'Buy ticket on website',
+			'scheduleReminder' => 'Schedule reminder',
+			'repertoire.noFilmsToDisplayPickAnotherDate' => 'No films to display. Pick another date or adjust filters.',
+			'repertoire.pickDifferentDate' => 'Pick a different date',
+			'repertoire.adjustFilters' => 'Adjust filters',
+			'repertoire.noFilmsToDisplay' => 'No films to display',
+			'repertoire.pickCinemas' => 'Pick cinemas',
+			'repertoire.failedToLoad' => 'Failed to load data',
+			'filmDetails.premiere' => 'Premiere',
+			'filmDetails.filmLength' => 'Film length',
+			'filmDetails.filmLengthValue' => ({required Object val}) => '${val} min',
+			'filmDetails.filmTitle' => 'Title',
+			'filmDetails.filmGenre' => 'Genre',
+			'filmDetails.cast' => 'Cast',
+			'filmDetails.director' => 'Director',
+			'filmDetails.production' => 'Production',
+			'filmDetails.rating' => 'Rating',
+			'filmDetails.ratingNoData' => 'No data',
+			'filmDetails.seeTrailer' => 'Watch trailer',
+			'filmDetails.failedToLoad' => 'Failed to load film details',
+			'filmDetails.posterError' => 'Failed to load poster',
+			'filters.name' => 'Filters',
+			'filters.genre' => 'Genre',
+			'filters.typeOfShow' => 'Type of session',
+			'filters.noRating' => 'No rating',
+			'filters.minimalRating' => 'Minimal rating',
+			'filters.selectAll' => 'Select all',
+			'filters.unselectAll' => 'Unselect all',
+			'cinemas.name' => 'Cinemas',
+			'cinemas.pickCinemas' => 'Select cinemas',
+			'cinemas.savedAsFavorite' => 'Saved as favorite',
+			'cinemas.failedToLoad' => 'Failed to load list of cinemas',
+			'reminders.filmReminder' => ({required Object time}) => 'Reminder - ${time}',
+			'reminders.reminderScheduled' => 'Reminder scheduled',
+			'reminders.selectReminderTime' => 'Select reminder time',
+			'genres.action' => 'Action',
+			'genres.adventure' => 'Adventure',
+			'genres.animation' => 'Animation',
+			'genres.bollywood' => 'Bollywoood',
+			'genres.comedy' => 'Comedy',
+			'genres.crime' => 'Crime',
+			'genres.documentary' => 'Documentary',
+			'genres.drama' => 'Drama',
+			'genres.family' => 'Family',
+			'genres.fantasy' => 'Fantasy',
+			'genres.history' => 'History',
+			'genres.horror' => 'Horror',
+			'genres.kidsClub' => 'Kids club',
+			'genres.live' => 'Love',
+			'genres.musical' => 'Musical',
+			'genres.romance' => 'Romance',
+			'genres.sciFi' => 'Sci-fi',
+			'genres.sport' => 'Sport',
+			'genres.thriller' => 'Thriller',
+			'genres.war' => 'War',
+			'genres.western' => 'Western',
+			'genres.unspecified' => 'Unspecified',
+			'languageType.original' => 'PL',
+			'languageType.subtitles' => 'Subtitles',
+			'languageType.dubbing' => 'Dubbing',
+			'seatplan.availableSeats' => 'Available seats',
+			'seatplan.ticketingFinished' => 'Ticketing finished',
+			'seatplan.failedToLoad' => 'No info about available seats',
+			_ => null,
+		};
 	}
 }
 
