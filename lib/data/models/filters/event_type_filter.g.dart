@@ -16,9 +16,7 @@ class EventTypeFilterAdapter extends TypeAdapter<EventTypeFilter> {
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return EventTypeFilter(
-      (fields[0] as List?)?.cast<String>(),
-    );
+    return EventTypeFilter((fields[0] as List?)?.cast<String>());
   }
 
   @override

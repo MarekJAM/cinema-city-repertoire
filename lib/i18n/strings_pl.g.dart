@@ -11,7 +11,7 @@ import 'package:slang/generated.dart';
 import 'strings.g.dart';
 
 // Path: <root>
-class TranslationsPl implements Translations {
+class TranslationsPl with BaseTranslations<AppLocale, Translations> implements Translations {
 	/// You can call this constructor and build your own translation instance of this locale.
 	/// Constructing via the enum [AppLocale.build] is preferred.
 	TranslationsPl({Map<String, Node>? overrides, PluralResolver? cardinalResolver, PluralResolver? ordinalResolver, TranslationMetadata<AppLocale, Translations>? meta})
@@ -199,10 +199,6 @@ class _TranslationsSeatplanPl implements TranslationsSeatplanEn {
 /// so the map is split into smaller functions (512 entries each).
 extension on TranslationsPl {
 	dynamic _flatMapFunction(String path) {
-		return _flatMapFunction$0(path);
-	}
-
-	dynamic _flatMapFunction$0(String path) {
 		return switch (path) {
 			'appName' => 'Cinema City Repertuar',
 			'appBarTitlePart1' => 'Cinema City',
@@ -281,4 +277,3 @@ extension on TranslationsPl {
 		};
 	}
 }
-
