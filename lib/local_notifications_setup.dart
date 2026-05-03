@@ -14,6 +14,6 @@ abstract class LocalNotifications {
         .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
         ?.requestExactAlarmsPermission();
 
-    return localNotification.initialize(initializationSettings);
+    return localNotification.initialize(settings: initializationSettings);
   }
 }
