@@ -70,9 +70,9 @@ extension GetItInjectableX on _i174.GetIt {
       () => registerModule.dioFilmweb,
       instanceName: 'dioFilmweb',
     );
-    gh.lazySingleton<_i622.FilmScoresApiClient>(
-      () => _i622.FilmScoresApiClient(
-        client: gh<_i361.Dio>(instanceName: 'dioFilmweb'),
+    gh.factory<_i833.FiltersStorage>(
+      () => _i347.FiltersStorageHive(
+        gh<_i738.Box<dynamic>>(instanceName: 'filtersBox'),
       ),
     );
     gh.lazySingleton<_i347.CinemasLocalStorageApi>(
@@ -93,9 +93,9 @@ extension GetItInjectableX on _i174.GetIt {
         client: gh<_i361.Dio>(instanceName: 'dioCinemaCity'),
       ),
     );
-    gh.factory<_i833.FiltersStorage>(
-      () => _i347.FiltersStorageHive(
-        gh<_i738.Box<dynamic>>(instanceName: 'filtersBox'),
+    gh.lazySingleton<_i622.FilmScoresApiClient>(
+      () => _i622.FilmScoresApiClient(
+        client: gh<_i361.Dio>(instanceName: 'dioFilmweb'),
       ),
     );
     gh.lazySingleton<_i263.FiltersRepository>(
@@ -112,9 +112,10 @@ extension GetItInjectableX on _i174.GetIt {
         filmScoresApiClient: gh<_i400.FilmScoresApiClient>(),
       ),
     );
-    gh.factory<_i219.FilmScoresCubit>(
-      () => _i219.FilmScoresCubit(
-        filmScoresRepository: gh<_i400.FilmScoresRepository>(),
+    gh.lazySingleton<_i80.RepertoireRepository>(
+      () => _i80.RepertoireRepository(
+        repertoireApiClient: gh<_i400.RepertoireApiClient>(),
+        filmApiClient: gh<_i400.FilmApiClient>(),
       ),
     );
     gh.factory<_i49.FiltersCubit>(
@@ -122,22 +123,21 @@ extension GetItInjectableX on _i174.GetIt {
           _i49.FiltersCubit(gh<_i400.FiltersRepository>())
             ..loadFiltersOnAppStarted(),
     );
-    gh.lazySingleton<_i80.RepertoireRepository>(
-      () => _i80.RepertoireRepository(
-        repertoireApiClient: gh<_i400.RepertoireApiClient>(),
-        filmApiClient: gh<_i400.FilmApiClient>(),
+    gh.factory<_i449.FilmDetailsCubit>(
+      () => _i449.FilmDetailsCubit(
+        repertoireRepository: gh<_i400.RepertoireRepository>(),
       ),
+    );
+    gh.factory<_i176.DatesCubit>(
+      () => _i176.DatesCubit(gh<_i80.RepertoireRepository>()),
     );
     gh.factory<_i171.CinemasCubit>(
       () =>
           _i171.CinemasCubit(cinemasRepository: gh<_i400.CinemasRepository>()),
     );
-    gh.factory<_i176.DatesCubit>(
-      () => _i176.DatesCubit(gh<_i80.RepertoireRepository>()),
-    );
-    gh.factory<_i449.FilmDetailsCubit>(
-      () => _i449.FilmDetailsCubit(
-        repertoireRepository: gh<_i400.RepertoireRepository>(),
+    gh.factory<_i219.FilmScoresCubit>(
+      () => _i219.FilmScoresCubit(
+        filmScoresRepository: gh<_i400.FilmScoresRepository>(),
       ),
     );
     gh.factory<_i914.RepertoireBloc>(

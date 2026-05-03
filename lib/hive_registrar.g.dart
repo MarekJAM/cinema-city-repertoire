@@ -2,7 +2,7 @@
 // Do not modify
 // Check in to version control
 
-import 'package:hive_ce/hive.dart';
+import 'package:hive_ce/hive_ce.dart';
 import 'package:cinema_city/data/models/filters/event_type_filter.dart';
 import 'package:cinema_city/data/models/filters/genre_filter.dart';
 import 'package:cinema_city/data/models/filters/score_filter.dart';
