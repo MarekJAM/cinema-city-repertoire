@@ -7,24 +7,21 @@ import '../date_selector.dart';
 import '../error_column.dart';
 
 class RepertoireEmptyListFiltersOff extends StatelessWidget {
-  const RepertoireEmptyListFiltersOff({
-    super.key,
-  });
+  const RepertoireEmptyListFiltersOff({super.key});
 
   @override
   Widget build(BuildContext context) {
     return ErrorColumn(
-        errorMessage: t.repertoire.noFilmsToDisplay,
-        buttonMessage: t.repertoire.pickDifferentDate,
-        buttonOnPressed: () async {
-          final date = await DateSelector.selectDate(context);
-          if (date == null) return;
-          if (context.mounted) {
-            context
-                .read<DatesCubit>()
-                .selectedDateChanged(date);
-          }
-        },
-      );
+      icon: Icons.event_busy_rounded,
+      errorMessage: t.repertoire.noFilmsToDisplay,
+      buttonMessage: t.repertoire.pickDifferentDate,
+      buttonOnPressed: () async {
+        final date = await DateSelector.selectDate(context);
+        if (date == null) return;
+        if (context.mounted) {
+          context.read<DatesCubit>().selectedDateChanged(date);
+        }
+      },
+    );
   }
 }

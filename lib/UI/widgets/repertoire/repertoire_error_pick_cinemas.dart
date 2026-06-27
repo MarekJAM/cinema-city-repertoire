@@ -5,13 +5,12 @@ import '../../../i18n/strings.g.dart';
 import '../error_column.dart';
 
 class RepertoireErrorPickCinemas extends StatelessWidget {
-  const RepertoireErrorPickCinemas({
-    super.key,
-  });
+  const RepertoireErrorPickCinemas({super.key});
 
   @override
   Widget build(BuildContext context) {
     return ErrorColumn(
+      icon: Icons.theaters_rounded,
       errorMessage: t.repertoire.noFilmsToDisplay,
       buttonMessage: t.repertoire.pickCinemas,
       buttonOnPressed: () {
