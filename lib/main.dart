@@ -1,4 +1,3 @@
-import 'package:cinema_city/firebase_options.dart';
 import 'package:cinema_city/i18n/strings.g.dart';
 import 'package:cinema_city/local_notifications_setup.dart';
 import 'package:flutter/foundation.dart';
@@ -27,9 +26,7 @@ void main() async {
   tz.initializeTimeZones();
 
   if (!kDebugMode) {
-    await Firebase.initializeApp(
-      options: DefaultFirebaseOptions.currentPlatform,
-    );
+    await Firebase.initializeApp();
 
     FlutterError.onError = (errorDetails) {
       FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
