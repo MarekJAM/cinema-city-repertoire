@@ -14,7 +14,9 @@ class FilmDetailsPage extends StatelessWidget {
   const FilmDetailsPage({super.key, required this.film});
 
   static Route<void> route(Film film) {
-    return MaterialPageRoute(builder: (BuildContext context) => FilmDetailsPage(film: film));
+    return MaterialPageRoute(
+      builder: (BuildContext context) => FilmDetailsPage(film: film),
+    );
   }
 
   @override
@@ -47,30 +49,31 @@ class FilmDetailsView extends StatelessWidget {
                 ),
               ),
               SliverToBoxAdapter(
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(15),
-                  child: Container(
-                    color: context.colorScheme.surfaceContainerLow,
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 8, right: 8, top: 8),
-                      child: BlocBuilder<FilmDetailsCubit, FilmDetailsState>(
-                        builder: (context, state) {
-                          return switch (state) {
-                            FilmDetailsLoading() => FilmDetailsColumn(
-                              film: Film.mock,
-                              isLoading: true,
-                            ),
-                            FilmDetailsLoaded() => FilmDetailsColumn(film: state.film),
-                            FilmDetailsError() => ErrorColumn(
-                              errorMessage: state.message,
-                              buttonMessage: t.refresh,
-                              buttonOnPressed: () {
-                                BlocProvider.of<FilmDetailsCubit>(context).getFilmDetails(film);
-                              },
-                            ),
-                          };
-                        },
-                      ),
+                child: Card(
+                  margin: EdgeInsets.zero,
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 8, right: 8, top: 8),
+                    child: BlocBuilder<FilmDetailsCubit, FilmDetailsState>(
+                      builder: (context, state) {
+                        return switch (state) {
+                          FilmDetailsLoading() => FilmDetailsColumn(
+                            film: Film.mock,
+                            isLoading: true,
+                          ),
+                          FilmDetailsLoaded() => FilmDetailsColumn(
+                            film: state.film,
+                          ),
+                          FilmDetailsError() => ErrorColumn(
+                            errorMessage: state.message,
+                            buttonMessage: t.refresh,
+                            buttonOnPressed: () {
+                              BlocProvider.of<FilmDetailsCubit>(
+                                context,
+                              ).getFilmDetails(film);
+                            },
+                          ),
+                        };
+                      },
                     ),
                   ),
                 ),
@@ -106,7 +109,9 @@ class DetailsHeaderRow extends StatelessWidget {
           crossAxisAlignment: .start,
           children: [
             Text("$title: ", style: const TextStyle(fontSize: 12)),
-            Wrap(children: [Text(content!, style: const TextStyle(fontSize: 16))]),
+            Wrap(
+              children: [Text(content!, style: const TextStyle(fontSize: 16))],
+            ),
           ],
         ),
       ],
@@ -119,7 +124,12 @@ class DetailsDataRow extends StatelessWidget {
   final String? content;
   final Widget? widget;
 
-  const DetailsDataRow({super.key, required this.title, this.content, this.widget});
+  const DetailsDataRow({
+    super.key,
+    required this.title,
+    this.content,
+    this.widget,
+  });
 
   @override
   Widget build(BuildContext context) {

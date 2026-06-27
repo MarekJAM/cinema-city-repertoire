@@ -25,7 +25,6 @@ class RepertoireFilmItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: context.colorScheme.surfaceContainerLow,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
         child: Row(
@@ -82,7 +81,7 @@ class RepertoireFilmItemWidget extends StatelessWidget {
                             ),
                             decoration: BoxDecoration(
                               border: .all(
-                                color: Colors.grey[700] ?? Colors.grey,
+                                color: context.colorScheme.outlineVariant,
                               ),
                               borderRadius: const BorderRadius.all(
                                 .circular(5),
@@ -107,7 +106,9 @@ class RepertoireFilmItemWidget extends StatelessWidget {
                                 ),
                                 decoration: BoxDecoration(
                                   borderRadius: const .all(.circular(5)),
-                                  color: Colors.grey[700],
+                                  color: context
+                                      .colorScheme
+                                      .surfaceContainerHighest,
                                 ),
                                 child: Text(
                                   item,

@@ -14,11 +14,24 @@ class FilterValueButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return FilterChip(
       label: Text(
         label,
+        style: TextStyle(
+          color: isSelected
+              ? colorScheme.primary
+              : colorScheme.onSurfaceVariant,
+          fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400,
+        ),
       ),
       selected: isSelected,
+      backgroundColor: colorScheme.surfaceContainerHighest,
+      selectedColor: colorScheme.primary.withValues(alpha: 0.14),
+      side: BorderSide(
+        color: isSelected ? colorScheme.primary : colorScheme.outlineVariant,
+      ),
       showCheckmark: false,
       onSelected: (newVal) {
         onValueChanged(newVal, label);
