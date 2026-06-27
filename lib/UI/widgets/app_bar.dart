@@ -10,21 +10,56 @@ import '../../utils/date_helper.dart';
 import '../pages/filters_page.dart';
 import 'date_selector.dart';
 
-class RepertoireAppBar extends StatefulWidget implements PreferredSizeWidget {
+const _repertoireAppBarHeight = 60.0;
+
+class RepertoireAppBar extends StatelessWidget implements PreferredSizeWidget {
   const RepertoireAppBar({super.key});
 
   @override
-  State<RepertoireAppBar> createState() => _RepertoireAppBarState();
+  Size get preferredSize => const Size.fromHeight(_repertoireAppBarHeight);
 
-  @override
-  Size get preferredSize => const Size.fromHeight(60);
-}
-
-class _RepertoireAppBarState extends State<RepertoireAppBar> {
   @override
   Widget build(BuildContext context) {
-    final datesCubit = context.watch<DatesCubit>();
+    return _DateChangeListener(
+      child: AppBar(
+        automaticallyImplyLeading: false,
+        surfaceTintColor: Colors.transparent,
+        title: const _RepertoireAppBarTitle(),
+        actions: _buildRepertoireAppBarActions(context),
+        backgroundColor: context.colorScheme.surface,
+      ),
+    );
+  }
+}
 
+class RepertoireSliverAppBar extends StatelessWidget {
+  const RepertoireSliverAppBar({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return _DateChangeListener(
+      child: SliverAppBar(
+        automaticallyImplyLeading: false,
+        floating: true,
+        snap: true,
+        pinned: false,
+        toolbarHeight: _repertoireAppBarHeight,
+        surfaceTintColor: Colors.transparent,
+        title: const _RepertoireAppBarTitle(),
+        actions: _buildRepertoireAppBarActions(context),
+        backgroundColor: context.colorScheme.surface,
+      ),
+    );
+  }
+}
+
+class _DateChangeListener extends StatelessWidget {
+  const _DateChangeListener({required this.child});
+
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
     return BlocListener<DatesCubit, DatesState>(
       listenWhen: (previous, current) =>
           previous.status.isSuccess &&
@@ -34,110 +69,112 @@ class _RepertoireAppBarState extends State<RepertoireAppBar> {
           GetRepertoire(date: state.selectedDate),
         );
       },
-      child: AppBar(
-        automaticallyImplyLeading: false,
-        surfaceTintColor: Colors.transparent,
-        title: RichText(
-          text: TextSpan(
-            children: [
-              TextSpan(text: '${t.appBarTitlePart1}\n'),
-              TextSpan(
-                text: t.appBarTitlePart2,
-                style: TextStyle(fontSize: 16),
-              ),
-            ],
-            style: TextStyle(color: context.colorScheme.primary, fontSize: 22),
-          ),
-        ),
-        actions: <Widget>[
-          Padding(
-            padding: const .all(8.0),
-            child: TextButton(
-              style: ButtonStyle(
-                backgroundColor: WidgetStateProperty.all(
-                  context.colorScheme.primary,
-                ),
-              ),
-              child: Text(
-                DateHelper.convertDateToDDMM(datesCubit.state.selectedDate),
-                style: const TextStyle(color: Colors.white),
-              ),
-              onPressed: () async {
-                final date = await DateSelector.selectDate(context);
-                if (date == null) return;
-                if (context.mounted) {
-                  context.read<DatesCubit>().selectedDateChanged(date);
-                }
-              },
-            ),
-          ),
-          BlocConsumer<CinemasCubit, CinemasState>(
-            listenWhen: (prev, cur) =>
-                prev.status.isLoading && cur.status.isSuccess,
-            listener: (context, state) {
-              if (state.status.isSuccess) {
-                BlocProvider.of<DatesCubit>(context).getDates(
-                  DateHelper.getDateTimeInAYear,
-                  state.favoriteCinemaIds,
-                );
-              }
-            },
-            builder: (context, state) => _AppBarIconAction(
-              tooltip: t.cinemas.name,
-              icon: Icons.theaters_rounded,
-              badgeCount: state.pickedCinemaIds.length,
-              onPressed: state.status.isSuccess
-                  ? () => _showCinemasList(context)
-                  : null,
-            ),
-          ),
-          BlocBuilder<FiltersCubit, FiltersState>(
-            builder: (context, state) => _AppBarIconAction(
-              tooltip: t.filters.name,
-              icon: Icons.filter_alt_rounded,
-              badgeCount: _activeFilterCount(state),
-              onPressed: () {
-                Navigator.of(context).push(FiltersPage.route());
-              },
-            ),
-          ),
+      child: child,
+    );
+  }
+}
+
+class _RepertoireAppBarTitle extends StatelessWidget {
+  const _RepertoireAppBarTitle();
+
+  @override
+  Widget build(BuildContext context) {
+    return RichText(
+      text: TextSpan(
+        children: [
+          TextSpan(text: '${t.appBarTitlePart1}\n'),
+          TextSpan(text: t.appBarTitlePart2, style: TextStyle(fontSize: 16)),
         ],
-        backgroundColor: context.colorScheme.surface,
+        style: TextStyle(color: context.colorScheme.primary, fontSize: 22),
       ),
     );
   }
+}
 
-  void _showCinemasList(BuildContext context) {
-    showModalBottomSheet(
-      context: context,
-      scrollControlDisabledMaxHeightRatio: 1,
-      useSafeArea: true,
-      builder: (context) => const CinemasList(),
-    );
-  }
+List<Widget> _buildRepertoireAppBarActions(BuildContext context) {
+  final datesCubit = context.watch<DatesCubit>();
 
-  int _activeFilterCount(FiltersState state) {
-    if (state is! FiltersLoaded) return 0;
+  return [
+    Padding(
+      padding: const .all(8.0),
+      child: TextButton(
+        style: ButtonStyle(
+          backgroundColor: WidgetStateProperty.all(context.colorScheme.primary),
+        ),
+        child: Text(
+          DateHelper.convertDateToDDMM(datesCubit.state.selectedDate),
+          style: const TextStyle(color: Colors.white),
+        ),
+        onPressed: () async {
+          final date = await DateSelector.selectDate(context);
+          if (date == null) return;
+          if (context.mounted) {
+            context.read<DatesCubit>().selectedDateChanged(date);
+          }
+        },
+      ),
+    ),
+    BlocConsumer<CinemasCubit, CinemasState>(
+      listenWhen: (prev, cur) => prev.status.isLoading && cur.status.isSuccess,
+      listener: (context, state) {
+        if (state.status.isSuccess) {
+          BlocProvider.of<DatesCubit>(
+            context,
+          ).getDates(DateHelper.getDateTimeInAYear, state.favoriteCinemaIds);
+        }
+      },
+      builder: (context, state) => _AppBarIconAction(
+        tooltip: t.cinemas.name,
+        icon: Icons.theaters_rounded,
+        badgeCount: state.pickedCinemaIds.length,
+        onPressed: state.status.isSuccess
+            ? () => _showCinemasList(context)
+            : null,
+      ),
+    ),
+    BlocBuilder<FiltersCubit, FiltersState>(
+      builder: (context, state) => _AppBarIconAction(
+        tooltip: t.filters.name,
+        icon: Icons.filter_alt_rounded,
+        badgeCount: _activeFilterCount(state),
+        onPressed: () {
+          Navigator.of(context).push(FiltersPage.route());
+        },
+      ),
+    ),
+  ];
+}
 
-    var count = 0;
-    final allGenresCount = genreMap.length + 1;
+void _showCinemasList(BuildContext context) {
+  showModalBottomSheet(
+    context: context,
+    scrollControlDisabledMaxHeightRatio: 1,
+    useSafeArea: true,
+    builder: (context) => const CinemasList(),
+  );
+}
 
-    for (final filter in state.filters) {
-      switch (filter) {
-        case GenreFilter(genres: final genres):
-          if ((genres?.length ?? 0) < allGenresCount) count++;
-        case EventTypeFilter(eventTypes: final eventTypes):
-          if ((eventTypes?.length ?? 0) < allEventTypes.length) count++;
-        case ScoreFilter(
-          score: final score,
-          showFilmsWithNoScore: final showFilmsWithNoScore,
-        ):
-          if ((score ?? 0) > 0 || showFilmsWithNoScore == false) count++;
-      }
+int _activeFilterCount(FiltersState state) {
+  if (state is! FiltersLoaded) return 0;
+
+  var count = 0;
+  final allGenresCount = genreMap.length + 1;
+
+  for (final filter in state.filters) {
+    switch (filter) {
+      case GenreFilter(genres: final genres):
+        if ((genres?.length ?? 0) < allGenresCount) count++;
+      case EventTypeFilter(eventTypes: final eventTypes):
+        if ((eventTypes?.length ?? 0) < allEventTypes.length) count++;
+      case ScoreFilter(
+        score: final score,
+        showFilmsWithNoScore: final showFilmsWithNoScore,
+      ):
+        if ((score ?? 0) > 0 || showFilmsWithNoScore == false) count++;
     }
-
-    return count;
   }
+
+  return count;
 }
 
 class _AppBarIconAction extends StatelessWidget {

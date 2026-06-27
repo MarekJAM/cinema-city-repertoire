@@ -27,86 +27,97 @@ class RepertoireView extends StatefulWidget {
 class _RepertoireViewState extends State<RepertoireView> {
   @override
   Widget build(BuildContext context) {
-    final selectedDate = context.select<DatesCubit, DateTime>((cubit) => cubit.state.selectedDate);
+    final selectedDate = context.select<DatesCubit, DateTime>(
+      (cubit) => cubit.state.selectedDate,
+    );
 
     return BlocConsumer<CinemasCubit, CinemasState>(
       listenWhen: (prev, cur) =>
-          prev.status != cur.status || prev.pickedCinemaIds != cur.pickedCinemaIds,
+          prev.status != cur.status ||
+          prev.pickedCinemaIds != cur.pickedCinemaIds,
       listener: (context, state) {
         if (state.status.isSuccess) {
           context.read<RepertoireBloc>().add(
-                GetRepertoire(
-                  date: selectedDate,
-                  allCinemas: state.cinemas,
-                  pickedCinemaIds: state.pickedCinemaIds,
-                ),
-              );
+            GetRepertoire(
+              date: selectedDate,
+              allCinemas: state.cinemas,
+              pickedCinemaIds: state.pickedCinemaIds,
+            ),
+          );
         }
       },
       buildWhen: (prev, cur) =>
-          prev.status != cur.status || prev.pickedCinemaIds != cur.pickedCinemaIds,
+          prev.status != cur.status ||
+          prev.pickedCinemaIds != cur.pickedCinemaIds,
       builder: (context, cinemasState) {
         return Scaffold(
-          appBar: const RepertoireAppBar(),
           backgroundColor: context.colorScheme.surface,
-          body: Padding(
-            padding: const .symmetric(horizontal: 8.0),
-            child: Builder(
-              builder: (context) {
-                final repertoireMock = Repertoire.mock;
-                switch (cinemasState.status) {
-                  case CinemasStatus.success:
-                    return BlocBuilder<RepertoireBloc, RepertoireState>(
-                      builder: (context, state) {
-                        switch (state) {
-                          case RepertoireLoaded(
+          body: NestedScrollView(
+            floatHeaderSlivers: true,
+            headerSliverBuilder: (context, innerBoxIsScrolled) => const [
+              RepertoireSliverAppBar(),
+            ],
+            body: Padding(
+              padding: const .symmetric(horizontal: 8.0),
+              child: Builder(
+                builder: (context) {
+                  final repertoireMock = Repertoire.mock;
+                  switch (cinemasState.status) {
+                    case CinemasStatus.success:
+                      return BlocBuilder<RepertoireBloc, RepertoireState>(
+                        builder: (context, state) {
+                          switch (state) {
+                            case RepertoireLoaded(
                               data: final data,
-                              hasFilteringLimitedResults: final hasFilteringLimitedResults
+                              hasFilteringLimitedResults: final hasFilteringLimitedResults,
                             ):
-                            return RefreshIndicator(
-                              onRefresh: () => Future.sync(
-                                () => context.read<RepertoireBloc>().add(const GetRepertoire()),
-                              ),
-                              backgroundColor: context.colorScheme.surface,
-                              child: data.filmItems.isNotEmpty
-                                  ? RepertoireListPopulated(data: data)
-                                  : cinemasState.pickedCinemaIds.isNotEmpty
-                                      ? hasFilteringLimitedResults
+                              return RefreshIndicator(
+                                onRefresh: () => Future.sync(
+                                  () => context.read<RepertoireBloc>().add(
+                                    const GetRepertoire(),
+                                  ),
+                                ),
+                                backgroundColor: context.colorScheme.surface,
+                                child: data.filmItems.isNotEmpty
+                                    ? RepertoireListPopulated(data: data)
+                                    : cinemasState.pickedCinemaIds.isNotEmpty
+                                    ? hasFilteringLimitedResults
                                           ? const RepertoireEmptyListFiltersOn()
                                           : const RepertoireEmptyListFiltersOff()
-                                      : const RepertoireErrorPickCinemas(),
-                            );
-                          case RepertoireLoading():
-                            return Skeletonizer(
-                              child: RepertoireListPopulated(
-                                data: repertoireMock,
-                              ),
-                            );
-                          case RepertoireError(message: final message):
-                            return ErrorColumn(
-                              errorMessage: message,
-                              buttonMessage: t.refresh,
-                              buttonOnPressed: () =>
-                                  context.read<RepertoireBloc>().add(const GetRepertoire()),
-                            );
-                        }
-                      },
-                    );
-                  case CinemasStatus.inProgress:
-                  case CinemasStatus.initial:
-                    return Skeletonizer(
-                      child: RepertoireListPopulated(
-                        data: repertoireMock,
-                      ),
-                    );
-                  case CinemasStatus.failure:
-                    return ErrorColumn(
-                      errorMessage: cinemasState.errorMessage,
-                      buttonMessage: t.refresh,
-                      buttonOnPressed: () => context.read<CinemasCubit>().getCinemas(),
-                    );
-                }
-              },
+                                    : const RepertoireErrorPickCinemas(),
+                              );
+                            case RepertoireLoading():
+                              return Skeletonizer(
+                                child: RepertoireListPopulated(
+                                  data: repertoireMock,
+                                ),
+                              );
+                            case RepertoireError(message: final message):
+                              return ErrorColumn(
+                                errorMessage: message,
+                                buttonMessage: t.refresh,
+                                buttonOnPressed: () => context
+                                    .read<RepertoireBloc>()
+                                    .add(const GetRepertoire()),
+                              );
+                          }
+                        },
+                      );
+                    case CinemasStatus.inProgress:
+                    case CinemasStatus.initial:
+                      return Skeletonizer(
+                        child: RepertoireListPopulated(data: repertoireMock),
+                      );
+                    case CinemasStatus.failure:
+                      return ErrorColumn(
+                        errorMessage: cinemasState.errorMessage,
+                        buttonMessage: t.refresh,
+                        buttonOnPressed: () =>
+                            context.read<CinemasCubit>().getCinemas(),
+                      );
+                  }
+                },
+              ),
             ),
           ),
         );
