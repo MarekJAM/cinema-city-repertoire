@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../bloc/blocs.dart';
+import '../../data/models/models.dart';
 import '../../i18n/strings.g.dart';
 import '../../utils/date_helper.dart';
 import '../pages/filters_page.dart';
@@ -25,9 +26,13 @@ class _RepertoireAppBarState extends State<RepertoireAppBar> {
     final datesCubit = context.watch<DatesCubit>();
 
     return BlocListener<DatesCubit, DatesState>(
-      listenWhen: (previous, current) => previous.status.isSuccess && previous.selectedDate != current.selectedDate,
+      listenWhen: (previous, current) =>
+          previous.status.isSuccess &&
+          previous.selectedDate != current.selectedDate,
       listener: (context, state) {
-        context.read<RepertoireBloc>().add(GetRepertoire(date: state.selectedDate));
+        context.read<RepertoireBloc>().add(
+          GetRepertoire(date: state.selectedDate),
+        );
       },
       child: AppBar(
         automaticallyImplyLeading: false,
@@ -36,7 +41,10 @@ class _RepertoireAppBarState extends State<RepertoireAppBar> {
           text: TextSpan(
             children: [
               TextSpan(text: '${t.appBarTitlePart1}\n'),
-              TextSpan(text: t.appBarTitlePart2, style: TextStyle(fontSize: 16)),
+              TextSpan(
+                text: t.appBarTitlePart2,
+                style: TextStyle(fontSize: 16),
+              ),
             ],
             style: TextStyle(color: context.colorScheme.primary, fontSize: 22),
           ),
@@ -57,12 +65,15 @@ class _RepertoireAppBarState extends State<RepertoireAppBar> {
               onPressed: () async {
                 final date = await DateSelector.selectDate(context);
                 if (date == null) return;
-                if (context.mounted) context.read<DatesCubit>().selectedDateChanged(date);
+                if (context.mounted) {
+                  context.read<DatesCubit>().selectedDateChanged(date);
+                }
               },
             ),
           ),
           BlocConsumer<CinemasCubit, CinemasState>(
-            listenWhen: (prev, cur) => prev.status.isLoading && cur.status.isSuccess,
+            listenWhen: (prev, cur) =>
+                prev.status.isLoading && cur.status.isSuccess,
             listener: (context, state) {
               if (state.status.isSuccess) {
                 BlocProvider.of<DatesCubit>(context).getDates(
@@ -71,36 +82,129 @@ class _RepertoireAppBarState extends State<RepertoireAppBar> {
                 );
               }
             },
-            builder: (ctx, state) {
-              return PopupMenuButton(
-                shape: RoundedRectangleBorder(borderRadius: .circular(15)),
-                itemBuilder: (BuildContext context) {
-                  return [
-                    PopupMenuItem<String>(
-                      enabled: state.status.isSuccess,
-                      onTap: () => showModalBottomSheet(
-                        context: context,
-                        scrollControlDisabledMaxHeightRatio: 1,
-                        useSafeArea: true,
-                        builder: (context) => const CinemasList(),
-                      ),
-                      child: Text(t.cinemas.name),
-                    ),
-                    PopupMenuItem<String>(
-                      child: Text(t.filters.name),
-                      onTap: () {
-                        Navigator.of(context).push(
-                          FiltersPage.route(),
-                        );
-                      },
-                    ),
-                  ];
-                },
-              );
-            },
+            builder: (context, state) => _AppBarIconAction(
+              tooltip: t.cinemas.name,
+              icon: Icons.theaters_rounded,
+              badgeCount: state.pickedCinemaIds.length,
+              onPressed: state.status.isSuccess
+                  ? () => _showCinemasList(context)
+                  : null,
+            ),
+          ),
+          BlocBuilder<FiltersCubit, FiltersState>(
+            builder: (context, state) => _AppBarIconAction(
+              tooltip: t.filters.name,
+              icon: Icons.filter_alt_rounded,
+              badgeCount: _activeFilterCount(state),
+              onPressed: () {
+                Navigator.of(context).push(FiltersPage.route());
+              },
+            ),
           ),
         ],
         backgroundColor: context.colorScheme.surface,
+      ),
+    );
+  }
+
+  void _showCinemasList(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      scrollControlDisabledMaxHeightRatio: 1,
+      useSafeArea: true,
+      builder: (context) => const CinemasList(),
+    );
+  }
+
+  int _activeFilterCount(FiltersState state) {
+    if (state is! FiltersLoaded) return 0;
+
+    var count = 0;
+    final allGenresCount = genreMap.length + 1;
+
+    for (final filter in state.filters) {
+      switch (filter) {
+        case GenreFilter(genres: final genres):
+          if ((genres?.length ?? 0) < allGenresCount) count++;
+        case EventTypeFilter(eventTypes: final eventTypes):
+          if ((eventTypes?.length ?? 0) < allEventTypes.length) count++;
+        case ScoreFilter(
+          score: final score,
+          showFilmsWithNoScore: final showFilmsWithNoScore,
+        ):
+          if ((score ?? 0) > 0 || showFilmsWithNoScore == false) count++;
+      }
+    }
+
+    return count;
+  }
+}
+
+class _AppBarIconAction extends StatelessWidget {
+  const _AppBarIconAction({
+    required this.tooltip,
+    required this.icon,
+    required this.badgeCount,
+    required this.onPressed,
+  });
+
+  final String tooltip;
+  final IconData icon;
+  final int badgeCount;
+  final VoidCallback? onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return Tooltip(
+      message: tooltip,
+      child: SizedBox.square(
+        dimension: 48,
+        child: Stack(
+          clipBehavior: Clip.none,
+          alignment: .center,
+          children: [
+            IconButton(onPressed: onPressed, icon: Icon(icon)),
+            if (badgeCount > 0)
+              Positioned(
+                top: 6,
+                right: 4,
+                child: IgnorePointer(
+                  child: _ActionCountIndicator(count: badgeCount),
+                ),
+              ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _ActionCountIndicator extends StatelessWidget {
+  const _ActionCountIndicator({required this.count});
+
+  final int count;
+
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
+    return Container(
+      constraints: const BoxConstraints(minWidth: 16, minHeight: 16),
+      padding: const EdgeInsets.symmetric(horizontal: 4),
+      alignment: .center,
+      decoration: BoxDecoration(
+        color: colorScheme.surfaceContainerHighest,
+        border: .all(color: colorScheme.outlineVariant),
+        borderRadius: .circular(8),
+      ),
+      child: Text(
+        count > 99 ? '99+' : '$count',
+        style: TextStyle(
+          color: colorScheme.onSurfaceVariant,
+          fontSize: 10,
+          fontWeight: .w600,
+          height: 1,
+        ),
       ),
     );
   }
