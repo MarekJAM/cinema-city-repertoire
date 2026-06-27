@@ -216,62 +216,124 @@ class RepertoireFilmItemRow extends StatelessWidget {
         ? Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Text(cinema ?? '', style: const TextStyle(fontSize: 12)),
-              const SizedBox(height: 2),
+              Padding(
+                padding: const .only(top: 2),
+                child: Text(
+                  cinema ?? '',
+                  style: TextStyle(
+                    color: context.colorScheme.onSurfaceVariant,
+                    fontSize: 12,
+                    fontWeight: .w600,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 3),
               Wrap(
                 direction: .horizontal,
                 alignment: .start,
-                spacing: 4,
-                runSpacing: 4,
+                spacing: 5,
+                runSpacing: 5,
                 children: <Widget>[
                   for (var item in events)
-                    InkWell(
-                      customBorder: RoundedRectangleBorder(
-                        borderRadius: .circular(5),
+                    Material(
+                      color: context.colorScheme.surfaceContainerHighest
+                          .withValues(alpha: 0.55),
+                      clipBehavior: .antiAlias,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: .circular(6),
+                        side: BorderSide(
+                          color: context.colorScheme.outlineVariant,
+                        ),
                       ),
-                      onTap: () {
-                        showModalBottomSheet<void>(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return FilmEventDialog(
-                              film: film,
-                              cinema: cinema,
-                              item: item,
-                            );
-                          },
-                        );
-                      },
-                      child: Column(
-                        children: [
-                          Container(
-                            decoration: BoxDecoration(
-                              border: .all(color: context.colorScheme.primary),
-                              borderRadius: const .all(.circular(5)),
-                            ),
-                            padding: const EdgeInsets.symmetric(horizontal: 2),
-                            child: Column(
-                              children: [
-                                Text(
-                                  DateHelper.convertDateToHHMM(item.dateTime),
-                                ),
-                                if (item.type != null)
-                                  Text(
-                                    item.type!,
-                                    style: const TextStyle(fontSize: 7),
+                      child: InkWell(
+                        customBorder: RoundedRectangleBorder(
+                          borderRadius: .circular(6),
+                        ),
+                        onTap: () {
+                          showModalBottomSheet<void>(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return FilmEventDialog(
+                                film: film,
+                                cinema: cinema,
+                                item: item,
+                              );
+                            },
+                          );
+                        },
+                        child: IntrinsicHeight(
+                          child: Row(
+                            mainAxisSize: .min,
+                            children: [
+                              Container(
+                                width: 2,
+                                decoration: BoxDecoration(
+                                  color: context.colorScheme.primary.withValues(
+                                    alpha: 0.75,
                                   ),
-                                Text(switch (item.language) {
-                                  (LanguageType.dubbing) =>
-                                    t.languageType.dubbing,
-                                  (LanguageType.original) =>
-                                    t.languageType.original,
-                                  (LanguageType.subtitles) =>
-                                    t.languageType.subtitles,
-                                }, style: const TextStyle(fontSize: 7)),
-                                const Padding(padding: .only(bottom: 2)),
-                              ],
-                            ),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 5,
+                                  vertical: 4,
+                                ),
+                                child: Column(
+                                  mainAxisSize: .min,
+                                  children: [
+                                    Text(
+                                      DateHelper.convertDateToHHMM(
+                                        item.dateTime,
+                                      ),
+                                      style: TextStyle(
+                                        color: context.colorScheme.onSurface,
+                                        fontSize: 13,
+                                        fontWeight: .w700,
+                                        fontFeatures: const [
+                                          FontFeature.tabularFigures(),
+                                        ],
+                                        height: 1,
+                                      ),
+                                    ),
+                                    if (item.type != null)
+                                      Padding(
+                                        padding: const .only(top: 1, bottom: 1),
+                                        child: Text(
+                                          item.type!,
+                                          style: TextStyle(
+                                            color: context
+                                                .colorScheme
+                                                .onSurfaceVariant,
+                                            fontSize: 8,
+                                            fontWeight: .w600,
+                                            height: 1.15,
+                                          ),
+                                        ),
+                                      ),
+                                    Text(
+                                      switch (item.language) {
+                                        (LanguageType.dubbing) =>
+                                          t.languageType.dubbing,
+                                        (LanguageType.original) =>
+                                          t.languageType.original,
+                                        (LanguageType.subtitles) =>
+                                          t.languageType.subtitles,
+                                      },
+                                      style: TextStyle(
+                                        color: context
+                                            .colorScheme
+                                            .onSurfaceVariant,
+                                        fontSize: 8,
+                                        fontWeight: .w600,
+                                        height: 1.15,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
                           ),
-                        ],
+                        ),
                       ),
                     ),
                 ],
