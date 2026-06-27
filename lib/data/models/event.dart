@@ -23,8 +23,8 @@ class Event {
 
   factory Event.fromJson(Map<String, dynamic> json) {
     Map<String, dynamic> attributes = {};
+    LanguageType language = LanguageType.original;
     if (json['attributeIds'] != null) {
-      LanguageType? language;
       json['attributeIds'].forEach((attr) {
         for (var type in allEventTypes) {
           if (attr == type) {
@@ -39,13 +39,10 @@ class Event {
           language = LanguageType.dubbing;
         } else if ((attr.contains('original-') && (!attr.contains('pl')) ||
                 attr == 'first-subbed-lang-pl') &&
-            language == null) {
+            language == LanguageType.original) {
           language = LanguageType.subtitles;
         }
       });
-      language ??= LanguageType.original;
-
-      attributes.putIfAbsent('language', () => language);
     }
 
     return Event(
@@ -53,8 +50,8 @@ class Event {
       filmId: json['filmId'],
       cinemaId: json['cinemaId'],
       dateTime: DateTime.parse(json['eventDateTime']),
-      language: attributes['language'],
-      type: attributes['type'].toUpperCase(),
+      language: language,
+      type: attributes['type']?.toUpperCase(),
       bookingLink: json['bookingLink'],
     );
   }

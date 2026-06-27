@@ -13,8 +13,6 @@ class RepertoireApiClient {
 
   RepertoireApiClient({@Named('dioCinemaCity') required this.client});
 
-  final _repertoire = Repertoire();
-
   Future<Repertoire> getRepertoire({
     required String date,
     required List<Cinema>? allCinemas,
@@ -22,9 +20,7 @@ class RepertoireApiClient {
   }) async {
     List<Response> responseList = await Future.wait(
       cinemaIds.map(
-        (cinemaId) => client.get(
-          '$_repertoireEndpoint$cinemaId/at-date/$date',
-        ),
+        (cinemaId) => client.get('$_repertoireEndpoint$cinemaId/at-date/$date'),
       ),
     );
 
@@ -49,17 +45,16 @@ class RepertoireApiClient {
       events.add(Event.fromJson(event));
     }
 
-    _repertoire.setItems(films: films, events: events, cinemas: allCinemas);
+    final repertoire = Repertoire()
+      ..setItems(films: films, events: events, cinemas: allCinemas);
 
-    return _repertoire;
+    return repertoire;
   }
 
   Future<List<String>> getDates(String date, List<String> cinemaIds) async {
     List<Response> responseList = await Future.wait(
       cinemaIds.map(
-        (cinemaId) => client.get(
-          '$_datesEndpoint$cinemaId/until/$date',
-        ),
+        (cinemaId) => client.get('$_datesEndpoint$cinemaId/until/$date'),
       ),
     );
 

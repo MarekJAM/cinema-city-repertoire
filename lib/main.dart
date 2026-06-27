@@ -16,6 +16,8 @@ import 'injection.dart';
 import 'hive_registrar.g.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
   if (kDebugMode) Bloc.observer = AppBlocObserver();
 
   await Hive.initFlutter();
@@ -23,8 +25,6 @@ void main() async {
   Hive.registerAdapters();
 
   tz.initializeTimeZones();
-
-  WidgetsFlutterBinding.ensureInitialized();
 
   if (!kDebugMode) {
     await Firebase.initializeApp(
@@ -50,24 +50,12 @@ void main() async {
   runApp(
     MultiBlocProvider(
       providers: [
-        BlocProvider<CinemasCubit>(
-          create: (context) => di()..getCinemas(),
-        ),
-        BlocProvider<RepertoireBloc>(
-          create: (context) => di(),
-        ),
-        BlocProvider<DatesCubit>(
-          create: (context) => di(),
-        ),
-        BlocProvider<FilmDetailsCubit>(
-          create: (context) => di(),
-        ),
-        BlocProvider<FilmScoresCubit>(
-          create: (context) => di(),
-        ),
-        BlocProvider<FiltersCubit>(
-          create: (context) => di(),
-        ),
+        BlocProvider<CinemasCubit>(create: (context) => di()..getCinemas()),
+        BlocProvider<RepertoireBloc>(create: (context) => di()),
+        BlocProvider<DatesCubit>(create: (context) => di()),
+        BlocProvider<FilmDetailsCubit>(create: (context) => di()),
+        BlocProvider<FilmScoresCubit>(create: (context) => di()),
+        BlocProvider<FiltersCubit>(create: (context) => di()),
       ],
       child: TranslationProvider(child: const App()),
     ),

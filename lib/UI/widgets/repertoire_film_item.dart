@@ -37,29 +37,7 @@ class RepertoireFilmItemWidget extends StatelessWidget {
               },
               child: Column(
                 children: [
-                  SizedBox(
-                    height: 120,
-                    width: 80,
-                    child: ClipRRect(
-                      borderRadius: .circular(5),
-                      child: Skeleton.replace(
-                        child: CachedNetworkImage(
-                          imageUrl: data.film.posterLink!,
-                          errorWidget: (context, url, error) {
-                            return Center(
-                              child: Column(
-                                mainAxisAlignment: .center,
-                                children: [
-                                  const Icon(Icons.image_not_supported_rounded),
-                                  Text(t.filmDetails.posterError, textAlign: .center),
-                                ],
-                              ),
-                            );
-                          },
-                        ),
-                      ),
-                    ),
-                  ),
+                  FilmPoster(imageUrl: data.film.posterLink),
                   const SizedBox(height: 2),
                   FilmWebScoreWrap(data: data),
                 ],
@@ -90,19 +68,30 @@ class RepertoireFilmItemWidget extends StatelessWidget {
                           Padding(
                             padding: const .only(right: 4),
                             child: Skeleton.leaf(
-                              child: FilmAgeRestrictionIndicator(data.film.ageRestriction!),
+                              child: FilmAgeRestrictionIndicator(
+                                data.film.ageRestriction!,
+                              ),
                             ),
                           ),
                         Padding(
                           padding: const .only(right: 4),
                           child: Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 1),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 3,
+                              vertical: 1,
+                            ),
                             decoration: BoxDecoration(
-                              border: .all(color: Colors.grey[700] ?? Colors.grey),
-                              borderRadius: const BorderRadius.all(.circular(5)),
+                              border: .all(
+                                color: Colors.grey[700] ?? Colors.grey,
+                              ),
+                              borderRadius: const BorderRadius.all(
+                                .circular(5),
+                              ),
                             ),
                             child: Text(
-                              t.filmDetails.filmLengthValue(val: '${data.film.length}'),
+                              t.filmDetails.filmLengthValue(
+                                val: '${data.film.length}',
+                              ),
                               style: const TextStyle(fontSize: 10),
                             ),
                           ),
@@ -112,12 +101,18 @@ class RepertoireFilmItemWidget extends StatelessWidget {
                             child: Padding(
                               padding: const .only(right: 4),
                               child: Container(
-                                padding: const .symmetric(horizontal: 3, vertical: 1),
+                                padding: const .symmetric(
+                                  horizontal: 3,
+                                  vertical: 1,
+                                ),
                                 decoration: BoxDecoration(
                                   borderRadius: const .all(.circular(5)),
                                   color: Colors.grey[700],
                                 ),
-                                child: Text(item, style: const TextStyle(fontSize: 10)),
+                                child: Text(
+                                  item,
+                                  style: const TextStyle(fontSize: 10),
+                                ),
                               ),
                             ),
                           ),
@@ -141,6 +136,49 @@ class RepertoireFilmItemWidget extends StatelessWidget {
   }
 }
 
+class FilmPoster extends StatelessWidget {
+  const FilmPoster({super.key, required this.imageUrl});
+
+  final String? imageUrl;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 120,
+      width: 80,
+      child: ClipRRect(
+        borderRadius: .circular(5),
+        child: Skeleton.replace(
+          child: imageUrl == null
+              ? const FilmPosterFallback()
+              : CachedNetworkImage(
+                  imageUrl: imageUrl!,
+                  errorWidget: (context, url, error) =>
+                      const FilmPosterFallback(),
+                ),
+        ),
+      ),
+    );
+  }
+}
+
+class FilmPosterFallback extends StatelessWidget {
+  const FilmPosterFallback({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Column(
+        mainAxisAlignment: .center,
+        children: [
+          const Icon(Icons.image_not_supported_rounded),
+          Text(t.filmDetails.posterError, textAlign: .center),
+        ],
+      ),
+    );
+  }
+}
+
 class FilmWebScoreWrap extends StatelessWidget {
   const FilmWebScoreWrap({super.key, required this.data});
 
@@ -150,7 +188,10 @@ class FilmWebScoreWrap extends StatelessWidget {
   Widget build(BuildContext context) {
     return switch (data.film.rating) {
       FilmRatingError() => const SizedBox.shrink(),
-      FilmRatingLoaded(rating: final rating) => RatingBar(rating: rating, maxRating: 10),
+      FilmRatingLoaded(rating: final rating) => RatingBar(
+        rating: rating,
+        maxRating: 10,
+      ),
       FilmRatingLoading() || FilmRatingInitial() => const RatingBarSkeleton(),
     };
   }
@@ -174,7 +215,7 @@ class RepertoireFilmItemRow extends StatelessWidget {
         ? Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Text(cinema!, style: const TextStyle(fontSize: 12)),
+              Text(cinema ?? '', style: const TextStyle(fontSize: 12)),
               const SizedBox(height: 2),
               Wrap(
                 direction: .horizontal,
@@ -184,12 +225,18 @@ class RepertoireFilmItemRow extends StatelessWidget {
                 children: <Widget>[
                   for (var item in events)
                     InkWell(
-                      customBorder: RoundedRectangleBorder(borderRadius: .circular(5)),
+                      customBorder: RoundedRectangleBorder(
+                        borderRadius: .circular(5),
+                      ),
                       onTap: () {
                         showModalBottomSheet<void>(
                           context: context,
                           builder: (BuildContext context) {
-                            return FilmEventDialog(film: film, cinema: cinema, item: item);
+                            return FilmEventDialog(
+                              film: film,
+                              cinema: cinema,
+                              item: item,
+                            );
                           },
                         );
                       },
@@ -203,12 +250,21 @@ class RepertoireFilmItemRow extends StatelessWidget {
                             padding: const EdgeInsets.symmetric(horizontal: 2),
                             child: Column(
                               children: [
-                                Text(DateHelper.convertDateToHHMM(item.dateTime)),
-                                Text(item.type!, style: const TextStyle(fontSize: 7)),
+                                Text(
+                                  DateHelper.convertDateToHHMM(item.dateTime),
+                                ),
+                                if (item.type != null)
+                                  Text(
+                                    item.type!,
+                                    style: const TextStyle(fontSize: 7),
+                                  ),
                                 Text(switch (item.language) {
-                                  (LanguageType.dubbing) => t.languageType.dubbing,
-                                  (LanguageType.original) => t.languageType.original,
-                                  (LanguageType.subtitles) => t.languageType.subtitles,
+                                  (LanguageType.dubbing) =>
+                                    t.languageType.dubbing,
+                                  (LanguageType.original) =>
+                                    t.languageType.original,
+                                  (LanguageType.subtitles) =>
+                                    t.languageType.subtitles,
                                 }, style: const TextStyle(fontSize: 7)),
                                 const Padding(padding: .only(bottom: 2)),
                               ],

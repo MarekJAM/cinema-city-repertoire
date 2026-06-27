@@ -13,7 +13,12 @@ import '../../utils/time_zone.dart';
 import '../widgets/snackbar.dart';
 
 class FilmEventDialog extends StatefulWidget {
-  const FilmEventDialog({super.key, required this.film, required this.cinema, required this.item});
+  const FilmEventDialog({
+    super.key,
+    required this.film,
+    required this.cinema,
+    required this.item,
+  });
 
   final Film film;
   final String? cinema;
@@ -32,12 +37,18 @@ class _FilmEventDialogState extends State<FilmEventDialog> {
     }
   }
 
-  Future<void> _scheduleNotification(String? title, Event event, tz.TZDateTime tzDateTime) async {
+  Future<void> _scheduleNotification(
+    String? title,
+    Event event,
+    tz.TZDateTime tzDateTime,
+  ) async {
+    final id = int.tryParse(event.id ?? '') ?? event.hashCode;
     return await di<FlutterLocalNotificationsPlugin>().zonedSchedule(
-      id: int.tryParse(event.id!) ?? 0,
+      id: id,
       title: title,
       body: t.reminders.filmReminder(
-        time: '${event.dateTime.hour}:${event.dateTime.minute == 0 ? "00" : event.dateTime.minute}',
+        time:
+            '${event.dateTime.hour}:${event.dateTime.minute == 0 ? "00" : event.dateTime.minute}',
       ),
       scheduledDate: tzDateTime,
       notificationDetails: NotificationDetails(
@@ -58,6 +69,10 @@ class _FilmEventDialogState extends State<FilmEventDialog> {
       (LanguageType.original) => t.languageType.original,
       (LanguageType.subtitles) => t.languageType.subtitles,
     };
+    final metadata = [
+      language,
+      if (widget.item.type != null) widget.item.type!,
+    ].join(', ');
     return Padding(
       padding: const .all(16),
       child: Column(
@@ -70,7 +85,10 @@ class _FilmEventDialogState extends State<FilmEventDialog> {
               Expanded(
                 child: Text(
                   widget.film.name,
-                  style: TextStyle(fontSize: 24, color: context.colorScheme.primary),
+                  style: TextStyle(
+                    fontSize: 24,
+                    color: context.colorScheme.primary,
+                  ),
                 ),
               ),
               IconButton(
@@ -85,15 +103,21 @@ class _FilmEventDialogState extends State<FilmEventDialog> {
           Padding(
             padding: const .only(bottom: 3.0),
             child: Text(
-              '${widget.cinema!}, ${DateHelper.convertDateToHHMM(widget.item.dateTime)}',
+              [
+                if (widget.cinema != null) widget.cinema!,
+                DateHelper.convertDateToHHMM(widget.item.dateTime),
+              ].join(', '),
               style: const TextStyle(fontSize: 18),
             ),
           ),
           Padding(
             padding: const .all(2.0),
             child: Text(
-              "$language, ${widget.item.type}",
-              style: TextStyle(fontSize: 14, color: context.colorScheme.onSurfaceVariant),
+              metadata,
+              style: TextStyle(
+                fontSize: 14,
+                color: context.colorScheme.onSurfaceVariant,
+              ),
             ),
           ),
           const SizedBox(height: 8),
@@ -102,9 +126,11 @@ class _FilmEventDialogState extends State<FilmEventDialog> {
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                  onPressed: () {
-                    _launchURL(widget.item.bookingLink);
-                  },
+                  onPressed: widget.item.bookingLink == null
+                      ? null
+                      : () {
+                          _launchURL(widget.item.bookingLink);
+                        },
                   child: Text(t.buyTicket),
                 ),
               ),
@@ -115,7 +141,12 @@ class _FilmEventDialogState extends State<FilmEventDialog> {
                     final timeZone = TimeZone();
                     return OutlinedButton(
                       onPressed:
-                          timeZone.diffWithCurrentPolishTime(widget.item.dateTime).inMinutes > -30
+                          timeZone
+                                  .diffWithCurrentPolishTime(
+                                    widget.item.dateTime,
+                                  )
+                                  .inMinutes >
+                              -30
                           ? null
                           : () async {
                               final eventDateTime = widget.item.dateTime;
@@ -125,14 +156,19 @@ class _FilmEventDialogState extends State<FilmEventDialog> {
                                 initialEntryMode: TimePickerEntryMode.input,
                                 helpText: t.reminders.selectReminderTime,
                                 initialTime: TimeOfDay.fromDateTime(
-                                  widget.item.dateTime.subtract(const Duration(minutes: 30)),
+                                  widget.item.dateTime.subtract(
+                                    const Duration(minutes: 30),
+                                  ),
                                 ),
                               );
 
                               if (pickedTime != null) {
-                                final timeZoneName = await timeZone.getTimeZoneName();
+                                final timeZoneName = await timeZone
+                                    .getTimeZoneName();
 
-                                final location = await timeZone.getLocation(timeZoneName);
+                                final location = await timeZone.getLocation(
+                                  timeZoneName,
+                                );
 
                                 final pickedTzDateTime = tz.TZDateTime(
                                   location,
@@ -143,7 +179,9 @@ class _FilmEventDialogState extends State<FilmEventDialog> {
                                   pickedTime.minute,
                                 );
 
-                                if (pickedTzDateTime.isAfter(tz.TZDateTime.now(location))) {
+                                if (pickedTzDateTime.isAfter(
+                                  tz.TZDateTime.now(location),
+                                )) {
                                   try {
                                     await _scheduleNotification(
                                       widget.film.name,
@@ -151,9 +189,13 @@ class _FilmEventDialogState extends State<FilmEventDialog> {
                                       pickedTzDateTime,
                                     );
                                     if (context.mounted) {
-                                      context.showSnackbar(t.reminders.reminderScheduled);
+                                      context.showSnackbar(
+                                        t.reminders.reminderScheduled,
+                                      );
                                     }
-                                    if (context.mounted) Navigator.of(context).pop();
+                                    if (context.mounted) {
+                                      Navigator.of(context).pop();
+                                    }
                                   } catch (_) {}
                                 }
                               }

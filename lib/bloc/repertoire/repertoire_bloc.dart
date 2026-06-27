@@ -35,7 +35,8 @@ class RepertoireBloc extends Bloc<RepertoireEvent, RepertoireState> {
     on<GetRepertoire>(_onGetRepertoire);
     on<FiltersChanged>((event, emit) => _onFiltersChanged(event.filters, emit));
 
-    filmScoresSubscription = filmScoresRepository.watchScores.listen((data) {
+    filmScoresSubscription = filmScoresRepository.watchScores.listen((film) {
+      _updateLoadedRepertoireRating(film);
       add(FiltersChanged(filters ?? []));
     });
   }
@@ -46,12 +47,17 @@ class RepertoireBloc extends Bloc<RepertoireEvent, RepertoireState> {
     return super.close();
   }
 
-  void _onGetRepertoire(GetRepertoire event, Emitter<RepertoireState> emit) async {
+  void _onGetRepertoire(
+    GetRepertoire event,
+    Emitter<RepertoireState> emit,
+  ) async {
     emit(RepertoireLoading());
     try {
       if (event.date != null) _pickedDate = event.date!;
       if (event.allCinemas != null) _allCinemas = [...event.allCinemas!];
-      if (event.pickedCinemaIds != null) _pickedCinemaIds = [...event.pickedCinemaIds!];
+      if (event.pickedCinemaIds != null) {
+        _pickedCinemaIds = [...event.pickedCinemaIds!];
+      }
 
       loadedRepertoire = await repertoireRepository.getRepertoire(
         date: _pickedDate,
@@ -60,10 +66,14 @@ class RepertoireBloc extends Bloc<RepertoireEvent, RepertoireState> {
       );
 
       filters ??= filtersRepository.loadFilters();
-      final filteredRepertoire = repertoireRepository.filterRepertoire(filters!, loadedRepertoire)!;
+      final filteredRepertoire = repertoireRepository.filterRepertoire(
+        filters!,
+        loadedRepertoire,
+      )!;
 
       final hasFilteringLimitedResults =
-          loadedRepertoire.filmItems.isNotEmpty && filteredRepertoire.filmItems.isEmpty;
+          loadedRepertoire.filmItems.isNotEmpty &&
+          filteredRepertoire.filmItems.isEmpty;
 
       for (var filmItem in filteredRepertoire.filmItems) {
         if (filmItem.film.rating is FilmRatingInitial) {
@@ -90,9 +100,13 @@ class RepertoireBloc extends Bloc<RepertoireEvent, RepertoireState> {
     filters = changedFilters;
 
     if (state is RepertoireLoaded) {
-      final filteredRepertoire = repertoireRepository.filterRepertoire(filters!, loadedRepertoire)!;
+      final filteredRepertoire = repertoireRepository.filterRepertoire(
+        filters!,
+        loadedRepertoire,
+      )!;
       final hasFilteringLimitedResults =
-          loadedRepertoire.filmItems.isNotEmpty && filteredRepertoire.filmItems.isEmpty;
+          loadedRepertoire.filmItems.isNotEmpty &&
+          filteredRepertoire.filmItems.isEmpty;
 
       emit(
         RepertoireLoaded(
@@ -100,6 +114,16 @@ class RepertoireBloc extends Bloc<RepertoireEvent, RepertoireState> {
           hasFilteringLimitedResults: hasFilteringLimitedResults,
         ),
       );
+    }
+  }
+
+  void _updateLoadedRepertoireRating(Film film) {
+    if (state is! RepertoireLoaded) return;
+
+    for (final filmItem in loadedRepertoire.filmItems) {
+      if (filmItem.film.id == film.id) {
+        filmItem.film.rating = film.rating;
+      }
     }
   }
 }
