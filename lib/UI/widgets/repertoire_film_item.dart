@@ -213,12 +213,12 @@ class RepertoireFilmItemRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return events.isNotEmpty
-        ? Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Padding(
-                padding: const .only(top: 2),
-                child: Text(
+        ? Padding(
+            padding: const .only(top: 4, bottom: 6),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text(
                   cinema ?? '',
                   style: TextStyle(
                     color: context.colorScheme.onSurfaceVariant,
@@ -226,120 +226,128 @@ class RepertoireFilmItemRow extends StatelessWidget {
                     fontWeight: .w600,
                   ),
                 ),
-              ),
-              const SizedBox(height: 3),
-              Wrap(
-                direction: .horizontal,
-                alignment: .start,
-                spacing: 5,
-                runSpacing: 5,
-                children: <Widget>[
-                  for (var item in events)
-                    Material(
-                      color: context.colorScheme.surfaceContainerHighest
-                          .withValues(alpha: 0.55),
-                      clipBehavior: .antiAlias,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: .circular(6),
-                        side: BorderSide(
-                          color: context.colorScheme.outlineVariant,
-                        ),
-                      ),
-                      child: InkWell(
-                        customBorder: RoundedRectangleBorder(
+                const SizedBox(height: 3),
+                Wrap(
+                  direction: .horizontal,
+                  alignment: .start,
+                  spacing: 5,
+                  runSpacing: 5,
+                  children: <Widget>[
+                    for (var item in events)
+                      Material(
+                        color: context.colorScheme.surfaceContainerHighest
+                            .withValues(alpha: 0.55),
+                        clipBehavior: .antiAlias,
+                        shape: RoundedRectangleBorder(
                           borderRadius: .circular(6),
+                          side: BorderSide(
+                            color: context.colorScheme.outlineVariant,
+                          ),
                         ),
-                        onTap: () {
-                          showModalBottomSheet<void>(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return FilmEventDialog(
-                                film: film,
-                                cinema: cinema,
-                                item: item,
-                              );
-                            },
-                          );
-                        },
-                        child: IntrinsicHeight(
-                          child: Row(
-                            mainAxisSize: .min,
-                            children: [
-                              Container(
-                                width: 2,
-                                decoration: BoxDecoration(
-                                  color: context.colorScheme.primary.withValues(
-                                    alpha: 0.75,
+                        child: InkWell(
+                          customBorder: RoundedRectangleBorder(
+                            borderRadius: .circular(6),
+                          ),
+                          onTap: () {
+                            showModalBottomSheet<void>(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return FilmEventDialog(
+                                  film: film,
+                                  cinema: cinema,
+                                  item: item,
+                                );
+                              },
+                            );
+                          },
+                          child: IntrinsicHeight(
+                            child: Row(
+                              mainAxisSize: .min,
+                              children: [
+                                Container(
+                                  width: 2,
+                                  decoration: BoxDecoration(
+                                    color: context.colorScheme.primary
+                                        .withValues(alpha: 0.75),
                                   ),
                                 ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 5,
-                                  vertical: 4,
-                                ),
-                                child: Column(
-                                  mainAxisSize: .min,
-                                  children: [
-                                    Text(
-                                      DateHelper.convertDateToHHMM(
-                                        item.dateTime,
-                                      ),
-                                      style: TextStyle(
-                                        color: context.colorScheme.onSurface,
-                                        fontSize: 13,
-                                        fontWeight: .w700,
-                                        fontFeatures: const [
-                                          FontFeature.tabularFigures(),
-                                        ],
-                                        height: 1,
-                                      ),
-                                    ),
-                                    if (item.type != null)
-                                      Padding(
-                                        padding: const .only(top: 1, bottom: 1),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 5,
+                                    vertical: 4,
+                                  ),
+                                  child: Column(
+                                    mainAxisSize: .min,
+                                    children: [
+                                      SizedBox(
+                                        width: 44,
                                         child: Text(
-                                          item.type!,
+                                          DateHelper.convertDateToHHMM(
+                                            item.dateTime,
+                                          ),
+                                          textAlign: .center,
+                                          maxLines: 1,
+                                          softWrap: false,
                                           style: TextStyle(
-                                            color: context
-                                                .colorScheme
-                                                .onSurfaceVariant,
-                                            fontSize: 8,
-                                            fontWeight: .w600,
-                                            height: 1.15,
+                                            color:
+                                                context.colorScheme.onSurface,
+                                            fontSize: 13,
+                                            fontWeight: .w700,
+                                            fontFeatures: const [
+                                              FontFeature.tabularFigures(),
+                                            ],
+                                            height: 1,
                                           ),
                                         ),
                                       ),
-                                    Text(
-                                      switch (item.language) {
-                                        (LanguageType.dubbing) =>
-                                          t.languageType.dubbing,
-                                        (LanguageType.original) =>
-                                          t.languageType.original,
-                                        (LanguageType.subtitles) =>
-                                          t.languageType.subtitles,
-                                      },
-                                      style: TextStyle(
-                                        color: context
-                                            .colorScheme
-                                            .onSurfaceVariant,
-                                        fontSize: 8,
-                                        fontWeight: .w600,
-                                        height: 1.15,
+                                      if (item.type != null)
+                                        Padding(
+                                          padding: const .only(
+                                            top: 1,
+                                            bottom: 1,
+                                          ),
+                                          child: Text(
+                                            item.type!,
+                                            style: TextStyle(
+                                              color: context
+                                                  .colorScheme
+                                                  .onSurfaceVariant,
+                                              fontSize: 8,
+                                              fontWeight: .w600,
+                                              height: 1.15,
+                                            ),
+                                          ),
+                                        ),
+                                      Text(
+                                        switch (item.language) {
+                                          (LanguageType.dubbing) =>
+                                            t.languageType.dubbing,
+                                          (LanguageType.original) =>
+                                            t.languageType.original,
+                                          (LanguageType.subtitles) =>
+                                            t.languageType.subtitles,
+                                        },
+                                        style: TextStyle(
+                                          color: context
+                                              .colorScheme
+                                              .onSurfaceVariant,
+                                          fontSize: 8,
+                                          fontWeight: .w600,
+                                          height: 1.15,
+                                        ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                ],
-              ),
-              const Padding(padding: .only(bottom: 4)),
-            ],
+                  ],
+                ),
+              ],
+            ),
           )
         : Container();
   }
