@@ -1,0 +1,9 @@
+targets:
+  $default:
+    builders:
+      # The asset-writer builder conflicts with committed translation outputs.
+      # Slang recommends the legacy builder for this case.
+      slang_build_runner:
+        enabled: false
+      slang_build_runner:legacy:
+        enabled: true
