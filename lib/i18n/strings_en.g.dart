@@ -20,20 +20,21 @@ class Translations with BaseTranslations<AppLocale, Translations> {
 	/// Constructing via the enum [AppLocale.build] is preferred.
 	Translations({Map<String, Node>? overrides, PluralResolver? cardinalResolver, PluralResolver? ordinalResolver, TranslationMetadata<AppLocale, Translations>? meta})
 		: assert(overrides == null, 'Set "translation_overrides: true" in order to enable this feature.'),
-		  $meta = meta ?? TranslationMetadata(
+		  _meta = meta ?? TranslationMetadata(
 		    locale: AppLocale.en,
 		    overrides: overrides ?? {},
 		    cardinalResolver: cardinalResolver,
 		    ordinalResolver: ordinalResolver,
 		  ) {
-		$meta.setFlatMapFunction(_flatMapFunction);
+		_meta.setFlatMapFunction(_flatMapFunction);
 	}
 
 	/// Metadata for the translations of <en>.
-	@override final TranslationMetadata<AppLocale, Translations> $meta;
+	final TranslationMetadata<AppLocale, Translations> _meta;
+	@override TranslationMetadata<AppLocale, Translations> get $meta => _meta;
 
 	/// Access flat map
-	dynamic operator[](String key) => $meta.getTranslation(key);
+	dynamic operator[](String key) => _meta.getTranslation(key);
 
 	late final Translations _root = this; // ignore: unused_field
 
@@ -77,19 +78,19 @@ class Translations with BaseTranslations<AppLocale, Translations> {
 	/// en: 'Schedule reminder'
 	String get scheduleReminder => 'Schedule reminder';
 
-	late final TranslationsRepertoireEn repertoire = TranslationsRepertoireEn._(_root);
-	late final TranslationsFilmDetailsEn filmDetails = TranslationsFilmDetailsEn._(_root);
-	late final TranslationsFiltersEn filters = TranslationsFiltersEn._(_root);
-	late final TranslationsCinemasEn cinemas = TranslationsCinemasEn._(_root);
-	late final TranslationsRemindersEn reminders = TranslationsRemindersEn._(_root);
-	late final TranslationsGenresEn genres = TranslationsGenresEn._(_root);
-	late final TranslationsLanguageTypeEn languageType = TranslationsLanguageTypeEn._(_root);
-	late final TranslationsSeatplanEn seatplan = TranslationsSeatplanEn._(_root);
+	late final Translations$repertoire$en repertoire = Translations$repertoire$en._(_root);
+	late final Translations$filmDetails$en filmDetails = Translations$filmDetails$en._(_root);
+	late final Translations$filters$en filters = Translations$filters$en._(_root);
+	late final Translations$cinemas$en cinemas = Translations$cinemas$en._(_root);
+	late final Translations$reminders$en reminders = Translations$reminders$en._(_root);
+	late final Translations$genres$en genres = Translations$genres$en._(_root);
+	late final Translations$languageType$en languageType = Translations$languageType$en._(_root);
+	late final Translations$seatplan$en seatplan = Translations$seatplan$en._(_root);
 }
 
 // Path: repertoire
-class TranslationsRepertoireEn {
-	TranslationsRepertoireEn._(this._root);
+class Translations$repertoire$en {
+	Translations$repertoire$en._(this._root);
 
 	final Translations _root; // ignore: unused_field
 
@@ -115,8 +116,8 @@ class TranslationsRepertoireEn {
 }
 
 // Path: filmDetails
-class TranslationsFilmDetailsEn {
-	TranslationsFilmDetailsEn._(this._root);
+class Translations$filmDetails$en {
+	Translations$filmDetails$en._(this._root);
 
 	final Translations _root; // ignore: unused_field
 
@@ -163,8 +164,8 @@ class TranslationsFilmDetailsEn {
 }
 
 // Path: filters
-class TranslationsFiltersEn {
-	TranslationsFiltersEn._(this._root);
+class Translations$filters$en {
+	Translations$filters$en._(this._root);
 
 	final Translations _root; // ignore: unused_field
 
@@ -193,8 +194,8 @@ class TranslationsFiltersEn {
 }
 
 // Path: cinemas
-class TranslationsCinemasEn {
-	TranslationsCinemasEn._(this._root);
+class Translations$cinemas$en {
+	Translations$cinemas$en._(this._root);
 
 	final Translations _root; // ignore: unused_field
 
@@ -214,8 +215,8 @@ class TranslationsCinemasEn {
 }
 
 // Path: reminders
-class TranslationsRemindersEn {
-	TranslationsRemindersEn._(this._root);
+class Translations$reminders$en {
+	Translations$reminders$en._(this._root);
 
 	final Translations _root; // ignore: unused_field
 
@@ -232,8 +233,8 @@ class TranslationsRemindersEn {
 }
 
 // Path: genres
-class TranslationsGenresEn {
-	TranslationsGenresEn._(this._root);
+class Translations$genres$en {
+	Translations$genres$en._(this._root);
 
 	final Translations _root; // ignore: unused_field
 
@@ -307,8 +308,8 @@ class TranslationsGenresEn {
 }
 
 // Path: languageType
-class TranslationsLanguageTypeEn {
-	TranslationsLanguageTypeEn._(this._root);
+class Translations$languageType$en {
+	Translations$languageType$en._(this._root);
 
 	final Translations _root; // ignore: unused_field
 
@@ -325,8 +326,8 @@ class TranslationsLanguageTypeEn {
 }
 
 // Path: seatplan
-class TranslationsSeatplanEn {
-	TranslationsSeatplanEn._(this._root);
+class Translations$seatplan$en {
+	Translations$seatplan$en._(this._root);
 
 	final Translations _root; // ignore: unused_field
 

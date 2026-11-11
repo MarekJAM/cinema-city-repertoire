@@ -16,20 +16,21 @@ class TranslationsPl with BaseTranslations<AppLocale, Translations> implements T
 	/// Constructing via the enum [AppLocale.build] is preferred.
 	TranslationsPl({Map<String, Node>? overrides, PluralResolver? cardinalResolver, PluralResolver? ordinalResolver, TranslationMetadata<AppLocale, Translations>? meta})
 		: assert(overrides == null, 'Set "translation_overrides: true" in order to enable this feature.'),
-		  $meta = meta ?? TranslationMetadata(
+		  _meta = meta ?? TranslationMetadata(
 		    locale: AppLocale.pl,
 		    overrides: overrides ?? {},
 		    cardinalResolver: cardinalResolver,
 		    ordinalResolver: ordinalResolver,
 		  ) {
-		$meta.setFlatMapFunction(_flatMapFunction);
+		_meta.setFlatMapFunction(_flatMapFunction);
 	}
 
 	/// Metadata for the translations of <pl>.
-	@override final TranslationMetadata<AppLocale, Translations> $meta;
+	final TranslationMetadata<AppLocale, Translations> _meta;
+	@override TranslationMetadata<AppLocale, Translations> get $meta => _meta;
 
 	/// Access flat map
-	@override dynamic operator[](String key) => $meta.getTranslation(key);
+	@override dynamic operator[](String key) => _meta.getTranslation(key);
 
 	late final TranslationsPl _root = this; // ignore: unused_field
 
@@ -49,19 +50,19 @@ class TranslationsPl with BaseTranslations<AppLocale, Translations> implements T
 	@override String get display => 'Wyświetl';
 	@override String get buyTicket => 'Kup bilet przez stronę';
 	@override String get scheduleReminder => 'Ustaw przypomnienie';
-	@override late final _TranslationsRepertoirePl repertoire = _TranslationsRepertoirePl._(_root);
-	@override late final _TranslationsFilmDetailsPl filmDetails = _TranslationsFilmDetailsPl._(_root);
-	@override late final _TranslationsFiltersPl filters = _TranslationsFiltersPl._(_root);
-	@override late final _TranslationsCinemasPl cinemas = _TranslationsCinemasPl._(_root);
-	@override late final _TranslationsRemindersPl reminders = _TranslationsRemindersPl._(_root);
-	@override late final _TranslationsGenresPl genres = _TranslationsGenresPl._(_root);
-	@override late final _TranslationsLanguageTypePl languageType = _TranslationsLanguageTypePl._(_root);
-	@override late final _TranslationsSeatplanPl seatplan = _TranslationsSeatplanPl._(_root);
+	@override late final _Translations$repertoire$pl repertoire = _Translations$repertoire$pl._(_root);
+	@override late final _Translations$filmDetails$pl filmDetails = _Translations$filmDetails$pl._(_root);
+	@override late final _Translations$filters$pl filters = _Translations$filters$pl._(_root);
+	@override late final _Translations$cinemas$pl cinemas = _Translations$cinemas$pl._(_root);
+	@override late final _Translations$reminders$pl reminders = _Translations$reminders$pl._(_root);
+	@override late final _Translations$genres$pl genres = _Translations$genres$pl._(_root);
+	@override late final _Translations$languageType$pl languageType = _Translations$languageType$pl._(_root);
+	@override late final _Translations$seatplan$pl seatplan = _Translations$seatplan$pl._(_root);
 }
 
 // Path: repertoire
-class _TranslationsRepertoirePl implements TranslationsRepertoireEn {
-	_TranslationsRepertoirePl._(this._root);
+class _Translations$repertoire$pl implements Translations$repertoire$en {
+	_Translations$repertoire$pl._(this._root);
 
 	final TranslationsPl _root; // ignore: unused_field
 
@@ -75,8 +76,8 @@ class _TranslationsRepertoirePl implements TranslationsRepertoireEn {
 }
 
 // Path: filmDetails
-class _TranslationsFilmDetailsPl implements TranslationsFilmDetailsEn {
-	_TranslationsFilmDetailsPl._(this._root);
+class _Translations$filmDetails$pl implements Translations$filmDetails$en {
+	_Translations$filmDetails$pl._(this._root);
 
 	final TranslationsPl _root; // ignore: unused_field
 
@@ -97,8 +98,8 @@ class _TranslationsFilmDetailsPl implements TranslationsFilmDetailsEn {
 }
 
 // Path: filters
-class _TranslationsFiltersPl implements TranslationsFiltersEn {
-	_TranslationsFiltersPl._(this._root);
+class _Translations$filters$pl implements Translations$filters$en {
+	_Translations$filters$pl._(this._root);
 
 	final TranslationsPl _root; // ignore: unused_field
 
@@ -113,8 +114,8 @@ class _TranslationsFiltersPl implements TranslationsFiltersEn {
 }
 
 // Path: cinemas
-class _TranslationsCinemasPl implements TranslationsCinemasEn {
-	_TranslationsCinemasPl._(this._root);
+class _Translations$cinemas$pl implements Translations$cinemas$en {
+	_Translations$cinemas$pl._(this._root);
 
 	final TranslationsPl _root; // ignore: unused_field
 
@@ -126,8 +127,8 @@ class _TranslationsCinemasPl implements TranslationsCinemasEn {
 }
 
 // Path: reminders
-class _TranslationsRemindersPl implements TranslationsRemindersEn {
-	_TranslationsRemindersPl._(this._root);
+class _Translations$reminders$pl implements Translations$reminders$en {
+	_Translations$reminders$pl._(this._root);
 
 	final TranslationsPl _root; // ignore: unused_field
 
@@ -138,8 +139,8 @@ class _TranslationsRemindersPl implements TranslationsRemindersEn {
 }
 
 // Path: genres
-class _TranslationsGenresPl implements TranslationsGenresEn {
-	_TranslationsGenresPl._(this._root);
+class _Translations$genres$pl implements Translations$genres$en {
+	_Translations$genres$pl._(this._root);
 
 	final TranslationsPl _root; // ignore: unused_field
 
@@ -169,8 +170,8 @@ class _TranslationsGenresPl implements TranslationsGenresEn {
 }
 
 // Path: languageType
-class _TranslationsLanguageTypePl implements TranslationsLanguageTypeEn {
-	_TranslationsLanguageTypePl._(this._root);
+class _Translations$languageType$pl implements Translations$languageType$en {
+	_Translations$languageType$pl._(this._root);
 
 	final TranslationsPl _root; // ignore: unused_field
 
@@ -181,8 +182,8 @@ class _TranslationsLanguageTypePl implements TranslationsLanguageTypeEn {
 }
 
 // Path: seatplan
-class _TranslationsSeatplanPl implements TranslationsSeatplanEn {
-	_TranslationsSeatplanPl._(this._root);
+class _Translations$seatplan$pl implements Translations$seatplan$en {
+	_Translations$seatplan$pl._(this._root);
 
 	final TranslationsPl _root; // ignore: unused_field
 

@@ -18,7 +18,7 @@ import 'package:cinema_city/bloc/filters/filters_cubit.dart' as _i49;
 import 'package:cinema_city/bloc/repertoire/repertoire_bloc.dart' as _i914;
 import 'package:cinema_city/data/repositories/cinemas_api_client.dart' as _i461;
 import 'package:cinema_city/data/repositories/cinemas_local_storage_api.dart'
-    as _i347;
+    as _i348;
 import 'package:cinema_city/data/repositories/cinemas_repository.dart' as _i610;
 import 'package:cinema_city/data/repositories/film_api_client.dart' as _i826;
 import 'package:cinema_city/data/repositories/film_scores_api_client.dart'
@@ -75,8 +75,8 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i738.Box<dynamic>>(instanceName: 'filtersBox'),
       ),
     );
-    gh.lazySingleton<_i347.CinemasLocalStorageApi>(
-      () => _i347.CinemasLocalStorageApi(plugin: gh<_i460.SharedPreferences>()),
+    gh.lazySingleton<_i348.CinemasLocalStorageApi>(
+      () => _i348.CinemasLocalStorageApi(plugin: gh<_i460.SharedPreferences>()),
     );
     gh.lazySingleton<_i461.CinemasApiClient>(
       () => _i461.CinemasApiClient(
@@ -104,7 +104,7 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i610.CinemasRepository>(
       () => _i610.CinemasRepository(
         cinemasApiClient: gh<_i400.CinemasApiClient>(),
-        cinemasLocalStorageApi: gh<_i347.CinemasLocalStorageApi>(),
+        cinemasLocalStorageApi: gh<_i348.CinemasLocalStorageApi>(),
       ),
     );
     gh.lazySingleton<_i640.FilmScoresRepository>(
