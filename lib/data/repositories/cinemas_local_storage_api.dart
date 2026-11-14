@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -6,7 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class CinemasLocalStorageApi {
   final SharedPreferences _plugin;
 
-  CinemasLocalStorageApi({required SharedPreferences plugin}) : _plugin = plugin;
+  CinemasLocalStorageApi({required this._plugin});
 
   static const String _favoriteCinemasKey = 'favoriteCinemas';
 

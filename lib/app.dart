@@ -1,8 +1,9 @@
 import 'package:cinema_city/i18n/strings.g.dart';
 import 'package:cinema_city/theme.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_localizations/flutter_localizations.dart' hide GlobalMaterialLocalizations;
+import 'package:material_ui/material_ui.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 import 'UI/pages/repertoire_page.dart';
 
@@ -18,10 +19,9 @@ class App extends StatelessWidget {
 
     return MaterialApp(
       locale: TranslationProvider.of(context).flutterLocale,
-      localizationsDelegates: const [
+      localizationsDelegates: [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
       ],
       debugShowCheckedModeBanner: false,
       supportedLocales: const [
@@ -30,6 +30,10 @@ class App extends StatelessWidget {
       ],
       title: t.appName,
       theme: theme,
+      builder: (context, child) => SkeletonizerConfig(
+        data: SkeletonizerConfigData(brightness: Theme.of(context).brightness),
+        child: child!,
+      ),
       home: const RepertoirePage(),
     );
   }

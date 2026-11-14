@@ -1,5 +1,5 @@
 import 'package:cinema_city/utils/theme_context_extensions.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 extension BuildContextX on BuildContext {
   void showSnackbar(String message, [SnackbarType type = SnackbarType.info]) {

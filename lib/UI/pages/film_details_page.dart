@@ -1,6 +1,6 @@
 import 'package:cinema_city/UI/widgets/widgets.dart';
 import 'package:cinema_city/utils/theme_context_extensions.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../bloc/blocs.dart';

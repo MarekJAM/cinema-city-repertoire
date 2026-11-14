@@ -4,8 +4,8 @@ description: Unofficial cinema city repertoire app.
 version: 1.2.0+11
 
 environment:
-  sdk: '>=3.10.0'
-  flutter: ">=3.47.5"
+  sdk: '>=3.14.0 <4.0.0'
+  flutter: ">=3.50.0"
 
 dependencies:
   flutter:
@@ -37,7 +37,7 @@ dependencies:
   firebase_core: ^5.1.0
   cached_network_image: ^4.0.7
   collection: ^1.19.1
-
+  material_ui: 1.11.0
 dev_dependencies:
   flutter_lints: ^6.0.0
   flutter_launcher_icons: ^0.14.4
